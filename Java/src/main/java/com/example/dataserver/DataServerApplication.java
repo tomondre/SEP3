@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DataServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DataServerApplication.class, args);
+      SpringApplication.run(DataServerApplication.class, args);
     }
-
 }

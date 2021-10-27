@@ -7,6 +7,11 @@ public class Provider {
     private String description;
     private Address address;
 
+    public Provider()
+    {
+
+    }
+
     public Provider(String companyName, int CVR, String phoneNumber, String description, Address address) {
         this.companyName = companyName;
         this.CVR = CVR;
@@ -53,5 +58,16 @@ public class Provider {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Provider{" +
+                "companyName='" + companyName + '\'' +
+                ", CVR=" + CVR +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", description='" + description + '\'' +
+                ", address=" + address +
+                '}';
     }
 }
