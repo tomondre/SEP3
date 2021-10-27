@@ -1,11 +1,9 @@
 package com.example.dataserver.model;
 
-import com.example.dataserver.networking.ProviderNetworkingImpl;
 import com.example.dataserver.persistence.ProviderPersistence;
 import com.example.dataserver.shared.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 

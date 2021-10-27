@@ -9,7 +9,6 @@ public class Provider {
 
     public Provider()
     {
-
     }
 
     public Provider(String companyName, int CVR, String phoneNumber, String description, Address address) {
