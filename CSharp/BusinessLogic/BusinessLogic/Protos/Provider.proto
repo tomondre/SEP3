@@ -1,5 +1,5 @@
-syntax="proto3";
-option java_multiple_files = true;
+﻿syntax="proto3";
+option csharp_namespace = "BusinessLogic";
 package com.example.dataserver.networking;
 
 message Provider{

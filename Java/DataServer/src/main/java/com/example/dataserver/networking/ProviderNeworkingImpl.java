@@ -23,17 +23,22 @@ public class ProviderNeworkingImpl extends ProviderServiceGrpc.ProviderServiceIm
 
         ProviderList.Builder builder = ProviderList.newBuilder();
         for (Provider provider : model.getAllProviders()) {
-            com.example.dataserver.networking.Provider.Builder bld = com.example.dataserver.networking.Provider.newBuilder()
-                    .setCompanyName(provider.getCompanyName())
-                    .setCvr(provider.getCVR())
-                    .setPhoneNumber(provider.getPhoneNumber())
-                    .setDescription(provider.getDescription())
-                    .setStreet(provider.getAddress().getStreet())
-                    .setCity(provider.getAddress().getCity())
-                    .setStreetNumber(provider.getAddress().getStreetNumber())
-                    .setPostCode(provider.getAddress().getPostCode());
-            builder.addValue(bld);
+            try {
+                com.example.dataserver.networking.Provider.Builder bld = com.example.dataserver.networking.Provider.newBuilder()
+                        .setCompanyName(provider.getCompanyName())
+                        .setCvr(provider.getCVR())
+                        .setPhoneNumber(provider.getPhoneNumber())
+                        .setDescription(provider.getDescription())
+                        .setStreet(provider.getAddress().getStreet())
+                        .setCity(provider.getAddress().getCity())
+                        .setStreetNumber(provider.getAddress().getStreetNumber())
+                        .setPostCode(provider.getAddress().getPostCode());
+                builder.addValue(bld);
+            }
+            catch (Exception e)
+            {}
         }
+
 
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();

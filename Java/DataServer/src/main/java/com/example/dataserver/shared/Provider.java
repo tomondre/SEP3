@@ -9,6 +9,7 @@ public class Provider {
 
     public Provider()
     {
+        address = new Address();
     }
 
     public Provider(String companyName, int CVR, String phoneNumber, String description, Address address) {
