@@ -15,22 +15,20 @@ import java.util.ArrayList;
 @Repository
 public class ProviderPersistenceImpl implements ProviderPersistence {
 
-    private final JdbcTemplate template;
+    private final ProviderRepository repo;
 
     @Autowired
-    public ProviderPersistenceImpl(JdbcTemplate template) {
-        this.template = template;
+    public ProviderPersistenceImpl(ProviderRepository repo) {
+        this.repo = repo;
     }
 
     @Override
     public void createProvider(Provider provider) {
-        String sql = "INSERT INTO provider (company_name, cvr, phone_number, description, street, street_no, post_code, city) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
-        template.update(sql, provider.getCompanyName(), provider.getCVR(), provider.getPhoneNumber(), provider.getDescription(), provider.getAddress().getStreet(), provider.getAddress().getStreetNumber(), provider.getAddress().getPostCode(), provider.getAddress().getCity());
+        repo.save(provider);
     }
 
     @Override
     public ArrayList<Provider> getAllProviders() {
-        String sql = "SELECT * FROM provider";
-        return (ArrayList<Provider>) template.query(sql, new BeanPropertyRowMapper(Provider.class));
+        return (ArrayList<Provider>) repo.findAll();
     }
 }

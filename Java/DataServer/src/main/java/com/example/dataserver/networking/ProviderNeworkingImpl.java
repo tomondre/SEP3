@@ -3,7 +3,6 @@ package com.example.dataserver.networking;
 import com.example.dataserver.model.ProviderModel;
 import com.example.dataserver.shared.Provider;
 import io.grpc.stub.StreamObserver;
-import net.badata.protobuf.converter.Converter;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -24,6 +23,8 @@ public class ProviderNeworkingImpl extends ProtobufProviderServiceGrpc.ProtobufP
     @Override
     public void createProvider(ProtobufProvider request, StreamObserver<ProtobufResponse> responseObserver) {
         model.createProvider(new Provider(request));
+        responseObserver.onNext(ProtobufResponse.newBuilder().setMessage("Success").build());
+        responseObserver.onCompleted();
     }
 
     @Async

@@ -1,18 +1,17 @@
 package com.example.dataserver.shared;
 
 import com.example.dataserver.networking.ProtobufAddress;
-import net.badata.protobuf.converter.annotation.ProtoClass;
-import net.badata.protobuf.converter.annotation.ProtoField;
 
-@ProtoClass(ProtobufAddress.class)
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class Address {
-    @ProtoField
+    private int id;
     private String street;
-    @ProtoField
     private String streetNumber;
-    @ProtoField
     private int postCode;
-    @ProtoField
     private String city;
 
     public Address(ProtobufAddress address)
