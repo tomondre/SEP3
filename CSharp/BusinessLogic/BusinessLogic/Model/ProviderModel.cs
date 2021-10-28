@@ -1,18 +1,26 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using BusinessLogic.Networking;
 using ClientServer.Models;
 
 namespace BusinessLogic.Model
 {
     public class ProviderModel : IProviderModel
     {
-        public void CreateProvider(Provider provider)
+        IProviderNet network;
+        public ProviderModel(IProviderNet network)
         {
-            throw new System.NotImplementedException();
+            this.network = network;
         }
 
-        public IList<Provider> GetAllProviders()
+        public Task CreateProvider(Provider provider)
         {
-            throw new System.NotImplementedException();
+           return network.CreateProvider(provider);
+        }
+
+        public Task<IList<Provider>> GetAllProviders()
+        {
+            return network.GetAllProviders();
         }
     }
 }

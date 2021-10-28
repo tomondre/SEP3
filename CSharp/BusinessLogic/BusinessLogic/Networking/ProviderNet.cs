@@ -1,18 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using ClientServer.Models;
+using Grpc.Net.Client;
 
 namespace BusinessLogic.Networking
 {
     public class ProviderNet : IProviderNet
     {
-        public void CreateProvider(Provider provider)
+        private ProviderService.ProviderServiceClient client;
+        public ProviderNet(ProviderService.ProviderServiceClient client)
+        {
+            this.client = client;
+        }
+
+        public async Task CreateProvider(Provider provider)
         {
             throw new System.NotImplementedException();
         }
 
-        public IList<Provider> GetAllProviders()
+        public async Task<IList<Provider>> GetAllProviders()
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine(client);
+            var allProvidersAsync = await client.getAllProvidersAsync(new Request());
+            Console.WriteLine(allProvidersAsync.Value.Count);
+            throw new NotImplementedException();
+            return null;
         }
     }
 }

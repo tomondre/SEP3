@@ -38,8 +38,6 @@ public class ProviderNeworkingImpl extends ProviderServiceGrpc.ProviderServiceIm
             catch (Exception e)
             {}
         }
-
-
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
     }

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogic.Model;
+using BusinessLogic.Networking;
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +29,10 @@ namespace BusinessLogic
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ProviderService.ProviderServiceClient>(
+                new ProviderService.ProviderServiceClient(GrpcChannel.ForAddress("http://localhost:9090")));
+            services.AddSingleton<IProviderModel, ProviderModel>();
+            services.AddSingleton<IProviderNet, ProviderNet>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

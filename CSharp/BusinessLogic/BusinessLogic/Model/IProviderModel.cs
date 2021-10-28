@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ClientServer.Models;
 
 namespace BusinessLogic.Model
 {
     public interface IProviderModel
     {
-        public void CreateProvider(Provider provider);
-        public IList<Provider> GetAllProviders();
+        public Task CreateProvider(Provider provider);
+        public Task<IList<Provider>> GetAllProviders();
     }
 }
