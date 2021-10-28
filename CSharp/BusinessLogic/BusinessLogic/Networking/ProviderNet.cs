@@ -1,31 +1,73 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using ClientServer.Models;
-using Grpc.Net.Client;
+using Com.Example.Dataserver.Networking;
+using GrpcFileGeneration.Models;
 
 namespace BusinessLogic.Networking
 {
     public class ProviderNet : IProviderNet
     {
-        private ProviderService.ProviderServiceClient client;
-        public ProviderNet(ProviderService.ProviderServiceClient client)
+        private ProtobufProviderService.ProtobufProviderServiceClient client;
+        public ProviderNet(ProtobufProviderService.ProtobufProviderServiceClient client)
         {
             this.client = client;
         }
 
         public async Task CreateProvider(Provider provider)
         {
-            throw new System.NotImplementedException();
+            await client.createProviderAsync(ModelProviderToProtobufProvider(provider));
         }
 
         public async Task<IList<Provider>> GetAllProviders()
         {
             Console.WriteLine(client);
-            var allProvidersAsync = await client.getAllProvidersAsync(new Request());
-            Console.WriteLine(allProvidersAsync.Value.Count);
-            throw new NotImplementedException();
-            return null;
+            IList<Provider> result = new List<Provider>();
+            var providers = (await client.getAllProvidersAsync(new ProtobufRequest())).Value;
+            foreach (var provider in providers)
+            {
+                result.Add(ProtobufProviderToModelProvider(provider));
+            }
+
+            return result;
+        }
+
+        private ProtobufProvider ModelProviderToProtobufProvider(Provider provider)
+        {
+            return new ProtobufProvider()
+            {
+                CompanyName = provider.CompanyName,
+                Cvr = provider.Cvr,
+                Description = provider.Description,
+                PhoneNumber = provider.PhoneNumber,
+                Address = new ProtobufAddress()
+                {
+                    City = provider.Address.City,
+                    Street = provider.Address.Street,
+                    PostCode = provider.Address.PostCode,
+                    StreetNumber = provider.Address.StreetNumber
+                }
+            };
+        }
+
+        private Provider ProtobufProviderToModelProvider(ProtobufProvider provider)
+        {
+            return new Provider()
+            {
+                    CompanyName = provider.CompanyName,
+                    Cvr = provider.Cvr,
+                    Description = provider.Description,
+                    PhoneNumber = provider.PhoneNumber,
+                    Address = new Address()
+                    {
+                        City = provider.Address.City,
+                        Street = provider.Address.Street,
+                        PostCode = provider.Address.PostCode,
+                        StreetNumber = provider.Address.StreetNumber
+                    }
+            };
         }
     }
 }

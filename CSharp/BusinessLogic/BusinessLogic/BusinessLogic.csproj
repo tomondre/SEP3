@@ -3,18 +3,16 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
-    
     <ItemGroup>
-        <Protobuf Include="Protos\Provider.proto" GrpcServices="Client" />
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="Google.Protobuf" Version="3.19.0" />
         <PackageReference Include="Grpc.Net.Client" Version="2.40.0" />
         <PackageReference Include="Grpc.Tools" Version="2.41.1">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\GrpcFileGeneration\GrpcFileGeneration\GrpcFileGeneration.csproj" />
     </ItemGroup>
 
 </Project>

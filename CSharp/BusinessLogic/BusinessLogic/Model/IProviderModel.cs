@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ClientServer.Models;
+using GrpcFileGeneration.Models;
 
 namespace BusinessLogic.Model
 {

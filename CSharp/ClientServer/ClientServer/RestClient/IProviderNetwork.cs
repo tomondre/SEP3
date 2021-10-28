@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ClientServer.Models;
+using GrpcFileGeneration.Models;
 
 namespace ClientServer.RestClient
 {

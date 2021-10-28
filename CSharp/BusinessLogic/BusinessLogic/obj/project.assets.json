@@ -146,6 +146,20 @@
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
         }
+      },
+      "GrpcFileGeneration/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Google.Protobuf": "3.19.0",
+          "Grpc.Net.Client": "2.40.0"
+        },
+        "compile": {
+          "bin/placeholder/GrpcFileGeneration.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/GrpcFileGeneration.dll": {}
+        }
       }
     }
   },
@@ -430,13 +444,18 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "GrpcFileGeneration/1.0.0": {
+      "type": "project",
+      "path": "../../GrpcFileGeneration/GrpcFileGeneration/GrpcFileGeneration.csproj",
+      "msbuildProject": "../../GrpcFileGeneration/GrpcFileGeneration/GrpcFileGeneration.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "Google.Protobuf >= 3.19.0",
       "Grpc.Net.Client >= 2.40.0",
       "Grpc.Tools >= 2.41.1",
+      "GrpcFileGeneration >= 1.0.0",
       "Swashbuckle.AspNetCore >= 5.6.3"
     ]
   },
@@ -464,7 +483,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\PC1\\RiderProjects\\SEP3\\CSharp\\GrpcFileGeneration\\GrpcFileGeneration\\GrpcFileGeneration.csproj": {
+              "projectPath": "C:\\Users\\PC1\\RiderProjects\\SEP3\\CSharp\\GrpcFileGeneration\\GrpcFileGeneration\\GrpcFileGeneration.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -477,10 +500,6 @@
       "net5.0": {
         "targetAlias": "net5.0",
         "dependencies": {
-          "Google.Protobuf": {
-            "target": "Package",
-            "version": "[3.19.0, )"
-          },
           "Grpc.Net.Client": {
             "target": "Package",
             "version": "[2.40.0, )"

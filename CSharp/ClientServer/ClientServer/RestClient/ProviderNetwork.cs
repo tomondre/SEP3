@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using ClientServer.Models;
-using ClientServer.Pages;
+using GrpcFileGeneration.Models;
 
 namespace ClientServer.RestClient
 {

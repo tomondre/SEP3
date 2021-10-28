@@ -1,5 +1,8 @@
 package com.example.dataserver.shared;
 
+import com.example.dataserver.networking.ProtobufAddress;
+import net.badata.protobuf.converter.annotation.ProtoClass;
+
 public class Login {
     private String email;
     private String password;

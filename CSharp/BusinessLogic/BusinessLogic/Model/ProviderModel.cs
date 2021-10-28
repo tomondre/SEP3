@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessLogic.Networking;
-using ClientServer.Models;
+using GrpcFileGeneration.Models;
 
 namespace BusinessLogic.Model
 {
