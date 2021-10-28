@@ -6,6 +6,7 @@ import com.example.dataserver.shared.Provider;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 
 @GrpcService
 public class ProviderNeworkingImpl extends ProviderServiceGrpc.ProviderServiceImplBase {
@@ -19,6 +20,7 @@ public class ProviderNeworkingImpl extends ProviderServiceGrpc.ProviderServiceIm
     }
 
     @Override
+    @Async
     public void getAllProviders(Request request, StreamObserver<ProviderList> responseObserver) {
 
         ProviderList.Builder builder = ProviderList.newBuilder();
@@ -43,6 +45,7 @@ public class ProviderNeworkingImpl extends ProviderServiceGrpc.ProviderServiceIm
     }
 
     @Override
+    @Async
     public void createProvider(com.example.dataserver.networking.Provider request, StreamObserver<SuccessResponse> responseObserver) {
         Address address = new Address(request.getStreet(), request.getStreetNumber(), request.getPostCode(), request.getCity());
         Provider provider = new Provider(request.getCompanyName(),request.getCvr(),request.getPhoneNumber(), request.getDescription(), address);
