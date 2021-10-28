@@ -19,6 +19,7 @@ namespace BusinessLogic.Networking
         public async Task CreateProvider(Provider provider)
         {
             await client.createProviderAsync(ModelProviderToProtobufProvider(provider));
+            Console.WriteLine("Created");
         }
 
         public async Task<IList<Provider>> GetAllProviders()
