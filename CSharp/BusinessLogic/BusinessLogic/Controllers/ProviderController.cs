@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BusinessLogic.Model;
 using GrpcFileGeneration.Models;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogic.Controllers
@@ -12,7 +11,6 @@ namespace BusinessLogic.Controllers
     public class ProviderController : ControllerBase
     {
         private IProviderModel model;
-        private string baseUri = "https://localhost:5001/Provider";
 
         public ProviderController(IProviderModel model)
         {
@@ -26,26 +24,10 @@ namespace BusinessLogic.Controllers
             list.Providers = await model.GetAllProviders();
             foreach (var provider in list.Providers)
             {
-                AddLinks(provider);
+                CreateLinksForProvider(provider);
             }
-
-            list.Links.Add(new Link()
-            {
-                Method = "GET",
-                Href = baseUri,
-                Rel = "self"
-            });
+            CreateLinksForProviderList(list);
             return Ok(list);
-        }
-        
-        private void AddLinks(Provider provider)
-        {
-            provider.Links.Add(new Link()
-            {
-                Rel = $"{baseUri}/{provider.Id}",
-                Href = "self",
-                Method = "GET"
-            });
         }
 
         [HttpGet]
@@ -53,14 +35,44 @@ namespace BusinessLogic.Controllers
         public async Task<ActionResult<Provider>> GetProviderById([FromRoute] int id)
         {
             var providerById = await model.GetProviderById(id);
-            AddLinks(providerById);
+            CreateLinksForProvider(providerById);
             return Ok(providerById);
         }
 
+        [HttpPatch]
+        public async Task<ActionResult> EditProvider([FromBody] Provider provider)
+        {
+            await model.EditProvider(provider);
+            return Ok();
+        }
+
         [HttpPost]
-        public async Task CreateProvider([FromBody] Provider provider)
+        public async Task<ActionResult> CreateProvider([FromBody] Provider provider)
         {
             await model.CreateProvider(provider);
+            return Ok();
+        }
+
+        private void CreateLinksForProviderList(ProviderList list)
+        {
+            var encodedUrl = UriHelper.GetEncodedUrl(Request);
+            list.Links.Add(new Link()
+            {
+                Method = "GET",
+                Href = encodedUrl,
+                Rel = "self"
+            });  
+        }
+
+        private void CreateLinksForProvider(Provider provider)
+        {
+            var encodedUrl = UriHelper.GetEncodedUrl(Request);
+            provider.Links.Add(new Link()
+            {
+                Rel = $"{encodedUrl}/{provider.Id}",
+                Href = "self",
+                Method = "GET"
+            });
         }
     }
 }

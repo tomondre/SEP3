@@ -20,12 +20,10 @@ namespace BusinessLogic.Networking
         public async Task CreateProvider(Provider provider)
         {
             await client.createProviderAsync(ModelProviderToProtobufProvider(provider));
-            Console.WriteLine("Created");
         }
 
         public async Task<IList<Provider>> GetAllProviders()
         {
-            Console.WriteLine(client);
             IList<Provider> result = new List<Provider>();
             var providers = (await client.getAllProvidersAsync(new ProtobufRequest())).Value;
             foreach (var provider in providers)
@@ -40,6 +38,11 @@ namespace BusinessLogic.Networking
         {
             var providerByIdAsync = await client.getProviderByIdAsync(new GetProviderByIdRequest {Id = id});
             return ProtobufProviderToModelProvider(providerByIdAsync);
+        }
+
+        public async Task EditProvider(Provider provider)
+        {
+            await client.editProviderAsync(ModelProviderToProtobufProvider(provider));
         }
 
         private ProtobufProvider ModelProviderToProtobufProvider(Provider provider)

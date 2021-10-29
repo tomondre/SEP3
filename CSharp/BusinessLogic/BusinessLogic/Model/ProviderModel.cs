@@ -27,5 +27,10 @@ namespace BusinessLogic.Model
         {
             return network.GetProviderById(id);
         }
+
+        public Task EditProvider(Provider provider)
+        {
+            return network.EditProvider(provider);
+        }
     }
 }

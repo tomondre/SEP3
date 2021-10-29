@@ -38,4 +38,5 @@ service ProtobufProviderService{
   rpc createProvider(ProtobufProvider) returns (ProtobufResponse);
   rpc getAllProviders(ProtobufRequest) returns (ProtobufProviderList);
   rpc getProviderById(GetProviderByIdRequest) returns (ProtobufProvider);
+  rpc editProvider(ProtobufProvider) returns (ProtobufResponse);
 }

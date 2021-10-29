@@ -10,5 +10,6 @@ namespace BusinessLogic.Model
         public Task CreateProvider(Provider provider);
         public Task<IList<Provider>> GetAllProviders();
         Task<Provider> GetProviderById(int id);
+        Task EditProvider(Provider provider);
     }
 }
