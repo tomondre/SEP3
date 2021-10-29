@@ -9,4 +9,5 @@ import java.util.ArrayList;
 public interface ProviderPersistence {
     void createProvider(Provider provider);
     ArrayList<Provider> getAllProviders();
+    Provider getProviderById(int id);
 }

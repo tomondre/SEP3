@@ -3,21 +3,27 @@ option java_multiple_files = true;
 package com.example.dataserver.networking;
 
 message ProtobufProvider{
-  string companyName = 1;
-  int32 cvr = 2;
-  string phoneNumber = 3;
-  string description = 4;
-  ProtobufAddress address = 5;
+  int32 id = 1;
+  string companyName = 2;
+  int32 cvr = 3;
+  string phoneNumber = 4;
+  string description = 5;
+  ProtobufAddress address = 6;
 }
 
 message ProtobufAddress{
-  string street = 5;
-  string streetNumber = 6;
-  int32 postCode = 7;
-  string city = 8;
+  string street = 1;
+  string streetNumber = 2;
+  int32 postCode = 3;
+  string city = 4;
 }
 
 message ProtobufRequest{
+
+}
+
+message GetProviderByIdRequest{
+  int32 id = 1;
 }
 
 message ProtobufProviderList{
@@ -31,4 +37,5 @@ message ProtobufResponse{
 service ProtobufProviderService{
   rpc createProvider(ProtobufProvider) returns (ProtobufResponse);
   rpc getAllProviders(ProtobufRequest) returns (ProtobufProviderList);
+  rpc getProviderById(GetProviderByIdRequest) returns (ProtobufProvider);
 }

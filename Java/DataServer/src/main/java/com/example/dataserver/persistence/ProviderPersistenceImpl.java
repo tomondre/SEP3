@@ -31,4 +31,9 @@ public class ProviderPersistenceImpl implements ProviderPersistence {
     public ArrayList<Provider> getAllProviders() {
         return (ArrayList<Provider>) repo.findAll();
     }
+
+    @Override
+    public Provider getProviderById(int id) {
+        return repo.findById(id).orElseThrow();
+    }
 }
