@@ -22,5 +22,10 @@ namespace BusinessLogic.Model
         {
             return network.GetAllProviders();
         }
+
+        public Task<Provider> GetProviderById(int id)
+        {
+            return network.GetProviderById(id);
+        }
     }
 }

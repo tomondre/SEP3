@@ -11,6 +11,7 @@ namespace BusinessLogic.Networking
     public class ProviderNet : IProviderNet
     {
         private ProtobufProviderService.ProtobufProviderServiceClient client;
+
         public ProviderNet(ProtobufProviderService.ProtobufProviderServiceClient client)
         {
             this.client = client;
@@ -35,10 +36,17 @@ namespace BusinessLogic.Networking
             return result;
         }
 
+        public async Task<Provider> GetProviderById(int id)
+        {
+            var providerByIdAsync = await client.getProviderByIdAsync(new GetProviderByIdRequest {Id = id});
+            return ProtobufProviderToModelProvider(providerByIdAsync);
+        }
+
         private ProtobufProvider ModelProviderToProtobufProvider(Provider provider)
         {
             return new ProtobufProvider()
             {
+                Id = provider.Id,
                 CompanyName = provider.CompanyName,
                 Cvr = provider.Cvr,
                 Description = provider.Description,
@@ -57,17 +65,18 @@ namespace BusinessLogic.Networking
         {
             return new Provider()
             {
-                    CompanyName = provider.CompanyName,
-                    Cvr = provider.Cvr,
-                    Description = provider.Description,
-                    PhoneNumber = provider.PhoneNumber,
-                    Address = new Address()
-                    {
-                        City = provider.Address.City,
-                        Street = provider.Address.Street,
-                        PostCode = provider.Address.PostCode,
-                        StreetNumber = provider.Address.StreetNumber
-                    }
+                Id = provider.Id,
+                CompanyName = provider.CompanyName,
+                Cvr = provider.Cvr,
+                Description = provider.Description,
+                PhoneNumber = provider.PhoneNumber,
+                Address = new Address()
+                {
+                    City = provider.Address.City,
+                    Street = provider.Address.Street,
+                    PostCode = provider.Address.PostCode,
+                    StreetNumber = provider.Address.StreetNumber
+                }
             };
         }
     }
