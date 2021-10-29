@@ -41,6 +41,7 @@ public class Provider {
     }
 
     public Provider(ProtobufProvider provider) {
+        id = provider.getId();
         companyName = provider.getCompanyName();
         cvr = provider.getCvr();
         phoneNumber = provider.getPhoneNumber();
@@ -50,18 +51,6 @@ public class Provider {
         postCode = provider.getAddress().getPostCode();
         city = provider.getAddress().getCity();
     }
-
-//    public Provider(int id, String companyName, int cvr, String phoneNumber, String description, String street, String streetNumber, int postCode, String city) {
-//        this.id = id;
-//        this.companyName = companyName;
-//        this.cvr = cvr;
-//        this.phoneNumber = phoneNumber;
-//        this.description = description;
-//        this.street = street;
-//        this.streetNumber = streetNumber;
-//        this.postCode = postCode;
-//        this.city = city;
-//    }
 
     public String getCompanyName() {
         return companyName;
@@ -101,6 +90,7 @@ public class Provider {
         builder.setCvr(cvr);
         builder.setPhoneNumber(phoneNumber);
         builder.setDescription(description);
+        builder.setId(id);
         builder.setAddress(ProtobufAddress.newBuilder().setStreetNumber(streetNumber).setCity(city).setPostCode(postCode).setStreet(street).build());
         return builder.build();
     }

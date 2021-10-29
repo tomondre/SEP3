@@ -27,4 +27,9 @@ public class ProviderModelImpl implements ProviderModel {
     public ArrayList<Provider> getAllProviders() {
         return persistence.getAllProviders();
     }
+
+    @Override
+    public Provider getProviderById(int id) {
+        return persistence.getProviderById(id);
+    }
 }

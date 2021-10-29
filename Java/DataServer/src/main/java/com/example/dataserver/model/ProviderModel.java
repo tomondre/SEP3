@@ -8,4 +8,5 @@ import java.util.ArrayList;
 public interface ProviderModel {
     void createProvider(Provider provider);
     ArrayList<Provider> getAllProviders();
+    Provider getProviderById(int id);
 }
