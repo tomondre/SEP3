@@ -61,7 +61,7 @@ namespace BusinessLogic.Controllers
                 Method = "GET",
                 Href = encodedUrl,
                 Rel = "self"
-            });  
+            });
         }
 
         private void CreateLinksForProvider(Provider provider)
@@ -69,10 +69,16 @@ namespace BusinessLogic.Controllers
             var encodedUrl = UriHelper.GetEncodedUrl(Request);
             provider.Links.Add(new Link()
             {
-                Rel = $"{encodedUrl}/{provider.Id}",
-                Href = "self",
+                Href = $"{encodedUrl}/{provider.Id}",
+                Rel = "self",
                 Method = "GET"
             });
+            provider.Links.Add(new Link()
+            {
+                Href = $"{encodedUrl}/{provider.Id}",
+                Rel = "self",
+                Method = "PATCH",
+            });  
         }
     }
 }
