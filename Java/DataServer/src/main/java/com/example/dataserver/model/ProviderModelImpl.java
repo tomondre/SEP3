@@ -32,4 +32,9 @@ public class ProviderModelImpl implements ProviderModel {
     public Provider getProviderById(int id) {
         return persistence.getProviderById(id);
     }
+
+    @Override
+    public void editProvider(Provider provider) {
+        persistence.editProvider(provider);
+    }
 }

@@ -36,4 +36,9 @@ public class ProviderPersistenceImpl implements ProviderPersistence {
     public Provider getProviderById(int id) {
         return repo.findById(id).orElseThrow();
     }
+
+    @Override
+    public void editProvider(Provider provider) {
+        repo.save(provider);
+    }
 }

@@ -46,4 +46,12 @@ public class ProviderNeworkingImpl extends ProtobufProviderServiceGrpc.ProtobufP
         responseObserver.onNext(providerById.toProtobuf());
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void editProvider(ProtobufProvider request, StreamObserver<ProtobufResponse> responseObserver) {
+        Provider provider = new Provider(request);
+        model.editProvider(provider);
+        responseObserver.onNext(ProtobufResponse.newBuilder().setMessage("Success").build());
+        responseObserver.onCompleted();
+    }
 }

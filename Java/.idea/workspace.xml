@@ -4,11 +4,66 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36cb2a8f-2edd-4bc0-8f8d-b87d8364edce" name="Changes" comment="Implemented database connection, TODO - gRPC communication">
+    <list default="true" id="36cb2a8f-2edd-4bc0-8f8d-b87d8364edce" name="Changes" comment="Creating method for getting one provider">
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/Controllers/ProviderController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/Controllers/ProviderController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/Model/IProviderModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/Model/IProviderModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/Model/ProviderModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/Model/ProviderModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/Networking/IProviderNet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/Networking/IProviderNet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/Networking/ProviderNet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/Networking/ProviderNet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/bin/Debug/net5.0/BusinessLogic.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/bin/Debug/net5.0/BusinessLogic.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/bin/Debug/net5.0/BusinessLogic.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/bin/Debug/net5.0/BusinessLogic.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/bin/Debug/net5.0/GrpcFileGeneration.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/bin/Debug/net5.0/GrpcFileGeneration.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/bin/Debug/net5.0/GrpcFileGeneration.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/bin/Debug/net5.0/GrpcFileGeneration.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/bin/Debug/net5.0/ref/BusinessLogic.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/bin/Debug/net5.0/ref/BusinessLogic.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/BusinessLogic.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/BusinessLogic.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.genruntimeconfig.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/BusinessLogic.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/ref/BusinessLogic.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/Debug/net5.0/ref/BusinessLogic.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/ClientServer.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/ClientServer.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/Debug/net5.0/ClientServer.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/Debug/net5.0/ClientServer.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/Debug/net5.0/ClientServer.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/Debug/net5.0/ClientServer.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/Debug/net5.0/ClientServer.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/Debug/net5.0/ClientServer.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/ClientServer/ClientServer/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/GrpcFileGeneration.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/GrpcFileGeneration.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/Proto/ProviderNetworking.proto" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/Proto/ProviderNetworking.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/bin/Debug/net5.0/GrpcFileGeneration.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/bin/Debug/net5.0/GrpcFileGeneration.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/bin/Debug/net5.0/GrpcFileGeneration.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/bin/Debug/net5.0/GrpcFileGeneration.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/bin/Debug/net5.0/ref/GrpcFileGeneration.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/bin/Debug/net5.0/ref/GrpcFileGeneration.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/GrpcFileGeneration.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/GrpcFileGeneration.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/GrpcFileGeneration.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/GrpcFileGeneration.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/GrpcFileGeneration.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/GrpcFileGeneration.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/GrpcFileGeneration.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/GrpcFileGeneration.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/GrpcFileGeneration.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/GrpcFileGeneration.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/GrpcFileGeneration.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/GrpcFileGeneration.genruntimeconfig.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/GrpcFileGeneration.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/GrpcFileGeneration.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/dfe805b7589f203f_ProviderNetworking.protodep" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/dfe805b7589f203f_ProviderNetworking.protodep" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/ref/GrpcFileGeneration.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/Debug/net5.0/ref/GrpcFileGeneration.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/GrpcFileGeneration.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/GrpcFileGeneration.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/obj/rider.project.restore.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataServer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/DataServer/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataServer/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/DataServer/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/model/ProviderModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/model/ProviderModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/model/ProviderModelImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/model/ProviderModelImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/networking/ProviderNeworkingImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/networking/ProviderNeworkingImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/persistence/ProviderPersistence.java" beforeDir="false" afterPath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/persistence/ProviderPersistence.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/persistence/ProviderPersistenceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/persistence/ProviderPersistenceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GrpcFileGeneration/src/main/proto/ProviderNetworking.proto" beforeDir="false" afterPath="$PROJECT_DIR$/GrpcFileGeneration/src/main/proto/ProviderNetworking.proto" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,6 +162,8 @@
       <workItem from="1635353556122" duration="12953000" />
       <workItem from="1635368333105" duration="156000" />
       <workItem from="1635494648173" duration="957000" />
+      <workItem from="1635505204437" duration="3735000" />
+      <workItem from="1635514543054" duration="1535000" />
     </task>
     <task id="LOCAL-00001" summary="Implemented database connection, TODO - gRPC communication">
       <created>1635352620654</created>
@@ -115,7 +172,28 @@
       <option name="project" value="LOCAL" />
       <updated>1635352620654</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Property set">
+      <created>1635496865193</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1635496865193</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Creating method for getting one provider">
+      <created>1635510398419</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1635510398419</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Creating method for getting one provider">
+      <created>1635510425984</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1635510425984</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,6 +213,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Implemented database connection, TODO - gRPC communication" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented database connection, TODO - gRPC communication" />
+    <MESSAGE value="Property set" />
+    <MESSAGE value="Creating method for getting one provider" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating method for getting one provider" />
   </component>
 </project>
