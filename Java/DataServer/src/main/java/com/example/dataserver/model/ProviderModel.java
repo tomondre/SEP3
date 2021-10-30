@@ -10,4 +10,5 @@ public interface ProviderModel {
     ArrayList<Provider> getAllProviders();
     Provider getProviderById(int id);
     void editProvider(Provider provider);
+    void removeProvider(int id);
 }

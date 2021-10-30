@@ -11,4 +11,5 @@ public interface ProviderPersistence {
     ArrayList<Provider> getAllProviders();
     Provider getProviderById(int id);
     void editProvider(Provider provider);
+    void removeProvider(int id);
 }

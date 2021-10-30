@@ -41,16 +41,25 @@ public class ProviderNeworkingImpl extends ProtobufProviderServiceGrpc.ProtobufP
 
     @Async
     @Override
-    public void getProviderById(GetProviderByIdRequest request, StreamObserver<ProtobufProvider> responseObserver) {
+    public void getProviderById(ProtobufIdRequest request, StreamObserver<ProtobufProvider> responseObserver) {
         Provider providerById = model.getProviderById(request.getId());
         responseObserver.onNext(providerById.toProtobuf());
         responseObserver.onCompleted();
     }
 
+    @Async
     @Override
     public void editProvider(ProtobufProvider request, StreamObserver<ProtobufResponse> responseObserver) {
         Provider provider = new Provider(request);
         model.editProvider(provider);
+        responseObserver.onNext(ProtobufResponse.newBuilder().setMessage("Success").build());
+        responseObserver.onCompleted();
+    }
+
+    @Async
+    @Override
+    public void removeProvider(ProtobufIdRequest request, StreamObserver<ProtobufResponse> responseObserver) {
+        model.removeProvider(request.getId());
         responseObserver.onNext(ProtobufResponse.newBuilder().setMessage("Success").build());
         responseObserver.onCompleted();
     }

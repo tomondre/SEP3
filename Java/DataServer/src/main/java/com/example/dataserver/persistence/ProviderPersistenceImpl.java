@@ -39,6 +39,12 @@ public class ProviderPersistenceImpl implements ProviderPersistence {
 
     @Override
     public void editProvider(Provider provider) {
-        repo.save(provider);
+        if (repo.existsById(provider.getId()))
+            repo.save(provider);
+    }
+
+    @Override
+    public void removeProvider(int id) {
+        repo.deleteById(id);
     }
 }

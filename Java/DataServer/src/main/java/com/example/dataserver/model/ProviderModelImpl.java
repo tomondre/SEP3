@@ -37,4 +37,9 @@ public class ProviderModelImpl implements ProviderModel {
     public void editProvider(Provider provider) {
         persistence.editProvider(provider);
     }
+
+    @Override
+    public void removeProvider(int id) {
+        persistence.removeProvider(id);
+    }
 }
