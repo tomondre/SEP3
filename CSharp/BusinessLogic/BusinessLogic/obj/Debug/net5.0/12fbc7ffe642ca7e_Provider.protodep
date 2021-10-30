@@ -1,2 +1,0 @@
-obj\Debug\net5.0\Protos/Provider.cs \
-obj\Debug\net5.0\Protos/ProviderGrpc.cs: Protos/Provider.proto
