@@ -1,0 +1,72 @@
+﻿@page "/Providers"
+@using GrpcFileGeneration.Models
+@using ClientBlazor.Data
+@inject NavigationManager NavigationManager
+@inject IProviderService ProviderService
+
+@if (providers == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+
+else if (!providers.Providers.Any())
+{
+    <p>
+        <em>No Adults items exist. Please add some.</em>
+    </p>
+}
+else
+{
+    @foreach (var item in providers.Providers)
+    {
+        <div class="xl:w-3/4 2xl:w-4/5 w-full">
+            <div class="bg-white px-4 md:px-10 pb-5">
+                <div class="overflow-x-auto">
+                    <table class="w-full whitespace-nowrap">
+                        <tbody>
+                        <tr tabindex="0" class="focus:outline-none text-sm leading-none text-gray-600 h-16">
+                            <td class="pl-16">
+                                <p>@item.CompanyName</p>
+                            </td>
+                            <td>
+                                <p class="pl-16">@item.Cvr</p>
+                            </td>
+                            <td>
+                                <p class="pl-16">@item.Description</p>
+                            </td>
+                            <td>
+                                <p class="pl-16">@item.PhoneNumber</p>
+                            </td>
+                            <td>
+                                <p class="pl-16">@item.Address.City</p>
+                            </td>
+                            <td>
+                                <p class="pl-16">@item.Address.Street</p>
+                            </td>
+                            <td>
+                                <p class="pl-16">@item.Address.PostCode</p>
+                            </td>
+                            <td>
+                                <p class="pl-16">@item.Address.StreetNumber</p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@code {
+    private ProviderList providers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        providers = await ProviderService.GetAllProviders();
+    }
+
+}
+
