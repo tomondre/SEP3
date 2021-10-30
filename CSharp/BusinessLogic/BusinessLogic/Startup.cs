@@ -6,6 +6,7 @@ using BusinessLogic.Model;
 using BusinessLogic.Networking;
 using Com.Example.Dataserver.Networking;
 using Grpc.Net.Client;
+using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RiskFirst.Hateoas;
 
 namespace BusinessLogic
 {
@@ -30,15 +32,25 @@ namespace BusinessLogic
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ProtobufProviderService.ProtobufProviderServiceClient>(
+            services.AddSingleton(
                 new ProtobufProviderService.ProtobufProviderServiceClient(
                     GrpcChannel.ForAddress("http://localhost:9090")));
             services.AddSingleton<IProviderModel, ProviderModel>();
             services.AddSingleton<IProviderNet, ProviderNet>();
             services.AddControllers();
+            services.AddSingleton<ILinksService, DefaultLinksService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "BusinessLogic", Version = "v1"});
+            });
+            services.AddLinks(config =>
+            {
+                config.AddPolicy<Provider>(policy =>
+                {
+                    policy.RequireSelfLink()
+                        .RequireRoutedLink("edit", "GetProviderByIdRoute", x => new {id = x.Id});
+                });
+                config.AddPolicy<ProviderList>(policy => { policy.RequireSelfLink(); });
             });
         }
 

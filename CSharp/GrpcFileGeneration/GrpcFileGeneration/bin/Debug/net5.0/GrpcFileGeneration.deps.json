@@ -10,7 +10,8 @@
         "dependencies": {
           "Google.Protobuf": "3.19.0",
           "Grpc.Net.Client": "2.40.0",
-          "Grpc.Tools": "2.41.1"
+          "Grpc.Tools": "2.41.1",
+          "RiskFirst.Hateoas.Models": "3.1.1"
         },
         "runtime": {
           "GrpcFileGeneration.dll": {}
@@ -67,6 +68,25 @@
           }
         }
       },
+      "Newtonsoft.Json/12.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.0.1.22727"
+          }
+        }
+      },
+      "RiskFirst.Hateoas.Models/3.1.1": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/RiskFirst.Hateoas.Models.dll": {
+            "assemblyVersion": "3.1.1.0",
+            "fileVersion": "3.1.1.0"
+          }
+        }
+      },
       "System.Memory/4.5.3": {}
     }
   },
@@ -117,6 +137,20 @@
       "sha512": "sha512-m2Jyi/MEn043WMI1I6J1ALuCThktZ93rd7eqzYeLmMcA0bdZC+TBVl0LuEbEWM01dWeeBjOoagjNwQTzOi2r6A==",
       "path": "microsoft.extensions.logging.abstractions/3.0.3",
       "hashPath": "microsoft.extensions.logging.abstractions.3.0.3.nupkg.sha512"
+    },
+    "Newtonsoft.Json/12.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pBR3wCgYWZGiaZDYP+HHYnalVnPJlpP1q55qvVb+adrDHmFMDc1NAKio61xTwftK3Pw5h7TZJPJEEVMd6ty8rg==",
+      "path": "newtonsoft.json/12.0.1",
+      "hashPath": "newtonsoft.json.12.0.1.nupkg.sha512"
+    },
+    "RiskFirst.Hateoas.Models/3.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wUghbCCbhPcuDXLS6WA9Ifbm+ypt/TTMAVHaTEjVZVgImPCFI/PqdG9NXH62khIAFMN/IvHeRqralg78U0LoDQ==",
+      "path": "riskfirst.hateoas.models/3.1.1",
+      "hashPath": "riskfirst.hateoas.models.3.1.1.nupkg.sha512"
     },
     "System.Memory/4.5.3": {
       "type": "package",
