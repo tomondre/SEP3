@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "DQlWjJd7NSJ3YyipbL/kdWaxBwOD0vzEs0AEHs17UuLFNmQCIl6h6e6lEAzHzsPKFkomkiEodfKx5HzKMJcyDQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\PC1\\SEPO\\CSharp\\ClientBlazor\\ClientBlazor.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\PC1\\.nuget\\packages\\node.js\\0.12.7\\node.js.0.12.7.nupkg.sha512",
+    "C:\\Users\\PC1\\.nuget\\packages\\nogit\\0.1.0\\nogit.0.1.0.nupkg.sha512",
+    "C:\\Users\\PC1\\.nuget\\packages\\npm\\3.5.2\\npm.3.5.2.nupkg.sha512"
+  ],
+  "logs": []
+}
