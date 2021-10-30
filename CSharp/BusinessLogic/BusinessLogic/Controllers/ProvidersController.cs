@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BusinessLogic.Model;
 using GrpcFileGeneration.Models;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using RiskFirst.Hateoas;
 
@@ -43,6 +42,7 @@ namespace BusinessLogic.Controllers
         [HttpPatch("{id:int}",Name = "EditProviderRoute")]
         public async Task<ActionResult> EditProvider([FromBody] Provider provider, [FromRoute] int id)
         {
+            provider.Id = id;   
             await model.EditProvider(provider);
             return Ok();
         }
@@ -51,6 +51,13 @@ namespace BusinessLogic.Controllers
         public async Task<ActionResult> CreateProvider([FromBody] Provider provider)
         {
             await model.CreateProvider(provider);
+            return Ok();
+        }
+        
+        [HttpDelete("{id:int}", Name = "DeleteProviderRoute")]
+        public async Task<ActionResult> DeleteProvider([FromRoute] int id)
+        {
+            await model.DeleteProvider(id);
             return Ok();
         }
     }

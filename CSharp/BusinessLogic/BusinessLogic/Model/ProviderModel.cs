@@ -32,5 +32,10 @@ namespace BusinessLogic.Model
         {
             return network.EditProvider(provider);
         }
+
+        public Task DeleteProvider(int id)
+        {
+            return network.DeleteProvider(id);
+        }
     }
 }

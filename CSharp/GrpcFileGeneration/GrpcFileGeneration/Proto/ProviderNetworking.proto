@@ -22,7 +22,7 @@ message ProtobufRequest{
 
 }
 
-message GetProviderByIdRequest{
+message ProtobufIdRequest{
   int32 id = 1;
 }
 
@@ -37,6 +37,7 @@ message ProtobufResponse{
 service ProtobufProviderService{
   rpc createProvider(ProtobufProvider) returns (ProtobufResponse);
   rpc getAllProviders(ProtobufRequest) returns (ProtobufProviderList);
-  rpc getProviderById(GetProviderByIdRequest) returns (ProtobufProvider);
+  rpc getProviderById(ProtobufIdRequest) returns (ProtobufProvider);
   rpc editProvider(ProtobufProvider) returns (ProtobufResponse);
+  rpc removeProvider(ProtobufIdRequest) returns (ProtobufResponse);
 }

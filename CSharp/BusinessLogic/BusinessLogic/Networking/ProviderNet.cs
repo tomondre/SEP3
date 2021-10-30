@@ -36,13 +36,18 @@ namespace BusinessLogic.Networking
 
         public async Task<Provider> GetProviderById(int id)
         {
-            var providerByIdAsync = await client.getProviderByIdAsync(new GetProviderByIdRequest {Id = id});
+            var providerByIdAsync = await client.getProviderByIdAsync(new ProtobufIdRequest() {Id = id});
             return ProtobufProviderToModelProvider(providerByIdAsync);
         }
 
         public async Task EditProvider(Provider provider)
         {
             await client.editProviderAsync(ModelProviderToProtobufProvider(provider));
+        }
+
+        public async Task DeleteProvider(int id)
+        {
+            await client.removeProviderAsync(new ProtobufIdRequest {Id = id});
         }
 
         private ProtobufProvider ModelProviderToProtobufProvider(Provider provider)
