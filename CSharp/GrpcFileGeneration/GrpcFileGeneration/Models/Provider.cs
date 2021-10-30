@@ -26,6 +26,7 @@ namespace GrpcFileGeneration.Models
 
         public Provider()
         {
+            Address = new Address();
             Links = new Dictionary<string, Link>();
         }
     }

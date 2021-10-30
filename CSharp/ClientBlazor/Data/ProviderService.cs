@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
@@ -18,9 +20,13 @@ namespace ClientBlazor.Data
         }
 
 
-        public Task CreateProvider(Provider provider)
+        public async Task CreateProvider(Provider provider)
         {
-            throw new System.NotImplementedException();
+            string providerAsJson = JsonSerializer.Serialize(provider);
+            var stringContent = new StringContent(providerAsJson, Encoding.UTF8, "application/json");
+            var httpResponseMessage = await client.PostAsync(uri, stringContent);
+            Console.WriteLine(httpResponseMessage.StatusCode);
+            CheckException(httpResponseMessage);
         }
 
         public async Task<ProviderList> GetAllProviders()
@@ -48,6 +54,14 @@ namespace ClientBlazor.Data
         public Task DeleteProvider(int id)
         {
             throw new System.NotImplementedException();
+        }
+        
+        private void CheckException(HttpResponseMessage task)
+        {
+            if (!task.IsSuccessStatusCode)
+            {
+                throw new Exception($"Code: {task.StatusCode}, {task.ReasonPhrase} ");
+            }
         }
     }
 }
