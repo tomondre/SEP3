@@ -40,8 +40,8 @@ namespace BusinessLogic.Controllers
             return Ok(providerById);
         }
 
-        [HttpPatch(Name = "EditProviderRoute")]
-        public async Task<ActionResult> EditProvider([FromBody] Provider provider)
+        [HttpPatch("{id:int}",Name = "EditProviderRoute")]
+        public async Task<ActionResult> EditProvider([FromBody] Provider provider, [FromRoute] int id)
         {
             await model.EditProvider(provider);
             return Ok();
