@@ -1,14 +1,13 @@
 @inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
+<div class="flex flex-no-wrap">
+    <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         <NavMenu/>
-    </div>
+        <Header></Header>
 
-    <div class="main">
 
-        <div class="content px-4">
+        <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
             @Body
         </div>
     </div>
-</div>
+    </div>
