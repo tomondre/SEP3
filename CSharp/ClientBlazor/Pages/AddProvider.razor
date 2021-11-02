@@ -3,67 +3,68 @@
 @using ClientBlazor.Data
 @inject IProviderService ProviderService
 
-<EditForm Model="@newProvider" OnValidSubmit="@AddNewProvider">
-    <div class="form-group">
-        <label class="block text-gray-700 text-sm font-bold mb-2" >
-                Company Name
-              </label>
-        <InputText rows="1" @bind-Value="newProvider.CompanyName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-    </div>
+    <div class="mt-10 sm:mt-0">
+        <div class="md:grid md:grid-cols-3 md:gap-6">
+            <div class="md:col-span-1">
+                <div class="px-4 sm:px-0">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
+                </div>
+            </div>
+            <EditForm Model="@newProvider" OnSubmit="@AddNewProvider" class="mt-5 md:mt-0 md:col-span-2">
+                    <div class="shadow overflow-hidden sm:rounded-md">
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            <div class="grid grid-cols-6 gap-6">
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label for="company-name" class="block text-sm font-medium text-gray-700">Company name</label>
+                                    <InputText name="first-name" id="company-name" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.CompanyName"/>
+                                </div>
 
-    <div class="form-group">
-       <label class="block text-gray-700 text-sm font-bold mb-2" >
-               Username
-             </label>
-        <InputNumber rows="1" @bind-Value="newProvider.Cvr" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-    </div>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label for="cvr" class="block text-sm font-medium text-gray-700">CVR</label>
+                                    <InputNumber name="cvr" id="cvr" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Cvr"/>
+                                </div>
 
-    <div class="form-group">
-        <label class="block text-gray-700 text-sm font-bold mb-2" >
-                Descripton
-              </label>
-        <InputTextArea rows="2" @bind-Value="newProvider.Description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-    </div>
+                                <div class="col-span-6 sm:col-span-4">
+                                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                                    <InputTextArea rows="4" name="description" id="description" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Description"/>
+                                </div>
 
-    <div class="form-group">
-       <label class="block text-gray-700 text-sm font-bold mb-2">
-               Phone Number:
-             </label>
-        <InputText rows="1" @bind-Value="newProvider.PhoneNumber" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-    </div>
+                                <div class="col-span-6 sm:col-span-4">
+                                    <label for="phoneNumber" class="block text-sm font-medium text-gray-700">PhoneNumber</label>
+                                    <InputText rows="4" name="phoneNumber" id="phoneNumber" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.PhoneNumber"/>
+                                </div>
 
-    <div class="form-group">
-        <label class="block text-gray-700 text-sm font-bold mb-2" >
-            City: 
-            </label>
-        <InputText @bind-Value="newProvider.Address.City" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-    </div>
+                                <div class="col-span-6 sm:col-span-4">
+                                    <label for="address-street" class="block text-sm font-medium text-gray-700">Street</label>
+                                    <InputText name="address-street" id="address-street" autocomplete="street" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Address.Street"/>
+                                </div>
 
-    <div class="form-group">
-        <label class="block text-gray-700 text-sm font-bold mb-2">
-                Street: 
-              </label>
-        <InputText @bind-Value="newProvider.Address.Street" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-    </div>
-    <div class="form-group">
-        <label class="block text-gray-700 text-sm font-bold mb-2" >
-                StreetNumber:
-              </label>
-        <br/>
-        <InputText @bind-Value="newProvider.Address.StreetNumber" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-    </div>
+                                <div class="col-span-6 sm:col-span-4">
+                                    <label for="address-street-number" class="block text-sm font-medium text-gray-700">Street number</label>
+                                    <InputText name="address-street-number" id="address-street-number" autocomplete="street" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Address.StreetNumber"/>
+                                </div>
 
-    <div class="form-group">
-       <label class="block text-gray-700 text-sm font-bold mb-2">
-               Post Code:
-             </label>
-        <InputNumber @bind-Value="newProvider.Address.PostCode" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-    </div>
+                                <div class="col-span-6 sm:col-span-4">
+                                    <label for="address-city" class="block text-sm font-medium text-gray-700">City</label>
+                                    <InputText name="address-city" id="address-city" autocomplete="city" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Address.City"/>
+                                </div>
 
-    <p class="actions">
-        <button class="btn btn-outline-dark" type="submit">Add</button>
-    </p>
-</EditForm>
+                                <div class="col-span-6 sm:col-span-4">
+                                    <label for="address-postcode" class="block text-sm font-medium text-gray-700">Postcode</label>
+                                    <InputNumber name="address-postcode" id="address-postcode" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Address.PostCode"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                            <button @onclick="Print" type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </EditForm>
+        </div>
+</div>
+
 
 @code {
     private Provider newProvider = new();
@@ -72,6 +73,11 @@
     {
         Console.WriteLine("I am called");
         await ProviderService.CreateProvider(newProvider);
+    }
+
+    private async Task Print()
+    {
+        Console.WriteLine("Invalid");
     }
 
 }
