@@ -19,45 +19,72 @@ else if (!providers.Providers.Any())
 }
 else
 {
-    @foreach (var item in providers.Providers)
-    {
-        <div class="xl:w-3/4 2xl:w-4/5 w-full">
-            <div class="bg-white px-4 md:px-10 pb-5">
-                <div class="overflow-x-auto">
-                    <table class="w-full whitespace-nowrap">
-                        <tbody>
-                        <tr tabindex="0" class="focus:outline-none text-sm leading-none text-gray-600 h-16">
-                            <td class="pl-16">
-                                <p>@item.CompanyName</p>
-                            </td>
-                            <td>
-                                <p class="pl-16">@item.Cvr</p>
-                            </td>
-                            <td>
-                                <p class="pl-16">@item.Description</p>
-                            </td>
-                            <td>
-                                <p class="pl-16">@item.PhoneNumber</p>
-                            </td>
-                            <td>
-                                <p class="pl-16">@item.Address.City</p>
-                            </td>
-                            <td>
-                                <p class="pl-16">@item.Address.Street</p>
-                            </td>
-                            <td>
-                                <p class="pl-16">@item.Address.PostCode</p>
-                            </td>
-                            <td>
-                                <p class="pl-16">@item.Address.StreetNumber</p>
-                            </td>
+    <section class="container mx-auto p-6 font-mono">
+        <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+            <div class="w-full overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                    <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                        <th class="px-4 py-3">Company Name</th>
+                        <th class="px-4 py-3">CVR</th>
+                        <th class="px-4 py-3">Address</th>
+                        <th class="px-4 py-3">Description</th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                    @foreach (var item in providers.Providers)
+                    {
+                        <tr class="text-gray-700">
+                            <td class="px-4 py-3 text-ms font-semibold border">@item.CompanyName</td>
+                            <td class="px-4 py-3 text-ms font-semibold border">@item.Cvr</td>
+                            <td class="px-4 py-3 text-ms font-semibold border">@item.Address</td>
+                            <td class="px-4 py-3 text-ms font-semibold border">@item.Description</td>
                         </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    }
+                    </tbody>
+                </table>
             </div>
         </div>
-    }
+    </section>
+    @* @foreach (var item in providers.Providers) *@
+    @* { *@
+    @*     <div class="xl:w-3/4 2xl:w-4/5 w-full"> *@
+    @*         <div class="bg-white px-4 md:px-10 pb-5"> *@
+    @*             <div class="overflow-x-auto"> *@
+    @*                 <table class="w-full whitespace-nowrap"> *@
+    @*                     <tbody> *@
+    @*                     <tr tabindex="0" class="focus:outline-none text-sm leading-none text-gray-600 h-16"> *@
+    @*                         <td class="pl-16"> *@
+    @*                             <p>@item.CompanyName</p> *@
+    @*                         </td> *@
+    @*                         <td> *@
+    @*                             <p class="pl-16">@item.Cvr</p> *@
+    @*                         </td> *@
+    @*                         <td> *@
+    @*                             <p class="pl-16">@item.Description</p> *@
+    @*                         </td> *@
+    @*                         <td> *@
+    @*                             <p class="pl-16">@item.PhoneNumber</p> *@
+    @*                         </td> *@
+    @*                         <td> *@
+    @*                             <p class="pl-16">@item.Address.City</p> *@
+    @*                         </td> *@
+    @*                         <td> *@
+    @*                             <p class="pl-16">@item.Address.Street</p> *@
+    @*                         </td> *@
+    @*                         <td> *@
+    @*                             <p class="pl-16">@item.Address.PostCode</p> *@
+    @*                         </td> *@
+    @*                         <td> *@
+    @*                             <p class="pl-16">@item.Address.StreetNumber</p> *@
+    @*                         </td> *@
+    @*                     </tr> *@
+    @*                     </tbody> *@
+    @*                 </table> *@
+    @*             </div> *@
+    @*         </div> *@
+    @*     </div> *@
+
 }
 
 @code {
