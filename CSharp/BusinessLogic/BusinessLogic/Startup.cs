@@ -52,7 +52,11 @@ namespace BusinessLogic
                         .RequireRoutedLink("edit", "EditProviderRoute", x => new {id = x.Id})
                         .RequireRoutedLink("remove", "DeleteProviderRoute", x => new {id = x.Id});
                 });
-                config.AddPolicy<ProviderList>(policy => { policy.RequireSelfLink(); });
+                config.AddPolicy<ProviderList>(policy =>
+                {
+                    policy.RequireSelfLink();
+                    policy.RequireRoutedLink("create", "CreateProviderRoute");
+                });
                 config.AddPolicy<HandShake>(policy =>
                 {
                     policy.RequireRoutedLink("allProviders", "GetProvidersRoute");
