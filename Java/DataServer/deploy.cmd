@@ -1,1 +1,0 @@
-command = deploy.cmd
