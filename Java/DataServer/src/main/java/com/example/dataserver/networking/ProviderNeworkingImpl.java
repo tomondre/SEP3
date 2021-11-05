@@ -1,6 +1,6 @@
 package com.example.dataserver.networking;
 
-import com.example.dataserver.model.ProviderModel;
+import com.example.dataserver.persistence.ProviderDAO;
 import com.example.dataserver.shared.Provider;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -12,10 +12,10 @@ import java.util.ArrayList;
 @GrpcService
 public class ProviderNeworkingImpl extends ProtobufProviderServiceGrpc.ProtobufProviderServiceImplBase {
 
-    private ProviderModel model;
+    private ProviderDAO model;
 
     @Autowired
-    public ProviderNeworkingImpl(ProviderModel model) {
+    public ProviderNeworkingImpl(ProviderDAO model) {
         this.model = model;
     }
 

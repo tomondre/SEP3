@@ -1,24 +1,18 @@
 package com.example.dataserver.persistence;
 
-import com.example.dataserver.shared.Address;
 import com.example.dataserver.shared.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 @Repository
-public class ProviderPersistenceImpl implements ProviderPersistence {
+public class ProviderDAOImpl implements ProviderDAO {
 
     private final ProviderRepository repo;
 
     @Autowired
-    public ProviderPersistenceImpl(ProviderRepository repo) {
+    public ProviderDAOImpl(ProviderRepository repo) {
         this.repo = repo;
     }
 
