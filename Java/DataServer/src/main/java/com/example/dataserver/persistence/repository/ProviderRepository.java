@@ -1,4 +1,4 @@
-package com.example.dataserver.persistence;
+package com.example.dataserver.persistence.repository;
 
 import com.example.dataserver.models.Provider;
 import org.springframework.data.jpa.repository.JpaRepository;

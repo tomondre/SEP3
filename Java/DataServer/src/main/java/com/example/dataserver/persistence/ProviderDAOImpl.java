@@ -1,6 +1,7 @@
 package com.example.dataserver.persistence;
 
 import com.example.dataserver.models.Provider;
+import com.example.dataserver.persistence.repository.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
