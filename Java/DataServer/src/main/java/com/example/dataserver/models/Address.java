@@ -1,11 +1,6 @@
-package com.example.dataserver.shared;
+package com.example.dataserver.models;
 
 import com.example.dataserver.networking.ProtobufAddress;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 public class Address {
     private int id;

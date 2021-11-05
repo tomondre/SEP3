@@ -1,4 +1,4 @@
-package com.example.dataserver.shared;
+package com.example.dataserver.models;
 
 import com.example.dataserver.networking.ProtobufAddress;
 import com.example.dataserver.networking.ProtobufProvider;

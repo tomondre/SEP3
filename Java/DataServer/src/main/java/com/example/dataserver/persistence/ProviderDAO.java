@@ -1,8 +1,6 @@
 package com.example.dataserver.persistence;
 
-import com.example.dataserver.shared.Provider;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
+import com.example.dataserver.models.Provider;
 
 import java.util.ArrayList;
 

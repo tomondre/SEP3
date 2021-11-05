@@ -1,4 +1,4 @@
-package com.example.dataserver.shared;
+package com.example.dataserver.models;
 
 
 public class Login {

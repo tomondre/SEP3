@@ -1,7 +1,7 @@
 package com.example.dataserver.networking;
 
 import com.example.dataserver.persistence.ProviderDAO;
-import com.example.dataserver.shared.Provider;
+import com.example.dataserver.models.Provider;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
