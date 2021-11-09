@@ -14,9 +14,11 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="RiskFirst.Hateoas" Version="3.1.1" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Protobuf" />
+      <Folder Include="Protobuf\Proto" />
     </ItemGroup>
 
 </Project>
