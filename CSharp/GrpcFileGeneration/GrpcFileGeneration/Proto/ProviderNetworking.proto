@@ -2,42 +2,14 @@ syntax="proto3";
 option java_multiple_files = true;
 package com.example.dataserver.networking;
 
-message ProtobufProvider{
-  int32 id = 1;
-  string companyName = 2;
-  int32 cvr = 3;
-  string phoneNumber = 4;
-  string description = 5;
-  ProtobufAddress address = 6;
-}
-
-message ProtobufAddress{
-  string street = 1;
-  string streetNumber = 2;
-  int32 postCode = 3;
-  string city = 4;
-}
-
-message ProtobufRequest{
-
-}
-
-message ProtobufIdRequest{
-  int32 id = 1;
-}
-
-message ProtobufProviderList{
-  repeated ProtobufProvider value = 1;
-}
-
-message ProtobufResponse{
-  string message = 1;
+message ProtobufMessage{
+  string massageOrObject = 1;
 }
 
 service ProtobufProviderService{
-  rpc createProvider(ProtobufProvider) returns (ProtobufResponse);
-  rpc getAllProviders(ProtobufRequest) returns (ProtobufProviderList);
-  rpc getProviderById(ProtobufIdRequest) returns (ProtobufProvider);
-  rpc editProvider(ProtobufProvider) returns (ProtobufResponse);
-  rpc removeProvider(ProtobufIdRequest) returns (ProtobufResponse);
+  rpc createProvider(ProtobufMessage) returns (ProtobufMessage);
+  rpc getAllProviders(ProtobufMessage) returns (ProtobufMessage);
+  rpc getProviderById(ProtobufMessage) returns (ProtobufMessage);
+  rpc editProvider(ProtobufMessage) returns (ProtobufMessage);
+  rpc removeProvider(ProtobufMessage) returns (ProtobufMessage);
 }
