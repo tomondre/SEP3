@@ -15,7 +15,6 @@ namespace ClientBlazor.Data
         
         public async void CreateHandShake(HttpClient client)
         {
-            
             var httpResponseMessage = await client.GetAsync("https://localhost:5001/Link");
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             HandShake = JsonSerializer.Deserialize<HandShake>(readAsStringAsync);

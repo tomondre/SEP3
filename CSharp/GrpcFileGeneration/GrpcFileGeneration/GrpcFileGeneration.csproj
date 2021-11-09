@@ -14,9 +14,20 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="RiskFirst.Hateoas.Models" Version="3.1.1" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Protobuf" />
+      <Folder Include="Protobuf\Proto" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="obj\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Remove="obj\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="obj\**" />
     </ItemGroup>
 
 </Project>
