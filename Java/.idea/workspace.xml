@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36cb2a8f-2edd-4bc0-8f8d-b87d8364edce" name="Changes" comment="Adding service for deleting existing source">
-      <change afterPath="$PROJECT_DIR$/../CSharp/ClientBlazor/Data/LinkNames.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/BusinessLogic.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/BusinessLogic/BusinessLogic/BusinessLogic.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CSharp/ClientBlazor/Data/HandShakeService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/ClientBlazor/Data/HandShakeService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CSharp/ClientBlazor/Data/ProviderService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/ClientBlazor/Data/ProviderService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CSharp/ClientBlazor/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/ClientBlazor/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CSharp/CSharp.sln" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/CSharp.sln" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/GrpcFileGeneration.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../CSharp/GrpcFileGeneration/GrpcFileGeneration/GrpcFileGeneration.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,6 +118,7 @@
       <workItem from="1635929627182" duration="3020000" />
       <workItem from="1635948151394" duration="1302000" />
       <workItem from="1636032246374" duration="3041000" />
+      <workItem from="1636454153388" duration="54000" />
     </task>
     <task id="LOCAL-00001" summary="Implemented database connection, TODO - gRPC communication">
       <created>1635352620654</created>

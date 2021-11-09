@@ -4,21 +4,21 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
-<ItemGroup>
-    <Protobuf Include="Proto/ProviderNetworking.proto" OutputDir="./Protobuf" GrpcServices="Client" />
-</ItemGroup>
     <ItemGroup>
-      <PackageReference Include="Google.Protobuf" Version="3.19.0" />
-      <PackageReference Include="Grpc.Net.Client" Version="2.40.0" />
-      <PackageReference Include="Grpc.Tools" Version="2.41.1">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-      <PackageReference Include="RiskFirst.Hateoas" Version="3.1.1" />
+        <Protobuf Include="Proto/ProviderNetworking.proto" OutputDir="./Protobuf" GrpcServices="Client" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Protobuf" />
-      <Folder Include="Protobuf\Proto" />
+        <PackageReference Include="Google.Protobuf" Version="3.19.0" />
+        <PackageReference Include="Grpc.Net.Client" Version="2.40.0" />
+        <PackageReference Include="Grpc.Tools" Version="2.41.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="RiskFirst.Hateoas" Version="3.1.1" />
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Protobuf" />
+        <Folder Include="Protobuf\Proto" />
     </ItemGroup>
 
 </Project>
