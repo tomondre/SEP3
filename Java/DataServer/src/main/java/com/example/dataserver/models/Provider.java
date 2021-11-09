@@ -1,7 +1,7 @@
 package com.example.dataserver.models;
 
-import com.example.dataserver.networking.ProtobufAddress;
-import com.example.dataserver.networking.ProtobufProvider;
+//import com.example.dataserver.networking.ProtobufAddress;
+//import com.example.dataserver.networking.ProtobufProvider;
 
 import javax.persistence.*;
 
@@ -41,17 +41,17 @@ public class Provider {
     protected Provider() {
     }
 
-    public Provider(ProtobufProvider provider) {
-        id = provider.getId();
-        companyName = provider.getCompanyName();
-        cvr = provider.getCvr();
-        phoneNumber = provider.getPhoneNumber();
-        description = provider.getDescription();
-        street = provider.getAddress().getStreet();
-        streetNumber = provider.getAddress().getStreetNumber();
-        postCode = provider.getAddress().getPostCode();
-        city = provider.getAddress().getCity();
-    }
+//    public Provider(ProtobufProvider provider) {
+//        id = provider.getId();
+//        companyName = provider.getCompanyName();
+//        cvr = provider.getCvr();
+//        phoneNumber = provider.getPhoneNumber();
+//        description = provider.getDescription();
+//        street = provider.getAddress().getStreet();
+//        streetNumber = provider.getAddress().getStreetNumber();
+//        postCode = provider.getAddress().getPostCode();
+//        city = provider.getAddress().getCity();
+//    }
 
     public String getCompanyName() {
         return companyName;
@@ -85,16 +85,16 @@ public class Provider {
         this.description = description;
     }
 
-    public ProtobufProvider toProtobuf() {
-        ProtobufProvider.Builder builder = ProtobufProvider.newBuilder();
-        builder.setCompanyName(companyName);
-        builder.setCvr(cvr);
-        builder.setPhoneNumber(phoneNumber);
-        builder.setDescription(description);
-        builder.setId(id);
-        builder.setAddress(ProtobufAddress.newBuilder().setStreetNumber(streetNumber).setCity(city).setPostCode(postCode).setStreet(street).build());
-        return builder.build();
-    }
+//    public ProtobufProvider toProtobuf() {
+//        ProtobufProvider.Builder builder = ProtobufProvider.newBuilder();
+//        builder.setCompanyName(companyName);
+//        builder.setCvr(cvr);
+//        builder.setPhoneNumber(phoneNumber);
+//        builder.setDescription(description);
+//        builder.setId(id);
+//        builder.setAddress(ProtobufAddress.newBuilder().setStreetNumber(streetNumber).setCity(city).setPostCode(postCode).setStreet(street).build());
+//        return builder.build();
+//    }
 
     @Override
     public String toString() {

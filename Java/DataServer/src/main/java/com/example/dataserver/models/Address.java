@@ -1,6 +1,6 @@
 package com.example.dataserver.models;
 
-import com.example.dataserver.networking.ProtobufAddress;
+//import com.example.dataserver.networking.ProtobufAddress;
 
 public class Address {
     private int id;
@@ -9,13 +9,13 @@ public class Address {
     private int postCode;
     private String city;
 
-    public Address(ProtobufAddress address)
-    {
-        street = address.getStreet();
-        streetNumber = address.getStreetNumber();
-        postCode = address.getPostCode();
-        city = address.getCity();
-    }
+//    public Address(ProtobufAddress address)
+//    {
+//        street = address.getStreet();
+//        streetNumber = address.getStreetNumber();
+//        postCode = address.getPostCode();
+//        city = address.getCity();
+//    }
 
     public Address()
     {
@@ -32,15 +32,15 @@ public class Address {
         this.city = city;
     }
 
-    public ProtobufAddress toProtobuf()
-    {
-        ProtobufAddress.Builder builder = ProtobufAddress.newBuilder();
-        builder.setCity(city);
-        builder.setPostCode(postCode);
-        builder.setStreet(street);
-        builder.setStreetNumber(streetNumber);
-        return builder.build();
-    }
+//    public ProtobufAddress toProtobuf()
+//    {
+//        ProtobufAddress.Builder builder = ProtobufAddress.newBuilder();
+//        builder.setCity(city);
+//        builder.setPostCode(postCode);
+//        builder.setStreet(street);
+//        builder.setStreetNumber(streetNumber);
+//        return builder.build();
+//    }
 
     public String getStreet() {
         return street;
