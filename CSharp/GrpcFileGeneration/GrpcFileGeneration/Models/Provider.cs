@@ -1,33 +1,36 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using RiskFirst.Hateoas.Models;
 
 namespace GrpcFileGeneration.Models
 {
     public class Provider : ILinkContainer
     {
-        private Dictionary<string, Link> _links;
-        public int Id { get; set; }
+        public Dictionary<string, Link>? Links { get; set; }
+        public int? Id { get; set; }
         public string CompanyName { get; set; }
-        public int Cvr { get; set; }
+        public int? Cvr { get; set; }
         public string PhoneNumber { get; set; }
         public string Description { get; set; }
-        public Address Address { get; set; }
+        public string Street { get; set; }
+        public string StreetNumber { get; set; }
+        public int PostCode { get; set; }
+        public string City { get; set; }
 
-        public void AddLink(string id, Link link)
-        {
-            Links.Add(id, link);
-        }
-
-        public Dictionary<string, Link> Links
-        {
-            get => _links;
-            set => _links = value;
-        }
+        public bool? IsApproved { get; set; }
 
         public Provider()
         {
-            Address = new Address();
-            Links = new Dictionary<string, Link>();
+        }
+
+        public void AddLink(string id, Link link)
+        {
+            if (Links != null) 
+                Links.Add(id, link);
+            else
+            {
+                Links = new Dictionary<string, Link>();
+            }
         }
     }
 }

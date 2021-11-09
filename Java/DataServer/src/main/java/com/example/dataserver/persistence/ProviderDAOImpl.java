@@ -42,4 +42,9 @@ public class ProviderDAOImpl implements ProviderDAO {
     public void removeProvider(int id) {
         repo.deleteById(id);
     }
+
+    @Override
+    public ArrayList<Provider> getAllNotApprovedProviders() {
+        return repo.getAllByIsApproved(false);
+    }
 }

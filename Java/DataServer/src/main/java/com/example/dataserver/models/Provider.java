@@ -1,10 +1,8 @@
 package com.example.dataserver.models;
 
-//import com.example.dataserver.networking.ProtobufAddress;
-//import com.example.dataserver.networking.ProtobufProvider;
+import com.google.gson.annotations.SerializedName;
 
 import javax.persistence.*;
-
 
 @Entity
 @Table(name = "provider", schema = "sep3")
@@ -12,46 +10,47 @@ public class Provider {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @SerializedName(value = "id", alternate = {"Id"})
     private int id;
 
+    @SerializedName(value = "companyName", alternate = {"CompanyName"})
     @Column(name = "company_name")
     private String companyName;
 
+    @SerializedName(value = "cvr", alternate = {"Cvr"})
     @Column(name = "cvr")
     private int cvr;
 
+    @SerializedName(value = "phoneNumber", alternate = {"PhoneNumber"})
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @SerializedName(value = "description", alternate = {"Description"})
     @Column(name = "description")
     private String description;
 
+    @SerializedName(value = "street", alternate = {"Street"})
     @Column(name = "street")
     private String street;
 
+    @SerializedName(value = "streetNumber", alternate = {"StreetNumber"})
     @Column(name = "street_no")
     private String streetNumber;
 
+    @SerializedName(value = "postCode", alternate = {"PostCode"})
     @Column(name = "post_code")
     private int postCode;
 
+    @SerializedName(value = "city", alternate = {"City"})
     @Column(name = "city")
     private String city;
 
+    @SerializedName(value = "isApproved", alternate = {"IsApproved"})
+    @Column(name = "is_approved")
+    private boolean isApproved = false;
+
     protected Provider() {
     }
-
-//    public Provider(ProtobufProvider provider) {
-//        id = provider.getId();
-//        companyName = provider.getCompanyName();
-//        cvr = provider.getCvr();
-//        phoneNumber = provider.getPhoneNumber();
-//        description = provider.getDescription();
-//        street = provider.getAddress().getStreet();
-//        streetNumber = provider.getAddress().getStreetNumber();
-//        postCode = provider.getAddress().getPostCode();
-//        city = provider.getAddress().getCity();
-//    }
 
     public String getCompanyName() {
         return companyName;
@@ -96,6 +95,7 @@ public class Provider {
 //        return builder.build();
 //    }
 
+
     @Override
     public String toString() {
         return "Provider{" +
@@ -108,6 +108,7 @@ public class Provider {
                 ", streetNumber='" + streetNumber + '\'' +
                 ", postCode=" + postCode +
                 ", city='" + city + '\'' +
+                ", isApproved=" + isApproved +
                 '}';
     }
 
@@ -133,6 +134,14 @@ public class Provider {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public void setIsApproved(boolean approved) {
+        isApproved = approved;
+    }
+
+    public boolean isApproved() {
+        return isApproved;
     }
 
     public int getId() {

@@ -12,4 +12,5 @@ service ProtobufProviderService{
   rpc getProviderById(ProtobufMessage) returns (ProtobufMessage);
   rpc editProvider(ProtobufMessage) returns (ProtobufMessage);
   rpc removeProvider(ProtobufMessage) returns (ProtobufMessage);
+  rpc getAllNotApprovedProviders(ProtobufMessage) returns (ProtobufMessage);
 }

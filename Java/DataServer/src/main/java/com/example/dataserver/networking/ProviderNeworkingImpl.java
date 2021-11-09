@@ -65,4 +65,12 @@ public class ProviderNeworkingImpl extends ProtobufProviderServiceGrpc.ProtobufP
         responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject("Success").build());
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void getAllNotApprovedProviders(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
+        ArrayList<Provider> allNotApprovedProviders = model.getAllNotApprovedProviders();
+        String json = gson.toJson(allNotApprovedProviders);
+        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject(json).build());
+        responseObserver.onCompleted();
+    }
 }

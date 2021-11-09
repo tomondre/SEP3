@@ -19,10 +19,19 @@ namespace BusinessLogic.Controllers
         }
 
         [HttpGet(Name = "GetProvidersRoute")]
-        public async Task<ActionResult<ProviderList>> GetProviders()
+        public async Task<ActionResult<ProviderList>> GetProviders([FromQuery] bool? approved)
         {
             ProviderList list = new ProviderList();
-            list.Providers = await model.GetAllProviders();
+            
+            if (approved is null or true)
+            {
+                list.Providers = await model.GetAllProviders();
+            }
+            else
+            {
+                list.Providers = await model.GetAllNotApprovedProviders();
+            }
+            
             foreach (var provider in list.Providers)
             {
                 await linksService.AddLinksAsync(provider);
@@ -31,7 +40,7 @@ namespace BusinessLogic.Controllers
             return Ok(list);
         }
 
-        [HttpGet("{id:int}" ,Name = "GetProviderByIdRoute")]
+        [HttpGet("{id:int}", Name = "GetProviderByIdRoute")]
         public async Task<ActionResult<Provider>> GetProviderById([FromRoute] int id)
         {
             var providerById = await model.GetProviderById(id);

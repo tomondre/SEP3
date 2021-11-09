@@ -56,5 +56,15 @@ namespace BusinessLogic.Networking
         {
             await client.removeProviderAsync(new ProtobufMessage {MassageOrObject = id.ToString()});
         }
+
+        public async Task<IList<Provider>> GetAllNotApprovedProviders()
+        {
+            var allNotApprovedProvidersAsync = await client.getAllNotApprovedProvidersAsync(new ProtobufMessage());
+            string objectsAsJson = allNotApprovedProvidersAsync.MassageOrObject;
+            return JsonSerializer.Deserialize<IList<Provider>>(objectsAsJson, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+        }
     }
 }
