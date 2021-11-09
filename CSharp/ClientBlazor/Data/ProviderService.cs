@@ -18,7 +18,7 @@ namespace ClientBlazor.Data
             this.client = client;
             uri = "https://localhost:5001/Provider";
         }
-        
+
         public async Task CreateProvider(Provider provider)
         {
             string providerAsJson = JsonSerializer.Serialize(provider);
@@ -54,7 +54,19 @@ namespace ClientBlazor.Data
         {
             throw new System.NotImplementedException();
         }
-        
+
+        public async Task<ProviderList> GetAllNotApprovedProvidersAsync()
+        {
+            var httpResponseMessage = await client.GetAsync($"{uri}/?approved=false");
+            var providersAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
+            ProviderList providers = JsonSerializer.Deserialize<ProviderList>(providersAsJson,
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+            return providers;
+        }
+
         private void CheckException(HttpResponseMessage task)
         {
             if (!task.IsSuccessStatusCode)
