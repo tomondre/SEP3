@@ -49,6 +49,15 @@ public class Provider {
     @Column(name = "is_approved")
     private boolean isApproved = false;
 
+    @SerializedName(value = "email", alternate = {"Email"})
+    @Column(name = "email")
+    private String email;
+
+    @SerializedName(value = "password", alternate = {"Password"})
+    @Column(name = "password")
+    private String password;
+
+
     protected Provider() {
     }
 
@@ -84,6 +93,7 @@ public class Provider {
         this.description = description;
     }
 
+
 //    public ProtobufProvider toProtobuf() {
 //        ProtobufProvider.Builder builder = ProtobufProvider.newBuilder();
 //        builder.setCompanyName(companyName);
@@ -106,9 +116,11 @@ public class Provider {
                 ", description='" + description + '\'' +
                 ", street='" + street + '\'' +
                 ", streetNumber='" + streetNumber + '\'' +
-                ", postCode=" + postCode +
+                ", postCode=" + postCode + '\'' +
                 ", city='" + city + '\'' +
-                ", isApproved=" + isApproved +
+                ", isApproved=" + isApproved + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password +
                 '}';
     }
 
@@ -166,5 +178,25 @@ public class Provider {
 
     public String getCity() {
         return city;
+    }
+
+    public void setApproved(boolean approved) {
+        isApproved = approved;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
