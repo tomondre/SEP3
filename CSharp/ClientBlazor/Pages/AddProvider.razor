@@ -4,78 +4,126 @@
 @inject IProviderService ProviderService
 @inject NavigationManager NavigationManager
 
+<div class="min-h-screen p-4 bg-gray-100 flex items-center justify-center">
+  <EditForm Model="@newProvider" OnSubmit="@AddNewProvider">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div class="container min-w-screen-lg mx-auto">
+      <div>
+        <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
+          <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+            <div class="text-gray-600">
+              <p class="font-medium text-lg">Company details</p>
+              <p>Please fill out all the fields.</p>
+            </div>
 
-<section class="container mx-auto">
-    <div class="mt-10 sm:mt-0">
-        <div class="md:grid md:grid-cols-3 md:gap-6 text-gray-800">
-            <EditForm Model="@newProvider" OnSubmit="@AddNewProvider" class="mt-5 md:mt-0 md:col-span-2">
-                <div class="shadow overflow-hidden sm:rounded-md">
-                    <div class="px-4 py-5 bg-white sm:p-6">
-                        <div class="grid grid-cols-6 gap-6">
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="company-name" class="block text-sm font-medium text-gray-700">Company name</label>
-                                <InputText name="first-name" id="company-name" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.CompanyName"/>
-                            </div>
-
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="cvr" class="block text-sm font-medium text-gray-700">CVR</label>
-                                <InputNumber name="cvr" id="cvr" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Cvr"/>
-                            </div>
-
-                            <div class="col-span-6 sm:col-span-4">
-                                <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                                <InputTextArea rows="4" name="description" id="description" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Description"/>
-                            </div>
-
-                            <div class="col-span-6 sm:col-span-4">
-                                <label for="phoneNumber" class="block text-sm font-medium text-gray-700">PhoneNumber</label>
-                                <InputText rows="4" name="phoneNumber" id="phoneNumber" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.PhoneNumber"/>
-                            </div>
-
-                            <div class="col-span-6 sm:col-span-4">
-                                <label for="address-street" class="block text-sm font-medium text-gray-700">Street</label>
-                                <InputText name="address-street" id="address-street" autocomplete="street" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Address.Street"/>
-                            </div>
-
-                            <div class="col-span-6 sm:col-span-4">
-                                <label for="address-street-number" class="block text-sm font-medium text-gray-700">Street number</label>
-                                <InputText name="address-street-number" id="address-street-number" autocomplete="street" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Address.StreetNumber"/>
-                            </div>
-
-                            <div class="col-span-6 sm:col-span-4">
-                                <label for="address-city" class="block text-sm font-medium text-gray-700">City</label>
-                                <InputText name="address-city" id="address-city" autocomplete="city" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Address.City"/>
-                            </div>
-
-                            <div class="col-span-6 sm:col-span-4">
-                                <label for="address-postcode" class="block text-sm font-medium text-gray-700">Postcode</label>
-                                <InputNumber name="address-postcode" id="address-postcode" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Address.PostCode"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                        <button @onclick="Print" type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Save
-                        </button>
-                    </div>
+            <div class="lg:col-span-2">
+              <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                <div class="md:col-span-5">
+                  <label for="name">Company Name</label>
+                  <InputText type="text" name="name" id="name" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" @bind-Value="newProvider.CompanyName"/>
                 </div>
-            </EditForm>
+
+                <div class="md:col-span-5">
+                  <label for="cvr">CVR</label>
+                  <InputNumber name="cvr" id="cvr" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" @bind-Value="newProvider.Cvr"/>
+                </div>
+
+                <div class="md:col-span-5">
+                  <label for="description">Description</label>
+                  <InputTextArea row-span-3 type="text" name="description" id="description" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" @bind-Value="newProvider.Description"/>
+                </div>
+
+                <div class="md:col-span-5">
+                  <label for="phoneNumber">Phone Number</label>
+                  <InputText type="text" name="phoneNumber" id="phoneNumber" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" @bind-Value="newProvider.PhoneNumber"/>
+                </div>
+                
+                <div class="md:col-span-2">
+                  <label for="state">Username/ Email</label>
+                  <div class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
+                    <InputText name="username" id="username" placeholder="e-mail" class="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent" @bind-Value="newProvider.Email"/>
+                    <button tabindex="-1" class="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-red-600">
+                      <svg class="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
+                    <button tabindex="-1" for="show_more" class="cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-blue-600">
+                      <svg class="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="md:col-span-1">
+                  <label for="zipcode">Password</label>
+                  <InputText type="text" name="password" id="password" class="transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50" @bind-Value="newProvider.Password"/>
+                </div>
+                
+                <div class="md:col-span-3">
+                  <label for="address">Address / Street</label>
+                  <InputText type="text" name="address" id="address" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" @bind-Value="newProvider.Street"/>
+                </div>
+
+                <div class="md:col-span-2">
+                  <label for="number">Number</label>
+                  <InputText type="text" name="number" id="number" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" @bind-Value="newProvider.StreetNumber"/>
+                </div>
+
+                <div class="md:col-span-2">
+                  <label for="city">City</label>
+                  <div class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
+                    <InputText name="city" id="city" class="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent" @bind-Value="newProvider.City"/>
+                    <button tabindex="-1" class="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-red-600">
+                      <svg class="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
+                    <button tabindex="-1" for="show_more" class="cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-blue-600">
+                      <svg class="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="md:col-span-1">
+                  <label for="zipcode">Zipcode</label>
+                  <InputNumber type="text" name="zipcode" id="zipcode" class="transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50" @bind-Value="newProvider.PostCode"/>
+                </div>
+
+                <div class="md:col-span-5 text-right">
+                  <div class="inline-flex items-end">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <a href="https://www.buymeacoffee.com/dgauderman" target="_blank" class="md:absolute bottom-0 right-0 p-4 float-right">
+        <img src="https://www.buymeacoffee.com/assets/img/guidelines/logo-mark-3.svg" alt="Buy Me A Coffee" class="transition-all rounded-full w-14 -rotate-45 hover:shadow-sm shadow-lg ring hover:ring-4 ring-white">
+      </a>
     </div>
-</section>
+  </EditForm>
+</div>
+
+
 
 @code {
-    private Provider newProvider = new();
+  private Provider newProvider = new();
 
-    private async Task AddNewProvider()
-    {
-        await ProviderService.CreateProvider(newProvider);
-        NavigationManager.NavigateTo("/Providers");
-    }
+  private async Task AddNewProvider()
+  {
+    await ProviderService.CreateProvider(newProvider);
+    NavigationManager.NavigateTo("/Providers");
+  }
 
-    private async Task Print()
-    {
-        Console.WriteLine("Invalid");
-    }
-
+  private async Task Print()
+  {
+    Console.WriteLine("Invalid");
+  }
+    
 }
