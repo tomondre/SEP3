@@ -5,8 +5,6 @@
 @inject IProviderService ProviderService
 @inject NavigationManager NavigationManager
 
-<h3>ApproveProviders</h3>
-
 @if (providers == null)
 {
     <p>
@@ -41,19 +39,12 @@ else
                         <tr class="text-xs bg-gray-50">
                             <td class="py-5 px-6 font-medium">@item.CompanyName</td>
 
-                            <td class="flex px-4 py-3">
-                                <img class="w-8 h-8 mr-4 object-cover rounded-md" src="https://images.unsplash.com/photo-1559893088-c0787ebfc084?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80" alt="">
-                                <div>
-                                    <p class="font-medium">@item.Cvr</p>
-                                </div>
-                            </td>
+                            <td class="py-5 px-6 font-medium">@item.Cvr</td>
 
-                            <td class="font-medium">@item.Description</td>
+                            <td class="py-5 px-6 font-medium">@item.Description</td>
 
-                            <td>
-                                <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">@item.City</span>
-                            </td>
-
+                            <td class="py-5 px-6 font-medium">@item.City</td>
+                            
                             <td>
                                 <a @onclick="@(() => ApproveProviderAsync(item))" class="inline-block mr-2">
                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
