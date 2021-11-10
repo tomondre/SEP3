@@ -10,7 +10,7 @@ namespace ClientBlazor.Data
         public Task<ProviderList> GetAllProviders();
         Task<Provider> GetProviderById(int id);
         Task EditProvider(Provider provider);
-        Task DeleteProvider(int id);
+        Task DeleteProvider(Provider provider);
         Task<ProviderList> GetAllNotApprovedProvidersAsync();
     }
 }

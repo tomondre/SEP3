@@ -24,13 +24,13 @@ namespace ClientBlazor.Data
             string providerAsJson = JsonSerializer.Serialize(provider);
             var stringContent = new StringContent(providerAsJson, Encoding.UTF8, "application/json");
             var httpResponseMessage = await client.PostAsync(uri, stringContent);
-            Console.WriteLine(httpResponseMessage.StatusCode);
             CheckException(httpResponseMessage);
         }
 
         public async Task<ProviderList> GetAllProviders()
         {
             var httpResponseMessage = await client.GetAsync(uri);
+            CheckException(httpResponseMessage);
             var providersAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
             ProviderList providers = JsonSerializer.Deserialize<ProviderList>(providersAsJson,
                 new JsonSerializerOptions()
@@ -45,19 +45,24 @@ namespace ClientBlazor.Data
             throw new System.NotImplementedException();
         }
 
-        public Task EditProvider(Provider provider)
+        public async Task EditProvider(Provider provider)
         {
-            throw new System.NotImplementedException();
+            var json = JsonSerializer.Serialize(provider);
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var httpResponseMessage = await client.PatchAsync($"{uri}/{provider.Id}", stringContent);
+            CheckException(httpResponseMessage);
         }
 
-        public Task DeleteProvider(int id)
+        public async Task DeleteProvider(Provider provider)
         {
-            throw new System.NotImplementedException();
+            var httpResponseMessage = await client.DeleteAsync($"{uri}/{provider.Id}");
+            CheckException(httpResponseMessage);
         }
 
         public async Task<ProviderList> GetAllNotApprovedProvidersAsync()
         {
             var httpResponseMessage = await client.GetAsync($"{uri}/?approved=false");
+            CheckException(httpResponseMessage);
             var providersAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
             ProviderList providers = JsonSerializer.Deserialize<ProviderList>(providersAsJson,
                 new JsonSerializerOptions()

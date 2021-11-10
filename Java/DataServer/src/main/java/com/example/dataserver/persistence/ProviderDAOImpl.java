@@ -24,7 +24,7 @@ public class ProviderDAOImpl implements ProviderDAO {
 
     @Override
     public ArrayList<Provider> getAllProviders() {
-        return (ArrayList<Provider>) repo.findAll();
+        return repo.getAllByIsApproved(true);
     }
 
     @Override
