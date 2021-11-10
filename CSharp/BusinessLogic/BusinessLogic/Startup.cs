@@ -54,7 +54,7 @@ namespace BusinessLogic
                 });
                 config.AddPolicy<ProviderList>(policy =>
                 {
-                    policy.RequireSelfLink();
+                    policy.RequireRoutedLink("self", "GetProvidersRoute");
                     policy.RequireRoutedLink("create", "CreateProviderRoute");
                 });
                 config.AddPolicy<HandShake>(policy =>

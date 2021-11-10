@@ -20,8 +20,10 @@ namespace BusinessLogic.Networking
 
         public async Task CreateProvider(Provider provider)
         {
-            var serialize = JsonSerializer.Serialize(provider);
-            await client.createProviderAsync(new ProtobufMessage {MassageOrObject = serialize});
+            await client.createProviderAsync(new ProtobufMessage
+            {
+                MassageOrObject = serialize(provider)
+            });
         }
 
         public async Task<IList<Provider>> GetAllProviders()
@@ -38,7 +40,8 @@ namespace BusinessLogic.Networking
 
         public async Task<Provider> GetProviderById(int id)
         {
-            var providerByIdAsync = await client.getProviderByIdAsync(new ProtobufMessage(){MassageOrObject = id.ToString()});
+            var providerByIdAsync =
+                await client.getProviderByIdAsync(new ProtobufMessage() {MassageOrObject = id.ToString()});
             var massageOrObject = providerByIdAsync.MassageOrObject;
             return JsonSerializer.Deserialize<Provider>(massageOrObject, new JsonSerializerOptions
             {
@@ -48,8 +51,7 @@ namespace BusinessLogic.Networking
 
         public async Task EditProvider(Provider provider)
         {
-            var serialize = JsonSerializer.Serialize(provider);
-            await client.editProviderAsync(new ProtobufMessage {MassageOrObject = serialize});
+            await client.editProviderAsync(new ProtobufMessage {MassageOrObject = serialize(provider)});
         }
 
         public async Task DeleteProvider(int id)
@@ -62,6 +64,14 @@ namespace BusinessLogic.Networking
             var allNotApprovedProvidersAsync = await client.getAllNotApprovedProvidersAsync(new ProtobufMessage());
             string objectsAsJson = allNotApprovedProvidersAsync.MassageOrObject;
             return JsonSerializer.Deserialize<IList<Provider>>(objectsAsJson, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+        }
+
+        private string serialize(Provider provider)
+        {
+            return JsonSerializer.Serialize(provider, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });

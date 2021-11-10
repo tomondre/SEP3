@@ -25,12 +25,8 @@ namespace GrpcFileGeneration.Models
 
         public void AddLink(string id, Link link)
         {
-            if (Links != null) 
-                Links.Add(id, link);
-            else
-            {
-                Links = new Dictionary<string, Link>();
-            }
+
+            Links = new Dictionary<string, Link>();
         }
     }
 }
