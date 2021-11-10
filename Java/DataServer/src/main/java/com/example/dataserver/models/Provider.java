@@ -1,10 +1,8 @@
 package com.example.dataserver.models;
 
-//import com.example.dataserver.networking.ProtobufAddress;
-//import com.example.dataserver.networking.ProtobufProvider;
+import com.google.gson.annotations.SerializedName;
 
 import javax.persistence.*;
-
 
 @Entity
 @Table(name = "provider", schema = "sep3")
@@ -38,20 +36,11 @@ public class Provider {
     @Column(name = "city")
     private String city;
 
+    @Column(name = "is_approved")
+    private boolean isApproved = false;
+
     protected Provider() {
     }
-
-//    public Provider(ProtobufProvider provider) {
-//        id = provider.getId();
-//        companyName = provider.getCompanyName();
-//        cvr = provider.getCvr();
-//        phoneNumber = provider.getPhoneNumber();
-//        description = provider.getDescription();
-//        street = provider.getAddress().getStreet();
-//        streetNumber = provider.getAddress().getStreetNumber();
-//        postCode = provider.getAddress().getPostCode();
-//        city = provider.getAddress().getCity();
-//    }
 
     public String getCompanyName() {
         return companyName;
@@ -96,6 +85,7 @@ public class Provider {
 //        return builder.build();
 //    }
 
+
     @Override
     public String toString() {
         return "Provider{" +
@@ -108,6 +98,7 @@ public class Provider {
                 ", streetNumber='" + streetNumber + '\'' +
                 ", postCode=" + postCode +
                 ", city='" + city + '\'' +
+                ", isApproved=" + isApproved +
                 '}';
     }
 
@@ -133,6 +124,14 @@ public class Provider {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public void setIsApproved(boolean approved) {
+        isApproved = approved;
+    }
+
+    public boolean isApproved() {
+        return isApproved;
     }
 
     public int getId() {
