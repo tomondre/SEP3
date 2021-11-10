@@ -11,7 +11,10 @@ namespace GrpcFileGeneration.Models
         public int Cvr { get; set; }
         public string PhoneNumber { get; set; }
         public string Description { get; set; }
-        public Address Address { get; set; }
+        public string Street { get; set; }
+        public string StreetNumber { get; set; }
+        public int PostCode { get; set; }
+        public string City { get; set; }
 
         public void AddLink(string id, Link link)
         {
@@ -26,7 +29,6 @@ namespace GrpcFileGeneration.Models
 
         public Provider()
         {
-            Address = new Address();
             Links = new Dictionary<string, Link>();
         }
     }
