@@ -37,5 +37,10 @@ namespace BusinessLogic.Model
         {
             return network.DeleteProvider(id);
         }
+
+        public Task<IList<Provider>> GetAllNotApprovedProviders()
+        {
+            return network.GetAllNotApprovedProviders();
+        }
     }
 }
