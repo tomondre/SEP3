@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Com.Example.Dataserver.Networking;
 using GrpcFileGeneration.Models;
+using Networking.Provider;
 
 namespace BusinessLogic.Networking
 {
