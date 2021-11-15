@@ -9,6 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BusinessLogic\BusinessLogic\BusinessLogic.csproj" />
       <ProjectReference Include="..\GrpcFileGeneration\GrpcFileGeneration\GrpcFileGeneration.csproj" />
     </ItemGroup>
     <Target Name="CheckForNpm" BeforeTargets="NpmInstall">
