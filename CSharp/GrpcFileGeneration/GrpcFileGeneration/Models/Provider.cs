@@ -26,9 +26,14 @@ namespace GrpcFileGeneration.Models
         public int PostCode { get; set; }
         [Required, MaxLength(50)]
         public string City { get; set; }
-        [Required]
+        [Required, EmailAddress]
         public string Email { get; set; }
         [Required]
+        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,14}$",ErrorMessage =
+            "The password must be between 8 (included) and 14 (included) characters, " +
+            "contain at least one number" +
+            "contain at least one upper case character" +
+            "contain at least one lower case character")]
         public string Password { get; set; }
 
         public void AddLink(string id, Link link)
