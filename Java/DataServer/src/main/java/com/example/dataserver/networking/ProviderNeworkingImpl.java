@@ -5,6 +5,8 @@ import com.example.dataserver.models.Provider;
 import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
+import networking.provider.ProtobufMessage;
+import networking.provider.ProtobufProviderServiceGrpc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 

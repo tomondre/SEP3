@@ -65,6 +65,7 @@
                     <pluginArtifact>
                         io.grpc:protoc-gen-grpc-java:1.4.0:exe:${os.detected.classifier}
                     </pluginArtifact>
+                    <protoSourceRoot>${basedir}/src/main/proto/</protoSourceRoot>
                 </configuration>
                 <executions>
                     <execution>
