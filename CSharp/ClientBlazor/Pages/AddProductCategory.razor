@@ -1,7 +1,7 @@
 ﻿@page "/AddProductCategory"
 @using GrpcFileGeneration.Models
-@using ClientBlazor.Data
 @using ClientBlazor.Data.ProductCategory
+@inject NavigationManager NavigationManager
 @inject IProductCategoryService ProductCategoryService
 
 <div class="py-6">
@@ -32,7 +32,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach (var category in categories)
+                    @foreach (var category in categories.Categories)
                     {
                         <tr class="text-xs bg-gray-50">
                             <td class="flex py-3 px-4">
@@ -72,18 +72,20 @@
 
 @code {
     private Category newCategory = new();
-    private IList<Category> categories = new List<Category>(){new (){CategoryName = "Testing"}};
+    private CategoryList categories = new();
 
     private async Task AddProductCategoryAsync()
     {
     //TODO implement the exceptions
         await ProductCategoryService.AddProductCategoryAsync(newCategory);
+        newCategory = new Category();
+        await OnInitializedAsync();
     }
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    // //TODO implement the exceptions
-    //     categories = await ProductCategoryService.GetAllCategoriesAsync();
-    // }
+    protected override async Task OnInitializedAsync()
+    {
+    //TODO implement the exceptions
+        categories = await ProductCategoryService.GetAllCategoriesAsync();
+    }
 
 }

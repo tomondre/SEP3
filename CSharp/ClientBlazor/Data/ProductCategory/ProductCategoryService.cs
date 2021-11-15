@@ -16,7 +16,7 @@ namespace ClientBlazor.Data.ProductCategory
         public ProductCategoryService(HttpClient client)
         {
             this.client = client;
-            uri = "https://localhost:5001/Categories";
+            uri = "https://localhost:5001/ProductCategory";
         }
         
         public async Task<Category> AddProductCategoryAsync(Category category)
@@ -33,12 +33,12 @@ namespace ClientBlazor.Data.ProductCategory
             return deserialize;
         }
 
-        public async Task<IList<Category>> GetAllCategoriesAsync()
+        public async Task<CategoryList> GetAllCategoriesAsync()
         {
             var httpResponseMessage = await client.GetAsync(uri);
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var categories = JsonSerializer.Deserialize<IList<Category>>(readAsStringAsync, new JsonSerializerOptions()
+            var categories = JsonSerializer.Deserialize<CategoryList>(readAsStringAsync, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });

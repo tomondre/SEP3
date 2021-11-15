@@ -42,7 +42,6 @@ namespace BusinessLogic.Networking.ProductCategory
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
-
             return deserialize;
         }
 

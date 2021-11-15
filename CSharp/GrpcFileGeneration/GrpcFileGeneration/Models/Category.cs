@@ -7,7 +7,7 @@ namespace GrpcFileGeneration.Models
 {
     public class Category : ILinkContainer
     {
-        private Dictionary<string, Link> links;
+        public Dictionary<string, Link> Links { set; get; }
         public int Id { set; get; }
         [Required(ErrorMessage = "Please add a category name")]
         
@@ -22,12 +22,6 @@ namespace GrpcFileGeneration.Models
         public void AddLink(string id, Link link)
         {
             Links.Add(id, link);
-        }
-        
-        public Dictionary<string, Link> Links
-        {
-            get => links;
-            set => links = value;
         }
 
         public override string ToString()

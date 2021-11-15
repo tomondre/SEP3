@@ -1,5 +1,7 @@
 package com.example.dataserver.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +13,7 @@ public class Category
   @Column(name = "id")
   private int id;
   @Column(name = "category_name")
+  @SerializedName(value = "categoryName", alternate = "CategoryName")
   private String categoryName;
 
   public Category()

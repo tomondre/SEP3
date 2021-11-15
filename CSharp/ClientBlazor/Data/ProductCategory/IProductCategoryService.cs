@@ -7,7 +7,7 @@ namespace ClientBlazor.Data.ProductCategory
     public interface IProductCategoryService
     {
         Task<Category> AddProductCategoryAsync(Category category);
-        Task<IList<Category>> GetAllCategoriesAsync();
+        Task<CategoryList> GetAllCategoriesAsync();
         Task<Category> EditProductCategoryAsync(Category category);
         Task DeleteProductCategoryAsync(int id);
     }
