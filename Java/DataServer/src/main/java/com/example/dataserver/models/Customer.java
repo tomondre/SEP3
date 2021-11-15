@@ -15,11 +15,11 @@ public class Customer {
 
     @SerializedName(value = "firstName", alternate = {"FirstName"})
     @Column(name = "first_name")
-    private int firstName;
+    private String firstName;
 
     @SerializedName(value = "lastName", alternate = {"LastName"})
     @Column(name = "last_name")
-    private int lastName;
+    private String lastName;
 
     @SerializedName(value = "phoneNumber", alternate = {"PhoneNumber"})
     @Column(name = "phone_number")
@@ -34,14 +34,14 @@ public class Customer {
     private String password;
 
     @SerializedName(value = "address", alternate = {"Address"})
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Address address;
 
     public Customer() {
 
     }
 
-    public Customer(int id, int firstName, int lastName, String phoneNumber, String email, String password, Address address) {
+    public Customer(int id, String firstName, String lastName, String phoneNumber, String email, String password, Address address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -59,19 +59,19 @@ public class Customer {
         this.id = id;
     }
 
-    public int getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(int firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public int getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(int lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 

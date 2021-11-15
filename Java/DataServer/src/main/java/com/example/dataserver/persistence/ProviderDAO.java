@@ -10,6 +10,5 @@ public interface ProviderDAO {
     Provider getProviderById(int id);
     void editProvider(Provider provider);
     void removeProvider(int id);
-
     ArrayList<Provider> getAllNotApprovedProviders();
 }

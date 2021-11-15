@@ -43,7 +43,7 @@ else
 
                             <td class="py-5 px-6 font-medium">@item.Description</td>
 
-                            <td class="py-5 px-6 font-medium">@item.City</td>
+                            <td class="py-5 px-6 font-medium">@item.Address.City</td>
                             
                             <td>
                                 <a @onclick="@(() => ApproveProviderAsync(item))" class="inline-block mr-2">
