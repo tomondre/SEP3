@@ -25,6 +25,14 @@ public class Customer {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @SerializedName(value = "email", alternate = {"Email"})
+    @Column(name = "email")
+    private String email;
+
+    @SerializedName(value = "password", alternate = {"Password"})
+    @Column(name = "password")
+    private String password;
+
     @SerializedName(value = "address", alternate = {"Address"})
     @ManyToOne
     private Address address;
@@ -33,11 +41,13 @@ public class Customer {
 
     }
 
-    public Customer(int id, int firstName, int lastName, String phoneNumber, Address address) {
+    public Customer(int id, int firstName, int lastName, String phoneNumber, String email, String password, Address address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.password = password;
         this.address = address;
     }
 
@@ -73,6 +83,22 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Address getAddress() {
         return address;
     }
@@ -88,6 +114,8 @@ public class Customer {
                 ", firstName=" + firstName +
                 ", lastName=" + lastName +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 ", address=" + address +
                 '}';
     }
