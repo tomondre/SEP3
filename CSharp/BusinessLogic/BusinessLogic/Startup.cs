@@ -7,6 +7,7 @@ using BusinessLogic.Networking;
 using Com.Example.Dataserver.Networking;
 using Grpc.Net.Client;
 using GrpcFileGeneration.Models;
+using GrpcFileGeneration.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,6 +38,7 @@ namespace BusinessLogic
                     GrpcChannel.ForAddress("http://localhost:9090")));
             services.AddSingleton<IProviderModel, ProviderModel>();
             services.AddSingleton<IProviderNet, ProviderNet>();
+            services.AddSingleton<IValidator, Validator>();
             services.AddControllers();
             services.AddSingleton<ILinksService, DefaultLinksService>();
             services.AddSwaggerGen(c =>
