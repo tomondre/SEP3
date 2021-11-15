@@ -34,7 +34,7 @@ public class Provider {
     private boolean isApproved = false;
 
     @SerializedName(value = "address", alternate = {"Address"})
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Address address;
 
     @SerializedName(value = "email", alternate = {"Email"})
