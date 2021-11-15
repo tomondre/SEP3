@@ -29,72 +29,17 @@ public class Provider {
     @Column(name = "description")
     private String description;
 
-    @SerializedName(value = "street", alternate = {"Street"})
-    @Column(name = "street")
-    private String street;
-
-    @SerializedName(value = "streetNumber", alternate = {"StreetNumber"})
-    @Column(name = "street_no")
-    private String streetNumber;
-
-    @SerializedName(value = "postCode", alternate = {"PostCode"})
-    @Column(name = "post_code")
-    private int postCode;
-
-    @SerializedName(value = "city", alternate = {"City"})
-    @Column(name = "city")
-    private String city;
-
     @SerializedName(value = "isApproved", alternate = {"IsApproved"})
     @Column(name = "is_approved")
     private boolean isApproved = false;
 
+    @SerializedName(value = "address", alternate = {"Address"})
+    @ManyToOne
+    private Address address;
+
     protected Provider() {
+        this.address = new Address();
     }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public int getCVR() {
-        return cvr;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public void setCVR(int CVR) {
-        this.cvr = CVR;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-//    public ProtobufProvider toProtobuf() {
-//        ProtobufProvider.Builder builder = ProtobufProvider.newBuilder();
-//        builder.setCompanyName(companyName);
-//        builder.setCvr(cvr);
-//        builder.setPhoneNumber(phoneNumber);
-//        builder.setDescription(description);
-//        builder.setId(id);
-//        builder.setAddress(ProtobufAddress.newBuilder().setStreetNumber(streetNumber).setCity(city).setPostCode(postCode).setStreet(street).build());
-//        return builder.build();
-//    }
-
 
     @Override
     public String toString() {
@@ -104,67 +49,64 @@ public class Provider {
                 ", cvr=" + cvr +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", description='" + description + '\'' +
-                ", street='" + street + '\'' +
-                ", streetNumber='" + streetNumber + '\'' +
-                ", postCode=" + postCode +
-                ", city='" + city + '\'' +
                 ", isApproved=" + isApproved +
+                ", address=" + address +
                 '}';
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setCvr(int cvr) {
-        this.cvr = cvr;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public void setStreetNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
-    }
-
-    public void setPostCode(int postCode) {
-        this.postCode = postCode;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setIsApproved(boolean approved) {
-        isApproved = approved;
-    }
-
-    public boolean isApproved() {
-        return isApproved;
     }
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
     public int getCvr() {
         return cvr;
     }
 
-    public String getStreet() {
-        return street;
+    public void setCvr(int cvr) {
+        this.cvr = cvr;
     }
 
-    public String getStreetNumber() {
-        return streetNumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public int getPostCode() {
-        return postCode;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getCity() {
-        return city;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public void setApproved(boolean approved) {
+        isApproved = approved;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
