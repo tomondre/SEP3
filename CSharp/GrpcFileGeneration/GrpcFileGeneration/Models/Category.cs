@@ -10,6 +10,7 @@ namespace GrpcFileGeneration.Models
         private Dictionary<string, Link> links;
         public int Id { set; get; }
         [Required(ErrorMessage = "Please add a category name")]
+        
         public string CategoryName { get; set; }
 
 

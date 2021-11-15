@@ -11,7 +11,7 @@ public class Category
   @Column(name = "id")
   private int id;
   @Column(name = "category_name")
-  private String CategoryName;
+  private String categoryName;
 
   public Category()
   {
@@ -29,17 +29,17 @@ public class Category
 
   public String getCategoryName()
   {
-    return CategoryName;
+    return categoryName;
   }
 
   public void setCategoryName(String categoryName)
   {
-    CategoryName = categoryName;
+    this.categoryName = categoryName;
   }
 
   @Override
   public String toString()
   {
-    return "Category{" + "id=" + id + ", CategoryName='" + CategoryName + '\'' + '}';
+    return "Category{" + "id=" + id + ", CategoryName='" + categoryName + '\'' + '}';
   }
 }
