@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using BusinessLogic.Model;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -59,8 +60,17 @@ namespace BusinessLogic.Controllers
         [HttpPost(Name = "CreateProviderRoute")]
         public async Task<ActionResult> CreateProvider([FromBody] Provider provider)
         {
-            await model.CreateProvider(provider);
-            return Ok();
+            try
+            {
+                await model.CreateProvider(provider);
+                return Ok();
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(403, e.Message);
+            }
+            
         }
         
         [HttpDelete("{id:int}", Name = "DeleteProviderRoute")]

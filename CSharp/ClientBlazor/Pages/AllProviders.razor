@@ -4,17 +4,17 @@
 @inject NavigationManager NavigationManager
 @inject IProviderService ProviderService
 
+
 @if (providers == null)
 {
     <p>
         <em>Loading...</em>
     </p>
 }
-
 else if (!providers.Providers.Any())
 {
     <p>
-        <em>No Providers items exist. Please add some.</em>
+        <em>No Providers currenlty exist. Please approve some.</em>
     </p>
 }
 else
@@ -65,4 +65,3 @@ else
     }
 
 }
-

@@ -34,7 +34,7 @@ public class Provider {
     private boolean isApproved = false;
 
     @SerializedName(value = "address", alternate = {"Address"})
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Address address;
 
     @SerializedName(value = "email", alternate = {"Email"})
@@ -45,8 +45,12 @@ public class Provider {
     @Column(name = "password")
     private String password;
 
+
     protected Provider() {
-        this.address = new Address();
+    }
+
+    public String getCompanyName() {
+        return companyName;
     }
 
     public Provider(int id, String companyName, int cvr, String phoneNumber, String description, boolean isApproved, Address address, String email, String password) {
@@ -69,8 +73,13 @@ public class Provider {
         this.id = id;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    @Override
+    public String toString()
+    {
+        return "Provider{" + "id=" + id + ", companyName='" + companyName + '\'' + ", cvr=" + cvr
+            + ", phoneNumber='" + phoneNumber + '\'' + ", description='" + description + '\''
+            + ", street='" + address.getStreet() + '\'' + ", streetNumber='" + address.getStreetNumber() + '\''
+            + ", postCode=" + address.getPostCode() + '\'' + ", city='" + address.getCity() + '\'' + ", isApproved=" + isApproved + '\'' + ", email='" + email + '\'' + ", password='" + password + '}';
     }
 
     public void setCompanyName(String companyName) {
@@ -131,20 +140,5 @@ public class Provider {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "Provider{" +
-                "id=" + id +
-                ", companyName='" + companyName + '\'' +
-                ", cvr=" + cvr +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", description='" + description + '\'' +
-                ", isApproved=" + isApproved +
-                ", address=" + address +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

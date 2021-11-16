@@ -6,3 +6,4 @@
 /CSharp/ClientBlazor/bin/
 /Java/DataServer/target/
 /Java/GrpcFileGeneration/target/
+/Java/.idea/
