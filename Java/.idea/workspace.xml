@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36cb2a8f-2edd-4bc0-8f8d-b87d8364edce" name="Changes" comment="Creating method for getting one provider">
+    <list default="true" id="36cb2a8f-2edd-4bc0-8f8d-b87d8364edce" name="Changes" comment="Adding email and password in provider">
+      <change afterPath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/models/Experience.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/models/Validity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/persistence/experience/ExperienceDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/persistence/experience/ExperienceDAOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/persistence/repository/ExperienceRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/models/Provider.java" beforeDir="false" afterPath="$PROJECT_DIR$/DataServer/src/main/java/com/example/dataserver/models/Provider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GrpcFileGeneration/src/main/proto/ProviderNetworking.proto" beforeDir="false" afterPath="$PROJECT_DIR$/GrpcFileGeneration/src/main/proto/ProviderNetworking.proto" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +21,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
+        <option value="Enum" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -124,6 +129,8 @@
       <workItem from="1635929627182" duration="3020000" />
       <workItem from="1635948151394" duration="1302000" />
       <workItem from="1636032246374" duration="3041000" />
+      <workItem from="1636454153388" duration="54000" />
+      <workItem from="1637053968661" duration="4298000" />
     </task>
     <task id="LOCAL-00001" summary="Implemented database connection, TODO - gRPC communication">
       <created>1635352620654</created>
