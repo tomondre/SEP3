@@ -34,24 +34,31 @@ public class Provider {
     private boolean isApproved = false;
 
     @SerializedName(value = "address", alternate = {"Address"})
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Address address;
+
+    @SerializedName(value = "email", alternate = {"Email"})
+    @Column(name = "email")
+    private String email;
+
+    @SerializedName(value = "password", alternate = {"Password"})
+    @Column(name = "password")
+    private String password;
 
     protected Provider() {
         this.address = new Address();
     }
 
-    @Override
-    public String toString() {
-        return "Provider{" +
-                "id=" + id +
-                ", companyName='" + companyName + '\'' +
-                ", cvr=" + cvr +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", description='" + description + '\'' +
-                ", isApproved=" + isApproved +
-                ", address=" + address +
-                '}';
+    public Provider(int id, String companyName, int cvr, String phoneNumber, String description, boolean isApproved, Address address, String email, String password) {
+        this.id = id;
+        this.companyName = companyName;
+        this.cvr = cvr;
+        this.phoneNumber = phoneNumber;
+        this.description = description;
+        this.isApproved = isApproved;
+        this.address = address;
+        this.email = email;
+        this.password = password;
     }
 
     public int getId() {
@@ -108,5 +115,36 @@ public class Provider {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Provider{" +
+                "id=" + id +
+                ", companyName='" + companyName + '\'' +
+                ", cvr=" + cvr +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", description='" + description + '\'' +
+                ", isApproved=" + isApproved +
+                ", address=" + address +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
