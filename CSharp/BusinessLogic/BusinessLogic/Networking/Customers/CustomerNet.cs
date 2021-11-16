@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
-using Networking.Customers;
+using Networking.Customer;
 
 namespace BusinessLogic.Networking.Customers
 {

@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
-using Microsoft.JSInterop;
-using Microsoft.VisualBasic;
 using Networking.Category;
 
 namespace BusinessLogic.Networking.ProductCategory

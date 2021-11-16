@@ -1,6 +1,6 @@
 ﻿syntax="proto3";
 option java_multiple_files = true;
-package networking.customers;
+package networking.customer;
 
 message ProtobufMessage{
   string massageOrObject = 1;
