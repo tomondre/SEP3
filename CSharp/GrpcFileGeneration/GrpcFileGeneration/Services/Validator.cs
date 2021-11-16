@@ -20,7 +20,7 @@ namespace GrpcFileGeneration.Services
         
         public bool isValidPassword(string password)
         {
-            Regex regex = new Regex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,14}$");
+            Regex regex = new Regex(@"^(?=.*?[A-Z])(?=.*?[a-z]).{8,14}$");
             Match match = regex.Match(password);
             return match.Success;
         }
