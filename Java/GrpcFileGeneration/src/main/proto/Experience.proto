@@ -1,0 +1,13 @@
+syntax="proto3";
+option java_multiple_files = true;
+package networking.experience;
+
+message ProtobufMessage{
+    string messageOrObject = 1;
+}
+        
+service CategoryService{
+   rpc getAllProviderExperiences(ProtobufMessage) returns (ProtobufMessage);
+   rpc getAllWenShopExperiences(ProtobufMessage) returns (ProtobufMessage);
+   rpc addExperience(ProtobufMessage) returns (ProtobufMessage);
+}

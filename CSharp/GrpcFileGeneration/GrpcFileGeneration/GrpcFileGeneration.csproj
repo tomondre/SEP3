@@ -7,7 +7,7 @@
     <ItemGroup>
         <Protobuf Include="Proto/ProviderNetworking.proto" OutputDir="./Protobuf/Provider" GrpcServices="Client" />
         <Protobuf Include="Proto/Category.proto" OutputDir="./Protobuf/Category" GrpcServices="Client" />
-        <Protobuf Include="Proto/Customer.proto" OutputDir="./Protobuf/Customer" GrpcServices="Client" />
+        <Protobuf Include="Proto/Experience.proto" OutputDir="./Protobuf/Experience" GrpcServices="Client" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Google.Protobuf" Version="3.19.0" />
@@ -20,6 +20,11 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Protobuf" />
+        <Folder Include="Protobuf\Category" />
+        <Folder Include="Protobuf\Category\Proto" />
+        <Folder Include="Protobuf\Experience\Proto" />
+        <Folder Include="Protobuf\Provider" />
+        <Folder Include="Protobuf\Provider\Proto" />
     </ItemGroup>
 
 </Project>
