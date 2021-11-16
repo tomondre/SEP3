@@ -10,6 +10,7 @@ using BusinessLogic.Networking.Customers;
 using BusinessLogic.Networking.ProductCategory;
 using Grpc.Net.Client;
 using GrpcFileGeneration.Models;
+using GrpcFileGeneration.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -56,6 +57,7 @@ namespace BusinessLogic
             services.AddSingleton<ICustomerModel, CustomerModel>();
             services.AddSingleton<ICustomerNet, CustomerNet>();
             
+            services.AddSingleton<IValidator, Validator>();
             services.AddControllers();
             
             services.AddSingleton<ILinksService, DefaultLinksService>();

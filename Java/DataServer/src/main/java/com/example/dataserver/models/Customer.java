@@ -34,7 +34,7 @@ public class Customer {
     private String password;
 
     @SerializedName(value = "address", alternate = {"Address"})
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
 
     public Customer() {
