@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface ExperienceDAO {
     Experience addExperience(Experience experience);
-    ArrayList<Experience> getAllProviderExperiences(Provider provider);
+    ArrayList<Experience> getAllProviderExperiences(int provider);
     ArrayList<Experience> getAllWebShopExperiences();
 
 }
