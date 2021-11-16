@@ -4,17 +4,17 @@
 @inject NavigationManager NavigationManager
 @inject IProviderService ProviderService
 
+
 @if (providers == null)
 {
     <p>
         <em>Loading...</em>
     </p>
 }
-
 else if (!providers.Providers.Any())
 {
     <p>
-        <em>No Providers items exist. Please add some.</em>
+        <em>No Providers currenlty exist. Please approve some.</em>
     </p>
 }
 else
@@ -33,7 +33,6 @@ else
                         <th class="px-4 py-3">Street</th>
                         <th class="px-4 py-3">Street Number</th>
                         <th class="px-4 py-3">Post Code</th>
-                        <th class="px-4 py-3">Email</th>
                     </tr>
                     </thead>
                     <tbody class="bg-white">
@@ -48,7 +47,6 @@ else
                             <td class="px-4 py-3 text-ms font-semibold border">@item.Address.Street</td>
                             <td class="px-4 py-3 text-ms font-semibold border">@item.Address.StreetNumber</td>
                             <td class="px-4 py-3 text-ms font-semibold border">@item.Address.PostCode</td>
-                            <td class="px-4 py-3 text-ms font-semibold border">@item.Email</td>
                         </tr>
                     }
                     </tbody>
@@ -67,4 +65,3 @@ else
     }
 
 }
-
