@@ -14,16 +14,19 @@ namespace GrpcFileGeneration.Models
         [Required, MaxLength(500)]
         public string Description { get; set; }
         
-        public Validity ExperienceValidity { get; set; }
+        [Required, MaxLength(50)]
+        public string ExperienceValidity { get; set; }
         
         public Category ExperienceCategory { get; set; }
         public  Provider ExperienceProvider { get; set; }
+        
+        public Address Address { get; set; }
 
         public Experience()
         {
-            ExperienceValidity = Validity.ThreeMonths;
             ExperienceCategory = new Category();
             ExperienceProvider = new Provider();
+            Address = new Address();
         }
 
     }
