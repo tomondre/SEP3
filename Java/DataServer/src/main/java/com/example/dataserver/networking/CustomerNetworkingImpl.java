@@ -5,8 +5,8 @@ import com.example.dataserver.persistence.customer.CustomerDAO;
 import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
-import networking.customers.CustomerServiceGrpc;
-import networking.customers.ProtobufMessage;
+import networking.customer.CustomerServiceGrpc;
+import networking.customer.ProtobufMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @GrpcService
