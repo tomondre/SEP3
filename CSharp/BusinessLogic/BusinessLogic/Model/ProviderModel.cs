@@ -28,7 +28,7 @@ namespace BusinessLogic.Model
             " contain at least one number," +
                 " contain at least one upper case character and" +
                 " contain at least one lower case character");
-            if (!validator.isValidPostCode(provider.PostCode))
+            if (!validator.isValidPostCode(provider.Address.PostCode))
             {
                 throw new Exception("The post code must be between 1000 and 9999");
             }
