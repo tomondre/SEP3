@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic.Model;
+using BusinessLogic.Model.ProductCategory;
 using BusinessLogic.Networking;
-using Com.Example.Dataserver.Networking;
+using BusinessLogic.Networking.ProductCategory;
 using Grpc.Net.Client;
 using GrpcFileGeneration.Models;
 using GrpcFileGeneration.Services;
@@ -17,6 +18,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Networking.Category;
+using Networking.Provider;
 using RiskFirst.Hateoas;
 
 namespace BusinessLogic
@@ -35,10 +38,15 @@ namespace BusinessLogic
         {
             services.AddSingleton(
                 new ProtobufProviderService.ProtobufProviderServiceClient(
+                    GrpcChannel.ForAddress("http://localhost:9090")));          
+            services.AddSingleton(
+                new CategoryService.CategoryServiceClient(
                     GrpcChannel.ForAddress("http://localhost:9090")));
             services.AddSingleton<IProviderModel, ProviderModel>();
+            services.AddSingleton<IProductCategoryModel, ProductCategoryModel>();
             services.AddSingleton<IProviderNet, ProviderNet>();
             services.AddSingleton<IValidator, Validator>();
+            services.AddSingleton<IProductCategoryNet, ProductCategoryNet>();
             services.AddControllers();
             services.AddSingleton<ILinksService, DefaultLinksService>();
             services.AddSwaggerGen(c =>
@@ -62,6 +70,17 @@ namespace BusinessLogic
                 config.AddPolicy<HandShake>(policy =>
                 {
                     policy.RequireRoutedLink("allProviders", "GetProvidersRoute");
+                });
+                //TODO add self rel
+                config.AddPolicy<Category>(policy =>
+                {
+                    policy.RequireRoutedLink("edit", "EditCategoryRoute", x => new {id = x.Id})
+                        .RequireRoutedLink("remove", "DeleteCategoryRoute", x => new {id = x.Id});
+                });
+                config.AddPolicy<CategoryList>(policy =>
+                {
+                    policy.RequireSelfLink();
+                    policy.RequireRoutedLink("create", "CreateCategoryRoute");
                 });
             });
         }

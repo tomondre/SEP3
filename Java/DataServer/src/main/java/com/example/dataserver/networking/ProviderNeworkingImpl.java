@@ -5,6 +5,8 @@ import com.example.dataserver.models.Provider;
 import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
+import networking.provider.ProtobufMessage;
+import networking.provider.ProtobufProviderServiceGrpc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 
@@ -63,6 +65,14 @@ public class ProviderNeworkingImpl extends ProtobufProviderServiceGrpc.ProtobufP
     public void removeProvider(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
         model.removeProvider(Integer.parseInt(request.getMassageOrObject()));
         responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject("Success").build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getAllNotApprovedProviders(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
+        ArrayList<Provider> allNotApprovedProviders = model.getAllNotApprovedProviders();
+        String json = gson.toJson(allNotApprovedProviders);
+        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject(json).build());
         responseObserver.onCompleted();
     }
 }

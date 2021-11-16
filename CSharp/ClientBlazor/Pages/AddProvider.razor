@@ -16,12 +16,64 @@
               <p class="font-medium text-lg">Company details</p>
               <p>Please fill out all the fields.</p>
             </div>
-
             <div class="lg:col-span-2">
               <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                 <div class="md:col-span-5">
                   <label for="name">Company Name</label>
                   <InputText type="text" name="name" id="name" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" @bind-Value="newProvider.CompanyName"/>
+<section class="container mx-auto">
+    <div class="mt-10 sm:mt-0">
+        <div class="md:grid md:grid-cols-3 md:gap-6 text-gray-800">
+            <EditForm Model="@newProvider" OnSubmit="@AddNewProvider" class="mt-5 md:mt-0 md:col-span-2">
+                <div class="shadow overflow-hidden sm:rounded-md">
+                    <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="grid grid-cols-6 gap-6">
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="company-name" class="block text-sm font-medium text-gray-700">Company name</label>
+                                <InputText name="first-name" id="company-name" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.CompanyName"/>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="cvr" class="block text-sm font-medium text-gray-700">CVR</label>
+                                <InputNumber name="cvr" id="cvr" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Cvr"/>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-4">
+                                <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                                <InputTextArea rows="4" name="description" id="description" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Description"/>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-4">
+                                <label for="phoneNumber" class="block text-sm font-medium text-gray-700">PhoneNumber</label>
+                                <InputText rows="4" name="phoneNumber" id="phoneNumber" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.PhoneNumber"/>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-4">
+                                <label for="address-street" class="block text-sm font-medium text-gray-700">Street</label>
+                                <InputText name="address-street" id="address-street" autocomplete="street" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.Street"/>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-4">
+                                <label for="address-street-number" class="block text-sm font-medium text-gray-700">Street number</label>
+                                <InputText name="address-street-number" id="address-street-number" autocomplete="street" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.StreetNumber"/>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-4">
+                                <label for="address-city" class="block text-sm font-medium text-gray-700">City</label>
+                                <InputText name="address-city" id="address-city" autocomplete="city" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.City"/>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-4">
+                                <label for="address-postcode" class="block text-sm font-medium text-gray-700">Postcode</label>
+                                <InputNumber name="address-postcode" id="address-postcode" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" @bind-Value="newProvider.PostCode"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                        <button @onclick="Print" type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Save
+                        </button>
+                    </div>
                 </div>
 
                 <div class="md:col-span-5">

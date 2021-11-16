@@ -1,6 +1,6 @@
 syntax="proto3";
 option java_multiple_files = true;
-package com.example.dataserver.networking;
+package networking.provider;
 
 message ProtobufMessage{
   string massageOrObject = 1;
@@ -12,4 +12,5 @@ service ProtobufProviderService{
   rpc getProviderById(ProtobufMessage) returns (ProtobufMessage);
   rpc editProvider(ProtobufMessage) returns (ProtobufMessage);
   rpc removeProvider(ProtobufMessage) returns (ProtobufMessage);
+  rpc getAllNotApprovedProviders(ProtobufMessage) returns (ProtobufMessage);
 }

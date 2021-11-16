@@ -11,5 +11,6 @@ namespace BusinessLogic.Networking
         Task<Provider> GetProviderById(int id);
         Task EditProvider(Provider provider);
         Task DeleteProvider(int id);
+        Task<IList<Provider>> GetAllNotApprovedProviders();
     }
 }
