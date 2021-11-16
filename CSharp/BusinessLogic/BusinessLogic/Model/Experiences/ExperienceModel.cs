@@ -20,7 +20,7 @@ namespace BusinessLogic.Model.Experiences
             return await network.AddExperienceAsync(experience);
         }
 
-        public async Task<IList<Experience>> GetAllProviderExperiencesAsync(Provider provider)
+        public async Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider)
         {
             return await network.GetAllProviderExperiencesAsync(provider);
         }
