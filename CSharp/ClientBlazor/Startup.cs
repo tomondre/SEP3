@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ClientBlazor.Data;
+using GrpcFileGeneration.Services;
 using ClientBlazor.Data.ProductCategory;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;

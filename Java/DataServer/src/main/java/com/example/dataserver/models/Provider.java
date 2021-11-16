@@ -32,7 +32,23 @@ public class Provider {
     @SerializedName(value = "isApproved", alternate = {"IsApproved"})
     @Column(name = "is_approved")
     private boolean isApproved = false;
+  
+    @SerializedName(value = "email", alternate = {"Email"})
+    @Column(name = "email")
+    private String email;
 
+    @SerializedName(value = "password", alternate = {"Password"})
+    @Column(name = "password")
+    private String password;
+
+
+    protected Provider() {
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+  
     @SerializedName(value = "address", alternate = {"Address"})
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Address address;
@@ -73,6 +89,35 @@ public class Provider {
         return companyName;
     }
 
+//    public ProtobufProvider toProtobuf() {
+//        ProtobufProvider.Builder builder = ProtobufProvider.newBuilder();
+//        builder.setCompanyName(companyName);
+//        builder.setCvr(cvr);
+//        builder.setPhoneNumber(phoneNumber);
+//        builder.setDescription(description);
+//        builder.setId(id);
+//        builder.setAddress(ProtobufAddress.newBuilder().setStreetNumber(streetNumber).setCity(city).setPostCode(postCode).setStreet(street).build());
+//        return builder.build();
+//    }
+
+
+    @Override
+    public String toString() {
+        return "Provider{" +
+                "id=" + id +
+                ", companyName='" + companyName + '\'' +
+                ", cvr=" + cvr +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", description='" + description + '\'' +
+                ", street='" + street + '\'' +
+                ", streetNumber='" + streetNumber + '\'' +
+                ", postCode=" + postCode + '\'' +
+                ", city='" + city + '\'' +
+                ", isApproved=" + isApproved + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password +
+                '}';
+  
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
@@ -133,18 +178,24 @@ public class Provider {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "Provider{" +
-                "id=" + id +
-                ", companyName='" + companyName + '\'' +
-                ", cvr=" + cvr +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", description='" + description + '\'' +
-                ", isApproved=" + isApproved +
-                ", address=" + address +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+
+    public void setApproved(boolean approved) {
+        isApproved = approved;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
