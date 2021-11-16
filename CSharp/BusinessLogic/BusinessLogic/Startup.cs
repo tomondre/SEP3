@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic.Model;
+using BusinessLogic.Model.Customers;
 using BusinessLogic.Model.ProductCategory;
 using BusinessLogic.Networking;
+using BusinessLogic.Networking.Customers;
 using BusinessLogic.Networking.ProductCategory;
 using Grpc.Net.Client;
 using GrpcFileGeneration.Models;
@@ -19,6 +21,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Networking.Category;
+using Networking.Customers;
 using Networking.Provider;
 using RiskFirst.Hateoas;
 
@@ -39,16 +42,26 @@ namespace BusinessLogic
             services.AddSingleton(
                 new ProtobufProviderService.ProtobufProviderServiceClient(
                     GrpcChannel.ForAddress("http://localhost:9090")));          
+            services.AddSingleton<IProviderModel, ProviderModel>();
+            services.AddSingleton<IProviderNet, ProviderNet>();
+            
             services.AddSingleton(
                 new CategoryService.CategoryServiceClient(
                     GrpcChannel.ForAddress("http://localhost:9090")));
-            services.AddSingleton<IProviderModel, ProviderModel>();
             services.AddSingleton<IProductCategoryModel, ProductCategoryModel>();
-            services.AddSingleton<IProviderNet, ProviderNet>();
-            services.AddSingleton<IValidator, Validator>();
             services.AddSingleton<IProductCategoryNet, ProductCategoryNet>();
+            
+            services.AddSingleton(
+                new CustomerService.CustomerServiceClient(
+                    GrpcChannel.ForAddress("http://localhost:9090")));
+            services.AddSingleton<ICustomerModel, CustomerModel>();
+            services.AddSingleton<ICustomerNet, CustomerNet>();
+            
+            services.AddSingleton<IValidator, Validator>();
             services.AddControllers();
+            
             services.AddSingleton<ILinksService, DefaultLinksService>();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "BusinessLogic", Version = "v1"});

@@ -7,6 +7,8 @@
     <ItemGroup>
         <Protobuf Include="Proto/ProviderNetworking.proto" OutputDir="./Protobuf/Provider" GrpcServices="Client" />
         <Protobuf Include="Proto/Category.proto" OutputDir="./Protobuf/Category" GrpcServices="Client" />
+        <Protobuf Include="Proto/Experience.proto" OutputDir="./Protobuf/Experience" GrpcServices="Client" />
+        <Protobuf Include="Proto/Customer.proto" OutputDir="./Protobuf/Customer" GrpcServices="Client" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Google.Protobuf" Version="3.19.0" />
@@ -16,13 +18,6 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="RiskFirst.Hateoas" Version="3.1.1" />
-    </ItemGroup>
-    <ItemGroup>
-        <Folder Include="Protobuf" />
-        <Folder Include="Protobuf\Category" />
-        <Folder Include="Protobuf\Category\Proto" />
-        <Folder Include="Protobuf\Provider" />
-        <Folder Include="Protobuf\Provider\Proto" />
     </ItemGroup>
 
 </Project>
