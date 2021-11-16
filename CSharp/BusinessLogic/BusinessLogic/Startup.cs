@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic.Model;
 using BusinessLogic.Model.Customers;
+using BusinessLogic.Model.Experiences;
 using BusinessLogic.Model.ProductCategory;
 using BusinessLogic.Networking;
 using BusinessLogic.Networking.Customers;
+using BusinessLogic.Networking.Experiences;
 using BusinessLogic.Networking.ProductCategory;
 using Grpc.Net.Client;
 using GrpcFileGeneration.Models;
@@ -21,7 +23,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Networking.Category;
-using Networking.Customers;
+using Networking.Customer;
+using Networking.Experience;
 using Networking.Provider;
 using RiskFirst.Hateoas;
 
@@ -56,6 +59,11 @@ namespace BusinessLogic
                     GrpcChannel.ForAddress("http://localhost:9090")));
             services.AddSingleton<ICustomerModel, CustomerModel>();
             services.AddSingleton<ICustomerNet, CustomerNet>();
+
+            services.AddSingleton(
+                new ExperienceService.ExperienceServiceClient(GrpcChannel.ForAddress("http://localhost:9090")));
+            services.AddSingleton<IExperienceModel, ExperienceModel>();
+            services.AddSingleton<IExperienceNet, ExperienceNet>();
             
             services.AddSingleton<IValidator, Validator>();
             services.AddControllers();
