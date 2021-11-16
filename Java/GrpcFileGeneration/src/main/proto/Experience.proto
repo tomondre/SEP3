@@ -6,8 +6,8 @@ message ProtobufMessage{
     string messageOrObject = 1;
 }
         
-service CategoryService{
+service ExperienceService{
    rpc getAllProviderExperiences(ProtobufMessage) returns (ProtobufMessage);
-   rpc getAllWenShopExperiences(ProtobufMessage) returns (ProtobufMessage);
+   rpc getAllWebShopExperiences(ProtobufMessage) returns (ProtobufMessage);
    rpc addExperience(ProtobufMessage) returns (ProtobufMessage);
 }
