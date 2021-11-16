@@ -21,6 +21,21 @@
             </EditForm>
         </div>
     </section>
+    
+@if (categories == null)
+{
+    <p class="text-center">
+        <em>Loading...</em>
+    </p>
+}
+else if (!categories.Categories.Any())
+{
+    <p class="text-center">
+        <em>No Categories currenlty exist. Please add some.</em>
+    </p>
+}
+else
+{
     <section class="">
         <div class="container px-4 mx-auto">
             <div class="p-4 mb-6 bg-white shadow rounded">
@@ -68,7 +83,9 @@
             </div>
         </div>
     </section>
-</div>
+}
+   </div> 
+
 
 @code {
     private Category newCategory = new();
