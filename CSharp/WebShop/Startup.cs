@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -9,7 +10,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebShop.Data;
+using WebShop.Data.Experiences;
+using WebShop.Data.ProductCategory;
 using WebShop.RestWebShop;
 
 namespace WebShop
@@ -31,6 +33,8 @@ namespace WebShop
             services.AddServerSideBlazor();
             services.AddHttpClient();
             services.AddSingleton<ICustomerNetwork, CustomerNetwork>();
+            services.AddSingleton<IProductCategoryService, ProductCategoryService>();
+            services.AddSingleton<IExperienceService, ExperienceService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

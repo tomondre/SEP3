@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "address", schema = "sep3")
+@Table(name = "address", schema = "sep3", uniqueConstraints={@UniqueConstraint(columnNames ={"id", "city", "street", "street_no", "post_code"})})
 public class Address {
 
     @Id

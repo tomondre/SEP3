@@ -29,7 +29,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
       StreamObserver<ProtobufMessage> responseObserver)
   {
     ArrayList<Experience> allProviderExperiences = experienceDAO.getAllProviderExperiences(
-        Integer.parseInt(request.getMessageOrObject()));
+    Integer.parseInt(request.getMessageOrObject()));
     String toJson = gson.toJson(allProviderExperiences);
     responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(toJson).build());
     responseObserver.onCompleted();
@@ -39,7 +39,10 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
   public void getAllWebShopExperiences(ProtobufMessage request,
       StreamObserver<ProtobufMessage> responseObserver)
   {
-    super.getAllWebShopExperiences(request, responseObserver);
+    ArrayList<Experience> allWebShopExperiences = experienceDAO.getAllWebShopExperiences();
+    String s = gson.toJson(allWebShopExperiences);
+    responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
+    responseObserver.onCompleted();
   }
 
   @Override
