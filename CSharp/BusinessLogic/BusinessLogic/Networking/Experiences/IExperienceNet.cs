@@ -8,7 +8,7 @@ namespace BusinessLogic.Networking.Experiences
     public interface IExperienceNet
     {
         Task<Experience> AddExperienceAsync(Experience experience);
-        Task<IList<Experience>> GetAllProviderExperiencesAsync(Provider provider);
+        Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider);
         Task<IList<Experience>> GetAllWebShopExperiencesAsync();
     }
 }

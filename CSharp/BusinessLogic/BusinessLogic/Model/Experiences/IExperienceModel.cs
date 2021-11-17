@@ -8,7 +8,7 @@ namespace BusinessLogic.Model.Experiences
     public interface IExperienceModel
     {
         Task<Experience> AddExperienceAsync(Experience experience);
-        Task<IList<Experience>> GetAllProviderExperiencesAsync(Provider provider);
+        Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider);
         Task<IList<Experience>> GetAllWebShopExperiencesAsync();
     }
 }

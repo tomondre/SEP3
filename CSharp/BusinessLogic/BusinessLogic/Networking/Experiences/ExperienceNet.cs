@@ -25,9 +25,15 @@ namespace BusinessLogic.Networking.Experiences
             });
         }
 
-        public Task<IList<Experience>> GetAllProviderExperiencesAsync(Provider provider)
+        public async Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider)
         {
-            throw new System.NotImplementedException();
+            var allProviderExperiences = await client.getAllProviderExperiencesAsync(new ProtobufMessage() {MessageOrObject = provider.ToString()});
+            var messageOrObject = allProviderExperiences.MessageOrObject;
+            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(messageOrObject, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+            return deserialize;
         }
 
         public Task<IList<Experience>> GetAllWebShopExperiencesAsync()

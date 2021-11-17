@@ -22,6 +22,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Networking.Category;
 using Networking.Customer;
+using Networking.Experience;
 using Networking.Provider;
 using RiskFirst.Hateoas;
 
@@ -56,6 +57,11 @@ namespace BusinessLogic
                     GrpcChannel.ForAddress("http://localhost:9090")));
             services.AddSingleton<ICustomerModel, CustomerModel>();
             services.AddSingleton<ICustomerNet, CustomerNet>();
+
+            services.AddSingleton(
+                new ExperienceService.ExperienceServiceClient(GrpcChannel.ForAddress("http://localhost:9090")));
+            services.AddSingleton<IExperienceModel, ExperienceModel>();
+            services.AddSingleton<IExperienceNet, ExperienceNet>();
             
             services.AddSingleton<IValidator, Validator>();
             services.AddControllers();
