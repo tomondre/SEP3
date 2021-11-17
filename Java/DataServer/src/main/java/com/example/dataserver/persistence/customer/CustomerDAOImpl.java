@@ -20,4 +20,10 @@ public class CustomerDAOImpl implements CustomerDAO {
         Customer save = repository.save(customer);
         return save;
     }
+
+    @Override
+    public Customer getCustomerByEmail(String email)
+    {
+        return repository.getByEmail(email);
+    }
 }

@@ -5,4 +5,5 @@ import com.example.dataserver.models.Customer;
 public interface CustomerDAO {
 
     Customer createCustomer(Customer customer);
+    Customer getCustomerByEmail(String email);
 }

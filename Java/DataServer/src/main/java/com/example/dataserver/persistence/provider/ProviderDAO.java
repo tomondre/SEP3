@@ -1,4 +1,4 @@
-package com.example.dataserver.persistence;
+package com.example.dataserver.persistence.provider;
 
 import com.example.dataserver.models.Provider;
 
@@ -11,4 +11,5 @@ public interface ProviderDAO {
     void editProvider(Provider provider);
     void removeProvider(int id);
     ArrayList<Provider> getAllNotApprovedProviders();
+    Provider getProviderByEmail(String email);
 }

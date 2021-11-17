@@ -10,4 +10,5 @@ import java.util.ArrayList;
 @Repository
 public interface ProviderRepository extends JpaRepository<Provider, Integer> {
     ArrayList<Provider> getAllByIsApproved(@Param("is_approved") boolean isApproved);
+    Provider getByEmail(@Param("email")String email);
 }

@@ -1,4 +1,4 @@
-package com.example.dataserver.persistence;
+package com.example.dataserver.persistence.provider;
 
 import com.example.dataserver.models.Provider;
 import com.example.dataserver.persistence.repository.ProviderRepository;
@@ -46,5 +46,11 @@ public class ProviderDAOImpl implements ProviderDAO {
     @Override
     public ArrayList<Provider> getAllNotApprovedProviders() {
         return repo.getAllByIsApproved(false);
+    }
+
+    @Override
+    public Provider getProviderByEmail(String email)
+    {
+        return repo.getByEmail(email);
     }
 }
