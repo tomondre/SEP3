@@ -13,11 +13,7 @@
         <img class="h-9" src="yofte-assets/logos/yofte-logo.svg" alt="" width="auto">
       </a>
       <ul class="hidden lg:flex absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:items-center lg:w-auto">
-        <li><a class="mr-12 font-bold font-heading hover:text-gray-600" href="#">Category</a></li>
-        <li><a class="mr-12 font-bold font-heading hover:text-gray-600" href="#">Collection</a></li>
-        <li><a class="mr-12 font-bold font-heading hover:text-gray-600" href="#">Story</a></li>
-        <li><a class="mr-12 font-bold font-heading hover:text-gray-600" href="#">Brand</a></li>
-        <li><a class="font-bold font-heading hover:text-gray-600" href="#">Photos</a></li>
+        <li><a @onclick="OpenExperiences" class="mr-12 font-bold font-heading hover:text-gray-600" >Experiences</a></li>
       </ul>
     </div>
     <div class="hidden xl:flex items-center justify-end mr-12">
@@ -108,4 +104,10 @@
   {
     NavigationManager.NavigateTo("/SignInPage");
   }
+
+  private void OpenExperiences()
+  {
+    NavigationManager.NavigateTo("/experiences");
+  }
+
 }
