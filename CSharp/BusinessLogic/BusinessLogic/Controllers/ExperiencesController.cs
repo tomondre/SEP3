@@ -20,7 +20,7 @@ namespace BusinessLogic.Controllers
         }
         
         [HttpGet]
-        [Route("/{provider:int}")]
+        [Route("{provider:int}")]
         public async Task<ActionResult<IList<Experience>>> GetAllExperiencesAsync([FromRoute] int? provider)
         {
             IList<Experience> experiences = new List<Experience>();
