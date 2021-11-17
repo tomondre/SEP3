@@ -18,26 +18,28 @@ namespace BusinessLogic.Controllers
         {
             this.model = model;
         }
-        
-        [HttpGet]
-        [Route("{provider:int}")]
-        public async Task<ActionResult<IList<Experience>>> GetAllExperiencesAsync([FromRoute] int? provider)
-        {
-            IList<Experience> experiences = new List<Experience>();
-            if (provider != null)
-            {
-                experiences = await model.GetAllProviderExperiencesAsync(provider.Value);
-            }
-            else
-            {
-                experiences = await model.GetAllWebShopExperiencesAsync();
-            }
 
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<ActionResult<ExperienceList>> GetExperiences(int? id)
+        {
+            ExperienceList experiences = new ExperienceList();
+            experiences.Experiences = await model.GetAllProviderExperiencesAsync(id.Value);
             return Ok(experiences);
         }
 
+
+        [HttpGet]
+        [Route("")]
+        public async Task<ActionResult<ExperienceList>> GetAllExperiencesAsync()
+        {
+            ExperienceList experiences = new ExperienceList();
+            experiences.Experiences = await model.GetAllWebShopExperiencesAsync();
+            return Ok(experiences);
+        }
+        
         [HttpPost]
-        public async Task<ActionResult<Experience>> AddExperienceAsync([FromBody]Experience experience)
+        public async Task<ActionResult<Experience>> AddExperienceAsync([FromBody] Experience experience)
         {
             var addExperienceAsync = await model.AddExperienceAsync(experience);
             return Ok(addExperienceAsync);
