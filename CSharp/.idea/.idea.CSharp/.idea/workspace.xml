@@ -13,89 +13,16 @@
     <projectFile profileName="WebShop">WebShop/WebShop.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2c44e8f-74d9-4966-a97f-9d00dbe82545" name="Changes" comment="Main layout adjustment">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Checkout_at_10__11__2021_10_21_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Checkout_at_10__11__2021_10_21_[Changes]1/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Checkout_at_10__11__2021_10_21__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Checkout_at_10__11__2021_10_21__Changes_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Checkout_at_10__11__2021_11_02_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Checkout_at_10__11__2021_11_02__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Checkout_at_10__11__2021_12_35_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Checkout_at_10__11__2021_12_35_[Changes]1/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Checkout_at_10__11__2021_12_35__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Checkout_at_10__11__2021_12_35__Changes_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Checkout_at_10__11__2021_9_51_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Checkout_at_10__11__2021_9_51__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Checkout_at_9__11__2021_20_17_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Checkout_at_9__11__2021_20_17__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Merge_at_10__11__2021_9_49_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Merge_at_10__11__2021_9_49__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Merge_at_16__11__2021_11_17_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Merge_at_16__11__2021_11_17__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Merge_at_9__11__2021_14_46_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Merge_at_9__11__2021_14_46_[Changes]1/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Merge_at_9__11__2021_14_46__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Merge_at_9__11__2021_14_46__Changes_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/BusinessLogic.assets.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/BusinessLogic.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/BusinessLogic.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/BusinessLogic.genruntimeconfig.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/BusinessLogic.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/BusinessLogic1.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/BusinessLogic1.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/BusinessLogic2.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/BusinessLogic3.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/ClientBlazor.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/GrpcFileGeneration.assets.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/GrpcFileGeneration.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/GrpcFileGeneration.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/GrpcFileGeneration.genruntimeconfig.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/GrpcFileGeneration.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/GrpcFileGeneration1.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/GrpcFileGeneration1.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/GrpcFileGeneration2.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/GrpcFileGeneration2.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/GrpcFileGeneration3.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/GrpcFileGeneration4.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/project.nuget.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/project.nuget1.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16_[NotRelated]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_21_16__NotRelated_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor.RazorComponent.input.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor.RazorCoreGenerate.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor.TagHelpers.output.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor.Views.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor.Views.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor.Views1.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor.Views1.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor1.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor1.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor2.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor2.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor3.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/ClientBlazor4.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/GrpcFileGeneration.csproj.AssemblyReference.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[NotRelated]/GrpcFileGeneration.assets.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[NotRelated]/GrpcFileGeneration.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[NotRelated]/GrpcFileGeneration.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[NotRelated]/GrpcFileGeneration.genruntimeconfig.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[NotRelated]/GrpcFileGeneration.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[NotRelated]/GrpcFileGeneration1.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[NotRelated]/GrpcFileGeneration1.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[NotRelated]/GrpcFileGeneration2.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[NotRelated]/GrpcFileGeneration3.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[NotRelated]/project.nuget.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22_[NotRelated]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/shelf/Uncommitted_changes_before_Update_at_30__10__2021_22_22__NotRelated_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/GrpcFileGeneration.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/GrpcFileGeneration.csproj" afterDir="false" />
+    <list default="true" id="b2c44e8f-74d9-4966-a97f-9d00dbe82545" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ClientBlazor/Pages/AddExperience.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/Experiences/ExperienceNet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/Experiences/ExperienceNet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/ExperienceNetwork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/ExperienceNetwork.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/IExperienceNetwork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/IExperienceNetwork.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Shared/SideBar.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Shared/SideBar.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Proto/Experience.proto" beforeDir="false" afterPath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Proto/Experience.proto" afterDir="false" />
     </list>
     <list id="7b6ad5ca-a7a2-4366-96a3-bd5f534953c1" name="NotRelated" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -142,8 +69,8 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/HandShake.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ClientBlazor/package-lock.json" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/HandShake.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Program.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="209OkxNnvKWn42iIkMmKox7zhC0" />
@@ -165,7 +92,7 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected=".NET Project.GrpcFileGeneration">
+  <component name="RunManager" selected=".NET Launch Settings Profile.ClientBlazor">
     <configuration name="ClientBlazor" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -360,6 +287,7 @@
       <workItem from="1636982062511" duration="13495000" />
       <workItem from="1637051117850" duration="6917000" />
       <workItem from="1637061739658" duration="1843000" />
+      <workItem from="1637083150118" duration="3365000" />
     </task>
     <task id="LOCAL-00001" summary="Creating method fer getting provider by id">
       <created>1635510476648</created>
@@ -678,14 +606,7 @@
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/WebShop/RestWebShop/CustomerNetwork.cs</url>
           <line>40</line>
-          <properties documentPath="C:\Users\PC1\SEPO\CSharp\WebShop\RestWebShop\CustomerNetwork.cs" initialLine="40" containingFunctionPresentation="method 'CheckException'">
-            <startOffsets>
-              <option value="1356" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1426" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="C:\Users\PC1\SEPO\CSharp\WebShop\RestWebShop\CustomerNetwork.cs" initialLine="40" containingFunctionPresentation="method 'CheckException'" />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
