@@ -18,7 +18,7 @@ namespace BusinessLogic.Networking.Experiences
         public async Task<Experience> AddExperienceAsync(Experience experience)
         {
             var serialize = JsonSerializer.Serialize(experience);
-            var protobufMessage = await client.addExperienceAsync(new ProtobufMessage(){MessageOrObject = serialize});
+            var protobufMessage = await client.addExperienceAsync(new ProtobufMessage() {MessageOrObject = serialize});
             return JsonSerializer.Deserialize<Experience>(protobufMessage.MessageOrObject, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -27,7 +27,8 @@ namespace BusinessLogic.Networking.Experiences
 
         public async Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider)
         {
-            var allProviderExperiences = await client.getAllProviderExperiencesAsync(new ProtobufMessage() {MessageOrObject = provider.ToString()});
+            var allProviderExperiences = await client.getAllProviderExperiencesAsync(new ProtobufMessage()
+                {MessageOrObject = provider.ToString()});
             var messageOrObject = allProviderExperiences.MessageOrObject;
             var deserialize = JsonSerializer.Deserialize<IList<Experience>>(messageOrObject, new JsonSerializerOptions()
             {
@@ -36,9 +37,14 @@ namespace BusinessLogic.Networking.Experiences
             return deserialize;
         }
 
-        public Task<IList<Experience>> GetAllWebShopExperiencesAsync()
+        public async Task<IList<Experience>> GetAllWebShopExperiencesAsync()
         {
-            throw new System.NotImplementedException();
+            var allProviderExperiences = await client.getAllWebShopExperiencesAsync(new ProtobufMessage());
+            return JsonSerializer.Deserialize<IList<Experience>>(allProviderExperiences.MessageOrObject,
+                new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
         }
     }
 }
