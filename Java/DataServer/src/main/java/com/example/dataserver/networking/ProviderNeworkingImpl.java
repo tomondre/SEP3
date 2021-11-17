@@ -1,6 +1,6 @@
 package com.example.dataserver.networking;
 
-import com.example.dataserver.persistence.ProviderDAO;
+import com.example.dataserver.persistence.provider.ProviderDAO;
 import com.example.dataserver.models.Provider;
 import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
