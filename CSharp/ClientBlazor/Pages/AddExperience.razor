@@ -4,7 +4,7 @@
 @using ClientBlazor.Data.Experiences
 @using ClientBlazor.Data.ProductCategory
 
-@inject IExperienceNetwork ExperienceNetwork
+@inject IExperienceService ExperienceService
 @inject NavigationManager NavigationManager
 @inject IProductCategoryService ProductCategoryService
 
@@ -94,7 +94,7 @@
 
   private async Task AddNewExperience()
   {
-    await ExperienceNetwork.AddExperienceAsync(newExperience);
+    await ExperienceService.AddExperienceAsync(newExperience);
     NavigationManager.NavigateTo("/AllExperiences");
   }
 

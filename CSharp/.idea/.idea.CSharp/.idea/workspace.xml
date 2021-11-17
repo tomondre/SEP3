@@ -13,16 +13,14 @@
     <projectFile profileName="WebShop">WebShop/WebShop.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2c44e8f-74d9-4966-a97f-9d00dbe82545" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ClientBlazor/Pages/AddExperience.razor" afterDir="false" />
+    <list default="true" id="b2c44e8f-74d9-4966-a97f-9d00dbe82545" name="Changes" comment="add experience page">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/Experiences/ExperienceNet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/Experiences/ExperienceNet.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/ExperienceNetwork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/ExperienceNetwork.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/IExperienceNetwork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/IExperienceNetwork.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientBlazor/Shared/SideBar.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Shared/SideBar.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/ExperienceNetwork.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/ExperienceService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/ExperienceService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/IExperienceSevice.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/IExperienceSevice.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Pages/AddExperience.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Pages/AddExperience.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClientBlazor/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Proto/Experience.proto" beforeDir="false" afterPath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Proto/Experience.proto" afterDir="false" />
     </list>
     <list id="7b6ad5ca-a7a2-4366-96a3-bd5f534953c1" name="NotRelated" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,7 +53,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="create_customer" />
+        <entry key="$PROJECT_DIR$/.." value="AddExperience" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -69,9 +67,21 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Data/Experiences/ExperienceNetwork.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Startup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/BusinessLogic/BusinessLogic/Networking/Experiences/ExperienceNet.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ClientBlazor/package-lock.json" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/HandShake.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Data/Experiences/ExperienceNetwork.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/BusinessLogic/BusinessLogic/Startup.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Shared/SideBar.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Data/Experiences/IExperienceSevice.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/BusinessLogic/BusinessLogic/Networking/Experiences/ExperienceNet.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Data/Experiences/IExperienceSevice.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/BusinessLogic/BusinessLogic/Startup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/HandShake.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Shared/SideBar.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Startup.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="209OkxNnvKWn42iIkMmKox7zhC0" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -92,7 +102,7 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.ClientBlazor">
+  <component name="RunManager" selected=".NET Project.GrpcFileGeneration">
     <configuration name="ClientBlazor" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -287,7 +297,7 @@
       <workItem from="1636982062511" duration="13495000" />
       <workItem from="1637051117850" duration="6917000" />
       <workItem from="1637061739658" duration="1843000" />
-      <workItem from="1637083150118" duration="3365000" />
+      <workItem from="1637083150118" duration="4989000" />
     </task>
     <task id="LOCAL-00001" summary="Creating method fer getting provider by id">
       <created>1635510476648</created>
@@ -534,7 +544,35 @@
       <option name="project" value="LOCAL" />
       <updated>1637064354857</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="creating network part for the clientblazor">
+      <created>1637137430123</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1637137430123</updated>
+    </task>
+    <task id="LOCAL-00037" summary="add experience singleton added">
+      <created>1637137491177</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1637137491177</updated>
+    </task>
+    <task id="LOCAL-00038" summary="create network part in business logic for add experience">
+      <created>1637137532601</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1637137532601</updated>
+    </task>
+    <task id="LOCAL-00039" summary="add experience page">
+      <created>1637137558257</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1637137558257</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -573,10 +611,6 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Updating git ignore" />
-    <MESSAGE value="Adding hateoas link for adding new provider for class ProviderList." />
-    <MESSAGE value="Creating new layout for website" />
-    <MESSAGE value="Halabala" />
     <MESSAGE value="Layout change" />
     <MESSAGE value="gRPC now uses single string field for easier data manipulation while developing the project" />
     <MESSAGE value="Address" />
@@ -598,7 +632,11 @@
     <MESSAGE value="Implementation of requirement add customer" />
     <MESSAGE value="Adding validation for Customer creation" />
     <MESSAGE value="Main layout adjustment" />
-    <option name="LAST_COMMIT_MESSAGE" value="Main layout adjustment" />
+    <MESSAGE value="creating network part for the clientblazor" />
+    <MESSAGE value="add experience singleton added" />
+    <MESSAGE value="create network part in business logic for add experience" />
+    <MESSAGE value="add experience page" />
+    <option name="LAST_COMMIT_MESSAGE" value="add experience page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
