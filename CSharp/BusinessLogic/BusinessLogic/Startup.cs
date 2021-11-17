@@ -21,7 +21,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Networking.Category;
-using Networking.Customers;
+using Networking.Customer;
 using Networking.Provider;
 using RiskFirst.Hateoas;
 
