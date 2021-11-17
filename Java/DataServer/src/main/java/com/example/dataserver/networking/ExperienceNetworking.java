@@ -46,6 +46,10 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
   public void addExperience(ProtobufMessage request,
       StreamObserver<ProtobufMessage> responseObserver)
   {
-    super.addExperience(request, responseObserver);
+    Experience experience = gson.fromJson(request.getMessageOrObject(),Experience.class);
+    Experience result =  experienceDAO.addExperience(experience);
+    String string =  gson.toJson(result);
+    responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(string).build());
+    responseObserver.onCompleted();
   }
 }
