@@ -25,6 +25,7 @@ namespace GrpcFileGeneration.Models
         [Required]
         public Address Address { get; set; }
 
+        public string Token { set; get; }
         public Customer()
         {
             Address = new Address();

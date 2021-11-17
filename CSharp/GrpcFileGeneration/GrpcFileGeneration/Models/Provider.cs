@@ -32,6 +32,8 @@ namespace GrpcFileGeneration.Models
 
         public Address Address { get; set; }
 
+        public string Token { set; get; }
+
         public Provider()
         {
             Address = new Address();
