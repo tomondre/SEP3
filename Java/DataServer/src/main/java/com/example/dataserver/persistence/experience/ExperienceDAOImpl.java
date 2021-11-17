@@ -25,8 +25,8 @@ public class ExperienceDAOImpl implements ExperienceDAO
     }
 
     @Override
-    public ArrayList<Experience> getAllProviderExperiences(Provider provider) {
-        return null;
+    public ArrayList<Experience> getAllProviderExperiences(int provider) {
+        return repository.getAllByExperienceProviderId(provider);
     }
 
     @Override
