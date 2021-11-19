@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ClientBlazor.Data;
 using ClientBlazor.Data.Experiences;
+using ClientBlazor.Data.Pictures;
 using GrpcFileGeneration.Services;
 using ClientBlazor.Data.ProductCategory;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +36,7 @@ namespace ClientBlazor
             services.AddScoped<IProviderService, ProviderService>();
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
             services.AddScoped<IExperienceService, ExperienceService>();
+            services.AddScoped<IPicturesService, PicturesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
