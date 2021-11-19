@@ -1,18 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using BusinessLogic.Networking.Experiences;
 using GrpcFileGeneration.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace BusinessLogic.Model.Experiences
 {
     public class ExperienceModel : IExperienceModel
     {
         private IExperienceNet network;
+        private IMemoryCache memoryCache;
 
-        public ExperienceModel(IExperienceNet network)
+        public ExperienceModel(IExperienceNet network, IMemoryCache memoryCache)
         {
             this.network = network;
+            this.memoryCache = memoryCache;
         }
         
         public async Task<Experience> AddExperienceAsync(GrpcFileGeneration.Models.Experience experience)
@@ -27,7 +32,16 @@ namespace BusinessLogic.Model.Experiences
 
         public async Task<IList<Experience>> GetAllWebShopExperiencesAsync()
         {
-            return await network.GetAllWebShopExperiencesAsync();
+            IList<Experience> result;
+            bool AlreadyExists = memoryCache.TryGetValue("CachedExperiences", out result);
+            if (!AlreadyExists)
+            { 
+                result = await network.GetAllWebShopExperiencesAsync();
+                var slidingExpiration = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(1));
+                memoryCache.Set("CachedExperiences", result, slidingExpiration);
+            }
+
+            return result;
         }
     }
 }
