@@ -69,7 +69,8 @@ namespace BusinessLogic
             services.AddControllers();
             
             services.AddSingleton<ILinksService, DefaultLinksService>();
-            
+
+            services.AddMemoryCache();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "BusinessLogic", Version = "v1"});
