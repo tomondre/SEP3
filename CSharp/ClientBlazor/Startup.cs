@@ -36,7 +36,7 @@ namespace ClientBlazor
             services.AddScoped<IProviderService, ProviderService>();
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
             services.AddScoped<IExperienceService, ExperienceService>();
-            services.AddScoped<IPicturesService, PicturesService>();
+            services.AddScoped<IPicturesService, PictureService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
