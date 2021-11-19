@@ -29,7 +29,10 @@ namespace BusinessLogic.Controllers
             list.Categories = await model.GetAllCategoriesAsync();
             foreach (var item in list.Categories)
             {
-                await linksService.AddLinksAsync(item);
+                if (item.Links.Count == 0)
+                {
+                    await linksService.AddLinksAsync(item);
+                }
             }
 
             await linksService.AddLinksAsync(list);
