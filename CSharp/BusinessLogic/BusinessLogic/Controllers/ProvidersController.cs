@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 using BusinessLogic.Model;
 using GrpcFileGeneration.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RiskFirst.Hateoas;
 
 namespace BusinessLogic.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ProviderController : ControllerBase

@@ -4,10 +4,12 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Experiences;
 using GrpcFileGeneration.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogic.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ExperiencesController : ControllerBase

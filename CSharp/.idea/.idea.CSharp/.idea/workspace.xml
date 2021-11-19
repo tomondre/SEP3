@@ -13,14 +13,24 @@
     <projectFile profileName="WebShop">WebShop/WebShop.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2c44e8f-74d9-4966-a97f-9d00dbe82545" name="Changes" comment="add experience page">
+    <list default="true" id="b2c44e8f-74d9-4966-a97f-9d00dbe82545" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/LoginController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Model/Login/ILoginModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Model/Login/LoginModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/Login/ILoginNet.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/Login/LoginNet.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClientBlazor/Pages/Login.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/BusinessLogic.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/BusinessLogic.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/CustomersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/CustomersController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/ExperiencesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/ExperiencesController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/ProductCategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/ProductCategoryController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/ProvidersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/ProvidersController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/ExperienceNetwork.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/ExperienceService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/ExperienceService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/IExperienceSevice.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/IExperienceSevice.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientBlazor/Pages/AddExperience.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Pages/AddExperience.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientBlazor/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Shared/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Shared/MainLayout.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Shared/SideBar.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Shared/SideBar.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/wwwroot/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/wwwroot/css/app.css" afterDir="false" />
     </list>
     <list id="7b6ad5ca-a7a2-4366-96a3-bd5f534953c1" name="NotRelated" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,7 +63,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="AddExperience" />
+        <entry key="$PROJECT_DIR$/.." value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -67,21 +77,14 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Data/Experiences/ExperienceNetwork.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Startup.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/BusinessLogic/BusinessLogic/Networking/Experiences/ExperienceNet.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ClientBlazor/package-lock.json" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Data/Experiences/ExperienceNetwork.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/BusinessLogic/BusinessLogic/Startup.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Program.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Shared/SideBar.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Data/Experiences/IExperienceSevice.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/BusinessLogic/BusinessLogic/Networking/Experiences/ExperienceNet.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Data/Experiences/IExperienceSevice.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/BusinessLogic/BusinessLogic/Startup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Proto/ProviderNetworking.proto" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/ProvidersController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/HandShake.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Shared/SideBar.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/tabit/RiderProjects/SEP3/CSharp/ClientBlazor/Startup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ClientBlazor/Data/ProductCategory/ProductCategoryService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ClientBlazor/package-lock.json" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Proto/Category.proto" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/af71748759ed495aa8657bac4bc37279d7578/31/JsonSerializer.Read.String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Program.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="209OkxNnvKWn42iIkMmKox7zhC0" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -99,10 +102,10 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="SolutionBuilderGeneralOptionsPageId" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected=".NET Project.GrpcFileGeneration">
+  <component name="RunManager" selected=".NET Launch Settings Profile.ClientBlazor">
     <configuration name="ClientBlazor" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -297,7 +300,8 @@
       <workItem from="1636982062511" duration="13495000" />
       <workItem from="1637051117850" duration="6917000" />
       <workItem from="1637061739658" duration="1843000" />
-      <workItem from="1637083150118" duration="4989000" />
+      <workItem from="1637226353659" duration="3506000" />
+      <workItem from="1637241445236" duration="6164000" />
     </task>
     <task id="LOCAL-00001" summary="Creating method fer getting provider by id">
       <created>1635510476648</created>
@@ -544,35 +548,63 @@
       <option name="project" value="LOCAL" />
       <updated>1637064354857</updated>
     </task>
-    <task id="LOCAL-00036" summary="creating network part for the clientblazor">
-      <created>1637137430123</created>
+    <task id="LOCAL-00036" summary="Administrator model class created">
+      <created>1637149229562</created>
       <option name="number" value="00036" />
       <option name="presentableId" value="LOCAL-00036" />
       <option name="project" value="LOCAL" />
-      <updated>1637137430123</updated>
+      <updated>1637149229562</updated>
     </task>
-    <task id="LOCAL-00037" summary="add experience singleton added">
-      <created>1637137491177</created>
+    <task id="LOCAL-00037" summary="Administrator DAO and Repository classes created">
+      <created>1637149253527</created>
       <option name="number" value="00037" />
       <option name="presentableId" value="LOCAL-00037" />
       <option name="project" value="LOCAL" />
-      <updated>1637137491177</updated>
+      <updated>1637149253527</updated>
     </task>
-    <task id="LOCAL-00038" summary="create network part in business logic for add experience">
-      <created>1637137532601</created>
+    <task id="LOCAL-00038" summary="Token added for the private key">
+      <created>1637149306481</created>
       <option name="number" value="00038" />
       <option name="presentableId" value="LOCAL-00038" />
       <option name="project" value="LOCAL" />
-      <updated>1637137532601</updated>
+      <updated>1637149306481</updated>
     </task>
-    <task id="LOCAL-00039" summary="add experience page">
-      <created>1637137558257</created>
+    <task id="LOCAL-00039" summary="Get by email methods added">
+      <created>1637149350280</created>
       <option name="number" value="00039" />
       <option name="presentableId" value="LOCAL-00039" />
       <option name="project" value="LOCAL" />
-      <updated>1637137558257</updated>
+      <updated>1637149350280</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="new protobuf generator added">
+      <created>1637149365617</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1637149365617</updated>
+    </task>
+    <task id="LOCAL-00041" summary="login protobuf file created">
+      <created>1637149380927</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1637149380927</updated>
+    </task>
+    <task id="LOCAL-00042" summary="gRPC service created">
+      <created>1637149401308</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1637149401308</updated>
+    </task>
+    <task id="LOCAL-00043" summary="package path updated">
+      <created>1637149482057</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1637149482057</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -611,10 +643,6 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Layout change" />
-    <MESSAGE value="gRPC now uses single string field for easier data manipulation while developing the project" />
-    <MESSAGE value="Address" />
-    <MESSAGE value="Csproj update" />
     <MESSAGE value="Adding proto generated files" />
     <MESSAGE value="Creating blazor project for webshop" />
     <MESSAGE value="Deleting unrelated files" />
@@ -632,11 +660,15 @@
     <MESSAGE value="Implementation of requirement add customer" />
     <MESSAGE value="Adding validation for Customer creation" />
     <MESSAGE value="Main layout adjustment" />
-    <MESSAGE value="creating network part for the clientblazor" />
-    <MESSAGE value="add experience singleton added" />
-    <MESSAGE value="create network part in business logic for add experience" />
-    <MESSAGE value="add experience page" />
-    <option name="LAST_COMMIT_MESSAGE" value="add experience page" />
+    <MESSAGE value="Administrator model class created" />
+    <MESSAGE value="Administrator DAO and Repository classes created" />
+    <MESSAGE value="Token added for the private key" />
+    <MESSAGE value="Get by email methods added" />
+    <MESSAGE value="new protobuf generator added" />
+    <MESSAGE value="login protobuf file created" />
+    <MESSAGE value="gRPC service created" />
+    <MESSAGE value="package path updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="package path updated" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

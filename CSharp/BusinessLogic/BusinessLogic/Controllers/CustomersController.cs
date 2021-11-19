@@ -2,10 +2,12 @@
 using System.Threading.Tasks;
 using BusinessLogic.Model.Customers;
 using GrpcFileGeneration.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogic.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CustomersController : ControllerBase
