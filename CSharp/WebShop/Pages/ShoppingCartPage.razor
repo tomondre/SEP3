@@ -2,6 +2,8 @@
 @using WebShop.Data.ShoppingCart
 @using WebShop.Models
 @using WebShop.Services
+
+@inject NavigationManager NavigationManager
 @inject IShoppingCartService ShopppingCartService
 @inject IObserverService ObserverService
 
@@ -72,7 +74,7 @@
                                         </div>
                                     </div>
                                     <div class="w-auto md:w-1/6 lg:w-2/12 px-4 text-right">
-                                        <p class="text-lg text-blue-500 font-bold font-heading">@item.TotalPrice</p>
+                                        <p class="text-lg text-blue-500 font-bold font-heading">@item.TotalPrice dkk</p>
                                     </div>
                                 </div>
                             }
@@ -80,41 +82,40 @@
                         </div>
 
 
-                        <div class="flex flex-wrap items-center lg:-mb-4">
-                            <span class="mr-12 mb-4 font-medium">Apply discount code:</span>
-                            <input class="flex-1 md:flex-none mr-6 sm:mr-0 md:mr-6 mb-4 px-8 py-4 placeholder-gray-800 font-bold font-heading border rounded-md" type="text" placeholder="SUMMER30X">
-                            <a class="flex-1 md:flex-none inline-block mb-4 px-8 py-4 text-center text-white font-bold font-heading uppercase bg-gray-800 hover:bg-gray-700 rounded-md" href="#">Apply</a>
-                        </div>
+                        @* <div class="flex flex-wrap items-center lg:-mb-4"> *@
+                        @*     <span class="mr-12 mb-4 font-medium">Apply discount code:</span> *@
+                        @*     <input class="flex-1 md:flex-none mr-6 sm:mr-0 md:mr-6 mb-4 px-8 py-4 placeholder-gray-800 font-bold font-heading border rounded-md" type="text" placeholder="SUMMER30X"> *@
+                        @*     <a class="flex-1 md:flex-none inline-block mb-4 px-8 py-4 text-center text-white font-bold font-heading uppercase bg-gray-800 hover:bg-gray-700 rounded-md" >Apply</a> *@
+                        @* </div> *@
                     </div>
                     <div class="w-full xl:w-4/12 px-4">
-                        <div class="p-6 md:p-12 bg-blue-300">
+                        <div class="p-6 md:p-12 bg-blue-500">
                             <h2 class="mb-6 text-4xl font-bold font-heading text-white">Cart totals</h2>
                             <div class="flex mb-8 items-center justify-between pb-5 border-b border-blue-100">
                                 <span class="text-blue-50">Subtotal</span>
-                                <span class="text-xl font-bold font-heading text-white">@ShoppingCart.OrderTotal</span>
+                                <span class="text-xl font-bold font-heading text-white">@ShoppingCart.OrderTotal dkk</span>
                             </div>
                             <h4 class="mb-2 text-xl font-bold font-heading text-white">Tax</h4>
                             <div class="flex mb-2 justify-between items-center">
                                 <span class="text-blue-50">Percent</span>
-                                <span class="text-xl font-bold font-heading text-white">@ShoppingCart.Tax</span>
+                                <span class="text-xl font-bold font-heading text-white">@ShoppingCart.Tax %</span>
                             </div>
                             <div class="flex mb-10 justify-between items-center">
-                                <span class="text-blue-50">DKK Amount</span>
+                                <span class="text-blue-50">Amount</span>
                                 <span class="text-xl font-bold font-heading text-white">@ShoppingCart.TaxAmount dkk</span>
                             </div>
                             <div class="flex mb-10 justify-between items-center">
                                 <span class="text-xl font-bold font-heading text-white">Order total</span>
                                 <span class="text-xl font-bold font-heading text-white">@ShoppingCart.OrderTotal</span>
                             </div>
-                            <a class="block w-full py-4 bg-orange-300 hover:bg-orange-400 text-center text-white font-bold font-heading uppercase rounded-md transition duration-200" href="#">Go to Checkout</a>
+                            <a @onclick="OpenCheckoutPage" class="block w-full py-4 bg-blue-300 hover:bg-blue-400 text-center text-white font-bold font-heading uppercase rounded-md transition duration-200">Go to Checkout</a>
                         </div>
                     </div>
                 </div>
             }
         </div>
-        
-        
-        
+
+
     </div>
 </section>
 
@@ -133,7 +134,7 @@
         item.Quantity--;
         if (item.Quantity == 0)
         {
-            ShoppingCart.ShoppingCartItems.Remove(item);
+            ShopppingCartService.RemoveExperienceItem(item);
             ObserverService.ChangeHappens();
         }
     }
@@ -143,4 +144,9 @@
         item.Quantity++;
     }
 
+    
+    private void OpenCheckoutPage()
+    {
+        NavigationManager.NavigateTo("/checkout");
+    }
 }
