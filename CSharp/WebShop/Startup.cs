@@ -12,7 +12,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebShop.Data.Experiences;
 using WebShop.Data.ProductCategory;
+using WebShop.Data.ShoppingCart;
+using WebShop.Models;
 using WebShop.RestWebShop;
+using WebShop.Services;
 
 namespace WebShop
 {
@@ -32,9 +35,11 @@ namespace WebShop
             services.AddRazorPages(); 
             services.AddServerSideBlazor();
             services.AddHttpClient();
-            services.AddSingleton<ICustomerNetwork, CustomerNetwork>();
+            services.AddSingleton<ICustomerService, CustomerService>();
             services.AddSingleton<IProductCategoryService, ProductCategoryService>();
             services.AddSingleton<IExperienceService, ExperienceService>();
+            services.AddScoped<IShoppingCartService, ShoppingCartService>();
+            services.AddScoped<IObserverService, ObserverService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
