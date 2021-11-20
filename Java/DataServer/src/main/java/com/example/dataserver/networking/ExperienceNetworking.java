@@ -55,4 +55,13 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
     responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(string).build());
     responseObserver.onCompleted();
   }
+
+  @Override
+  public void getExperienceById(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
+    int id = Integer.parseInt(request.getMessageOrObject());
+    Experience experienceById = experienceDAO.getExperienceById(id);
+    String json = gson.toJson(experienceById);
+    responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(json).build());
+    responseObserver.onCompleted();
+  }
 }

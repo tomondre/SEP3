@@ -10,4 +10,5 @@ service ExperienceService{
    rpc getAllProviderExperiences(ProtobufMessage) returns (ProtobufMessage);
    rpc getAllWebShopExperiences(ProtobufMessage) returns (ProtobufMessage);
    rpc addExperience(ProtobufMessage) returns (ProtobufMessage);
+  rpc getExperienceById(ProtobufMessage) returns (ProtobufMessage);
 }
