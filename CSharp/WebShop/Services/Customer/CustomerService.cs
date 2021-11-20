@@ -8,12 +8,12 @@ using GrpcFileGeneration.Models;
 
 namespace WebShop.RestWebShop
 {
-    public class CustomerNetwork : ICustomerNetwork
+    public class CustomerService : ICustomerService
     {
         private HttpClient client;
         private string uri;
 
-        public CustomerNetwork(HttpClient client)
+        public CustomerService(HttpClient client)
         {
             this.client = client;
             uri = "https://localhost:5001/Customers";

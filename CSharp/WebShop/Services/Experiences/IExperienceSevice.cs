@@ -8,5 +8,6 @@ namespace WebShop.Data.Experiences
     public interface IExperienceService
     {
         Task<ExperienceList> GetAllExperiences();
+        Task<Experience> GetExperienceById(int id);
     }
 }

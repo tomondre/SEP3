@@ -9,5 +9,5 @@ public interface ExperienceDAO {
     Experience addExperience(Experience experience);
     ArrayList<Experience> getAllProviderExperiences(int provider);
     ArrayList<Experience> getAllWebShopExperiences();
-
+    Experience getExperienceById(int id);
 }

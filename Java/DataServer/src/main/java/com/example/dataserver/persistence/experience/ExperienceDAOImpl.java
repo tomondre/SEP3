@@ -33,4 +33,9 @@ public class ExperienceDAOImpl implements ExperienceDAO
     public ArrayList<Experience> getAllWebShopExperiences() {
         return (ArrayList<Experience>) repository.findAll();
     }
+
+    @Override
+    public Experience getExperienceById(int id) {
+        return repository.findById(id);
+    }
 }

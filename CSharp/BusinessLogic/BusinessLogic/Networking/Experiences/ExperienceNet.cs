@@ -46,5 +46,11 @@ namespace BusinessLogic.Networking.Experiences
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 });
         }
+
+        public async Task<Experience> GetExperienceByIdAsync(int id)
+        {
+            var experienceByIdAsync = await client.getExperienceByIdAsync(new ProtobufMessage() {MessageOrObject = id.ToString()});
+            return JsonSerializer.Deserialize<Experience>(experienceByIdAsync.MessageOrObject, new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+        }
     }
 }
