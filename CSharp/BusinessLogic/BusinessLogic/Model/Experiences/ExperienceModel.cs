@@ -20,7 +20,7 @@ namespace BusinessLogic.Model.Experiences
             this.memoryCache = memoryCache;
         }
         
-        public async Task<Experience> AddExperienceAsync(GrpcFileGeneration.Models.Experience experience)
+        public async Task<Experience> AddExperienceAsync(Experience experience)
         {
             return await network.AddExperienceAsync(experience);
         }
@@ -42,6 +42,11 @@ namespace BusinessLogic.Model.Experiences
             }
 
             return result;
+        }
+
+        public async Task<Experience> GetExperienceByIdAsync(int id)
+        {
+            return await network.GetExperienceByIdAsync(id);
         }
     }
 }

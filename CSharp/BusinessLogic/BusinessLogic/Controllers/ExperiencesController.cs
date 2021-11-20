@@ -20,12 +20,20 @@ namespace BusinessLogic.Controllers
         }
 
         [HttpGet]
-        [Route("{id:int}")]
-        public async Task<ActionResult<ExperienceList>> GetExperiences(int? id)
+        [Route("/Providers/{id:int}/Experiences")]
+        public async Task<ActionResult<ExperienceList>> GetExperiences([FromRoute] int id)
         {
             ExperienceList experiences = new ExperienceList();
-            experiences.Experiences = await model.GetAllProviderExperiencesAsync(id.Value);
+            experiences.Experiences = await model.GetAllProviderExperiencesAsync(id);
             return Ok(experiences);
+        }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<ActionResult<Experience>> GetExperienceById([FromRoute] int id)
+        {
+            Experience experience = await model.GetExperienceByIdAsync(id);
+            return Ok(experience);
         }
 
 
@@ -37,7 +45,7 @@ namespace BusinessLogic.Controllers
             experiences.Experiences = await model.GetAllWebShopExperiencesAsync();
             return Ok(experiences);
         }
-        
+
         [HttpPost]
         public async Task<ActionResult<Experience>> AddExperienceAsync([FromBody] Experience experience)
         {

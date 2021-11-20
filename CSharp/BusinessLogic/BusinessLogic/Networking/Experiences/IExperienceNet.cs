@@ -10,5 +10,6 @@ namespace BusinessLogic.Networking.Experiences
         Task<Experience> AddExperienceAsync(Experience experience);
         Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider);
         Task<IList<Experience>> GetAllWebShopExperiencesAsync();
+        Task<Experience> GetExperienceByIdAsync(int id);
     }
 }
