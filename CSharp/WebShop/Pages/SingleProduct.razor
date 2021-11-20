@@ -30,7 +30,7 @@
                         <div class="mr-6">
                             <span class="block mb-4 font-bold font-heading text-gray-400 uppercase">QTY</span>
                             <div class="inline-flex items-center px-4 font-semibold font-heading text-gray-500 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md">
-                                <button @onclick="() => Quantity--" class="py-2 hover:text-gray-700">
+                                <button @onclick="DecreaseQuantity" class="py-2 hover:text-gray-700">
                                     <svg width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g opacity="0.35">
                                             <rect x="12" width="2" height="12" transform="rotate(90 12 0)" fill="currentColor"></rect>
@@ -50,7 +50,7 @@
                     </div>
                     <div class="flex flex-wrap -mx-4 mb-14 items-center">
                         <div class="w-full xl:w-2/3 px-4 mb-4 xl:mb-0">
-                            <a @onclick="AddProductToCart" class="block bg-blue-500 hover:bg-blue-700 text-center text-white font-bold font-heading py-5 px-8 rounded-md uppercase transition duration-200">Add to cart</a>
+                            <a @onclick="AddProductToCart" class=" @(ItemAdded ? "bg-blue-700" : "bg-blue-500") block bg-blue-500 hover:bg-blue-700 text-center text-white font-bold font-heading py-5 px-8 rounded-md uppercase transition duration-200">@(ItemAdded ? "In cart" : "Add To Cart")</a>
                         </div>
                     </div>
                 </div>
@@ -74,6 +74,7 @@
     public int Id {private get; set; }
 
     private int Quantity = 1;
+    private bool ItemAdded;
 
     private Experience LoadedExperience = new();
 
@@ -84,7 +85,16 @@
 
     private void AddProductToCart()
     {
-        ShoppingCartService.ShoppingCart.ShoppingCartItems.Add(new ExperienceCartItem{Experience = LoadedExperience, Quantity = Quantity});
+        ShoppingCartService.AddExperience(LoadedExperience, Quantity);
         ObserverService.ChangeHappens();
+        ItemAdded = true;
+    }
+
+    private void DecreaseQuantity()
+    {
+        if (Quantity != 1)
+        {
+            Quantity--;
+        }
     }
 }
