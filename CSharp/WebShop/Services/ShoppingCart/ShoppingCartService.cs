@@ -25,7 +25,10 @@ namespace WebShop.Models
                 ShoppingCart.ShoppingCartItems.Add(new ExperienceCartItem {Experience = experience, Quantity = quantity});
             }
         }
-        
-        
+
+        public void RemoveExperienceItem(ExperienceCartItem experience)
+        {
+            ShoppingCart.ShoppingCartItems.Remove(experience);
+        }
     }
 }
