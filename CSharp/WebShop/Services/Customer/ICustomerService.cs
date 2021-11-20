@@ -3,7 +3,7 @@ using GrpcFileGeneration.Models;
 
 namespace WebShop.RestWebShop
 {
-    public interface ICustomerNetwork
+    public interface ICustomerService
     {
         Task<Customer> CreateCustomerAsync(Customer customer);
     }
