@@ -22,7 +22,8 @@ namespace WebShop.Data.Experiences
 
         public async Task<ExperienceList> GetAllExperiences()
         {
-            var httpResponseMessage = await client.GetAsync($"{uri}");
+            var httpResponseMessage = await client.GetAsync(uri);
+            CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             var deserialize = JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync,
                 new JsonSerializerOptions()
@@ -30,6 +31,24 @@ namespace WebShop.Data.Experiences
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 });
             return deserialize;
+        }
+
+        public async Task<Experience> GetExperienceById(int id)
+        {
+            var httpResponseMessage = await client.GetAsync($"{uri}/{id}");
+            CheckException(httpResponseMessage);
+            var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
+            var deserialize = JsonSerializer.Deserialize<Experience>(readAsStringAsync,
+                new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+            return deserialize;
+        }
+        
+        private void CheckException(HttpResponseMessage task)
+        {
+            if (!task.IsSuccessStatusCode)
+            {
+                throw new Exception($"Code: {task.StatusCode}, {task.ReasonPhrase} ");
+            }
         }
     }
 }
