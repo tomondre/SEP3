@@ -13,7 +13,7 @@ namespace WebShop.Services.Checkout
     {
         private HttpClient client;
         private string secretKey = "sk_test_51JyZa3HP6RYbC1HUXv6ohA4Hz6PiePRCQUdo0R6xGXDqvnEKc8E95CobkUpAj12nvHqyuhASAMtEsxfDSyHKkh3S00KY0zYi2B";
-        private string url = "/checkout";
+        private string url = "https://localhost:5001/checkout";
         
         public CheckoutService(HttpClient client)
         {
