@@ -66,6 +66,9 @@ namespace BusinessLogic
             services.AddSingleton<IExperienceNet, ExperienceNet>();
             
             services.AddSingleton<IValidator, Validator>();
+            
+            services.AddSingleton<ICheckoutModel, CheckoutModel>();
+            
             services.AddControllers();
             
             services.AddSingleton<ILinksService, DefaultLinksService>();
