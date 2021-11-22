@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using BusinessLogic.Networking.Experiences;
 using Stripe;
 using Order = WebShop.Models.Order;
 
@@ -9,7 +9,7 @@ namespace BusinessLogic.Model
     public class CheckoutModel : ICheckoutModel
     {
         private string secretKey = "sk_test_51JyZa3HP6RYbC1HUXv6ohA4Hz6PiePRCQUdo0R6xGXDqvnEKc8E95CobkUpAj12nvHqyuhASAMtEsxfDSyHKkh3S00KY0zYi2B";
-
+        private IExperienceNet ExperienceNet;
         public CheckoutModel()
         {
             StripeConfiguration.ApiKey = secretKey;
@@ -23,12 +23,16 @@ namespace BusinessLogic.Model
             //Step 2 - Create payment call to Stripe
              await CreatePayment(order);
             
-            //Step 3 - Remove experiences from database
+            //Step 3 - Remove experiences stock from database
+            
             
             //Step 4 - Create Order + add generated id to the order object
             
+            
             //Step 5 - Generate vouchers
             
+            
+            //Step 6 - Return successful order
             return order;
         }
 
