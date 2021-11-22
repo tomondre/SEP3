@@ -11,6 +11,7 @@
         </PackageReference>
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.0" />
         <PackageReference Include="RiskFirst.Hateoas" Version="3.1.1" />
+        <PackageReference Include="Stripe.net" Version="39.80.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     </ItemGroup>
     <ItemGroup>
