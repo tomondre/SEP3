@@ -2,8 +2,12 @@
 @using WebShop.Data.ShoppingCart
 @using WebShop.Models
 @using System.Runtime.Serialization.Formatters.Binary
+@using WebShop.Services.Checkout
 
 @inject IShoppingCartService ShoppingCartService
+@inject ICheckoutService CheckoutService
+@inject NavigationManager NavigationManager
+
 
 <section class="py-20 bg-gray-100">
     <div class="container mx-auto px-4">
@@ -17,37 +21,37 @@
                     <form action="">
                         <div class="mb-10">
                             <label class="font-bold font-heading text-gray-600" for="">Email address</label>
-                            <input readonly @bind="Customer.Email" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="email">
+                            <input readonly @bind="@order.Customer.Email" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="email">
                         </div>
                         <div class="mb-10">
                             <label class="font-bold font-heading text-gray-600" for="">First name</label>
-                            <input readonly @bind="Customer.FirstName" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
+                            <input readonly @bind="@order.Customer.FirstName" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
                         </div>
                         <div class="mb-10">
                             <label class="font-bold font-heading text-gray-600" for="">Last name</label>
-                            <input readonly @bind="Customer.LastName" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
+                            <input readonly @bind="@order.Customer.LastName" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
                         </div>
                         <div class="mb-10">
                             <label class="font-bold font-heading text-gray-600" for="">Phone number</label>
-                            <input readonly @bind="Customer.PhoneNumber" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
+                            <input readonly @bind="@order.Customer.PhoneNumber" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
                         </div>
                         <div class="mb-10">
                             <label class="font-bold font-heading text-gray-600" for="">City</label>
-                            <input readonly @bind="Customer.Address.City" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
+                            <input readonly @bind="@order.Customer.Address.City" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
                         </div>
                         <div class="mb-10">
                             <label class="font-bold font-heading text-gray-600" for="">Street address</label>
-                            <input readonly @bind="Customer.Address.Street" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
+                            <input readonly @bind="@order.Customer.Address.Street" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
                         </div>
                         <div class="mb-10">
                             <div class="flex flex-wrap -mx-4">
                                 <div class="w-full md:w-3/5 px-4 mb-10 md:mb-0">
                                     <label class="font-bold font-heading text-gray-600" for="">Street number</label>
-                                    <input readonly @bind="Customer.Address.StreetNumber"  class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
+                                    <input readonly @bind="@order.Customer.Address.StreetNumber"  class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
                                 </div>
                                 <div class="w-full md:w-2/5 px-4">
                                     <label class="font-bold font-heading text-gray-600" for="">Zip Code</label>
-                                    <input readonly @bind="Customer.Address.PostCode" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
+                                    <input readonly @bind="@order.Customer.Address.PostCode" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
                                 </div>
                             </div>
                         </div>
@@ -72,21 +76,20 @@
                     {
                         <div class="mb-8 px-8 py-10 bg-gray-100">
                             <div class="mb-8">
-                                <label class="font-bold font-heading text-gray-600" for="">Name on card</label>
-                                <input class="block w-full mt-4 mb-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
-                                <p class="text-sm text-gray-500">Full name as displayed on card</p>
-                            </div>
-                            <div class="mb-8">
                                 <label class="font-bold font-heading text-gray-600" for="">Credit card number</label>
-                                <input class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
+                                <input @bind-value="order.CreditCard.Number" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
                             </div>
                             <div class="mb-8">
-                                <label class="font-bold font-heading text-gray-600" for="">Expiration</label>
-                                <input class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
+                                <label class="font-bold font-heading text-gray-600" for="">Expiration Year</label>
+                                <input @bind-value="order.CreditCard.Year" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
+                            </div>
+                            <div class="mb-8">
+                                <label class="font-bold font-heading text-gray-600" for="">Expiration Month</label>
+                                <input @bind-value="order.CreditCard.Month" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
                             </div>
                             <div>
-                                <label class="font-bold font-heading text-gray-600" for="">CVV</label>
-                                <input class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
+                                <label class="font-bold font-heading text-gray-600" for="">CVC</label>
+                                <input @bind-value="order.CreditCard.Cvv" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
                             </div>
                         </div>
                     }
@@ -99,7 +102,7 @@
                     <div class="mb-12 p-6 lg:p-12 bg-blue-300">
 
                         @foreach (ExperienceCartItem item in
-                            ShoppingCart.ShoppingCartItems)
+                            order.ShoppingCart.ShoppingCartItems)
                         {
                             <div class="mb-6 pb-8 border-b border-blue-100">
                                 <div class="flex">
@@ -114,15 +117,15 @@
 
                         <div class="flex mb-2 justify-between items-center">
                             <span class="text-blue-50">Order subtotal</span>
-                            <span class="text-xl font-bold font-heading text-white">dkk @ShoppingCart.OrderTotal</span>
+                            <span class="text-xl font-bold font-heading text-white">dkk @order.ShoppingCart.OrderTotal</span>
                         </div>
                         <div class="flex mb-5 justify-between items-center">
                             <span class="text-blue-50">Tax</span>
-                            <span class="text-xl font-bold font-heading text-white">dkk @ShoppingCart.TaxAmount</span>
+                            <span class="text-xl font-bold font-heading text-white">dkk @order.ShoppingCart.TaxAmount</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-xl font-bold font-heading text-white">Total</span>
-                            <span class="text-xl font-bold font-heading text-white">@ShoppingCart.OrderTotal</span>
+                            <span class="text-xl font-bold font-heading text-white">@order.ShoppingCart.OrderTotal</span>
                         </div>
                     </div>
                     <div class="mb-10">
@@ -135,7 +138,7 @@
                     <div>
                         <span class="block mb-4 font-medium">Order comment:</span>
                         <textarea class="mb-12 w-full resize-none border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" name="" id="" cols="30" rows="10"></textarea>
-                        <a class="block w-full py-4 bg-blue-300 hover:bg-blue-400 text-center text-white font-bold font-heading uppercase rounded-md transition duration-200" href="#">Checkout</a>
+                        <a @onclick="CheckoutHandler" class="block w-full py-4 bg-blue-300 hover:bg-blue-400 text-center text-white font-bold font-heading uppercase rounded-md transition duration-200">Checkout</a>
                     </div>
                 </div>
             </div>
@@ -144,21 +147,20 @@
 </section>
 
 @code {
+    private Order order = new ();
     private bool isPaymentCreditCard = true;
-    private ShoppingCart ShoppingCart = new();
-    private Customer Customer = new();
 
     protected override void OnInitialized()
     {
-        ShoppingCart = ShoppingCartService.ShoppingCart;
-    //TODO load logged-in customer
-        Customer = new()
+        order.ShoppingCart = ShoppingCartService.ShoppingCart;
+        //TODO load logged-in customer
+        order.Customer = new()
         {
             Email = "haabala@gmail.com",
             FirstName = "Peter",
             LastName = "Petersen",
             PhoneNumber = "+50 50 50 50 50",
-            Address = new Address()
+            Address = new Address
             {
                 City = "Horsens",
                 Street = "Gade",
@@ -166,6 +168,19 @@
                 StreetNumber = "20"
             }
         };
+    }
+
+    private async Task CheckoutHandler()
+    {
+        try
+        {
+            await CheckoutService.CheckoutAsync(order);
+            NavigationManager.NavigateTo("/success");
+        }
+        catch
+        {
+            NavigationManager.NavigateTo("/fail");
+        }
     }
 
 }
