@@ -16,6 +16,7 @@ using WebShop.Data.ShoppingCart;
 using WebShop.Models;
 using WebShop.RestWebShop;
 using WebShop.Services;
+using WebShop.Services.Checkout;
 
 namespace WebShop
 {
@@ -40,6 +41,8 @@ namespace WebShop
             services.AddSingleton<IExperienceService, ExperienceService>();
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<IObserverService, ObserverService>();
+            services.AddScoped<ICheckoutService, CheckoutService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
