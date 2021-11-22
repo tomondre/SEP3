@@ -27,7 +27,7 @@ namespace WebShop.Services.Checkout
             var options = new PaymentMethodCreateOptions
             {
                 Type = "card",
-                Card = new PaymentMethodCardOptions()
+                Card = new PaymentMethodCardOptions
                 {
                     Number = order.CreditCard.Number,
                     ExpMonth = order.CreditCard.Month,
