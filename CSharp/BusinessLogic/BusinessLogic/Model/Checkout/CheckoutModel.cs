@@ -1,0 +1,73 @@
+using System;
+using System.Threading.Tasks;
+using BusinessLogic.Networking.Experiences;
+using Stripe;
+using Order = WebShop.Models.Order;
+
+namespace BusinessLogic.Model
+{
+    public class CheckoutModel : ICheckoutModel
+    {
+        private string secretKey = "sk_test_51JyZa3HP6RYbC1HUXv6ohA4Hz6PiePRCQUdo0R6xGXDqvnEKc8E95CobkUpAj12nvHqyuhASAMtEsxfDSyHKkh3S00KY0zYi2B";
+        private IExperienceNet ExperienceNet;
+        public CheckoutModel()
+        {
+            StripeConfiguration.ApiKey = secretKey;
+        }
+
+        public async Task<Order> CheckoutAsync(Order order)
+        {
+            //Step 1 - Check if the experiences are in stock
+            
+            
+            //Step 2 - Create payment call to Stripe
+             await CreatePayment(order);
+            
+            //Step 3 - Remove experiences stock from database
+            
+            
+            //Step 4 - Create Order + add generated id to the order object
+            
+            
+            //Step 5 - Generate vouchers
+            
+            
+            //Step 6 - Return successful order
+            return order;
+        }
+
+        
+        private async Task CreatePayment(Order order)
+        {
+            var paymentIntentService = new PaymentIntentService();
+            
+            PaymentIntent paymentIntent = null;
+
+            try
+            {
+                if (order.PaymentId != null)
+                {
+                    var options = new PaymentIntentCreateOptions
+                    {
+                        PaymentMethod = order.PaymentId,
+                        Amount = Convert.ToInt64(order.ShoppingCart.OrderTotal),
+                        Currency = "dkk",
+                        ConfirmationMethod = "manual",
+                        Confirm =  true
+                    };
+
+                    paymentIntent = await paymentIntentService.CreateAsync(options);
+                }
+
+                if (paymentIntent?.Status == "requires_action")
+                {
+                    throw new Exception("Action required");
+                }
+            }
+            catch (StripeException e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+    }
+}
