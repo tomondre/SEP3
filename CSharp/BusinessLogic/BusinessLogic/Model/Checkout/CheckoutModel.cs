@@ -11,9 +11,11 @@ namespace BusinessLogic.Model.Checkout
     {
         private string secretKey = "sk_test_51JyZa3HP6RYbC1HUXv6ohA4Hz6PiePRCQUdo0R6xGXDqvnEKc8E95CobkUpAj12nvHqyuhASAMtEsxfDSyHKkh3S00KY0zYi2B";
         private IExperienceNet ExperienceNet;
-        public CheckoutModel(IExperienceNet experienceNet)
+        private IOrderNet OrderNet;
+        public CheckoutModel(IExperienceNet experienceNet, IOrderNet orderNet)
         {
             ExperienceNet = experienceNet;
+            OrderNet = orderNet; 
             StripeConfiguration.ApiKey = secretKey;
         }
 
@@ -22,7 +24,7 @@ namespace BusinessLogic.Model.Checkout
             //Step 1 - Check if the experiences are in stock
             foreach (var item in order.ShoppingCart.ShoppingCartItems)
             {
-                if (! await ExperienceNet.IsInStockAsync(item.Experience.Id, item.Quantity))
+                if (!await ExperienceNet.IsInStockAsync(item.Experience.Id, item.Quantity))
                 {
                     throw new Exception("Not in stock!");
                 }
@@ -32,10 +34,13 @@ namespace BusinessLogic.Model.Checkout
              await CreatePayment(order);
             
             //Step 3 - Remove experiences stock from database
-            
-            
+            foreach (var item in order.ShoppingCart.ShoppingCartItems)
+            {
+                 await ExperienceNet.RemoveStockAsync(item.Experience.Id, item.Quantity);
+            }
+
             //Step 4 - Create Order + add generated id to the order object
-            
+            await OrderNet.CreateOrderAsync(order);
             
             //Step 5 - Generate vouchers
             

@@ -28,7 +28,7 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message);
             }
         }
     }

@@ -62,5 +62,10 @@ namespace BusinessLogic.Networking.Experiences
             bool result =  bool.Parse(isInStockAsync.MessageOrObject);
             return result;
         }
+
+        public async Task RemoveStockAsync(int experienceId, int itemQuantity)
+        {
+            await client.removeStockAsync(new ProtobufStockRequest{Id = experienceId, Quantity = itemQuantity});
+        }
     }
 }
