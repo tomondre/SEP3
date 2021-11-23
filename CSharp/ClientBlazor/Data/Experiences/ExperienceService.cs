@@ -35,11 +35,11 @@ namespace ClientBlazor.Data.Experiences
             return deserialize;
         }
 
-        public async Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider)
+        public async Task<ExperienceList> GetAllProviderExperiencesAsync(int provider)
         {
             var httpResponseMessage = await client.GetAsync($"{uri}/{provider}");
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(readAsStringAsync, new JsonSerializerOptions()
+            var deserialize = JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });

@@ -8,6 +8,6 @@ namespace ClientBlazor.Data.Experiences
     public interface IExperienceService
     {
         Task<Experience> AddExperienceAsync(Experience experience);
-        Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider);
+        Task<ExperienceList> GetAllProviderExperiencesAsync(int provider);
     }
 }

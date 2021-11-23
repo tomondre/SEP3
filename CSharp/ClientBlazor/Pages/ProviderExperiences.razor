@@ -1,6 +1,5 @@
 @page "/ProviderExperiences"
 @using GrpcFileGeneration.Models
-@using System.Collections
 @using ClientBlazor.Data.Experiences
 
 @inject IExperienceService ExperienceService
@@ -12,7 +11,7 @@
             <em>Loading...</em>
         </p>
     }
-    else if (!experiences.Any())
+    else if (!experiences.Experiences.Any())
     {
         <p class="text-center">
             <em>No Experiences currenlty exist. Please add some.</em>
@@ -35,7 +34,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach (var experience in experiences)
+                        @foreach (var experience in experiences.Experiences)
                         {
                             <tr class="text-xs bg-gray-50">
                                 <td class="py-3 px-4">
@@ -83,12 +82,11 @@
 
 
 @code {
-    private IList<Experience> experiences;
+    private ExperienceList experiences = new();
 
     protected override async Task OnInitializedAsync()
     {
-    //TODO Figure out how to get the providers data
+        //TODO Figure out how to get the providers data
         experiences = await ExperienceService.GetAllProviderExperiencesAsync(2);
     }
-
 }
