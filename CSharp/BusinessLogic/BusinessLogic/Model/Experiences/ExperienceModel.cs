@@ -22,6 +22,7 @@ namespace BusinessLogic.Model.Experiences
         
         public async Task<Experience> AddExperienceAsync(Experience experience)
         {
+            memoryCache.Remove("CachedExperiences");
             return await network.AddExperienceAsync(experience);
         }
 

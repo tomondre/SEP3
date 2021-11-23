@@ -20,18 +20,19 @@ namespace BusinessLogic.Model.ProductCategory
         
         public async Task<Category> AddProductCategoryAsync(Category category)
         {
+            memoryCache.Remove("CachedCategories");
             return await network.AddProductCategoryAsync(category);
         }
 
         public async Task<IList<Category>> GetAllCategoriesAsync()
         {
             IList<Category> result;
-            bool AlreadyExists = memoryCache.TryGetValue("CachedExperiences", out result);
+            bool AlreadyExists = memoryCache.TryGetValue("CachedCategories", out result);
             if (!AlreadyExists)
             {
                 result = await network.GetAllCategoriesAsync();
                 var slidingExpiration = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(1));
-                memoryCache.Set("CachedExperiences", result, slidingExpiration);
+                memoryCache.Set("CachedCategories", result, slidingExpiration);
             }
 
             return result;
@@ -39,11 +40,13 @@ namespace BusinessLogic.Model.ProductCategory
 
         public async Task<Category> EditProductCategoryAsync(Category category)
         {
+            memoryCache.Remove("CachedCategories");
             return await network.EditProductCategoryAsync(category);
         }
 
         public async Task DeleteProductCategoryAsync(int id)
         {
+            memoryCache.Remove("CachedCategories");
             await network.DeleteProductCategoryAsync(id);
         }
     }
