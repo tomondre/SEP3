@@ -1,6 +1,4 @@
-using GrpcFileGeneration.Models;
-
-namespace WebShop.Models
+namespace GrpcFileGeneration.Models.Order
 {
     public class ExperienceCartItem
     {

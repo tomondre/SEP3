@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using WebShop.Models;
+using GrpcFileGeneration.Models.Order;
 
-namespace BusinessLogic.Model
+namespace BusinessLogic.Model.Checkout
 {
     public interface ICheckoutModel
     {

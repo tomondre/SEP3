@@ -1,4 +1,4 @@
-namespace WebShop.Models
+namespace GrpcFileGeneration.Models.Order
 {
     public class CreditCard
     {

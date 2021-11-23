@@ -12,11 +12,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebShop.Data.Experiences;
 using WebShop.Data.ProductCategory;
-using WebShop.Data.ShoppingCart;
 using WebShop.Models;
 using WebShop.RestWebShop;
 using WebShop.Services;
 using WebShop.Services.Checkout;
+using WebShop.Services.ShoppingCart;
 
 namespace WebShop
 {

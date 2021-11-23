@@ -2,9 +2,9 @@ using System;
 using System.Threading.Tasks;
 using BusinessLogic.Networking.Experiences;
 using Stripe;
-using Order = WebShop.Models.Order;
+using Order = GrpcFileGeneration.Models.Order.Order;
 
-namespace BusinessLogic.Model
+namespace BusinessLogic.Model.Checkout
 {
     public class CheckoutModel : ICheckoutModel
     {

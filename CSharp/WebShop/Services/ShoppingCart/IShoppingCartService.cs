@@ -1,12 +1,11 @@
-using System.Collections.Generic;
 using GrpcFileGeneration.Models;
-using WebShop.Models;
+using GrpcFileGeneration.Models.Order;
 
-namespace WebShop.Data.ShoppingCart
+namespace WebShop.Services.ShoppingCart
 {
     public interface IShoppingCartService
     {
-        Models.ShoppingCart ShoppingCart { get;}
+        GrpcFileGeneration.Models.Order.ShoppingCart ShoppingCart { get;}
         void AddExperience(Experience experience, int quantity);
         void RemoveExperienceItem(ExperienceCartItem experience);
     }

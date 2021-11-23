@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using GrpcFileGeneration.Models;
-using WebShop.Data.ShoppingCart;
+using GrpcFileGeneration.Models.Order;
+using WebShop.Services.ShoppingCart;
 
 namespace WebShop.Models
 {

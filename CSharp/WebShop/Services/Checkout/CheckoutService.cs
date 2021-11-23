@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Stripe;
-using Order = WebShop.Models.Order;
+using Order = GrpcFileGeneration.Models.Order.Order;
 
 namespace WebShop.Services.Checkout
 {

@@ -29,7 +29,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Models" />
       <Folder Include="wwwroot" />
     </ItemGroup>
 <!--    <Target Name="CheckForNpm" BeforeTargets="NpmInstall">-->

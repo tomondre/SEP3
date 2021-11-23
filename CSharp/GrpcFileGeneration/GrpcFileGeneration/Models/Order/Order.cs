@@ -1,6 +1,4 @@
-using Customer = GrpcFileGeneration.Models.Customer;
-
-namespace WebShop.Models
+namespace GrpcFileGeneration.Models.Order
 {
     public class Order
     {

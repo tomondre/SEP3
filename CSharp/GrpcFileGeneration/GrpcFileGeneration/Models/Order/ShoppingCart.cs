@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WebShop.Models
+namespace GrpcFileGeneration.Models.Order
 {
     public class ShoppingCart
     {

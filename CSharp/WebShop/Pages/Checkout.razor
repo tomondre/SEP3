@@ -1,8 +1,7 @@
 ﻿@page "/Checkout"
-@using WebShop.Data.ShoppingCart
-@using WebShop.Models
-@using System.Runtime.Serialization.Formatters.Binary
+@using GrpcFileGeneration.Models.Order
 @using WebShop.Services.Checkout
+@using WebShop.Services.ShoppingCart
 
 @inject IShoppingCartService ShoppingCartService
 @inject ICheckoutService CheckoutService
