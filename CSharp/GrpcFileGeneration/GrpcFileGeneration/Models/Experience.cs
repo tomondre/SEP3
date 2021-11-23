@@ -11,7 +11,10 @@ namespace GrpcFileGeneration.Models
         public string Name { get; set; }
         [Required]
         public double Price { get; set; }
+        [Required]
+        public int Stock { get;  set; }
         [Required, MaxLength(500)]
+        
         public string Description { get; set; }
         
         [Required, MaxLength(50)]
