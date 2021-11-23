@@ -19,7 +19,7 @@ namespace BusinessLogic.Controllers
         }
         
         [HttpPost(Name = "CheckoutRoute")]
-        public async Task<ActionResult<Order>> CreateCustomer([FromBody] Order order)
+        public async Task<ActionResult<Order>> Checkout([FromBody] Order order)
         {
             try
             {
