@@ -1,7 +1,6 @@
 package com.example.dataserver.persistence.experience;
 
 import com.example.dataserver.models.Experience;
-import com.example.dataserver.models.Provider;
 import com.example.dataserver.persistence.repository.ExperienceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -38,4 +37,11 @@ public class ExperienceDAOImpl implements ExperienceDAO
     public Experience getExperienceById(int id) {
         return repository.findById(id);
     }
+
+    @Override
+    public boolean isInStock(int id, int quantity) {
+      return repository.existsByIdAndStockIsGreaterThan(id, quantity);
+    }
+
+
 }

@@ -52,5 +52,15 @@ namespace BusinessLogic.Networking.Experiences
             var experienceByIdAsync = await client.getExperienceByIdAsync(new ProtobufMessage() {MessageOrObject = id.ToString()});
             return JsonSerializer.Deserialize<Experience>(experienceByIdAsync.MessageOrObject, new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
         }
+
+        public async Task<bool> IsInStockAsync(int experienceId, int quantity)
+        {
+            var isInStockAsync = await client.isInStockAsync(new ProtobufStockRequest()
+            {
+                Id = experienceId, Quantity = quantity
+            });
+            bool result =  bool.Parse(isInStockAsync.MessageOrObject);
+            return result;
+        }
     }
 }

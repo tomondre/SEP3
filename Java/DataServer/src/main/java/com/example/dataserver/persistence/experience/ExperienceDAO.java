@@ -1,7 +1,6 @@
 package com.example.dataserver.persistence.experience;
 
 import com.example.dataserver.models.Experience;
-import com.example.dataserver.models.Provider;
 
 import java.util.ArrayList;
 
@@ -10,4 +9,5 @@ public interface ExperienceDAO {
     ArrayList<Experience> getAllProviderExperiences(int provider);
     ArrayList<Experience> getAllWebShopExperiences();
     Experience getExperienceById(int id);
+    boolean isInStock(int id, int quantity);
 }
