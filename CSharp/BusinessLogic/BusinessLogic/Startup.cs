@@ -10,6 +10,7 @@ using BusinessLogic.Model.ProductCategory;
 using BusinessLogic.Networking;
 using BusinessLogic.Networking.Customers;
 using BusinessLogic.Networking.Experiences;
+using BusinessLogic.Networking.Order;
 using BusinessLogic.Networking.ProductCategory;
 using Grpc.Net.Client;
 using GrpcFileGeneration.Models;
@@ -24,10 +25,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Networking.Category;
-using Networking.Customer;
 using Networking.Experience;
 using Networking.Provider;
 using RiskFirst.Hateoas;
+using Stripe;
+using CustomerService = Networking.Customer.CustomerService;
+using OrderService = Networking.Order.OrderService;
 
 namespace BusinessLogic
 {
@@ -65,6 +68,11 @@ namespace BusinessLogic
                 new ExperienceService.ExperienceServiceClient(GrpcChannel.ForAddress("http://localhost:9090")));
             services.AddSingleton<IExperienceModel, ExperienceModel>();
             services.AddSingleton<IExperienceNet, ExperienceNet>();
+            
+            services.AddSingleton(
+                new OrderService.OrderServiceClient(GrpcChannel.ForAddress("http://localhost:9090")));
+            services.AddSingleton<IOrderNet, OrderNet>();
+
             
             services.AddSingleton<IValidator, Validator>();
             

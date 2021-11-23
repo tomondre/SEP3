@@ -9,6 +9,7 @@
         <Protobuf Include="Proto/Category.proto" OutputDir="./Protobuf/Category" GrpcServices="Client" />
         <Protobuf Include="Proto/Experience.proto" OutputDir="./Protobuf/Experience" GrpcServices="Client" />
         <Protobuf Include="Proto/Customer.proto" OutputDir="./Protobuf/Customer" GrpcServices="Client" />
+        <Protobuf Include="Proto/Order.proto" OutputDir="./Protobuf/Order" GrpcServices="Client" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Google.Protobuf" Version="3.19.0" />
