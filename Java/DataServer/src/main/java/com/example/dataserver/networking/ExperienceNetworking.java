@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import networking.experience.ProtobufMessage;
+import networking.experience.ProtobufStockRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import networking.experience.ExperienceServiceGrpc;
 
@@ -64,4 +65,15 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
     responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(json).build());
     responseObserver.onCompleted();
   }
+  @Override
+  public void isInStock(ProtobufStockRequest request, StreamObserver<ProtobufMessage> responseObserver)
+  {
+    int id = request.getId();
+    int quantity = request.getQuantity();
+    boolean inStock = experienceDAO.isInStock(id, quantity);
+    responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(String.valueOf(inStock) ).build());
+    responseObserver.onCompleted();
+  }
+
+
 }
