@@ -136,7 +136,7 @@
                     </div>
                     <div>
                         <span class="block mb-4 font-medium">Order comment:</span>
-                        <textarea class="mb-12 w-full resize-none border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" name="" id="" cols="30" rows="10"></textarea>
+                        <textarea @bind-value="order.Comment" class="mb-12 w-full resize-none border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" name="" id="" cols="30" rows="10"></textarea>
                         <a @onclick="CheckoutHandler" class="block w-full py-4 bg-blue-300 hover:bg-blue-400 text-center text-white font-bold font-heading uppercase rounded-md transition duration-200">Checkout</a>
                     </div>
                 </div>
