@@ -1,5 +1,6 @@
 package com.example.dataserver.networking;
 
+import com.example.dataserver.models.Order;
 import com.example.dataserver.persistence.order.OrderDAO;
 import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;

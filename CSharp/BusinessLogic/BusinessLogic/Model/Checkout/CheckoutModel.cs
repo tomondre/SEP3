@@ -1,7 +1,9 @@
 using System;
 using System.Threading.Tasks;
+using BusinessLogic.Model.Experiences;
+using BusinessLogic.Model.Order;
 using BusinessLogic.Networking.Experiences;
-using GrpcFileGeneration.Models.Order;
+using BusinessLogic.Networking.Order;
 using Stripe;
 using Order = GrpcFileGeneration.Models.Order.Order;
 
@@ -10,16 +12,16 @@ namespace BusinessLogic.Model.Checkout
     public class CheckoutModel : ICheckoutModel
     {
         private string secretKey = "sk_test_51JyZa3HP6RYbC1HUXv6ohA4Hz6PiePRCQUdo0R6xGXDqvnEKc8E95CobkUpAj12nvHqyuhASAMtEsxfDSyHKkh3S00KY0zYi2B";
-        private IExperienceNet ExperienceNet;
-        private IOrderNet OrderNet;
-        public CheckoutModel(IExperienceNet experienceNet, IOrderNet orderNet)
+        private IExperienceModel ExperienceNet;
+        private IOrderModel orderModel;
+        public CheckoutModel(IExperienceModel experienceNet, IOrderModel orderModel)
         {
             ExperienceNet = experienceNet;
-            OrderNet = orderNet; 
+            this.orderModel = orderModel; 
             StripeConfiguration.ApiKey = secretKey;
         }
 
-        public async Task<Order> CheckoutAsync(Order order)
+        public async Task<GrpcFileGeneration.Models.Order.Order> CheckoutAsync(GrpcFileGeneration.Models.Order.Order order)
         {
             //Step 1 - Check if the experiences are in stock
             foreach (var item in order.ShoppingCart.ShoppingCartItems)
@@ -40,7 +42,7 @@ namespace BusinessLogic.Model.Checkout
             }
 
             //Step 4 - Create Order + add generated id to the order object
-            await OrderNet.CreateOrderAsync(order);
+            await orderModel.CreateOrderAsync(order);
             
             //Step 5 - Generate vouchers
             
@@ -50,7 +52,7 @@ namespace BusinessLogic.Model.Checkout
         }
 
         
-        private async Task CreatePayment(Order order)
+        private async Task CreatePayment(GrpcFileGeneration.Models.Order.Order order)
         {
             var paymentIntentService = new PaymentIntentService();
             

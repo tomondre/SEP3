@@ -6,6 +6,7 @@ using BusinessLogic.Model;
 using BusinessLogic.Model.Checkout;
 using BusinessLogic.Model.Customers;
 using BusinessLogic.Model.Experiences;
+using BusinessLogic.Model.Order;
 using BusinessLogic.Model.ProductCategory;
 using BusinessLogic.Networking;
 using BusinessLogic.Networking.Customers;
@@ -71,6 +72,7 @@ namespace BusinessLogic
             
             services.AddSingleton(
                 new OrderService.OrderServiceClient(GrpcChannel.ForAddress("http://localhost:9090")));
+            services.AddSingleton<IOrderModel, OrderModel>();
             services.AddSingleton<IOrderNet, OrderNet>();
 
             
