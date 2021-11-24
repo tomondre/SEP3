@@ -5,10 +5,10 @@ using RiskFirst.Hateoas.Models;
 
 namespace GrpcFileGeneration.Models
 {
-    public class Provider : ILinkContainer
+    public class Provider : User, ILinkContainer
     {
         public Dictionary<string, Link> Links { set; get; }
-        public int Id { get; set; }
+        
         [Required, MaxLength(50)]
         public string CompanyName { get; set; }
         [Required]
@@ -18,21 +18,11 @@ namespace GrpcFileGeneration.Models
         public string PhoneNumber { get; set; }
         [Required, MaxLength(500)]
         public string Description { get; set; }
-        [Required, EmailAddress]
-        public string Email { get; set; }
-        public bool IsApproved { set; get; }
         
-        [Required]
-        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z]).{8,14}$",ErrorMessage =
-            "The password must be between 8 (included) and 14 (included) characters,\n " +
-            "contain at least one number\n" +
-            "contain at least one upper case character\n" +
-            "contain at least one lower case character")]
-        public string Password { get; set; }
+        public bool IsApproved { set; get; }
 
         public Address Address { get; set; }
 
-        public string Token { set; get; }
 
         public Provider()
         {
@@ -43,5 +33,6 @@ namespace GrpcFileGeneration.Models
         {
             Links = new Dictionary<string, Link>();
         }
+        
     }
 }
