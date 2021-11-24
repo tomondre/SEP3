@@ -22,10 +22,10 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
 
     @Override
     public void createCustomer(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
-        Customer customer = gson.fromJson(request.getMassageOrObject(), Customer.class);
-        Customer result = dao.createCustomer(customer);
-        String s = gson.toJson(result);
-        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject(s).build());
-        responseObserver.onCompleted();
+//        Customer customer = gson.fromJson(request.getMassageOrObject(), Customer.class);
+//        Customer result = dao.createCustomer(customer);
+//        String s = gson.toJson(result);
+//        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject(s).build());
+//        responseObserver.onCompleted();
     }
 }
