@@ -2,10 +2,24 @@ syntax="proto3";
 option java_multiple_files = true;
 package networking.order;
 
-message ProtobufMessage{
-  string messageOrObject = 1;
+message OrderMessage {
+  int32 id = 1;
+  string comment = 2;
+  string date = 3;
+  double total = 5;
+  repeated OrderItemMessage items = 6;
+  int32 customerId = 7;
+}
+
+message OrderItemMessage {
+  int32 id = 1;
+  string description = 2;
+  string name = 3;
+  string picture = 4;
+  double price = 5;
+  int32 quantity = 6;
 }
 
 service OrderService {
-  rpc createOrder (ProtobufMessage) returns (ProtobufMessage);
+  rpc createOrder (OrderMessage) returns (OrderMessage);
 }
