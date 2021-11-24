@@ -2,6 +2,8 @@ package com.example.dataserver.models;
 
 
 import com.google.gson.annotations.SerializedName;
+import networking.order.OrderItemMessage;
+import networking.order.OrderMessage;
 
 import javax.persistence.*;
 
@@ -10,13 +12,13 @@ import javax.persistence.*;
 public class OrderItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @SerializedName(value = "id", alternate = {"Id"})
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "order_id", nullable = false)
+    @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+    @MapsId
     private Order order;
 
     @SerializedName(value = "picture", alternate = {"Picture"})
@@ -38,4 +40,28 @@ public class OrderItem {
     @SerializedName(value = "quantity", alternate = {"Quantity"})
     @Column(name = "quantity")
     private int quantity;
+
+    public OrderItem(){
+
+    }
+
+    public OrderItem(OrderItemMessage item){
+        id = item.getId();
+        picture = item.getPicture();
+        name = item.getName();
+        price = item.getPrice();
+        description = item.getDescription();
+        quantity = item.getQuantity();
+    }
+
+    public OrderItemMessage toMessage(){
+        return OrderItemMessage.newBuilder()
+                .setId(id)
+                .setPicture(picture)
+                .setName(name)
+                .setPrice(price)
+                .setDescription(description)
+                .setQuantity(quantity)
+                .build();
+    }
 }
