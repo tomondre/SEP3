@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ClientBlazor.Data;
+using ClientBlazor.Data.Authentication;
 using ClientBlazor.Data.Experiences;
+using ClientBlazor.Data.Login;
 using GrpcFileGeneration.Services;
 using ClientBlazor.Data.ProductCategory;
+using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +39,9 @@ namespace ClientBlazor
             services.AddScoped<IProviderService, ProviderService>();
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
             services.AddScoped<IExperienceService, ExperienceService>();
+            services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<AuthenticationStateProvider, CurrentAuthenticationStateProvider>();
+            services.AddSingleton<CurrentUser>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
