@@ -28,7 +28,7 @@ namespace BusinessLogic.Model.Login
                 return null;
             }
 
-            customerLoginAsync.Token = WriteToken(username);
+            customerLoginAsync.Token = WriteToken(username, "Customer");
 
             return customerLoginAsync;
         }
@@ -41,7 +41,7 @@ namespace BusinessLogic.Model.Login
                 return null;
             }
 
-            providerLoginAsync.Token = WriteToken(username);
+            providerLoginAsync.Token = WriteToken(username, "Provider");
             return providerLoginAsync;
         }
 
@@ -53,11 +53,11 @@ namespace BusinessLogic.Model.Login
                 return null;
             }
 
-            addAdministratorLoginAsync.Token = WriteToken(username);
+            addAdministratorLoginAsync.Token = WriteToken(username, "Administrator");
             return addAdministratorLoginAsync;
         }
         
-        private string WriteToken(string username)
+        private string WriteToken(string username, string role)
         {
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(key);
@@ -65,7 +65,8 @@ namespace BusinessLogic.Model.Login
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim(ClaimTypes.Name, username),
+                    new Claim(ClaimTypes.Role, role)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials =

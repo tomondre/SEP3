@@ -27,52 +27,52 @@ public class ProviderNeworkingImpl extends ProtobufProviderServiceGrpc.ProtobufP
     @Async
     @Override
     public void createProvider(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
-        Provider provider = gson.fromJson(request.getMassageOrObject(), Provider.class);
-        model.createProvider(provider);
-        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject("Success").build());
-        responseObserver.onCompleted();
+//        Provider provider = gson.fromJson(request.getMassageOrObject(), Provider.class);
+//        model.createProvider(provider);
+//        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject("Success").build());
+//        responseObserver.onCompleted();
     }
 
     @Async
     @Override
     public void getAllProviders(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
-        ArrayList<Provider> allProviders = model.getAllProviders();
-        String s = gson.toJson(allProviders);
-        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject(s).build());
-        responseObserver.onCompleted();
+//        ArrayList<Provider> allProviders = model.getAllBy();
+//        String s = gson.toJson(allProviders);
+//        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject(s).build());
+//        responseObserver.onCompleted();
     }
 
     @Async
     @Override
     public void getProviderById(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
-        Provider providerById = model.getProviderById(Integer.parseInt(request.getMassageOrObject()));
-        String providerJson = gson.toJson(providerById);
-        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject(providerJson).build());
-        responseObserver.onCompleted();
+//        Provider providerById = model.getProviderById(Integer.parseInt(request.getMassageOrObject()));
+//        String providerJson = gson.toJson(providerById);
+//        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject(providerJson).build());
+//        responseObserver.onCompleted();
     }
 
     @Async
     @Override
     public void editProvider(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
-        Provider provider = gson.fromJson(request.getMassageOrObject(), Provider.class);
-        model.editProvider(provider);
-        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject("Success").build());
-        responseObserver.onCompleted();
+//        Provider provider = gson.fromJson(request.getMassageOrObject(), Provider.class);
+//        model.editProvider(provider);
+//        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject("Success").build());
+//        responseObserver.onCompleted();
     }
 
     @Async
     @Override
     public void removeProvider(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
-        model.removeProvider(Integer.parseInt(request.getMassageOrObject()));
-        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject("Success").build());
-        responseObserver.onCompleted();
+//        model.removeProvider(Integer.parseInt(request.getMassageOrObject()));
+//        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject("Success").build());
+//        responseObserver.onCompleted();
     }
 
     @Override
     public void getAllNotApprovedProviders(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
-        ArrayList<Provider> allNotApprovedProviders = model.getAllNotApprovedProviders();
-        String json = gson.toJson(allNotApprovedProviders);
-        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject(json).build());
-        responseObserver.onCompleted();
+//        ArrayList<Provider> allNotApprovedProviders = model.getAllNotApprovedProviders();
+//        String json = gson.toJson(allNotApprovedProviders);
+//        responseObserver.onNext(ProtobufMessage.newBuilder().setMassageOrObject(json).build());
+//        responseObserver.onCompleted();
     }
 }

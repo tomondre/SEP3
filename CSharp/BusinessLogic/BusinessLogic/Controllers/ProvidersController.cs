@@ -4,10 +4,13 @@ using BusinessLogic.Model;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using RiskFirst.Hateoas;
 
 namespace BusinessLogic.Controllers
 {
+    //TODO set authorization depending on the role for each method [Authorize(Roles = "Administrator")]
+
     [Authorize]
     [ApiController]
     [Route("[controller]")]
@@ -24,6 +27,7 @@ namespace BusinessLogic.Controllers
         [HttpGet(Name = "GetProvidersRoute")]
         public async Task<ActionResult<ProviderList>> GetProviders([FromQuery] bool? approved)
         {
+            var accessToken = Request.Headers[HeaderNames.Authorization];
             ProviderList list = new ProviderList();
             
             if (approved is null or true)

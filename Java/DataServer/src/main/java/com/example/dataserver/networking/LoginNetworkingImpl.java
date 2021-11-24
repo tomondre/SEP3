@@ -33,10 +33,6 @@ public class LoginNetworkingImpl extends LoginServiceGrpc.LoginServiceImplBase
   public void getProviderLogin(ProtobufMessage request,
       StreamObserver<ProtobufMessage> responseObserver)
   {
-    Provider providerByEmail = providerDAO.getProviderByEmail(request.getMessageOrObject());
-    String s = gson.toJson(providerByEmail);
-    responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
-    responseObserver.onCompleted();
 
   }
 
@@ -44,10 +40,6 @@ public class LoginNetworkingImpl extends LoginServiceGrpc.LoginServiceImplBase
   public void getCustomerLogin(ProtobufMessage request,
       StreamObserver<ProtobufMessage> responseObserver)
   {
-    Customer customerByEmail = customerDAO.getCustomerByEmail(request.getMessageOrObject());
-    String s = gson.toJson(customerByEmail);
-    responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
-    responseObserver.onCompleted();
   }
 
   @Override

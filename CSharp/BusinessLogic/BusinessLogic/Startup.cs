@@ -13,6 +13,7 @@ using BusinessLogic.Networking.Customers;
 using BusinessLogic.Networking.Experiences;
 using BusinessLogic.Networking.Login;
 using BusinessLogic.Networking.ProductCategory;
+using BusinessLogic.Networking.User;
 using Grpc.Net.Client;
 using GrpcFileGeneration.Models;
 using GrpcFileGeneration.Services;
@@ -32,6 +33,7 @@ using Networking.Customer;
 using Networking.Experience;
 using Networking.Login;
 using Networking.Provider;
+using Networking.User;
 using RiskFirst.Hateoas;
 
 namespace BusinessLogic
@@ -83,6 +85,11 @@ namespace BusinessLogic
                     GrpcChannel.ForAddress("http://localhost:9090")));          
             services.AddSingleton<IProviderModel, ProviderModel>();
             services.AddSingleton<IProviderNet, ProviderNet>();
+            
+            services.AddSingleton(
+                new UserService.UserServiceClient(
+                    GrpcChannel.ForAddress("http://localhost:9090")));          
+            services.AddSingleton<IUserNet, UserNet>();
             
             services.AddSingleton(
                 new CategoryService.CategoryServiceClient(
