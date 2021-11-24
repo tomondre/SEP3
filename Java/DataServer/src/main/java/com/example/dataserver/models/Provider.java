@@ -1,6 +1,7 @@
 package com.example.dataserver.models;
 
 import com.google.gson.annotations.SerializedName;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -8,43 +9,43 @@ import javax.persistence.*;
 @Table(name = "provider", schema = "sep3")
 public class Provider {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    @SerializedName(value = "id", alternate = {"Id"})
+    @Column(name = "user_id")
     private int id;
 
     @SerializedName(value = "companyName", alternate = {"CompanyName"})
+    @Nullable
     @Column(name = "company_name")
     private String companyName;
 
     @SerializedName(value = "cvr", alternate = {"Cvr"})
+    @Nullable
     @Column(name = "cvr")
     private int cvr;
 
     @SerializedName(value = "phoneNumber", alternate = {"PhoneNumber"})
+    @Nullable
     @Column(name = "phone_number")
     private String phoneNumber;
 
     @SerializedName(value = "description", alternate = {"Description"})
+    @Nullable
     @Column(name = "description")
     private String description;
 
     @SerializedName(value = "isApproved", alternate = {"IsApproved"})
+    @Nullable
     @Column(name = "is_approved")
     private boolean isApproved = false;
 
     @SerializedName(value = "address", alternate = {"Address"})
+    @Nullable
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Address address;
 
-    @SerializedName(value = "email", alternate = {"Email"})
-    @Column(name = "email")
-    private String email;
-
-    @SerializedName(value = "password", alternate = {"Password"})
-    @Column(name = "password")
-    private String password;
-
+    @OneToOne
+    @MapsId
+    @JoinColumn(name="user_id")
+    private User user;
 
     protected Provider() {
     }
@@ -61,84 +62,83 @@ public class Provider {
         this.description = description;
         this.isApproved = isApproved;
         this.address = address;
-        this.email = email;
-        this.password = password;
     }
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    @Override
-    public String toString()
+    public void setCompanyName(@Nullable String companyName)
     {
-        return "Provider{" + "id=" + id + ", companyName='" + companyName + '\'' + ", cvr=" + cvr
-            + ", phoneNumber='" + phoneNumber + '\'' + ", description='" + description + '\''
-            + ", street='" + address.getStreet() + '\'' + ", streetNumber='" + address.getStreetNumber() + '\''
-            + ", postCode=" + address.getPostCode() + '\'' + ", city='" + address.getCity() + '\'' + ", isApproved=" + isApproved + '\'' + ", email='" + email + '\'' + ", password='" + password + '}';
-    }
-
-    public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 
-    public int getCvr() {
+    public int getCvr()
+    {
         return cvr;
     }
 
-    public void setCvr(int cvr) {
+    public void setCvr(int cvr)
+    {
         this.cvr = cvr;
     }
 
-    public String getPhoneNumber() {
+    @Nullable
+    public String getPhoneNumber()
+    {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(@Nullable String phoneNumber)
+    {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getDescription() {
+    @Nullable
+    public String getDescription()
+    {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@Nullable String description)
+    {
         this.description = description;
     }
 
-    public boolean isApproved() {
+    public boolean isApproved()
+    {
         return isApproved;
     }
 
-    public void setApproved(boolean approved) {
+    public void setApproved(boolean approved)
+    {
         isApproved = approved;
     }
 
-    public Address getAddress() {
+    @Nullable
+    public Address getAddress()
+    {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(@Nullable Address address)
+    {
         this.address = address;
     }
 
-    public String getEmail() {
-        return email;
+    public User getUser()
+    {
+        return user;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUser(User user)
+    {
+        this.user = user;
     }
 }
