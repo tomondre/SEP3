@@ -1,0 +1,11 @@
+syntax="proto3";
+option java_multiple_files = true;
+package networking.user;
+
+message ProtobufMessage{
+    string messageOrObject = 1;
+}
+
+service UserService{
+    rpc createUser(ProtobufMessage) returns (ProtobufMessage);
+}
