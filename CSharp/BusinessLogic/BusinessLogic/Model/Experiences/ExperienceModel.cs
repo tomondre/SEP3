@@ -49,5 +49,15 @@ namespace BusinessLogic.Model.Experiences
         {
             return await network.GetExperienceByIdAsync(id);
         }
+
+        public Task<bool> IsInStockAsync(int experienceId, int quantity)
+        {
+            return network.IsInStockAsync(experienceId, quantity);
+        }
+
+        public async Task RemoveStockAsync(int experienceId, int itemQuantity)
+        {
+            await network.RemoveStockAsync(experienceId, itemQuantity);
+        }
     }
 }
