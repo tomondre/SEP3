@@ -14,89 +14,60 @@ namespace ClientBlazor.Data.Authentication
     {
         private readonly IJSRuntime jsRuntime;
         private readonly ILoginService loginService;
-        private CurrentUser currentUser;
 
-        public CurrentAuthenticationStateProvider(IJSRuntime jsRuntime, ILoginService loginService, CurrentUser currentUser)
+        private User cachedUser;
+        
+        public CurrentAuthenticationStateProvider(IJSRuntime jsRuntime, ILoginService loginService)
         {
             this.jsRuntime = jsRuntime;
             this.loginService = loginService;
-            this.currentUser = currentUser;
         }
-        
-        
-        
+
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var identity = new ClaimsIdentity();
-            if (currentUser.Administrator == null && currentUser.Provider == null)
+            if (cachedUser == null)
             {
-                var login = new GrpcFileGeneration.Models.Login();
-                string administratorAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUserAdministrator");
-                string providerAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUserProvider");
-                if (!string.IsNullOrEmpty(administratorAsJson))
+                string userAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
+                if (!string.IsNullOrEmpty(userAsJson))
                 {
-                    var user = JsonSerializer.Deserialize<Administrator>(administratorAsJson);
-                    login.Email = user.Email;
-                    login.Password = user.Password;
-                    await ValidateUser(login,true);
+                    User user = JsonSerializer.Deserialize<User>(userAsJson);
+                    await ValidateUser(user);
                 }
-                else if (!string.IsNullOrEmpty(providerAsJson))
-                {
-                    var user = JsonSerializer.Deserialize<Provider>(providerAsJson);
-                    login.Email = user.Email;
-                    login.Password = user.Password;
-                    await ValidateUser(login, null);
-                }
-            }
-            else if (currentUser.Administrator != null)
-            {
-                identity = SetupClaimsForUser(currentUser.Administrator);
             }
             else
             {
-                identity = SetupClaimsForUser(currentUser.Provider);
+                identity = SetupClaimsForUser(cachedUser);
             }
             
-
             ClaimsPrincipal cachedClaimsPrincipal = new ClaimsPrincipal(identity);
             return await Task.FromResult(new AuthenticationState(cachedClaimsPrincipal));
         }
 
-        private ClaimsIdentity SetupClaimsForUser<T>(T user)
+        private ClaimsIdentity SetupClaimsForUser(User user)
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Role, user.GetType().Name)
+                new(ClaimTypes.Role, user.SecurityType)
             };
             ClaimsIdentity identity = new ClaimsIdentity(claims);
             return identity;
         }
 
-        public async Task ValidateUser(GrpcFileGeneration.Models.Login login, bool? isAdministrator)
+        public async Task ValidateUser(User userCred)
         {
-            if (string.IsNullOrEmpty(login.Email)) throw new Exception("Enter username");
-            if (string.IsNullOrEmpty(login.Password)) throw new Exception("Enter password");
+            
+            if (string.IsNullOrEmpty(userCred.Email)) throw new Exception("Enter username");
+            if (string.IsNullOrEmpty(userCred.Password)) throw new Exception("Enter password");
 
             var identity = new ClaimsIdentity();
             try
             {
-                string userAsJson ="";
-                if (isAdministrator is null or false)
-                {
-                    var user = await loginService.LoginProvider(login);
-                    userAsJson = JsonSerializer.Serialize(user);
-                    identity = SetupClaimsForUser(user);
-                    cachedUser = user;
-                }
-                else
-                {
-                    var user = await loginService.LoginAdministrator(login);
-                    userAsJson = JsonSerializer.Serialize(user);
-                    identity = SetupClaimsForUser(user);
-                    cachedUser = user;
-                }
+                var user = await loginService.ValidateUser(userCred);
+                identity = SetupClaimsForUser(user);
+                string userAsJson = JsonSerializer.Serialize(user);
                 await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", userAsJson);
-                
+                cachedUser = user;
             }
             catch (Exception e)
             {
