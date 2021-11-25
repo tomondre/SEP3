@@ -19,36 +19,10 @@ namespace BusinessLogic.Controllers
         }
         
         [AllowAnonymous]
-        [HttpPost("authenticate/customer")]
-        public async Task<ActionResult<Customer>> AuthenticateCustomer([FromBody] Login userCred)
+        [HttpPost]
+        public async Task<ActionResult<User>> AuthenticateUser([FromBody] User userCred)
         {
-            var authenticate = await model.AuthenticateCustomerAsync(userCred.Email, userCred.Password);
-            if (authenticate == null)
-            {
-                return Unauthorized();
-            }
-            
-            return Ok(authenticate);
-        }
-        
-        [AllowAnonymous]
-        [HttpPost("authenticate/provider")]
-        public async Task<ActionResult<Customer>> AuthenticateProvider([FromBody] Login userCred)
-        {
-            var authenticate = await model.AuthenticateProviderAsync(userCred.Email, userCred.Password);
-            if (authenticate == null)
-            {
-                return Unauthorized();
-            }
-            
-            return Ok(authenticate);
-        }
-        
-        [AllowAnonymous]
-        [HttpPost("authenticate/administrator")]
-        public async Task<ActionResult<Customer>> AuthenticateAdministrator([FromBody] Login userCred)
-        {
-            var authenticate = await model.AuthenticateAdministratorAsync(userCred.Email, userCred.Password);
+            var authenticate = await model.AuthenticateUserAsync(userCred);
             if (authenticate == null)
             {
                 return Unauthorized();
