@@ -20,44 +20,19 @@ namespace BusinessLogic.Model.Login
             this.key = key;
         }
 
-        public async Task<Customer> AuthenticateCustomerAsync(string username, string password)
+        public async Task<User> AuthenticateUserAsync(User userCred)
         {
-            var customerLoginAsync = await net.GetCustomerLoginAsync(username);
-            if (customerLoginAsync == null)
+            var userLoginAsync = await net.GetUserLoginAsync(userCred);
+            if (userLoginAsync == null)
             {
                 return null;
             }
 
-            customerLoginAsync.Token = WriteToken(username, "Customer");
-
-            return customerLoginAsync;
-        }
-        
-        public async Task<Provider> AuthenticateProviderAsync(string username, string password)
-        {
-            var providerLoginAsync = await net.GetProviderLoginAsync(username);
-            if (providerLoginAsync == null)
-            {
-                return null;
-            }
-
-            providerLoginAsync.Token = WriteToken(username, "Provider");
-            return providerLoginAsync;
+            userLoginAsync.Token = WriteToken(userLoginAsync);
+            return userLoginAsync;
         }
 
-        public async Task<Administrator> AuthenticateAdministratorAsync(string username, string password)
-        {
-            var addAdministratorLoginAsync = await net.AddAdministratorLoginAsync(username);
-            if (addAdministratorLoginAsync == null)
-            {
-                return null;
-            }
-
-            addAdministratorLoginAsync.Token = WriteToken(username, "Administrator");
-            return addAdministratorLoginAsync;
-        }
-        
-        private string WriteToken(string username, string role)
+        private string WriteToken(User userCred)
         {
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(key);
@@ -65,8 +40,8 @@ namespace BusinessLogic.Model.Login
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, username),
-                    new Claim(ClaimTypes.Role, role)
+                    new Claim(ClaimTypes.Name, userCred.Email),
+                    new Claim(ClaimTypes.Role, userCred.SecurityType)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials =
