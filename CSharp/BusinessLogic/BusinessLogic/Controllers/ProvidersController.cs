@@ -11,7 +11,6 @@ namespace BusinessLogic.Controllers
 {
     //TODO set authorization depending on the role for each method [Authorize(Roles = "Administrator")]
 
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ProviderController : ControllerBase
