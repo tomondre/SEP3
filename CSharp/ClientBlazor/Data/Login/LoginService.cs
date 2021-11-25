@@ -17,33 +17,20 @@ namespace ClientBlazor.Data.Login
         public LoginService(HttpClient client)
         {
             this.client = client;
-            uri = "https://localhost:5001/Login/authenticate";
+            uri = "https://localhost:5001/Login";
         }
         
-        public async Task<Administrator> LoginAdministrator(GrpcFileGeneration.Models.Login login)
+        public async Task<User> ValidateUser(User userCred)
         {
-            var serialize = JsonSerializer.Serialize(login);
+            var serialize = JsonSerializer.Serialize(userCred);
             var stringContent = new StringContent(serialize, Encoding.UTF8, "application/json");
-            var postAsync = await client.PostAsync($"{uri}/administrator", stringContent);
+            var postAsync = await client.PostAsync(uri, stringContent);
             var readAsStringAsync = await postAsync.Content.ReadAsStringAsync();
-            var administrator = JsonSerializer.Deserialize<Administrator>(readAsStringAsync, new JsonSerializerOptions()
+            var user = JsonSerializer.Deserialize<User>(readAsStringAsync, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
-            return administrator;
-        }
-
-        public async Task<Provider> LoginProvider(GrpcFileGeneration.Models.Login login)
-        {
-            var serialize = JsonSerializer.Serialize(login);
-            var stringContent = new StringContent(serialize, Encoding.UTF8, "application/json");
-            var postAsync = await client.PostAsync($"{uri}/provider", stringContent);
-            var readAsStringAsync = await postAsync.Content.ReadAsStringAsync();
-            var provider = JsonSerializer.Deserialize<Provider>(readAsStringAsync, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-            return provider;
+            return user;
         }
     }
 }
