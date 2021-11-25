@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogic.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CustomersController : ControllerBase
