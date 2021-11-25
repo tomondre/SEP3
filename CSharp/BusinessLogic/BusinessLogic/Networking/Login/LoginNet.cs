@@ -1,7 +1,6 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
-using Microsoft.JSInterop;
 using Networking.Login;
 
 namespace BusinessLogic.Networking.Login
@@ -15,37 +14,16 @@ namespace BusinessLogic.Networking.Login
             this.client = client;
         }
         
-        public async Task<Provider> GetProviderLoginAsync(string email)
+        public async Task<User> GetUserLoginAsync(User user)
         {
-            var providerLoginAsync = await client.getProviderLoginAsync(new ProtobufMessage() {MessageOrObject = email});
+            var userAsJson = JsonSerializer.Serialize(user);    
+            var providerLoginAsync = await client.GetUserLoginAsync(new ProtobufMessage() {MessageOrObject = userAsJson});
             var messageOrObject = providerLoginAsync.MessageOrObject;
-            var deserialize = JsonSerializer.Deserialize<Provider>(messageOrObject, new JsonSerializerOptions()
+            var deserialize = JsonSerializer.Deserialize<User>(messageOrObject, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
             return deserialize;
-        }
-
-        public async Task<Customer> GetCustomerLoginAsync(string email)
-        {
-            var customerLoginAsync = await client.getCustomerLoginAsync(new ProtobufMessage() {MessageOrObject = email});
-            var messageOrObject = customerLoginAsync.MessageOrObject;
-            var deserialize = JsonSerializer.Deserialize<Customer>(messageOrObject, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-            return deserialize;
-        }
-
-        public async Task<Administrator> AddAdministratorLoginAsync(string email)
-        {
-            var addAdministratorLoginAsync = await client.addAdministratorLoginAsync(new ProtobufMessage() {MessageOrObject = email});
-            var messageOrObject = addAdministratorLoginAsync.MessageOrObject;
-            var administrator = JsonSerializer.Deserialize<Administrator>(messageOrObject, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-            return administrator;
         }
     }
 }
