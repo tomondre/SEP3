@@ -3,12 +3,12 @@ option java_multiple_files = true;
 package networking.user;
 
 message UserMessage {
-    int32 id = 1;
-    string email = 2;
-    string password = 3;
-    string securityType = 4;
+  int32 id = 1;
+  string email = 2;
+  string password = 3;
+  string securityType = 4;
 }
 
 service UserService{
-    
+
 }
