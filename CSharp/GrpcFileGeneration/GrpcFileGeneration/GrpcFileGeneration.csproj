@@ -10,6 +10,7 @@
         <Protobuf Include="Proto/Experience.proto" OutputDir="./Protobuf/Experience" GrpcServices="Client" />
         <Protobuf Include="Proto/Customer.proto" OutputDir="./Protobuf/Customer" GrpcServices="Client" />
         <Protobuf Include="Proto/Login.proto" OutputDir="./Protobuf/Login" GrpcServices="Client" />
+        <Protobuf Include="Proto/Address.proto" OutputDir="./Protobuf/Address" GrpcServices="Client" />
         <Protobuf Include="Proto/User.proto" OutputDir="./Protobuf/User" GrpcServices="Client" />
     </ItemGroup>
     <ItemGroup>
