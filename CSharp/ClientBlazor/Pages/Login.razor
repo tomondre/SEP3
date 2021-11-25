@@ -3,6 +3,7 @@
 @page "/Login"
 @using ClientBlazor.Data.Login
 @using ClientBlazor.Data.Authentication
+@using GrpcFileGeneration.Models
 
 <section class="py-12 bg-blue-600">
     <div class="container px-4 mx-auto">
@@ -13,26 +14,6 @@
             <div class="mt-12 mb-8 p-8 bg-white rounded">
                 <h4 class="mb-6 text-3xl">Sign In</h4>
                 <EditForm Model="@userCred" OnValidSubmit="@TryLoginAsync">
-                    <div class="flex justify-between mb-6 px-4 bg-blueGray-50 rounded">
-                        @* <InputRadioGroup @bind-Value="isAdministrator"> *@
-                        @* <label class="mr-2"> *@
-                        @*     <InputRadio Value="0"/> *@
-                        @*     <span class="ml-1">Provider</span> *@
-                        @* </label> *@
-                        @* <label> *@
-                        @*     <InputRadio Value="1"/> *@
-                        @*     <span class="ml-1">Administrator</span> *@
-                        @* </label> *@
-                        @* </InputRadioGroup> *@
-                        <label class="mr-2">
-                            <input @onchange="args => ToggleRadioButton(args)" type="radio" name="inline-radio" value="0">
-                            <span class="ml-1">Provider</span>
-                        </label>
-                        <label>
-                            <input @onchange="args => ToggleRadioButton(args)" type="radio" name="inline-radio" value="1">
-                            <span class="ml-1">Administrator</span>
-                        </label>
-                    </div>
                     <div class="flex mb-4 px-4 bg-blueGray-50 rounded">
                         <InputText @bind-Value="@userCred.Email" class="w-full py-4 text-xs placeholder-blueGray-400 font-semibold leading-none bg-blueGray-50 outline-none"
                                    type="email" placeholder="name@email.com"/>
@@ -46,7 +27,7 @@
                     <div class="flex mb-6 px-4 bg-blueGray-50 rounded">
                         <InputText @bind-Value="@userCred.Password" class="w-full py-4 text-xs placeholder-blueGray-400 font-semibold leading-none bg-blueGray-50 outline-none"
                                    type="@(showPassword ? "text" : "password")" placeholder="Enter your password"/>
-                        <button class="ml-4" @onclick="ToggleShowPassword">
+                        <button type="button" class="ml-4" @onclick="ToggleShowPassword">
                             <svg class="h-6 w-6 my-auto text-blueGray-300" xmlns="http://www.w3.org/2000/svg" fill="none"
                                  viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -76,24 +57,17 @@
 </section>
 
 @code {
-    private GrpcFileGeneration.Models.Login userCred = new();
-    private bool isAdministrator;
+    private User userCred = new();
     private bool showPassword;
     private string selected;
 
     private async void TryLoginAsync()
     {
-        await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).ValidateUser(userCred, isAdministrator);
+        await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).ValidateUser(userCred);
     }
 
     private void ToggleShowPassword()
     {
         showPassword = !showPassword;
     }
-
-    private void ToggleRadioButton(ChangeEventArgs args)
-    {
-        isAdministrator = args.Value.ToString() == "1";
-    }
-
 }
