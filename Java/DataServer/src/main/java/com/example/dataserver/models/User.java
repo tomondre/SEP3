@@ -1,7 +1,7 @@
 package com.example.dataserver.models;
 
-
 import com.google.gson.annotations.SerializedName;
+import networking.user.UserMessage;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -10,32 +10,36 @@ import javax.persistence.*;
 @Table(name = "users")
 public class User
 {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "user_id")
-  private int id;
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "user_id") private int id;
 
-  @SerializedName(value = "email", alternate = {"Email"})
-  @Column(name = "email")
-  private String email;
+  @SerializedName(value = "email", alternate = {
+      "Email"}) @Column(name = "email") private String email;
 
-  @SerializedName(value = "password", alternate = {"Password"})
-  @Column(name = "password")
-  private String password;
+  @SerializedName(value = "password", alternate = {
+      "Password"}) @Column(name = "password") private String password;
 
-  @Column(name = "secirity_type")
-  private String securityType;
+  @Column(name = "secirity_type") private String securityType;
 
-  @Nullable
-  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-  private Provider provider;
+  @Nullable @OneToOne(mappedBy = "user", cascade = CascadeType.ALL) private Provider provider;
 
-  @Nullable
-  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-  private Customer customer;
+  @Nullable @OneToOne(mappedBy = "user", cascade = CascadeType.ALL) private Customer customer;
 
   public User()
   {
+  }
+
+  public User(UserMessage message)
+  {
+    id = message.getId();
+    email = message.getEmail();
+    password = message.getPassword();
+    securityType = message.getSecurityType();
+  }
+
+  public UserMessage toMessage()
+  {
+    return UserMessage.newBuilder().setId(id).setEmail(email).setPassword(password)
+        .setSecurityType(securityType).build();
   }
 
   public int getId()
@@ -98,5 +102,13 @@ public class User
   public void setSecurityType(String securityType)
   {
     this.securityType = securityType;
+  }
+
+  @Override
+  public String toString()
+  {
+    return "User{" + "id=" + id + ", email='" + email + '\'' + ", password='" + password + '\''
+        + ", securityType='" + securityType + '\'' + ", provider=" + provider + ", customer="
+        + customer + '}';
   }
 }

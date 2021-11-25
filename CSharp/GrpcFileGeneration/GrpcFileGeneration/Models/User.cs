@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Networking.User;
 
 namespace GrpcFileGeneration.Models
 {
@@ -16,5 +17,29 @@ namespace GrpcFileGeneration.Models
         public string Password { get; set; }
         public string Token { set; get; }
         public string SecurityType { set; get; }
+
+        public User()
+        {
+            
+        }
+
+        public User(UserMessage message)
+        {
+            Id = message.Id;
+            Email = message.Email;
+            Password = message.Password;
+            SecurityType = message.SecurityType;
+        }
+
+        public UserMessage ToMessage()
+        {
+            return new UserMessage()
+            {
+                Email = this.Email,
+                Id = this.Id,
+                Password = this.Password,
+                SecurityType = this.SecurityType
+            };
+        }
     }
 }
