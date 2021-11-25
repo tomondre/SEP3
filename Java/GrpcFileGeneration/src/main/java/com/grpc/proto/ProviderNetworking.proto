@@ -2,11 +2,11 @@ syntax="proto3";
 option java_multiple_files = true;
 package networking.provider;
 
-import "Proto/Address.proto";
-import "Proto/User.proto";
+import "Address.proto";
+import "User.proto";
 
 message ProviderMessage{
-  user.UserMessage user_message = 1;
+  user.UserMessage user = 1;
   string company_name = 2;
   int32 cvr = 3;
   string phone_number = 4;
