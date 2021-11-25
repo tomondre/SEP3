@@ -1,54 +1,36 @@
 package com.example.dataserver.networking;
 
-import com.example.dataserver.models.Administrator;
-import com.example.dataserver.models.Customer;
-import com.example.dataserver.models.Provider;
-import com.example.dataserver.persistence.administrator.AdministratorDAO;
+import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.customer.CustomerDAO;
+import com.example.dataserver.persistence.login.LoginDAO;
 import com.example.dataserver.persistence.provider.ProviderDAO;
 import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import networking.login.LoginServiceGrpc;
 import networking.login.ProtobufMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @GrpcService
 public class LoginNetworkingImpl extends LoginServiceGrpc.LoginServiceImplBase
 {
-  private AdministratorDAO administratorDAO;
-  private ProviderDAO providerDAO;
-  private CustomerDAO customerDAO;
+  private LoginDAO loginDAO;
   private Gson gson;
 
-  public LoginNetworkingImpl(AdministratorDAO administratorDAO, ProviderDAO providerDAO,
-      CustomerDAO customerDAO)
+  @Autowired
+  public LoginNetworkingImpl(LoginDAO loginDAO)
   {
-    this.administratorDAO = administratorDAO;
-    this.providerDAO = providerDAO;
-    this.customerDAO = customerDAO;
+    this.loginDAO = loginDAO;
     gson = new Gson();
   }
 
   @Override
-  public void getProviderLogin(ProtobufMessage request,
+  public void getUserLogin(ProtobufMessage request,
       StreamObserver<ProtobufMessage> responseObserver)
   {
-
-  }
-
-  @Override
-  public void getCustomerLogin(ProtobufMessage request,
-      StreamObserver<ProtobufMessage> responseObserver)
-  {
-  }
-
-  @Override
-  public void addAdministratorLogin(ProtobufMessage request,
-      StreamObserver<ProtobufMessage> responseObserver)
-  {
-    Administrator administratorByEmail = administratorDAO.getAdministratorByEmail(
-        request.getMessageOrObject());
-    String s = gson.toJson(administratorByEmail);
+    User user = gson.fromJson(request.getMessageOrObject(), User.class);
+    User userLogin = loginDAO.getUserLogin(user);
+    String s = gson.toJson(userLogin);
     responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
     responseObserver.onCompleted();
   }
