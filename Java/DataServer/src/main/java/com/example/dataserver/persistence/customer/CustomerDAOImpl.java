@@ -17,8 +17,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public Customer createCustomer(User customer) {
-        repository.save(customer);
-        return null;
+    public User createCustomer(User customer) {
+        return repository.save(customer);
     }
 }

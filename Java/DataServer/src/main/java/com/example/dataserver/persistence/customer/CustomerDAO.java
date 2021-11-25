@@ -5,5 +5,5 @@ import com.example.dataserver.models.User;
 
 public interface CustomerDAO {
 
-    Customer createCustomer(User customer);
+    User createCustomer(User customer);
 }
