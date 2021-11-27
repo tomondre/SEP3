@@ -8,6 +8,7 @@ using ClientBlazor.Data.Experiences;
 using ClientBlazor.Data.Login;
 using GrpcFileGeneration.Services;
 using ClientBlazor.Data.ProductCategory;
+using ClientBlazor.Data.Provider;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
