@@ -9,6 +9,7 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import networking.customer.CustomerMessage;
 import networking.customer.CustomerServiceGrpc;
+import networking.user.UserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @GrpcService
@@ -23,15 +24,15 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
     }
 
     @Override
-    public void createCustomer(CustomerMessage request, StreamObserver<CustomerMessage> responseObserver) {
+    public void createCustomer(CustomerMessage request, StreamObserver<UserMessage> responseObserver) {
 
         var customer = new Customer(request);
         var user = customer.getUser();
         user.setCustomer(customer);
 
-        System.out.println(dao.createCustomer(user));
-
-        //        responseObserver.onNext(UserMessage.newBuilder().setMassageOrObject(s).build());
-//        responseObserver.onCompleted();
+        User createdCustomer = dao.createCustomer(user);
+        UserMessage userMessage = createdCustomer.toMessage();
+        responseObserver.onNext(userMessage);
+        responseObserver.onCompleted();
     }
 }
