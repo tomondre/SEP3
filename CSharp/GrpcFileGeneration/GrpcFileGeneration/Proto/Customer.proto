@@ -15,5 +15,5 @@ message CustomerMessage {
 
 
 service CustomerService {
-    rpc CreateCustomer(CustomerMessage) returns (CustomerMessage);
+    rpc CreateCustomer(CustomerMessage) returns (user.UserMessage);
 }
