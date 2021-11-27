@@ -15,11 +15,15 @@ message ProviderMessage{
   address.AddressMessage address = 7;
 }
 
+message ProvidersMessage {
+  repeated ProviderMessage providers = 1;
+}
+
 service ProviderService{
-  rpc CreateProvider(ProviderMessage) returns (ProviderMessage);
-  rpc GetAllProviders(ProviderMessage) returns (ProviderMessage);
-  rpc GetProviderById(ProviderMessage) returns (ProviderMessage);
+  rpc CreateProvider(ProviderMessage) returns (user.UserMessage);
+  rpc GetAllProviders(ProviderMessage) returns (ProvidersMessage);
+  rpc GetProviderById(user.UserMessage) returns (ProviderMessage);
   rpc EditProvider(ProviderMessage) returns (ProviderMessage);
-  rpc RemoveProvider(ProviderMessage) returns (ProviderMessage);
-  rpc GetAllNotApprovedProviders(ProviderMessage) returns (ProviderMessage);
+  rpc RemoveProvider(user.UserMessage) returns (ProviderMessage);
+  rpc GetAllNotApprovedProviders(ProviderMessage) returns (ProvidersMessage);
 }
