@@ -1,13 +1,13 @@
 syntax = "proto3";
 option java_multiple_files = true;
-
 package networking.address;
 
 message AddressMessage {
-    string street = 1;
-    string street_number = 2;
-    int32 post_code = 3;
-    string city = 4;
+    int32 id = 1;
+    string street = 2;
+    string street_number = 3;
+    int32 post_code = 4;
+    string city = 5;
 }
 
 service AddressService{
