@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 using Networking.Address;
@@ -16,12 +17,12 @@ namespace BusinessLogic.Networking.Customers
             this.client = client;
         }
 
-        public async Task<Customer> CreateCustomerAsync(Customer customer)
+        public async Task<User> CreateCustomerAsync(Customer customer)
         {
             CustomerMessage customerMessage = new CustomerMessage(customer.ToMessage());
             var protobufMessage = await client.CreateCustomerAsync(customerMessage);
-            //TODO finish after testing
-            return null;
+            var user = new User(protobufMessage);
+            return user;
         }
     }
 }

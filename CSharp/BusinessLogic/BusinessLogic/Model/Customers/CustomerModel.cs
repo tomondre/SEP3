@@ -15,7 +15,7 @@ namespace BusinessLogic.Model.Customers
             this.network = network;
         }
         
-        public Task<Customer> CreateCustomerAsync(Customer customer)
+        public Task<User> CreateCustomerAsync(Customer customer)
         {
             return network.CreateCustomerAsync(customer);
         }
