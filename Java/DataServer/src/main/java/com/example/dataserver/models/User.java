@@ -1,6 +1,7 @@
 package com.example.dataserver.models;
 
 import com.google.gson.annotations.SerializedName;
+import networking.provider.ProviderMessage;
 import networking.user.UserMessage;
 import org.springframework.lang.Nullable;
 
@@ -36,10 +37,27 @@ public class User
     securityType = message.getSecurityType();
   }
 
+  public User(ProviderMessage provider)
+  {
+    var user = provider.getUser();
+    id = user.getId();
+    email = user.getEmail();
+    password = user.getPassword();
+    securityType = user.getSecurityType();
+    this.provider = new Provider(provider);
+  }
+
   public UserMessage toMessage()
   {
     return UserMessage.newBuilder().setId(id).setEmail(email).setPassword(password)
         .setSecurityType(securityType).build();
+  }
+
+  public ProviderMessage toProviderMessage()
+  {
+    return ProviderMessage.newBuilder().setUser(toMessage()).setCompanyName(provider.getCompanyName()).setCvr(
+        provider.getCvr()).setDescription(provider.getDescription()).setIsApproved(provider.isApproved()).setPhoneNumber(
+        provider.getPhoneNumber()).setAddress(provider.getAddress().toMessage()).build();
   }
 
   public int getId()
