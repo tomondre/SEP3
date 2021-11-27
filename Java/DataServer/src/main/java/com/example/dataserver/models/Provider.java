@@ -66,6 +66,7 @@ public class Provider
         .setDescription(description).setIsApproved(isApproved).build();
   }
 
+
   public int getId()
   {
     return id;
@@ -74,6 +75,11 @@ public class Provider
   public void setId(int id)
   {
     this.id = id;
+  }
+
+  public String getCompanyName()
+  {
+    return companyName;
   }
 
   public void setCompanyName(@Nullable String companyName)

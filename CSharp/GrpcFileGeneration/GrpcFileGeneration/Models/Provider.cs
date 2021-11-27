@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 using Networking.Provider;
 using RiskFirst.Hateoas.Models;
 
@@ -30,7 +29,7 @@ namespace GrpcFileGeneration.Models
             Address = new Address();
         }
 
-        public Provider(ProviderMessage message) : base(message.UserMessage)
+        public Provider(ProviderMessage message) : base(message.User)
         {
             CompanyName = message.CompanyName;
             Cvr = message.Cvr;
@@ -50,7 +49,7 @@ namespace GrpcFileGeneration.Models
                 CompanyName = this.CompanyName,
                 IsApproved = this.IsApproved,
                 PhoneNumber = this.PhoneNumber,
-                UserMessage = base.ToMessage()
+                User = base.ToMessage()
             };
         }
         public void AddLink(string id, Link link)
