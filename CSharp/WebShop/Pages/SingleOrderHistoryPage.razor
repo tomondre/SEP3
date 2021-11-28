@@ -1,4 +1,8 @@
-﻿@page "/OrderHistory"
+﻿@page "/orders/{Id : int}"
+@using GrpcFileGeneration.Models.Order
+@using WebShop.Services.Order
+@inject IOrderService OrderService
+
 <section class="py-20 bg-gray-100">
   <div class="container mx-auto px-4">
     <div class="p-8 lg:p-20 bg-white">
@@ -122,5 +126,13 @@
 </section>
 
 @code {
-    
+  [Parameter]
+  public int Id { get; set; }
+
+  private Order LoadedOrder;
+  
+  protected override async Task OnInitializedAsync()
+  {
+    LoadedOrder = await OrderService.GetOrderByIdAsync(Id);
+  }
 }
