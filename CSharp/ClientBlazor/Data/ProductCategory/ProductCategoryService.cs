@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -25,11 +24,11 @@ namespace ClientBlazor.Data.ProductCategory
         
         public async Task<Category> AddProductCategoryAsync(Category category)
         {
-            var httMethod = await GetHttMethod(HttpMethod.Post, uri);
+            var httpRequest = await GetHttpRequest(HttpMethod.Post, uri);
             var categoryAsJson = JsonSerializer.Serialize(category);
             var stringContent = new StringContent(categoryAsJson, Encoding.UTF8, "application/json");
-            httMethod.Content = stringContent;
-            var httpResponseMessage = await client.SendAsync(httMethod);
+            httpRequest.Content = stringContent;
+            var httpResponseMessage = await client.SendAsync(httpRequest);
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             var deserialize = JsonSerializer.Deserialize<Category>(readAsStringAsync, new JsonSerializerOptions()
@@ -53,11 +52,11 @@ namespace ClientBlazor.Data.ProductCategory
 
         public async Task<Category> EditProductCategoryAsync(Category category)
         {
-            var httMethod = await GetHttMethod(HttpMethod.Put, uri);
+            var httpRequest = await GetHttpRequest(HttpMethod.Put, uri);
             var categoryAsJson = JsonSerializer.Serialize(category);
             var stringContent = new StringContent(categoryAsJson, Encoding.UTF8, "application/json");
-            httMethod.Content = stringContent;
-            var httpResponseMessage = await client.SendAsync(httMethod);
+            httpRequest.Content = stringContent;
+            var httpResponseMessage = await client.SendAsync(httpRequest);
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             var deserialize = JsonSerializer.Deserialize<Category>(readAsStringAsync, new JsonSerializerOptions()
@@ -70,21 +69,21 @@ namespace ClientBlazor.Data.ProductCategory
 
         public async Task DeleteProductCategoryAsync(int id)
         {
-            var httMethod = await GetHttMethod(HttpMethod.Delete, $"{uri}/{id}");
-            var httpResponseMessage = await client.SendAsync(httMethod);
+            var httpRequest = await GetHttpRequest(HttpMethod.Delete, $"{uri}/{id}");
+            var httpResponseMessage = await client.SendAsync(httpRequest);
             CheckException(httpResponseMessage);
         }
         
-        private async Task<HttpRequestMessage> GetHttMethod(HttpMethod method, string uri)
+        private async Task<HttpRequestMessage> GetHttpRequest(HttpMethod method, string uri)
         {
-            var httpRequestMessage = new HttpRequestMessage(method, uri);
+            var httpRequest = new HttpRequestMessage(method, uri);
             var token = await sessionStorage.GetAsync<string>("token");
             if (token.Success)
             {
-                httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
+                httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
             }
             //TODO add exception
-            return httpRequestMessage;
+            return httpRequest;
         }
         
         private void CheckException(HttpResponseMessage task)
