@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using ClientBlazor.Data.Authentication;
 using ClientBlazor.Data.Experiences;
 using ClientBlazor.Data.Login;
@@ -33,6 +34,17 @@ namespace ClientBlazor
             services.AddScoped<IExperienceService, ExperienceService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<AuthenticationStateProvider, CurrentAuthenticationStateProvider>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Customer",  a => 
+                    a.RequireAuthenticatedUser().RequireClaim(ClaimTypes.Role, "Customer"));
+                
+                options.AddPolicy("Provider",  a => 
+                    a.RequireAuthenticatedUser().RequireClaim(ClaimTypes.Role, "Provider"));
+                
+                options.AddPolicy("Administrator",  a => 
+                    a.RequireAuthenticatedUser().RequireClaim(ClaimTypes.Role, "Administrator"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
