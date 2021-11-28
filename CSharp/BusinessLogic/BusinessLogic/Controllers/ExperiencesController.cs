@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Experiences;
 using GrpcFileGeneration.Models;
@@ -22,6 +20,7 @@ namespace BusinessLogic.Controllers
         }
         
         [HttpGet]
+        [Authorize(Roles = "Administrator, Provider")]
         [Route("{provider:int}")]
         public async Task<ActionResult<IList<Experience>>> GetAllExperiencesAsync([FromRoute] int? provider)
         {
@@ -39,6 +38,7 @@ namespace BusinessLogic.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Provider")]
         public async Task<ActionResult<Experience>> AddExperienceAsync([FromBody]Experience experience)
         {
             var addExperienceAsync = await model.AddExperienceAsync(experience);
