@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BusinessLogic.Model;
 using BusinessLogic.Model.Providers;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
 using RiskFirst.Hateoas;
 
 namespace BusinessLogic.Controllers
 {
     //TODO set authorization depending on the role for each method [Authorize(Roles = "Administrator")]
-
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ProviderController : ControllerBase
@@ -24,6 +22,7 @@ namespace BusinessLogic.Controllers
             this.model = model;
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet(Name = "GetProvidersRoute")]
         public async Task<ActionResult<ProviderList>> GetProviders([FromQuery] bool? approved)
         {
@@ -46,6 +45,7 @@ namespace BusinessLogic.Controllers
             return Ok(list);
         }
 
+        
         [HttpGet("{id:int}", Name = "GetProviderByIdRoute")]
         public async Task<ActionResult<User>> GetProviderById([FromRoute] int id)
         {
@@ -54,6 +54,8 @@ namespace BusinessLogic.Controllers
             return Ok(providerById);
         }
 
+        //TODO is it only the provider that can edit himself or also the administrator
+        [Authorize(Roles = "Provider")]
         [HttpPatch("{id:int}",Name = "EditProviderRoute")]
         public async Task<ActionResult> EditProvider([FromBody] Provider provider, [FromRoute] int id)
         {
@@ -62,6 +64,7 @@ namespace BusinessLogic.Controllers
             return Ok();
         }
 
+        [AllowAnonymous]
         [HttpPost(Name = "CreateProviderRoute")]
         public async Task<ActionResult<User>> CreateProvider([FromBody] Provider provider)
         {
@@ -78,6 +81,7 @@ namespace BusinessLogic.Controllers
             
         }
         
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id:int}", Name = "DeleteProviderRoute")]
         public async Task<ActionResult> DeleteProvider([FromRoute] int id)
         {
