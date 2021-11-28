@@ -6,21 +6,23 @@ using System.Threading.Tasks;
 using ClientBlazor.Data.Login;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.JSInterop;
+using Networking.User;
 
 namespace ClientBlazor.Data.Authentication
 {
     public class CurrentAuthenticationStateProvider : AuthenticationStateProvider
     {
-        private readonly IJSRuntime jsRuntime;
         private readonly ILoginService loginService;
+        private readonly ProtectedSessionStorage sessionStorage;
 
         private User cachedUser;
         
-        public CurrentAuthenticationStateProvider(IJSRuntime jsRuntime, ILoginService loginService)
+        public CurrentAuthenticationStateProvider(ILoginService loginService, ProtectedSessionStorage sessionStorage)
         {
-            this.jsRuntime = jsRuntime;
             this.loginService = loginService;
+            this.sessionStorage = sessionStorage;
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
@@ -28,11 +30,10 @@ namespace ClientBlazor.Data.Authentication
             var identity = new ClaimsIdentity();
             if (cachedUser == null)
             {
-                string userAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
-                if (!string.IsNullOrEmpty(userAsJson))
+                var userFromStorage = await sessionStorage.GetAsync<User>("currentUser");
+                if (userFromStorage.Success)
                 {
-                    User user = JsonSerializer.Deserialize<User>(userAsJson);
-                    await ValidateUser(user);
+                    await ValidateUser(userFromStorage.Value);
                 }
             }
             else
@@ -65,8 +66,8 @@ namespace ClientBlazor.Data.Authentication
             {
                 var user = await loginService.ValidateUser(userCred);
                 identity = SetupClaimsForUser(user);
-                string userAsJson = JsonSerializer.Serialize(user);
-                await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", userAsJson);
+                await sessionStorage.SetAsync("currentUser", user);
+                await sessionStorage.SetAsync("token", user.Token);
                 cachedUser = user;
             }
             catch (Exception e)
@@ -81,7 +82,8 @@ namespace ClientBlazor.Data.Authentication
         {
             cachedUser = null;
             var user = new ClaimsPrincipal(new ClaimsIdentity());
-            jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", user);
+            sessionStorage.SetAsync("currentUser", user);
+            sessionStorage.SetAsync("token", "");
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }
     }
