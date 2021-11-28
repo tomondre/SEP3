@@ -75,12 +75,12 @@ namespace ClientBlazor.Data.Authentication
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity))));
         }
 
-        public void Logout()
+        public async Task Logout()
         {
             cachedUser = null;
             var user = new ClaimsPrincipal(new ClaimsIdentity());
-            sessionStorage.SetAsync("currentUser", user);
-            sessionStorage.SetAsync("token", "");
+            await sessionStorage.SetAsync("currentUser", user);
+            await sessionStorage.SetAsync("token", "");
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }
     }
