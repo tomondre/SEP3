@@ -1,8 +1,8 @@
 package com.example.dataserver.models;
 
-//import com.example.dataserver.networking.ProtobufAddress;
 
 import com.google.gson.annotations.SerializedName;
+import networking.address.AddressMessage;
 
 import javax.persistence.*;
 
