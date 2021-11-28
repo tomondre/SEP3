@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,7 +8,7 @@ using WebShop.Data.ProductCategory;
 using WebShop.Models;
 using WebShop.RestWebShop;
 using WebShop.Services;
-using WebShop.Services.Checkout;
+using WebShop.Services.Order;
 using WebShop.Services.ShoppingCart;
 
 namespace WebShop
@@ -41,7 +34,7 @@ namespace WebShop
             services.AddSingleton<IExperienceService, ExperienceService>();
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<IObserverService, ObserverService>();
-            services.AddScoped<ICheckoutService, CheckoutService>();
+            services.AddScoped<IOrderService, OrderService>();
             
         }
 
