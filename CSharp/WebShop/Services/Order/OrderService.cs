@@ -50,7 +50,17 @@ namespace WebShop.Services.Order
             //Step 5 - If success, return, if not throw exception
             CheckException(postAsync);
         }
-        
+
+        public async Task<GrpcFileGeneration.Models.Order.Order> GetOrderByIdAsync(int id)
+        {
+            var httpResponseMessage = await client.GetAsync($"{url}/{id}");
+            CheckException(httpResponseMessage);
+            var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
+            var deserialize = JsonSerializer.Deserialize<GrpcFileGeneration.Models.Order.Order>(readAsStringAsync,
+                new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+            return deserialize;
+        }
+
         private void CheckException(HttpResponseMessage task)
         {
             if (!task.IsSuccessStatusCode)
