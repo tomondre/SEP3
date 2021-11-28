@@ -2,10 +2,7 @@ using System;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Experiences;
 using BusinessLogic.Model.Order;
-using BusinessLogic.Networking.Experiences;
-using BusinessLogic.Networking.Order;
 using Stripe;
-using Order = GrpcFileGeneration.Models.Order.Order;
 
 namespace BusinessLogic.Model.Checkout
 {
@@ -41,14 +38,15 @@ namespace BusinessLogic.Model.Checkout
                  await ExperienceNet.RemoveStockAsync(item.Experience.Id, item.Quantity);
             }
 
-            //Step 4 - Create Order + add generated id to the order object
-            await orderModel.CreateOrderAsync(order);
+            //Step 4 - Create Order and save it
+            var orderAsync = await orderModel.CreateOrderAsync(order);
             
-            //Step 5 - Generate vouchers
+
+            //Step 5 - Generate vouchers and save them
             
             
             //Step 6 - Return successful order
-            return order;
+            return orderAsync;
         }
 
         
