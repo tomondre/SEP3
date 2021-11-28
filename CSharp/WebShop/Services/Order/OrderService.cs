@@ -1,27 +1,25 @@
 using System;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Stripe;
-using Order = GrpcFileGeneration.Models.Order.Order;
 
-namespace WebShop.Services.Checkout
+namespace WebShop.Services.Order
 {
-    public class CheckoutService : ICheckoutService
+    public class OrderService : IOrderService
     {
         private HttpClient client;
         private string secretKey = "sk_test_51JyZa3HP6RYbC1HUXv6ohA4Hz6PiePRCQUdo0R6xGXDqvnEKc8E95CobkUpAj12nvHqyuhASAMtEsxfDSyHKkh3S00KY0zYi2B";
         private string url = "https://localhost:5001/checkout";
         
-        public CheckoutService(HttpClient client)
+        public OrderService(HttpClient client)
         {
             this.client = client;
             StripeConfiguration.ApiKey = secretKey;
         }
 
-        public async Task CheckoutAsync(Order order)
+        public async Task CreateOrderAsync(GrpcFileGeneration.Models.Order.Order order)
         {
             //Step 1 - CreatePaymentMethod from stripe and receive payment id
             var options = new PaymentMethodCreateOptions
