@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
-using WebShop.Data.Login;
+using WebShop.Services.Login;
 
 namespace WebShop.Data.Authentication
 {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Model;
+using BusinessLogic.Model.Checkout;
 using BusinessLogic.Model.Customers;
 using BusinessLogic.Model.Experiences;
 using BusinessLogic.Model.Login;
@@ -109,10 +110,14 @@ namespace BusinessLogic
             services.AddSingleton<ILoginNet, LoginNet>();
             
             services.AddSingleton<IValidator, Validator>();
+            
+            services.AddSingleton<ICheckoutModel, CheckoutModel>();
+            
             services.AddControllers();
             
             services.AddSingleton<ILinksService, DefaultLinksService>();
-            
+
+            services.AddMemoryCache();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "BusinessLogic", Version = "v1"});

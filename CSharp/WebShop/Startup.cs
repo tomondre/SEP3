@@ -1,19 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebShop.Data;
 using WebShop.Data.Authentication;
-using WebShop.Data.Customer;
-using WebShop.Data.Login;
+using WebShop.Data.Experiences;
+using WebShop.Data.ProductCategory;
+using WebShop.Models;
+using WebShop.Services;
+using WebShop.Services.Checkout;
+using WebShop.Services.Customer;
+using WebShop.Services.Login;
+using WebShop.Services.ShoppingCart;
 
 namespace WebShop
 {
@@ -33,7 +32,12 @@ namespace WebShop
             services.AddRazorPages(); 
             services.AddServerSideBlazor();
             services.AddHttpClient();
-            services.AddSingleton<ICustomerNetwork, CustomerNetwork>();
+            services.AddSingleton<ICustomerService, CustomerService>();
+            services.AddSingleton<IProductCategoryService, ProductCategoryService>();
+            services.AddSingleton<IExperienceService, ExperienceService>();
+            services.AddScoped<IShoppingCartService, ShoppingCartService>();
+            services.AddScoped<IObserverService, ObserverService>();
+            services.AddScoped<ICheckoutService, CheckoutService>();
             services.AddSingleton<ILoginService, LoginService>();
             services.AddSingleton<AuthenticationStateProvider, CurrentAuthenticationStateProvider>();
         }

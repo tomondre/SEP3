@@ -1,6 +1,5 @@
 @page "/ProviderExperiences"
 @using GrpcFileGeneration.Models
-@using System.Collections
 @using ClientBlazor.Data.Experiences
 
 @inject IExperienceService ExperienceService
@@ -12,7 +11,7 @@
             <em>Loading...</em>
         </p>
     }
-    else if (!experiences.Any())
+    else if (!experiences.Experiences.Any())
     {
         <p class="text-center">
             <em>No Experiences currenlty exist. Please add some.</em>
@@ -28,6 +27,7 @@
                         <tr class="text-xs text-gray-500 text-left">
                             <th class="pb-3 font-medium">Experience</th>
                             <th class="pb-3 font-medium">Price</th>
+                             <th class="pb-3 font-medium">Stock</th>
                             <th class="pb-3 font-medium">Validity</th>
                             <th class="pb-3 font-medium">Category</th>
                             <th class="pb-3 font-medium">Description</th>
@@ -35,7 +35,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach (var experience in experiences)
+                        @foreach (var experience in experiences.Experiences)
                         {
                             <tr class="text-xs bg-gray-50">
                                 <td class="py-3 px-4">
@@ -43,6 +43,9 @@
                                 </td>
                                 <td class="py-3 px-4">
                                     <p class="font-medium align-middle">@experience.Price</p>
+                                </td>
+                                <td class="py-3 px-4">
+                                    <p class="font-medium align-middle">@experience.Stock</p>
                                 </td>
                                 <td class="py-3 px-4">
                                     <p class="font-medium align-middle">@experience.ExperienceValidity</p>
@@ -83,12 +86,11 @@
 
 
 @code {
-    private IList<Experience> experiences;
+    private ExperienceList experiences = new();
 
     protected override async Task OnInitializedAsync()
     {
-    //TODO Figure out how to get the providers data
+        //TODO Figure out how to get the providers data
         experiences = await ExperienceService.GetAllProviderExperiencesAsync(2);
     }
-
 }

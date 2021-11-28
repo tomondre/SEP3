@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 
-namespace WebShop.Data.Login
+namespace WebShop.Services.Login
 {
     public interface ILoginService
     {

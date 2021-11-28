@@ -3,19 +3,18 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using WebShop.Data.Authentication;
 
-namespace WebShop.Data.Customer
+namespace WebShop.Services.Customer
 {
-    public class CustomerNetwork : ICustomerNetwork
+    public class CustomerService : ICustomerService
     {
         private HttpClient client;
         private readonly AuthenticationStateProvider authenticationStateProvider;
         private string uri;
-
-        public CustomerNetwork(HttpClient client, AuthenticationStateProvider authenticationStateProvider)
+        
+        public CustomerService(HttpClient client, AuthenticationStateProvider authenticationStateProvider)
         {
             this.client = client;
             this.authenticationStateProvider = authenticationStateProvider;

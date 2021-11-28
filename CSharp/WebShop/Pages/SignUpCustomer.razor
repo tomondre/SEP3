@@ -1,10 +1,10 @@
 @page "/SignUpCustomer"
 @using Microsoft.AspNetCore.Components
 @using GrpcFileGeneration.Models
-@using WebShop.Data.Customer
+@using WebShop.Services.Customer
 
 @inject NavigationManager NavigationManager
-@inject ICustomerNetwork CustomerNetwork; 
+@inject ICustomerService CustomerService; 
 
 @* TODO validation *@
 
@@ -102,7 +102,7 @@
 
   private async Task CreateNewCustomer()
   {
-    await CustomerNetwork.CreateCustomerAsync(newCustomer);
+    await CustomerService.CreateCustomerAsync(newCustomer);
     NavigationManager.NavigateTo("/");
   }
 }

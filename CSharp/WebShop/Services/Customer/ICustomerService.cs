@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace WebShop.Data.Customer
+namespace WebShop.Services.Customer
 {
-    public interface ICustomerNetwork
+    public interface ICustomerService
     { 
         Task CreateCustomerAsync(GrpcFileGeneration.Models.Customer customer);
     }

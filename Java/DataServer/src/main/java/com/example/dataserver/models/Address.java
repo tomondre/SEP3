@@ -1,28 +1,37 @@
 package com.example.dataserver.models;
 
+//import com.example.dataserver.networking.ProtobufAddress;
+
 import com.google.gson.annotations.SerializedName;
-import networking.address.AddressMessage;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "address", schema = "sep3")
+@Table(name = "address", schema = "sep3", uniqueConstraints={@UniqueConstraint(columnNames ={"id", "city", "street", "street_no", "post_code"})})
 public class Address
 {
 
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id") @SerializedName(value = "id", alternate = {
-      "Id"}) private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    @SerializedName(value = "id", alternate = {"Id"})
+    private int id;
 
-  @SerializedName(value = "street", alternate = {
-      "Street"}) @Column(name = "street") private String street;
+    @SerializedName(value = "street", alternate = {"Street"})
+    @Column(name = "street")
+    private String street;
 
-  @SerializedName(value = "streetNumber", alternate = {
-      "StreetNumber"}) @Column(name = "street_no") private String streetNumber;
+    @SerializedName(value = "streetNumber", alternate = {"StreetNumber"})
+    @Column(name = "street_no")
+    private String streetNumber;
 
-  @SerializedName(value = "postCode", alternate = {
-      "PostCode"}) @Column(name = "post_code") private int postCode;
+    @SerializedName(value = "postCode", alternate = {"PostCode"})
+    @Column(name = "post_code")
+    private int postCode;
 
-  @SerializedName(value = "city", alternate = {"City"}) @Column(name = "city") private String city;
+    @SerializedName(value = "city", alternate = {"City"})
+    @Column(name = "city")
+    private String city;
 
   public Address()
   {

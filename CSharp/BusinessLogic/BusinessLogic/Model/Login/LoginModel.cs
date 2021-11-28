@@ -1,10 +1,10 @@
 using System;
-using System.Threading.Tasks;
-using BusinessLogic.Networking.Login;
-using GrpcFileGeneration.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
+using BusinessLogic.Networking.Login;
+using GrpcFileGeneration.Models;
 using Microsoft.IdentityModel.Tokens;
 
 namespace BusinessLogic.Model.Login

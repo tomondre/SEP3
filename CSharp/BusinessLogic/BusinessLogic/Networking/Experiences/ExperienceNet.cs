@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
@@ -18,27 +17,49 @@ namespace BusinessLogic.Networking.Experiences
         public async Task<Experience> AddExperienceAsync(Experience experience)
         {
             var serialize = JsonSerializer.Serialize(experience);
-            var protobufMessage = await client.addExperienceAsync(new ProtobufMessage(){MessageOrObject = serialize});
+            var protobufMessage = await client.addExperienceAsync(new ProtobufMessage() {MessageOrObject = serialize});
             return JsonSerializer.Deserialize<Experience>(protobufMessage.MessageOrObject, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
         }
 
-        public async Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider)
+        public async Task<ExperienceList> GetAllProviderExperiencesAsync(int provider)
         {
-            var allProviderExperiences = await client.getAllProviderExperiencesAsync(new ProtobufMessage() {MessageOrObject = provider.ToString()});
+            var allProviderExperiences = await client.getAllProviderExperiencesAsync(new ProtobufMessage()
+                {MessageOrObject = provider.ToString()});
             var messageOrObject = allProviderExperiences.MessageOrObject;
-            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(messageOrObject, new JsonSerializerOptions()
+            var deserialize = JsonSerializer.Deserialize<ExperienceList>(messageOrObject, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
             return deserialize;
         }
 
-        public Task<IList<Experience>> GetAllWebShopExperiencesAsync()
+        public async Task<ExperienceList> GetAllWebShopExperiencesAsync()
         {
-            throw new System.NotImplementedException();
+            var allProviderExperiences = await client.getAllWebShopExperiencesAsync(new ProtobufMessage());
+            return JsonSerializer.Deserialize<ExperienceList>(allProviderExperiences.MessageOrObject,
+                new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+        }
+
+        public async Task<Experience> GetExperienceByIdAsync(int id)
+        {
+            var experienceByIdAsync = await client.getExperienceByIdAsync(new ProtobufMessage() {MessageOrObject = id.ToString()});
+            return JsonSerializer.Deserialize<Experience>(experienceByIdAsync.MessageOrObject, new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+        }
+
+        public async Task<bool> IsInStockAsync(int experienceId, int quantity)
+        {
+            var isInStockAsync = await client.isInStockAsync(new ProtobufStockRequest()
+            {
+                Id = experienceId, Quantity = quantity
+            });
+            bool result =  bool.Parse(isInStockAsync.MessageOrObject);
+            return result;
         }
     }
 }

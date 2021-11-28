@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Experiences;
 using GrpcFileGeneration.Models;
@@ -20,20 +19,28 @@ namespace BusinessLogic.Controllers
         }
         
         [HttpGet]
+        [Route("/Providers/{id:int}/Experiences")]
         [Authorize(Roles = "Administrator, Provider")]
-        [Route("{provider:int}")]
-        public async Task<ActionResult<IList<Experience>>> GetAllExperiencesAsync([FromRoute] int? provider)
+        public async Task<ActionResult<ExperienceList>> GetExperiences([FromRoute] int id)
         {
-            IList<Experience> experiences = new List<Experience>();
-            if (provider != null)
-            {
-                experiences = await model.GetAllProviderExperiencesAsync(provider.Value);
-            }
-            else
-            {
-                experiences = await model.GetAllWebShopExperiencesAsync();
-            }
+            ExperienceList experiences = await model.GetAllProviderExperiencesAsync(id);
+            return Ok(experiences);
+        }
 
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<ActionResult<Experience>> GetExperienceById([FromRoute] int id)
+        {
+            Experience experience = await model.GetExperienceByIdAsync(id);
+            return Ok(experience);
+        }
+
+
+        [HttpGet]
+        [Route("")]
+        public async Task<ActionResult<ExperienceList>> GetAllExperiencesAsync()
+        {
+            ExperienceList experiences = await model.GetAllWebShopExperiencesAsync();
             return Ok(experiences);
         }
 

@@ -13,24 +13,74 @@
     <projectFile profileName="WebShop">WebShop/WebShop.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2c44e8f-74d9-4966-a97f-9d00dbe82545" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/LoginController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Model/Login/ILoginModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Model/Login/LoginModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/Login/ILoginNet.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/Login/LoginNet.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClientBlazor/Pages/Login.razor" afterDir="false" />
+    <list default="true" id="b2c44e8f-74d9-4966-a97f-9d00dbe82545" name="Changes" comment="merge and refactor">
+      <change afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/CheckoutController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Model/Checkout/CheckoutModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Model/Checkout/ICheckoutModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/ExperienceList.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/Order/CreditCard.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/Order/ExperienceCartItem.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/Order/Order.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/Order/ShoppingCart.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebShop/Pages/ShoppingCartPage.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebShop/Services/Checkout/CheckoutService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebShop/Services/Checkout/ICheckoutService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebShop/Services/Experiences/ExperienceService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebShop/Services/Experiences/IExperienceSevice.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebShop/Services/Observer/IObserverService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebShop/Services/Observer/ObserverService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebShop/Services/ProductCategory/IProductCategoryService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebShop/Services/ProductCategory/ProductCategoryService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebShop/Services/ShoppingCart/IShoppingCartService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebShop/Services/ShoppingCart/ShoppingCartService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSharp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/BusinessLogic.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/BusinessLogic.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/CustomersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/CustomersController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/ExperiencesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/ExperiencesController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/ProductCategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/ProductCategoryController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/ProvidersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/ProvidersController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Model/Experiences/ExperienceModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Model/Experiences/ExperienceModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Model/Experiences/IExperienceModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Model/Experiences/IExperienceModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Model/Login/LoginModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Model/Login/LoginModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Model/ProductCategory/ProductCategoryModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Model/ProductCategory/ProductCategoryModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/Customers/CustomerNet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/Customers/CustomerNet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/Experiences/ExperienceNet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/Experiences/ExperienceNet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/Experiences/IExperienceNet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/Experiences/IExperienceNet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/ProductCategory/ProductCategoryNet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Networking/ProductCategory/ProductCategoryNet.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessLogic/BusinessLogic/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientBlazor/Shared/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Shared/MainLayout.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientBlazor/Shared/SideBar.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Shared/SideBar.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientBlazor/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/tailwind.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientBlazor/wwwroot/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/wwwroot/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/ClientBlazor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/ClientBlazor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/ExperienceService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/ExperienceService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/IExperienceSevice.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Data/Experiences/IExperienceSevice.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Data/Login/LoginService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Data/Login/LoginService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Data/ProductCategory/IProductCategoryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Data/ProductCategory/IProductCategoryService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Pages/AddExperience.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Pages/AddExperience.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Pages/ApproveProviders.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Pages/ApproveProviders.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientBlazor/Pages/ProviderExperiences.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ClientBlazor/Pages/ProviderExperiences.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/Category.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/Experience.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/Experience.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Proto/Experience.proto" beforeDir="false" afterPath="$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Proto/Experience.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/Data/Authentication/CurrentAuthenticationStateProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebShop/Data/Authentication/CurrentAuthenticationStateProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/Data/Customer/CustomerNetwork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebShop/Services/Customer/CustomerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/Data/Customer/ICustomerNetwork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebShop/Services/Customer/ICustomerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/Data/Login/ILoginService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebShop/Services/Login/ILoginService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/Data/Login/LoginService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebShop/Services/Login/LoginService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/Pages/Checkout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/WebShop/Pages/Checkout.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/Pages/OrderSuccessful.razor" beforeDir="false" afterPath="$PROJECT_DIR$/WebShop/Pages/OrderSuccessful.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/Pages/ProductGrid.razor" beforeDir="false" afterPath="$PROJECT_DIR$/WebShop/Pages/ProductGrid.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/Pages/ShoppingCart.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/Pages/SignUpCustomer.razor" beforeDir="false" afterPath="$PROJECT_DIR$/WebShop/Pages/SignUpCustomer.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/Pages/SingleProduct.razor" beforeDir="false" afterPath="$PROJECT_DIR$/WebShop/Pages/SingleProduct.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/RestWebShop/CustomerNetwork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebShop/RestWebShop/CustomerNetwork.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/Shared/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/WebShop/Shared/NavMenu.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebShop/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebShop/WebShop.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WebShop/WebShop.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/DataServer/src/main/java/com/example/dataserver/models/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/DataServer/src/main/java/com/example/dataserver/models/Address.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/DataServer/src/main/java/com/example/dataserver/models/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/DataServer/src/main/java/com/example/dataserver/models/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/DataServer/src/main/java/com/example/dataserver/models/Experience.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/DataServer/src/main/java/com/example/dataserver/models/Experience.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/DataServer/src/main/java/com/example/dataserver/networking/ExperienceNetworking.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/DataServer/src/main/java/com/example/dataserver/networking/ExperienceNetworking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/DataServer/src/main/java/com/example/dataserver/persistence/experience/ExperienceDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/DataServer/src/main/java/com/example/dataserver/persistence/experience/ExperienceDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/DataServer/src/main/java/com/example/dataserver/persistence/experience/ExperienceDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/DataServer/src/main/java/com/example/dataserver/persistence/experience/ExperienceDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/DataServer/src/main/java/com/example/dataserver/persistence/repository/ExperienceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/DataServer/src/main/java/com/example/dataserver/persistence/repository/ExperienceRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/GrpcFileGeneration/src/main/java/com/grpc/proto/Experience.proto" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/GrpcFileGeneration/src/main/java/com/grpc/proto/Experience.proto" afterDir="false" />
     </list>
     <list id="7b6ad5ca-a7a2-4366-96a3-bd5f534953c1" name="NotRelated" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -77,14 +127,58 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Proto/ProviderNetworking.proto" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Proto/Provider.proto" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ac9d10019ba3424c8c4cd80beb94d3634ac00/8d/4f9e8ae1/BasicRawUploadParams.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/WebShop/Services/Customer/ICustomerService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Proto/Category.proto" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ac9d10019ba3424c8c4cd80beb94d3634ac00/28/d0b12504/FileDescription.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/WebShop/Pages/Checkout.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/WebShop/Pages/SignUpCustomer.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/BusinessLogic/BusinessLogic/Networking/Customers/CustomerNet.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/ClientBlazor/Pages/AddExperience.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ClientBlazor/Data/ProductCategory/ProductCategoryService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/ClientBlazor/Startup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/BusinessLogic/BusinessLogic/Controllers/ExperiencesController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/WebShop/Services/Customer/CustomerService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/BusinessLogic/BusinessLogic/Controllers/CustomersController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/29a328843bdc4762af89c8fdc084c4d68f5778/40/String.Manipulation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/af71748759ed495aa8657bac4bc37279d7578/31/JsonSerializer.Read.String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/29a328843bdc4762af89c8fdc084c4d68f5778/26/910596b8/Action.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/29a328843bdc4762af89c8fdc084c4d68f5778/1B2/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BusinessLogic/BusinessLogic/Controllers/ProvidersController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Models/HandShake.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ClientBlazor/Data/ProductCategory/ProductCategoryService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/ClientBlazor/Startup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/ClientBlazor/Pages/ApproveProviders.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ClientBlazor/package-lock.json" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Proto/Category.proto" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/af71748759ed495aa8657bac4bc37279d7578/31/JsonSerializer.Read.String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/BusinessLogic/BusinessLogic/Controllers/ProvidersController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GrpcFileGeneration/GrpcFileGeneration/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/ClientBlazor/Data/Experiences/ExperienceService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/WebShop/Startup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/GrpcFileGeneration/GrpcFileGeneration/Models/Category.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/af75e39cca3840128ed4ee40d59a98102f378/25/InputFileChangeEventArgs.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ac9d10019ba3424c8c4cd80beb94d3634ac00/c3/4cbf3e2f/Cloudinary.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/af71748759ed495aa8657bac4bc37279d7578/2F/JsonSerializer.Read.Span.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/WebShop/Data/Customer/CustomerNetwork.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/ClientBlazor/Shared/SideBar.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/29a328843bdc4762af89c8fdc084c4d68f5778/3A/RuntimeType.CoreCLR.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/WebShop/Services/Customer/CustomerService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/222899a670a94fdea0abc9227ae57bcf6c978/A/DefaultComponentActivator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/ClientBlazor/Pages/Login.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/222899a670a94fdea0abc9227ae57bcf6c978/9/ComponentFactory.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/WebShop/Data/Customer/CustomerNetwork.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/BusinessLogic/BusinessLogic/Controllers/ExperiencesController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/WebShop/Startup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/222899a670a94fdea0abc9227ae57bcf6c978/3E/Renderer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/222899a670a94fdea0abc9227ae57bcf6c978/40/RenderTreeDiffBuilder.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/29a328843bdc4762af89c8fdc084c4d68f5778/2B7/RuntimeHelpers.CoreCLR.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/ClientBlazor/Data/Experiences/ExperienceService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/WebShop/Services/Customer/ICustomerService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/GrpcFileGeneration/GrpcFileGeneration/Services/Validator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/BusinessLogic/BusinessLogic/Startup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/WebShop/Startup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/ClientBlazor/Data/Authentication/CurrentAuthenticationStateProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/ClientBlazor/Startup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/JavaUni/SEP3/CSharp/WebShop/Data/Authentication/CurrentAuthenticationStateProvider.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="209OkxNnvKWn42iIkMmKox7zhC0" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -105,7 +199,7 @@
     <property name="settings.editor.selected.configurable" value="SolutionBuilderGeneralOptionsPageId" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.ClientBlazor">
+  <component name="RunManager" selected=".NET Project.GrpcFileGeneration">
     <configuration name="ClientBlazor" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -624,7 +718,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="HEAD" />
+                        <option value="login" />
                       </list>
                     </value>
                   </entry>
@@ -638,12 +732,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="false" />
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Adding proto generated files" />
     <MESSAGE value="Creating blazor project for webshop" />
     <MESSAGE value="Deleting unrelated files" />
     <MESSAGE value="Updating the side bar and header" />
@@ -668,7 +760,8 @@
     <MESSAGE value="login protobuf file created" />
     <MESSAGE value="gRPC service created" />
     <MESSAGE value="package path updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="package path updated" />
+    <MESSAGE value="merge and refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge and refactor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -681,5 +774,9 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

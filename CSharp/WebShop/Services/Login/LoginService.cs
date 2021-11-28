@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 
-namespace WebShop.Data.Login
+namespace WebShop.Services.Login
 {
     public class LoginService : ILoginService
     {
