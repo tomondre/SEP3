@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using BusinessLogic.Networking.Experiences;
+using GrpcFileGeneration.Models.Order;
 using Stripe;
 using Order = GrpcFileGeneration.Models.Order.Order;
 
@@ -10,16 +11,23 @@ namespace BusinessLogic.Model.Checkout
     {
         private string secretKey = "sk_test_51JyZa3HP6RYbC1HUXv6ohA4Hz6PiePRCQUdo0R6xGXDqvnEKc8E95CobkUpAj12nvHqyuhASAMtEsxfDSyHKkh3S00KY0zYi2B";
         private IExperienceNet ExperienceNet;
-        public CheckoutModel()
+        public CheckoutModel(IExperienceNet experienceNet)
         {
+            ExperienceNet = experienceNet;
             StripeConfiguration.ApiKey = secretKey;
         }
 
         public async Task<Order> CheckoutAsync(Order order)
         {
             //Step 1 - Check if the experiences are in stock
-            
-            
+            foreach (var item in order.ShoppingCart.ShoppingCartItems)
+            {
+                if (! await ExperienceNet.IsInStockAsync(item.Experience.Id, item.Quantity))
+                {
+                    throw new Exception("Not in stock!");
+                }
+            }
+
             //Step 2 - Create payment call to Stripe
              await CreatePayment(order);
             
