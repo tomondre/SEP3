@@ -33,5 +33,24 @@ namespace BusinessLogic.Controllers
                 return StatusCode(403, e.Message);
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult<CustomerList>> GetAllCustomersAsync()
+        {
+            CustomerList allCustomersAsync = new()
+            {
+                Customers = await model.GetAllCustomersAsync()
+            };
+
+            return Ok(allCustomersAsync);
+        }
+
+        [HttpDelete]
+        [Route("{customerId:int}")]
+        public async Task<ActionResult> DeleteCustomer([FromRoute] int customerId)
+        {
+            await model.DeleteCustomerAsync(customerId);
+            return Ok();
+        }
     }
 }
