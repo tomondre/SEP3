@@ -54,7 +54,7 @@ public class Experience
     {
     }
 
-    public Experience(int id, String picture, String name, double price,int stock, String description, String experienceValidity, Category experienceCategory, Provider experienceProvider, Address address) {
+    public Experience(int id, String picture, String name, double price,int stock, String description, String experienceValidity, Category experienceCategory, User experienceProvider, Address address) {
         this.id = id;
         this.picture = picture;
         this.name = name;
