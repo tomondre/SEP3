@@ -5,6 +5,6 @@ namespace BusinessLogic.Model.Customers
 {
     public interface ICustomerModel
     {
-        Task<Customer> CreateCustomerAsync(Customer customer);
+        Task<User> CreateCustomerAsync(Customer customer);
     }
 }

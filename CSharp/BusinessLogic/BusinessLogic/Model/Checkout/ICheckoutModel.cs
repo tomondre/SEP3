@@ -1,9 +1,11 @@
 using System.Threading.Tasks;
+using OrderStripe = Stripe.Order;
+using Order = GrpcFileGeneration.Models.Orders.Order;
 
 namespace BusinessLogic.Model.Checkout
 {
     public interface ICheckoutModel
     {
-        Task<GrpcFileGeneration.Models.Order.Order> CheckoutAsync(GrpcFileGeneration.Models.Order.Order order);
+        Task<Order> CheckoutAsync(Order order);
     }
 }

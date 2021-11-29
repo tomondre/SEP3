@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
-using GrpcFileGeneration.Models;
 
-namespace WebShop.RestWebShop
+namespace WebShop.Services.Customer
 {
     public interface ICustomerService
-    {
-        Task<Customer> CreateCustomerAsync(Customer customer);
+    { 
+        Task CreateCustomerAsync(GrpcFileGeneration.Models.Customer customer);
     }
 }

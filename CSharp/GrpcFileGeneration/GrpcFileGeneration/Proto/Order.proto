@@ -2,6 +2,8 @@ syntax="proto3";
 option java_multiple_files = true;
 package networking.order;
 
+import "Proto/User.proto";
+
 message OrderMessage {
   int32 id = 1;
   string comment = 2;
@@ -9,6 +11,10 @@ message OrderMessage {
   double total = 5;
   repeated OrderItemMessage items = 6;
   int32 customerId = 7;
+}
+
+message OrderListMessage {
+  repeated OrderMessage orders = 1;
 }
 
 message OrderItemMessage {
@@ -22,4 +28,6 @@ message OrderItemMessage {
 
 service OrderService {
   rpc createOrder (OrderMessage) returns (OrderMessage);
+  rpc getAllCustomerOrders (user.UserMessage) returns (OrderListMessage);
+  rpc getOrderById (OrderMessage) returns (OrderMessage);
 }

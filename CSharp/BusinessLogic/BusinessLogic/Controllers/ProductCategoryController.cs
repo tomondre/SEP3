@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BusinessLogic.Model.ProductCategory;
 using GrpcFileGeneration.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RiskFirst.Hateoas;
 
 namespace BusinessLogic.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ProductCategoryController : ControllerBase
@@ -22,6 +21,7 @@ namespace BusinessLogic.Controllers
             this.linksService = linksService;
         }
 
+        [AllowAnonymous]
         [HttpGet(Name = "GetCategoryRoute")]
         public async Task<ActionResult<CategoryList>>GetAllCategories()
         {
@@ -36,12 +36,11 @@ namespace BusinessLogic.Controllers
             }
 
             await linksService.AddLinksAsync(list);
-            
             return Ok(list);
         }
         
+        [AllowAnonymous]
         [HttpGet("{id:int}", Name = "GetCategoryByIdRoute")]
-   
         public async Task<ActionResult<CategoryList>>GetCategoryById([FromRoute] int id)
         {
             CategoryList list = new CategoryList();
@@ -56,6 +55,7 @@ namespace BusinessLogic.Controllers
             return Ok(list);
         }
         
+        [Authorize(Roles = "Administrator")]
         [HttpPut("{id:int}",Name = "EditCategoryRoute")]
         public async Task<ActionResult<Category>> EditCategory([FromBody] Category category, [FromRoute] int id)
         {
@@ -64,6 +64,7 @@ namespace BusinessLogic.Controllers
             return Ok(editProductCategoryAsync);
         }
         
+        [Authorize(Roles = "Administrator")]
         [HttpPost(Name = "CreateCategoryRoute")]
         public async Task<ActionResult<Category>> CreateCategory([FromBody] Category category)
         {
@@ -71,6 +72,7 @@ namespace BusinessLogic.Controllers
             return Ok(addProductCategoryAsync);
         }
         
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id:int}", Name = "DeleteCategoryRoute")]
         public async Task<ActionResult> DeleteProvider([FromRoute] int id)
         {

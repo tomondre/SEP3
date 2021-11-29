@@ -21,9 +21,9 @@ public class Order {
     @SerializedName(value = "id", alternate = {"Id"})
     private int id;
 
-    @SerializedName(value = "customer", alternate = {"Customer"})
+    @SerializedName(value = "user", alternate = {"User"})
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Customer customer;
+    private User user;
 
     @SerializedName(value = "total", alternate = {"Total"})
     @Column(name = "total")

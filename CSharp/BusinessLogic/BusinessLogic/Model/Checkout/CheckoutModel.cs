@@ -1,8 +1,10 @@
 using System;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Experiences;
-using BusinessLogic.Model.Order;
+using BusinessLogic.Model.Orders;
 using Stripe;
+using OrderStripe = Stripe.Order;
+using Order = GrpcFileGeneration.Models.Orders.Order;
 
 namespace BusinessLogic.Model.Checkout
 {
@@ -18,7 +20,7 @@ namespace BusinessLogic.Model.Checkout
             StripeConfiguration.ApiKey = secretKey;
         }
 
-        public async Task<GrpcFileGeneration.Models.Order.Order> CheckoutAsync(GrpcFileGeneration.Models.Order.Order order)
+        public async Task<Order> CheckoutAsync(Order order)
         {
             //Step 1 - Check if the experiences are in stock
             foreach (var item in order.ShoppingCart.ShoppingCartItems)
@@ -50,7 +52,7 @@ namespace BusinessLogic.Model.Checkout
         }
 
         
-        private async Task CreatePayment(GrpcFileGeneration.Models.Order.Order order)
+        private async Task CreatePayment(Order order)
         {
             var paymentIntentService = new PaymentIntentService();
             
@@ -68,7 +70,6 @@ namespace BusinessLogic.Model.Checkout
                         ConfirmationMethod = "manual",
                         Confirm =  true
                     };
-
                     paymentIntent = await paymentIntentService.CreateAsync(options);
                 }
 
