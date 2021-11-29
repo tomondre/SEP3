@@ -24,7 +24,7 @@ namespace ClientBlazor.Data.Experiences
 
         public async Task<Experience> AddExperienceAsync(Experience experience)
         {
-            var httpRequest = await GetHttpRequest(HttpMethod.Post, $"{uri}Experiences");
+            var httpRequest = await GetHttpRequestAsync(HttpMethod.Post, $"{uri}Experiences");
             var experienceAsJson = JsonSerializer.Serialize(experience);
             var stringContent = new StringContent(experienceAsJson, Encoding.UTF8, "application/json");
             httpRequest.Content = stringContent;
@@ -40,9 +40,17 @@ namespace ClientBlazor.Data.Experiences
             return deserialize;
         }
 
-        public async Task<ExperienceList> GetAllProviderExperiencesAsync(int provider)
+        public async Task<ExperienceList> GetAllProviderExperiencesAsync(int? providerId)
         {
-            var httpRequest = await GetHttpRequest(HttpMethod.Get, $"{uri}Providers/{provider}/Experiences");
+            if (providerId == null)
+            {
+                var protectedBrowserStorageResult = await sessionStorage.GetAsync<User>("currentUser");
+                if (protectedBrowserStorageResult.Success)
+                {
+                    providerId = protectedBrowserStorageResult.Value.Id;
+                }
+            }
+            var httpRequest = await GetHttpRequestAsync(HttpMethod.Get, $"{uri}Providers/{providerId}/Experiences");
             var httpResponseMessage = await client.SendAsync(httpRequest);
             
             CheckException(httpResponseMessage);
@@ -54,8 +62,16 @@ namespace ClientBlazor.Data.Experiences
             });
             return deserialize;
         }
-        
-        private async Task<HttpRequestMessage> GetHttpRequest(HttpMethod method, string uri)
+
+        public async Task DeleteExperienceAsync(Experience experience)
+        {
+            var httpRequest = await GetHttpRequestAsync(HttpMethod.Delete, $"{uri}/{experience.Id}");
+            var httpResponseMessage = await client.SendAsync(httpRequest);
+            
+            CheckException(httpResponseMessage);
+        }
+
+        private async Task<HttpRequestMessage> GetHttpRequestAsync(HttpMethod method, string uri)
         {
             var httpRequestMessage = new HttpRequestMessage(method, uri);
             var token = await sessionStorage.GetAsync<string>("token");

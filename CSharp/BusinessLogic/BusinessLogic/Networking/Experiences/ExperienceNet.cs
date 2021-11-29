@@ -61,5 +61,11 @@ namespace BusinessLogic.Networking.Experiences
             bool result =  bool.Parse(isInStockAsync.MessageOrObject);
             return result;
         }
+
+        public async Task DeleteExperienceAsync(int experienceId)
+        {
+            var protobufMessage = new ProtobufMessage() {MessageOrObject = experienceId.ToString()};
+            var deleteExperienceAsync = await client.deleteExperienceAsync(protobufMessage);
+        }
     }
 }

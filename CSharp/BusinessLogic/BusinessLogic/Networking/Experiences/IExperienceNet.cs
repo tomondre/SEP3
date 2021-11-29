@@ -10,5 +10,6 @@ namespace BusinessLogic.Networking.Experiences
         Task<ExperienceList> GetAllWebShopExperiencesAsync();
         Task<Experience> GetExperienceByIdAsync(int id);
         Task<bool> IsInStockAsync(int experienceId,int quantity );
+        Task DeleteExperienceAsync(int experienceId);
     }
 }

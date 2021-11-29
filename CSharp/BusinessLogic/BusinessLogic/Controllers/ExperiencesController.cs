@@ -51,5 +51,15 @@ namespace BusinessLogic.Controllers
             var addExperienceAsync = await model.AddExperienceAsync(experience);
             return Ok(addExperienceAsync);
         }
+
+        [HttpDelete]
+        [Route("{experienceId:int}")]
+        [AllowAnonymous]
+        // [Authorize(Roles = "Administrator, Provider")]
+        public async Task<ActionResult> DeleteExperienceAsync([FromRoute] int experienceId)
+        {
+            await model.DeleteExperienceAsync(experienceId);
+            return Ok();
+        }
     }
 }

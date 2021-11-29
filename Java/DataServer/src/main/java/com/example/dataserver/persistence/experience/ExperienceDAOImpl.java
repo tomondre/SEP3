@@ -43,5 +43,10 @@ public class ExperienceDAOImpl implements ExperienceDAO
       return repository.existsByIdAndStockIsGreaterThan(id, quantity);
     }
 
+    @Override
+    public void deleteExperience(int experienceId)
+    {
+        repository.deleteById(experienceId);
+    }
 
 }

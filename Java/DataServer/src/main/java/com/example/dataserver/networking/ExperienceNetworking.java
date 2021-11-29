@@ -75,5 +75,13 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
     responseObserver.onCompleted();
   }
 
-
+  @Override
+  public void deleteExperience(ProtobufMessage request,
+      StreamObserver<ProtobufMessage> responseObserver)
+  {
+    int experienceId = Integer.parseInt(request.getMessageOrObject());
+    experienceDAO.deleteExperience(experienceId);
+    responseObserver.onNext(ProtobufMessage.newBuilder().build());
+    responseObserver.onCompleted();
+  }
 }

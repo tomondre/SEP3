@@ -9,5 +9,6 @@ namespace BusinessLogic.Model.Experiences
         Task<ExperienceList> GetAllProviderExperiencesAsync(int provider);
         Task<ExperienceList> GetAllWebShopExperiencesAsync();
         Task<Experience> GetExperienceByIdAsync(int id);
+        Task DeleteExperienceAsync(int experienceId);
     }
 }
