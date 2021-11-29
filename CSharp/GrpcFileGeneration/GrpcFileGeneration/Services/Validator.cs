@@ -13,9 +13,9 @@ namespace GrpcFileGeneration.Services
             return cvr is >= 10000000 and <= 99999999;
         }
         
-        public bool isValidPostCode(int postCode)
+        public bool isValidPostCode(int post_code)
         {
-            return postCode is >= 1000 and <= 9999;
+            return post_code is >= 1000 and <= 9999;
         }
         
         public bool isValidPassword(string password)

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Networking.Address;
 
 namespace GrpcFileGeneration.Models
 {
@@ -16,6 +17,25 @@ namespace GrpcFileGeneration.Models
         
         public Address()
         {
+        }
+
+        public Address(AddressMessage message)
+        {
+            Street = message.Street;
+            StreetNumber = message.StreetNumber;
+            PostCode = message.PostCode;
+            City = message.City;
+        }
+
+        public AddressMessage ToMessage()
+        {
+            return new AddressMessage()
+            {
+                City = this.City,
+                Street = this.Street,
+                StreetNumber = this.StreetNumber,
+                PostCode = this.PostCode
+            };
         }
     }
 }

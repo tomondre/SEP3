@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Experiences;
 using GrpcFileGeneration.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogic.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ExperiencesController : ControllerBase
@@ -18,13 +17,13 @@ namespace BusinessLogic.Controllers
         {
             this.model = model;
         }
-
+        
         [HttpGet]
         [Route("/Providers/{id:int}/Experiences")]
+        [Authorize(Roles = "Administrator, Provider")]
         public async Task<ActionResult<ExperienceList>> GetExperiences([FromRoute] int id)
         {
-            ExperienceList experiences = new ExperienceList();
-            experiences.Experiences = await model.GetAllProviderExperiencesAsync(id);
+            ExperienceList experiences = await model.GetAllProviderExperiencesAsync(id);
             return Ok(experiences);
         }
 
@@ -41,13 +40,13 @@ namespace BusinessLogic.Controllers
         [Route("")]
         public async Task<ActionResult<ExperienceList>> GetAllExperiencesAsync()
         {
-            ExperienceList experiences = new ExperienceList();
-            experiences.Experiences = await model.GetAllWebShopExperiencesAsync();
+            ExperienceList experiences = await model.GetAllWebShopExperiencesAsync();
             return Ok(experiences);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Experience>> AddExperienceAsync([FromBody] Experience experience)
+        [Authorize(Roles = "Provider")]
+        public async Task<ActionResult<Experience>> AddExperienceAsync([FromBody]Experience experience)
         {
             var addExperienceAsync = await model.AddExperienceAsync(experience);
             return Ok(addExperienceAsync);

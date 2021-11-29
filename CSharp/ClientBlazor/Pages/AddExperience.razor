@@ -3,11 +3,7 @@
 @using Networking.Experience
 @using ClientBlazor.Data.Experiences
 @using ClientBlazor.Data.ProductCategory
-@using Microsoft.Extensions.Logging
-@using System.IO
-@using Microsoft.AspNetCore.Hosting
 
-@inject IWebHostEnvironment Environment
 @inject IExperienceService ExperienceService
 @inject NavigationManager NavigationManager
 @inject IProductCategoryService ProductCategoryService
@@ -20,30 +16,23 @@
   <ValidationSummary/>
   
   <section class="flex flex-col w-full h-full p-1 overflow-auto">
-    
-    
+      <label for="name" class="text-base leading-7 text-blueGray-500 mb-5">Image</label>
     <header class="flex flex-col items-center justify-center py-12 text-base text-blueGray-500 transition duration-500 ease-in-out transform bg-white border border-dashed rounded-lg focus:border-blue-500 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2">
       <p class="flex flex-wrap justify-center mb-3 text-base leading-7 text-blueGray-500">
-        <label>
-              Upload up to @maxFileSize bytes:
-              <InputFile OnChange="@LoadFiles" multiple />
-            </label>
+        <span>Drag and drop your</span> <span>files</span>
       </p>
+      <button class="w-auto px-2 py-1 my-2 mr-2 text-blueGray-500 transition duration-500 ease-in-out transform border rounded-md hover:text-blueGray-600 text-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-gray-100"> Upload a file </button>
     </header>
     
     </section>
     <div class="relative pt-4">
       <InputText type="text" id="name" name="name" placeholder="Experience title" class="w-full px-4 py-2 mt-2 mr-4 text-base text-black transition duration-500 ease-in-out transform rounded-lg bg-gray-100 focus:border-blueGray-500 focus:bg-white focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2" @bind-Value="newExperience.Name"/>
     </div>
-  <div class="relative pt-4">
-    <label for="price" class="text-base leading-7 text-blueGray-500">Price: </label>
-    <InputNumber id="price" name="color"  class="w-full px-4 py-2 mt-2 mr-4 text-base text-black transition duration-500 ease-in-out transform rounded-lg bg-gray-100 focus:border-blueGray-500 focus:bg-white focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2"@bind-Value="newExperience.Price"/>
-  </div>
-  <div class="relative pt-4">
-    <label for="stock" class="text-base leading-7 text-blueGray-500">Stock: </label>
-    <InputNumber id="stock" name="stock"  class="w-full px-4 py-2 mt-2 mr-4 text-base text-black transition duration-500 ease-in-out transform rounded-lg bg-gray-100 focus:border-blueGray-500 focus:bg-white focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2"@bind-Value="newExperience.Stock"/>
-  </div>
-  <div class="relative pt-4">
+    <div class="relative pt-4">
+      <label for="price" class="text-base leading-7 text-blueGray-500">Price: </label>
+      <InputNumber id="price" name="color"  class="w-full px-4 py-2 mt-2 mr-4 text-base text-black transition duration-500 ease-in-out transform rounded-lg bg-gray-100 focus:border-blueGray-500 focus:bg-white focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2"@bind-Value="newExperience.Price"/>
+    </div>
+    <div class="relative pt-4">
       <label for="name" class="text-base leading-7 text-blueGray-500">Address/Street</label>
       <InputText type="text" id="street" name="text"  class="w-full px-4 py-2 mt-2 mr-4 text-base text-black transition duration-500 ease-in-out transform rounded-lg bg-gray-100 focus:border-blueGray-500 focus:bg-white focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2" @bind-Value="newExperience.Address.Street"/>
     </div>
@@ -105,45 +94,8 @@
 
   private async Task AddNewExperience()
   {
-    newExperience.Picture = "";
-    newExperience.ExperienceCategory = null;
-    newExperience.ExperienceProvider = null;
-    
     await ExperienceService.AddExperienceAsync(newExperience);
     NavigationManager.NavigateTo("/AllExperiences");
-  }
-  
-  private List<IBrowserFile> loadedFiles = new();
-  private long maxFileSize = 1024 * 15;
-  private int maxAllowedFiles = 3;
-  private bool isLoading;
-
-  private async Task LoadFiles(InputFileChangeEventArgs e)
-  {
-    isLoading = true;
-    loadedFiles.Clear();
-
-    foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
-    {
-      try
-      {
-        loadedFiles.Add(file);
-
-        var trustedFileNameForFileStorage = Path.GetRandomFileName();
-        var path = Path.Combine(Environment.ContentRootPath,
-          Environment.EnvironmentName, "unsafe_uploads",
-          trustedFileNameForFileStorage);
-
-        await using FileStream fs = new(path, FileMode.Create);
-        await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
-      }
-      catch (Exception ex)
-      {
-        
-      }
-    }
-
-    isLoading = false;
   }
 
 }

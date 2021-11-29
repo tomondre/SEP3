@@ -5,10 +5,13 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-        <Protobuf Include="Proto/ProviderNetworking.proto" OutputDir="./Protobuf/Provider" GrpcServices="Client" />
+        <Protobuf Include="Proto\Provider.proto" OutputDir="./Protobuf/Provider" GrpcServices="Client" />
         <Protobuf Include="Proto/Category.proto" OutputDir="./Protobuf/Category" GrpcServices="Client" />
         <Protobuf Include="Proto/Experience.proto" OutputDir="./Protobuf/Experience" GrpcServices="Client" />
         <Protobuf Include="Proto/Customer.proto" OutputDir="./Protobuf/Customer" GrpcServices="Client" />
+        <Protobuf Include="Proto/Login.proto" OutputDir="./Protobuf/Login" GrpcServices="Client" />
+        <Protobuf Include="Proto/Address.proto" OutputDir="./Protobuf/Address" GrpcServices="Client" />
+        <Protobuf Include="Proto/User.proto" OutputDir="./Protobuf/User" GrpcServices="Client" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Google.Protobuf" Version="3.19.0" />
@@ -17,6 +20,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.JSInterop" Version="5.0.12" />
         <PackageReference Include="RiskFirst.Hateoas" Version="3.1.1" />
     </ItemGroup>
 

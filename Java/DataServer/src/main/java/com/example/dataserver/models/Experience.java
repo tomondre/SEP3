@@ -44,7 +44,7 @@ public class Experience
 
     @SerializedName(value = "experienceProvider", alternate = {"ExperienceProvider"})
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private  Provider experienceProvider;
+    private User experienceProvider;
 
     @SerializedName(value = "address", alternate = {"Address"})
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -54,7 +54,7 @@ public class Experience
     {
     }
 
-    public Experience(int id, String picture, String name, double price,int stock, String description, String experienceValidity, Category experienceCategory, Provider experienceProvider, Address address) {
+    public Experience(int id, String picture, String name, double price,int stock, String description, String experienceValidity, Category experienceCategory, User experienceProvider, Address address) {
         this.id = id;
         this.picture = picture;
         this.name = name;
@@ -139,19 +139,21 @@ public class Experience
         this.experienceCategory = experienceCategory;
     }
 
-    public Provider getExperienceProvider() {
+    public User getExperienceProvider() {
         return experienceProvider;
     }
 
-    public void setExperienceProvider(Provider experienceProvider) {
+    public void setExperienceProvider(User experienceProvider) {
         this.experienceProvider = experienceProvider;
     }
 
-    public int getStock() {
+    public int getStock()
+    {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(int stock)
+    {
         this.stock = stock;
     }
 }

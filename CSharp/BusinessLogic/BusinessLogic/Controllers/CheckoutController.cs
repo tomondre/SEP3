@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using BusinessLogic.Model;
 using BusinessLogic.Model.Checkout;
 using GrpcFileGeneration.Models.Order;
 using Microsoft.AspNetCore.Mvc;
