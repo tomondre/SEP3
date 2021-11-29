@@ -13,7 +13,12 @@ message CustomerMessage {
     address.AddressMessage address = 5;
 }
 
+message CustomersMessage {
+    repeated CustomerMessage customers = 1;
+}
 
 service CustomerService {
     rpc CreateCustomer(CustomerMessage) returns (user.UserMessage);
+    rpc GetAllCustomers(user.UserMessage) returns (CustomersMessage);
+    rpc DeleteCustomer(user.UserMessage) returns (CustomerMessage);
 }
