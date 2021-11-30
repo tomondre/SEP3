@@ -9,7 +9,7 @@ namespace ClientBlazor.Data.Providers
         public Task CreateProvider(ProviderObject provider);
         public Task<ProviderList> GetAllProviders();
         Task<ProviderObject> GetProviderById(int id);
-        Task EditProvider(ProviderObject provider);
+        Task<Provider> EditProvider(Provider provider);
         Task DeleteProvider(ProviderObject provider);
         Task<ProviderList> GetAllNotApprovedProvidersAsync();
     }

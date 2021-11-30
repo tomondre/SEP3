@@ -5,7 +5,7 @@ namespace GrpcFileGeneration.Models
 {
     public class User
     {
-        public int Id { set; get; }
+        public int Id { set; get; } = 0;
         [Required, EmailAddress]
         public string Email { get; set; }
         [Required]
@@ -16,7 +16,7 @@ namespace GrpcFileGeneration.Models
             "contain at least one lower case character")]
         public string Password { get; set; }
         public string Token { set; get; }
-        public string SecurityType { set; get; }
+        public string SecurityType { set; get; } = "";
 
         public User()
         {
@@ -33,12 +33,14 @@ namespace GrpcFileGeneration.Models
 
         public UserMessage ToMessage()
         {
+            
             return new UserMessage()
             {
                 Email = this.Email,
-                Id = this.Id,
+               Id = this.Id,
                 Password = this.Password,
-                SecurityType = this.SecurityType
+               SecurityType = this.SecurityType
+               
             };
         }
     }
