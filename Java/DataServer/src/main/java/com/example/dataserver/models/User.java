@@ -1,6 +1,7 @@
 package com.example.dataserver.models;
 
 import com.google.gson.annotations.SerializedName;
+import networking.customer.CustomerMessage;
 import networking.provider.ProviderMessage;
 import networking.user.UserMessage;
 import org.springframework.lang.Nullable;
@@ -19,7 +20,7 @@ public class User
   @SerializedName(value = "password", alternate = {
       "Password"}) @Column(name = "password") private String password;
 
-  @Column(name = "secirity_type") private String securityType;
+  @Column(name = "security_type") private String securityType;
 
   @Nullable @OneToOne(mappedBy = "user", cascade = CascadeType.ALL) private Provider provider;
 
@@ -58,6 +59,13 @@ public class User
     return ProviderMessage.newBuilder().setUser(toMessage()).setCompanyName(provider.getCompanyName()).setCvr(
         provider.getCvr()).setDescription(provider.getDescription()).setIsApproved(provider.isApproved()).setPhoneNumber(
         provider.getPhoneNumber()).setAddress(provider.getAddress().toMessage()).build();
+  }
+
+  public CustomerMessage toCustomerMessage()
+  {
+     return CustomerMessage.newBuilder().setUser(toMessage()).setFirstName(customer.getFirstName())
+         .setLastName(customer.getLastName()).setPhoneNumber(customer.getPhoneNumber())
+         .setAddress(customer.getAddress().toMessage()).build();
   }
 
   public int getId()

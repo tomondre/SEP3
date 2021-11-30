@@ -9,8 +9,13 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import networking.customer.CustomerMessage;
 import networking.customer.CustomerServiceGrpc;
+import networking.customer.CustomersMessage;
 import networking.user.UserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @GrpcService
 public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceImplBase {
@@ -33,6 +38,27 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
         User createdCustomer = dao.createCustomer(user);
         UserMessage userMessage = createdCustomer.toMessage();
         responseObserver.onNext(userMessage);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getAllCustomers(UserMessage request,
+        StreamObserver<CustomersMessage> responseObserver)
+    {
+        ArrayList<User> allCustomers = dao.getAllCustomers();
+        List<CustomerMessage> collect = allCustomers.stream().map(User::toCustomerMessage)
+            .collect(Collectors.toList());
+        CustomersMessage customersMessage = CustomersMessage.newBuilder().addAllCustomers(collect).build();
+        responseObserver.onNext(customersMessage);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void deleteCustomer(UserMessage request,
+        StreamObserver<CustomerMessage> responseObserver)
+    {
+        dao.deleteCustomer(request.getId());
+        responseObserver.onNext(CustomerMessage.newBuilder().build());
         responseObserver.onCompleted();
     }
 }

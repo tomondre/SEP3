@@ -11,12 +11,12 @@ message ProtobufStockRequest{
    int32 quantity =2;
 }
 
-
-        
 service ExperienceService{
    rpc getAllProviderExperiences(ProtobufMessage) returns (ProtobufMessage);
    rpc getAllWebShopExperiences(ProtobufMessage) returns (ProtobufMessage);
    rpc addExperience(ProtobufMessage) returns (ProtobufMessage);
    rpc getExperienceById(ProtobufMessage) returns (ProtobufMessage);
    rpc isInStock(ProtobufStockRequest) returns (ProtobufMessage);
+   rpc deleteExperience(ProtobufMessage) returns (ProtobufMessage);
+   rpc removeStock(ProtobufStockRequest) returns (ProtobufMessage);
 }

@@ -38,7 +38,7 @@ else
                     <tbody class="bg-white">
                     @foreach (var item in providers.Providers)
                     {
-                        <tr class="text-gray-700">
+                        <tr class="text-gray-700" @onclick="() => OpenExperienceView(item)">
                             <td class="px-4 py-3 text-ms font-semibold border">@item.CompanyName</td>
                             <td class="px-4 py-3 text-ms font-semibold border">@item.Cvr</td>
                             <td class="px-4 py-3 text-ms font-semibold border">@item.Description</td>
@@ -62,6 +62,11 @@ else
     protected override async Task OnInitializedAsync()
     {
         providers = await ProviderService.GetAllProviders();
+    }
+
+    private void OpenExperienceView(Provider provider)
+    {
+        NavigationManager.NavigateTo($"/ProviderExperiences/{provider.Id}");
     }
 
 }

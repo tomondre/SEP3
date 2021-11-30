@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Networking.Customer;
+using RiskFirst.Hateoas.Models;
 
 namespace GrpcFileGeneration.Models
 {
-    public class Customer : User
+    public class Customer : User, ILinkContainer
     {
         [Required, MaxLength(50)]
         public string FirstName { get; set; }
@@ -15,6 +17,14 @@ namespace GrpcFileGeneration.Models
         
         [Required]
         public Address Address { get; set; }
+
+        public Dictionary<string, Link> Links { set; get; }
+
+        public void AddLink(string id, Link link)
+        {
+            Links.Add(id, link);
+        }
+
 
         public Customer()
         {

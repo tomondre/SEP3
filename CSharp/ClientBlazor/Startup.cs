@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using ClientBlazor.Data.Authentication;
+using ClientBlazor.Data.Customers;
 using ClientBlazor.Data.Experiences;
 using ClientBlazor.Data.Login;
 using ClientBlazor.Data.ProductCategory;
@@ -34,6 +35,7 @@ namespace ClientBlazor
             services.AddScoped<IExperienceService, ExperienceService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<AuthenticationStateProvider, CurrentAuthenticationStateProvider>();
+            services.AddScoped<ICustomerService, CustomerService>();
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Customer",  a => 
