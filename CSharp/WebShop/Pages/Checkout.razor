@@ -152,7 +152,16 @@
 </section>
 
 @code {
-    private Order order = new();
+    private Order order = new()
+    {
+        CreditCard = new CreditCard()
+        {
+            Number = "4242 4242 4242 4242",
+            Cvv = "123",
+            Month = 12,
+            Year = 23
+        }
+    };
     private bool isPaymentCreditCard = true;
 
     protected override void OnInitialized()
@@ -161,10 +170,12 @@
     //TODO load logged-in customer
         order.Customer = new()
         {
+            Id = 10,
             Email = "haabala@gmail.com",
             FirstName = "Peter",
             LastName = "Petersen",
             PhoneNumber = "+50 50 50 50 50",
+            Password = "String01",
             Address = new Address
             {
                 City = "Horsens",
