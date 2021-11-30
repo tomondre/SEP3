@@ -2,6 +2,8 @@ using System.Security.Claims;
 using ClientBlazor.Data.Authentication;
 using ClientBlazor.Data.Customers;
 using ClientBlazor.Data.Experiences;
+using ClientBlazor.Data.Pictures;
+using GrpcFileGeneration.Services;
 using ClientBlazor.Data.Login;
 using ClientBlazor.Data.ProductCategory;
 using ClientBlazor.Data.Providers;
@@ -33,6 +35,8 @@ namespace ClientBlazor
             services.AddScoped<IProviderService, ProviderService>();
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
             services.AddScoped<IExperienceService, ExperienceService>();
+
+            services.AddScoped<IPicturesService, PictureService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<AuthenticationStateProvider, CurrentAuthenticationStateProvider>();
             services.AddScoped<ICustomerService, CustomerService>();
