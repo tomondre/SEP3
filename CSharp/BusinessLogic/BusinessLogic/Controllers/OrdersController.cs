@@ -18,7 +18,7 @@ namespace BusinessLogic.Controllers
         }
         
         [HttpPost(Name = "CreateOrder")]
-        public async Task<ActionResult<Order>> CreateOrder([FromBody] Order order)
+        public async Task<ActionResult<Order>> CreateOrderAsync([FromBody] Order order)
         {
             try
             {
@@ -31,18 +31,17 @@ namespace BusinessLogic.Controllers
             }
         }
 
-        [HttpGet(Name="allCustomerOrdersRoute")]
-        public async Task<ActionResult<OrderList>> GetAllCustomerOrdersAsync([FromRoute] int id)
+        [HttpGet("/customers/{customerId:int}/orders", Name = "allCustomerOrdersRoute")]
+        public async Task<ActionResult<OrderList>> GetAllCustomerOrdersAsync([FromRoute] int customerId)
         {
-            var allCustomerOrdersAsync = await model.GetAllCustomerOrdersAsync(id);
+            var allCustomerOrdersAsync = await model.GetAllCustomerOrdersAsync(customerId);
             var orders = new OrderList();
             orders.Orders = allCustomerOrdersAsync;
             return Ok(orders);
         }
         
-        [HttpGet(Name = "getOrderByIdRoute")]
-        [Route("{id:int}")]
-        public async Task<ActionResult<Order>> GetOrderById([FromRoute] int id)
+        [HttpGet("{id:int}", Name = "getOrderByIdRoute")]
+        public async Task<ActionResult<Order>> GetOrderByIdAsync([FromRoute] int id)
         {
             var orderById = await model.GetOrderByIdAsync(id);
             return Ok(orderById);

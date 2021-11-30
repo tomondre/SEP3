@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 
-namespace WebShop.Data.Experiences
+namespace WebShop.Services.Experiences
 {
     public interface IExperienceService
     {

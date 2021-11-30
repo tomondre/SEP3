@@ -49,7 +49,7 @@
   protected override async Task OnInitializedAsync()
   {
     //TODO Fetch customer id;
-    orders = await OrderService.GetCustomerOrders(2);
+    orders = await OrderService.GetCustomerOrdersAsync(2);
   }
 
   private void OpenSingleOrderView(int orderId)

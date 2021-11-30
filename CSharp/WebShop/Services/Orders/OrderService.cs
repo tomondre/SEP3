@@ -48,13 +48,13 @@ namespace WebShop.Services.Orders
             //Step 4 - Send order to rest api
             var serialize = JsonSerializer.Serialize(order);
             var stringContent = new StringContent(serialize, Encoding.UTF8, "application/json");
-            var postAsync =  await client.PostAsync($"{url}/checkout", stringContent);
+            var postAsync =  await client.PostAsync($"{url}Orders", stringContent);
             
             //Step 5 - If success, return, if not throw exception
             CheckException(postAsync);
         }
 
-        public async Task<Order> GetOrderById(int id)
+        public async Task<Order> GetOrderByIdAsync(int id)
         {
             var httpResponseMessage = await client.GetAsync($"{url}orders/{id}");
             CheckException(httpResponseMessage);
@@ -64,7 +64,7 @@ namespace WebShop.Services.Orders
             return deserialize;
         }
 
-        public async Task<OrderList> GetCustomerOrders(int id)
+        public async Task<OrderList> GetCustomerOrdersAsync(int id)
         {
             var httpResponseMessage = await client.GetAsync($"{url}providers/{id}/orders");
             CheckException(httpResponseMessage);

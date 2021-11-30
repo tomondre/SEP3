@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessLogic.Networking.Experiences;
 using GrpcFileGeneration.Models;
@@ -23,14 +24,14 @@ namespace BusinessLogic.Model.Experiences
             return await network.AddExperienceAsync(experience);
         }
 
-        public async Task<ExperienceList> GetAllProviderExperiencesAsync(int provider)
+        public async Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider)
         {
             return await network.GetAllProviderExperiencesAsync(provider);
         }
 
-        public async Task<ExperienceList> GetAllWebShopExperiencesAsync()
+        public async Task<IList<Experience>> GetAllWebShopExperiencesAsync()
         {
-            ExperienceList result;
+            IList<Experience> result;
             bool AlreadyExists = memoryCache.TryGetValue("CachedExperiences", out result);
             if (!AlreadyExists)
             { 

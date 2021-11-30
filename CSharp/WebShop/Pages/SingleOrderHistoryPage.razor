@@ -1,4 +1,4 @@
-﻿@page "/orders/{Id : int}"
+﻿@page "/orders/{Id:int}"
 
 @using GrpcFileGeneration.Models.Orders
 @using WebShop.Services.Orders
@@ -115,7 +115,7 @@ else if (!LoadedOrder.ShoppingCart.ShoppingCartItems.Any())
 
     protected override async Task OnInitializedAsync()
     {
-        LoadedOrder = await OrderService.GetOrderById(Id);
+        LoadedOrder = await OrderService.GetOrderByIdAsync(Id);
     }
 
 }

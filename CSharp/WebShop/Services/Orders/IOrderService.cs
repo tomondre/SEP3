@@ -8,7 +8,7 @@ namespace WebShop.Services.Orders
     public interface IOrderService
     {
         Task CreateOrderAsync(Order order);
-        Task<Order> GetOrderById(int id);
-        Task<OrderList> GetCustomerOrders(int id);
+        Task<Order> GetOrderByIdAsync(int id);
+        Task<OrderList> GetCustomerOrdersAsync(int id);
     }
 }

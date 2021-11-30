@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
@@ -24,22 +25,22 @@ namespace BusinessLogic.Networking.Experiences
             });
         }
 
-        public async Task<ExperienceList> GetAllProviderExperiencesAsync(int provider)
+        public async Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider)
         {
             var allProviderExperiences = await client.getAllProviderExperiencesAsync(new ProtobufMessage()
                 {MessageOrObject = provider.ToString()});
             var messageOrObject = allProviderExperiences.MessageOrObject;
-            var deserialize = JsonSerializer.Deserialize<ExperienceList>(messageOrObject, new JsonSerializerOptions()
+            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(messageOrObject, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
             return deserialize;
         }
 
-        public async Task<ExperienceList> GetAllWebShopExperiencesAsync()
+        public async Task<IList<Experience>> GetAllWebShopExperiencesAsync()
         {
             var allProviderExperiences = await client.getAllWebShopExperiencesAsync(new ProtobufMessage());
-            return JsonSerializer.Deserialize<ExperienceList>(allProviderExperiences.MessageOrObject,
+            return JsonSerializer.Deserialize<IList<Experience>>(allProviderExperiences.MessageOrObject,
                 new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
