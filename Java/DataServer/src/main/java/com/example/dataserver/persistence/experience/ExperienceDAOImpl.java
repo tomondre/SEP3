@@ -20,7 +20,6 @@ public class ExperienceDAOImpl implements ExperienceDAO
     @Override
     public Experience addExperience(Experience experience) {
         return repository.save(experience);
-
     }
 
     @Override
@@ -49,4 +48,10 @@ public class ExperienceDAOImpl implements ExperienceDAO
         repository.deleteById(experienceId);
     }
 
+    @Override
+    public void removeStock(int id, int quantity) {
+        Experience byId = repository.findById(id);
+        byId.setStock(byId.getStock() - quantity);
+        repository.save(byId);
+    }
 }

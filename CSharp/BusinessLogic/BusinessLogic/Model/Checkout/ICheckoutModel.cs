@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
-using GrpcFileGeneration.Models.Order;
+using OrderStripe = Stripe.Order;
+using Order = GrpcFileGeneration.Models.Orders.Order;
 
 namespace BusinessLogic.Model.Checkout
 {

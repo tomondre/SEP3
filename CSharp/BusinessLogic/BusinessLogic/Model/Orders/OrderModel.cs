@@ -1,47 +1,60 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Experiences;
-using BusinessLogic.Model.Orders;
+using BusinessLogic.Networking.Experiences;
+using BusinessLogic.Networking.Orders;
 using Stripe;
-using OrderStripe = Stripe.Order;
 using Order = GrpcFileGeneration.Models.Orders.Order;
 
-namespace BusinessLogic.Model.Checkout
+
+namespace BusinessLogic.Model.Orders
 {
-    public class CheckoutModel : ICheckoutModel
+    public class OrderModel : IOrderModel
     {
+        private IOrderNet networking;
         private string secretKey = "sk_test_51JyZa3HP6RYbC1HUXv6ohA4Hz6PiePRCQUdo0R6xGXDqvnEKc8E95CobkUpAj12nvHqyuhASAMtEsxfDSyHKkh3S00KY0zYi2B";
-        private IExperienceModel ExperienceNet;
-        private IOrderModel orderModel;
-        public CheckoutModel(IExperienceModel experienceNet, IOrderModel orderModel)
+        private IExperienceModel experienceNet;
+
+        public OrderModel(IOrderNet networking, IExperienceModel experienceNet)
         {
-            ExperienceNet = experienceNet;
-            this.orderModel = orderModel; 
+            this.networking = networking;
+            this.experienceNet = experienceNet;
             StripeConfiguration.ApiKey = secretKey;
         }
 
-        public async Task<Order> CheckoutAsync(Order order)
+        public async Task<IList<Order>> GetAllCustomerOrdersAsync(int id)
+        {
+            return await networking.GetAllCustomerOrdersAsync(id);
+        }
+
+        public async Task<Order> GetOrderByIdAsync(int id)
+        {
+            return await networking.GetOrderByIdAsync(id);
+        }
+
+        public async Task<Order> CreateOrderAsync(Order order)
         {
             //Step 1 - Check if the experiences are in stock
             foreach (var item in order.ShoppingCart.ShoppingCartItems)
             {
-                if (!await ExperienceNet.IsInStockAsync(item.Experience.Id, item.Quantity))
+                if (!await experienceNet.IsInStockAsync(item.Experience.Id, item.Quantity))
                 {
                     throw new Exception("Not in stock!");
                 }
             }
 
             //Step 2 - Create payment call to Stripe
-             await CreatePayment(order);
+            await CreatePayment(order);
             
             //Step 3 - Remove experiences stock from database
             foreach (var item in order.ShoppingCart.ShoppingCartItems)
             {
-                 await ExperienceNet.RemoveStockAsync(item.Experience.Id, item.Quantity);
+                await experienceNet.RemoveStockAsync(item.Experience.Id, item.Quantity);
             }
 
             //Step 4 - Create Order and save it
-            var orderAsync = await orderModel.CreateOrderAsync(order);
+            var orderAsync = await networking.CreateOrderAsync(order);
             
 
             //Step 5 - Generate vouchers and save them
@@ -50,7 +63,6 @@ namespace BusinessLogic.Model.Checkout
             //Step 6 - Return successful order
             return orderAsync;
         }
-
         
         private async Task CreatePayment(Order order)
         {
