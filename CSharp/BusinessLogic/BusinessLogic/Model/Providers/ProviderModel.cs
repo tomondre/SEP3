@@ -41,12 +41,12 @@ namespace BusinessLogic.Model.Providers
             return network.GetAllProvidersAsync();
         }
 
-        public Task<Provider> GetProviderById(int id)
+        public Task<Provider> GetProviderByIdAsync(int id)
         {
             return network.GetProviderByIdAsync(id);
         }
 
-        public Task EditProvider(Provider provider)
+        public Task<Provider> EditProviderAsync(Provider provider)
         {
             return network.EditProviderAsync(provider);
         }
