@@ -36,7 +36,6 @@ namespace BusinessLogic.Controllers
             }
 
             await linksService.AddLinksAsync(list);
-            
             return Ok(list);
         }
         

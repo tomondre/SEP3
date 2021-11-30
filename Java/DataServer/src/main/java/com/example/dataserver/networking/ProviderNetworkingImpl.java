@@ -69,8 +69,11 @@ public class ProviderNetworkingImpl extends ProviderServiceGrpc.ProviderServiceI
   public void editProvider(ProviderMessage request,
       StreamObserver<ProviderMessage> responseObserver)
   {
-    User user = model.editProvider(new User(request));
-    ProviderMessage providerMessage = user.toProviderMessage();
+    var provider = new Provider(request);
+    var user = provider.getUser();
+    user.setProvider(provider);
+    User edited = model.editProvider(user);
+    ProviderMessage providerMessage = edited.toProviderMessage();
     responseObserver.onNext(providerMessage);
     responseObserver.onCompleted();
   }

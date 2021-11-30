@@ -11,4 +11,5 @@ public interface ExperienceDAO {
     Experience getExperienceById(int id);
     boolean isInStock(int id, int quantity);
     void deleteExperience(int experienceId);
+    void removeStock(int id, int quantity);
 }

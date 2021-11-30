@@ -8,12 +8,14 @@ using BusinessLogic.Model.Checkout;
 using BusinessLogic.Model.Customers;
 using BusinessLogic.Model.Experiences;
 using BusinessLogic.Model.Login;
+using BusinessLogic.Model.Orders;
 using BusinessLogic.Model.ProductCategory;
 using BusinessLogic.Model.Providers;
 using BusinessLogic.Networking;
 using BusinessLogic.Networking.Customers;
 using BusinessLogic.Networking.Experiences;
 using BusinessLogic.Networking.Login;
+using BusinessLogic.Networking.Orders;
 using BusinessLogic.Networking.ProductCategory;
 using BusinessLogic.Networking.Providers;
 using Grpc.Net.Client;
@@ -36,6 +38,9 @@ using Networking.Experience;
 using Networking.Login;
 using Networking.Provider;
 using RiskFirst.Hateoas;
+using Stripe;
+using CustomerService = Networking.Customer.CustomerService;
+using OrderService = Networking.Order.OrderService;
 
 namespace BusinessLogic
 {
@@ -109,6 +114,12 @@ namespace BusinessLogic
             services.AddSingleton<ILoginModel>(x => new LoginModel(x.GetRequiredService<ILoginNet>(), key));
             services.AddSingleton<ILoginNet, LoginNet>();
             
+            services.AddSingleton(
+                new OrderService.OrderServiceClient(GrpcChannel.ForAddress("http://localhost:9090")));
+            services.AddSingleton<IOrderModel, OrderModel>();
+            services.AddSingleton<IOrderNet, OrderNet>();
+
+            
             services.AddSingleton<IValidator, Validator>();
             
             services.AddSingleton<ICheckoutModel, CheckoutModel>();
@@ -168,7 +179,6 @@ namespace BusinessLogic
 
             app.UseRouting();
 
-            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });

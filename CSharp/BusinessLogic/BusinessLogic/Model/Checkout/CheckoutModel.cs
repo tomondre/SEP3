@@ -1,18 +1,22 @@
 using System;
 using System.Threading.Tasks;
-using BusinessLogic.Networking.Experiences;
+using BusinessLogic.Model.Experiences;
+using BusinessLogic.Model.Orders;
 using Stripe;
-using Order = GrpcFileGeneration.Models.Order.Order;
+using OrderStripe = Stripe.Order;
+using Order = GrpcFileGeneration.Models.Orders.Order;
 
 namespace BusinessLogic.Model.Checkout
 {
     public class CheckoutModel : ICheckoutModel
     {
         private string secretKey = "sk_test_51JyZa3HP6RYbC1HUXv6ohA4Hz6PiePRCQUdo0R6xGXDqvnEKc8E95CobkUpAj12nvHqyuhASAMtEsxfDSyHKkh3S00KY0zYi2B";
-        private IExperienceNet ExperienceNet;
-        public CheckoutModel(IExperienceNet experienceNet)
+        private IExperienceModel ExperienceNet;
+        private IOrderModel orderModel;
+        public CheckoutModel(IExperienceModel experienceNet, IOrderModel orderModel)
         {
             ExperienceNet = experienceNet;
+            this.orderModel = orderModel; 
             StripeConfiguration.ApiKey = secretKey;
         }
 
@@ -21,7 +25,7 @@ namespace BusinessLogic.Model.Checkout
             //Step 1 - Check if the experiences are in stock
             foreach (var item in order.ShoppingCart.ShoppingCartItems)
             {
-                if (! await ExperienceNet.IsInStockAsync(item.Experience.Id, item.Quantity))
+                if (!await ExperienceNet.IsInStockAsync(item.Experience.Id, item.Quantity))
                 {
                     throw new Exception("Not in stock!");
                 }
@@ -31,16 +35,20 @@ namespace BusinessLogic.Model.Checkout
              await CreatePayment(order);
             
             //Step 3 - Remove experiences stock from database
+            foreach (var item in order.ShoppingCart.ShoppingCartItems)
+            {
+                 await ExperienceNet.RemoveStockAsync(item.Experience.Id, item.Quantity);
+            }
+
+            //Step 4 - Create Order and save it
+            var orderAsync = await orderModel.CreateOrderAsync(order);
             
-            
-            //Step 4 - Create Order + add generated id to the order object
-            
-            
-            //Step 5 - Generate vouchers
+
+            //Step 5 - Generate vouchers and save them
             
             
             //Step 6 - Return successful order
-            return order;
+            return orderAsync;
         }
 
         
@@ -62,7 +70,6 @@ namespace BusinessLogic.Model.Checkout
                         ConfirmationMethod = "manual",
                         Confirm =  true
                     };
-
                     paymentIntent = await paymentIntentService.CreateAsync(options);
                 }
 

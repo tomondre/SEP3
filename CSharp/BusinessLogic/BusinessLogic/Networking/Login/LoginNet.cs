@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 using Networking.Login;
+using Networking.User;
 
 namespace BusinessLogic.Networking.Login
 {
@@ -16,14 +17,10 @@ namespace BusinessLogic.Networking.Login
         
         public async Task<User> GetUserLoginAsync(User user)
         {
-            var userAsJson = JsonSerializer.Serialize(user);    
-            var providerLoginAsync = await client.GetUserLoginAsync(new ProtobufMessage() {MessageOrObject = userAsJson});
-            var messageOrObject = providerLoginAsync.MessageOrObject;
-            var deserialize = JsonSerializer.Deserialize<User>(messageOrObject, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-            return deserialize;
+            var userMessage = user.ToMessage();
+            var loginAsync = await client.GetUserLoginAsync(userMessage);
+            var messageOrObject = new User(loginAsync);
+            return messageOrObject;
         }
     }
 }

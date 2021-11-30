@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using ClientBlazor.Data.Authentication;
+using ClientBlazor.Data.Cache;
 using ClientBlazor.Data.Customers;
 using ClientBlazor.Data.Experiences;
 using ClientBlazor.Data.Pictures;
@@ -40,6 +41,7 @@ namespace ClientBlazor
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<AuthenticationStateProvider, CurrentAuthenticationStateProvider>();
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<ICacheService, CacheService>();
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Customer",  a => 

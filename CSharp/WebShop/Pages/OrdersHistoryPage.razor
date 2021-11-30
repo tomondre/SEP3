@@ -1,0 +1,59 @@
+@page "/orders"
+@using WebShop.Services.Orders
+@using GrpcFileGeneration.Models.Orders
+@using OrderStripe = Stripe.Order;
+@using Order = GrpcFileGeneration.Models.Orders.Order;
+@inject IOrderService OrderService;
+@inject NavigationManager NavigationManager;
+<h3>OrdersHistoryPage</h3>
+
+<section class="py-8">
+  <div class="container px-4 mx-auto">
+    <div class="pt-4 bg-white shadow rounded">
+      <div class="flex px-6 pb-4 border-b">
+        <h3 class="text-xl font-bold">Recent Transactions</h3>
+      </div>
+      <div class="p-4">
+        <table class="table-auto w-full">
+          <thead>
+          <tr class="text-xs text-gray-500 text-left">
+            <th class="pb-3 font-medium">Order ID</th>
+            <th class="pb-3 font-medium">Date</th>
+            <th class="pb-3 font-medium">Number of items</th>
+            <th class="pb-3 font-medium">Payment method</th>
+            <th class="pb-3 font-medium">Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          @foreach (Order order in orders.Orders)
+          {
+            <tr @onclick="() => OpenSingleOrderView(order.Id)" class="text-xs bg-gray-50">
+              <td class="py-5 px-6 font-medium">@order.Id</td>
+              <td class="font-medium">@order.Date</td>
+              <td class="font-medium">@order.ShoppingCart.ShoppingCartItems.Count</td>
+              <td class="font-medium">Credit card</td>
+              <td>
+                <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">Completed</span>
+              </td>
+            </tr>
+          }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+@code {
+  private OrderList orders;
+  protected override async Task OnInitializedAsync()
+  {
+    //TODO Fetch customer id;
+    orders = await OrderService.GetCustomerOrdersAsync(2);
+  }
+
+  private void OpenSingleOrderView(int orderId)
+  {
+    NavigationManager.NavigateTo($"/orders/{orderId}");
+  }
+}

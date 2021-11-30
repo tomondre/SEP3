@@ -1,0 +1,45 @@
+[
+  {
+    "ShoppingCartItems": {
+
+      "Quantity": 5,
+      "Experience": {
+        "Id": 1,
+        "Name": "Jump as high as you can",
+        "Picture": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fskylum.com%2Fhow-to%2Fhow-to-photoshop-someone-into-picture&psig=AOvVaw11IEJeL4qlr1u97osWOKSg&ust=1637837826958000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCMC7qMHrsPQCFQAAAAAdAAAAABAD",
+        "Price": 1000,
+        "Description": "halabalahalabala",
+        "Stock": 100,
+        "ExperienceValidity": "3Months",
+        "ExperienceCategory": {
+          "Id": 1,
+          "CategoryName": "jumping"
+        },
+        "ExperienceProvider": {
+          "Id": 1,
+          "CompanyName": "Company",
+          "CVR": 12345678,
+          "PhoneNumber": "+4512458595",
+          "Description": "halabala",
+          "IsApproved": true,
+          "Email": "gggg@gmail.com",
+          "Password": "Password1",
+          "Address": {
+            "Id": 1,
+            "Street": "Vejlevej",
+            "StreetNumber": 122,
+            "PostCode": 8700,
+            "City": "Horsens"
+          }
+        },
+        "Address": {
+          "Id": 1,
+          "Street": "Vejlevej",
+          "StreetNumber": 122,
+          "PostCode": 8700,
+          "City": "Horsens"
+        }
+      }
+    }
+  }
+]

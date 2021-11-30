@@ -7,12 +7,12 @@ using Microsoft.Extensions.Hosting;
 using WebShop.Data.Authentication;
 using WebShop.Data.Experiences;
 using WebShop.Data.ProductCategory;
-using WebShop.Models;
 using WebShop.Services;
-using WebShop.Services.Checkout;
 using WebShop.Services.Customer;
+using WebShop.Services.Experiences;
 using WebShop.Services.Login;
-using WebShop.Services.ShoppingCart;
+using WebShop.Services.Orders;
+using WebShop.Services.ShoppingCarts;
 
 namespace WebShop
 {
@@ -32,14 +32,14 @@ namespace WebShop
             services.AddRazorPages(); 
             services.AddServerSideBlazor();
             services.AddHttpClient();
-            services.AddSingleton<ICustomerService, CustomerService>();
             services.AddSingleton<IProductCategoryService, ProductCategoryService>();
             services.AddSingleton<IExperienceService, ExperienceService>();
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<IObserverService, ObserverService>();
-            services.AddScoped<ICheckoutService, CheckoutService>();
-            services.AddSingleton<ILoginService, LoginService>();
-            services.AddSingleton<AuthenticationStateProvider, CurrentAuthenticationStateProvider>();
+            services.AddScoped<IOrderService, OrderService>();
+            // services.AddSingleton<ICustomerService, CustomerService>();
+            // services.AddSingleton<ILoginService, LoginService>();
+            // services.AddSingleton<AuthenticationStateProvider, CurrentAuthenticationStateProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

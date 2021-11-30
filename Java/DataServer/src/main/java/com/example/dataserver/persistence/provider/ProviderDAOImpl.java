@@ -2,6 +2,7 @@ package com.example.dataserver.persistence.provider;
 
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.repository.UserRepository;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -40,10 +41,21 @@ public class ProviderDAOImpl implements ProviderDAO
   @Override
   public User editProvider(User provider)
   {
-    if (repo.existsById(provider.getId()))
-      return repo.save(provider);
 
-    return null;
+    User toEdit = repo.getUserById(provider.getId());
+    toEdit.getProvider().setCompanyName(provider.getProvider().getCompanyName());
+    toEdit.getProvider().setCvr(provider.getProvider().getCvr());
+    toEdit.getProvider().setDescription(provider.getProvider().getDescription());
+    toEdit.getProvider().setPhoneNumber(provider.getProvider().getPhoneNumber());
+    toEdit.setEmail(provider.getEmail());
+    toEdit.setPassword(provider.getPassword());
+    toEdit.getProvider().getAddress().setStreet(provider.getProvider().getAddress().getStreet());
+    toEdit.getProvider().getAddress().setStreetNumber(provider.getProvider().getAddress().getStreetNumber());
+    toEdit.getProvider().getAddress().setCity(provider.getProvider().getAddress().getCity());
+    toEdit.getProvider().getAddress().setPostCode(provider.getProvider().getAddress().getPostCode());
+
+    repo.save(toEdit);
+    return toEdit;
   }
 
   @Override
