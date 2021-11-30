@@ -1,144 +1,160 @@
 package com.example.dataserver.models;
 
 import com.google.gson.annotations.SerializedName;
+import networking.provider.ProviderMessage;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "provider", schema = "sep3")
-public class Provider {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    @SerializedName(value = "id", alternate = {"Id"})
-    private int id;
+public class Provider
+{
+  @Id @Column(name = "user_id") private int id;
 
-    @SerializedName(value = "companyName", alternate = {"CompanyName"})
-    @Column(name = "company_name")
-    private String companyName;
+  @SerializedName(value = "companyName", alternate = {
+      "CompanyName"}) @Nullable @Column(name = "company_name") private String companyName;
 
-    @SerializedName(value = "cvr", alternate = {"Cvr"})
-    @Column(name = "cvr")
-    private int cvr;
+  @SerializedName(value = "cvr", alternate = {
+      "Cvr"}) @Nullable @Column(name = "cvr") private int cvr;
 
-    @SerializedName(value = "phoneNumber", alternate = {"PhoneNumber"})
-    @Column(name = "phone_number")
-    private String phoneNumber;
+  @SerializedName(value = "phoneNumber", alternate = {
+      "PhoneNumber"}) @Nullable @Column(name = "phone_number") private String phoneNumber;
 
-    @SerializedName(value = "description", alternate = {"Description"})
-    @Column(name = "description")
-    private String description;
+  @SerializedName(value = "description", alternate = {
+      "Description"}) @Nullable @Column(name = "description") private String description;
 
-    @SerializedName(value = "isApproved", alternate = {"IsApproved"})
-    @Column(name = "is_approved")
-    private boolean isApproved = false;
+  @SerializedName(value = "isApproved", alternate = {
+      "IsApproved"}) @Nullable @Column(name = "is_approved") private boolean isApproved = false;
 
-    @SerializedName(value = "address", alternate = {"Address"})
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Address address;
+  @SerializedName(value = "address", alternate = {
+      "Address"}) @Nullable @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL) private Address address;
 
-    @SerializedName(value = "email", alternate = {"Email"})
-    @Column(name = "email")
-    private String email;
+  @OneToOne @MapsId @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "user_id") private User user;
 
-    @SerializedName(value = "password", alternate = {"Password"})
-    @Column(name = "password")
-    private String password;
+  public Provider()
+  {
+  }
+
+  public Provider(int id, String companyName, int cvr, String phoneNumber, String description,
+      boolean isApproved, Address address, String email, String password)
+  {
+    this.id = id;
+    this.companyName = companyName;
+    this.cvr = cvr;
+    this.phoneNumber = phoneNumber;
+    this.description = description;
+    this.isApproved = isApproved;
+    this.address = address;
+  }
+
+  public Provider(ProviderMessage message)
+  {
+    user = new User(message.getUser());
+    companyName = message.getCompanyName();
+    cvr = message.getCvr();
+    phoneNumber = message.getPhoneNumber();
+    description = message.getDescription();
+    isApproved = message.getIsApproved();
+    address = new Address(message.getAddress());
+  }
+
+  public ProviderMessage toMessage()
+  {
+    return ProviderMessage.newBuilder().setAddress(address.toMessage()).setUser(user.toMessage())
+        .setCompanyName(companyName).setCvr(cvr).setPhoneNumber(phoneNumber)
+        .setDescription(description).setIsApproved(isApproved).build();
+  }
 
 
-    protected Provider() {
-    }
+  public int getId()
+  {
+    return id;
+  }
 
-    public String getCompanyName() {
-        return companyName;
-    }
+  public void setId(int id)
+  {
+    this.id = id;
+  }
 
-    public Provider(int id, String companyName, int cvr, String phoneNumber, String description, boolean isApproved, Address address, String email, String password) {
-        this.id = id;
-        this.companyName = companyName;
-        this.cvr = cvr;
-        this.phoneNumber = phoneNumber;
-        this.description = description;
-        this.isApproved = isApproved;
-        this.address = address;
-        this.email = email;
-        this.password = password;
-    }
+  public String getCompanyName()
+  {
+    return companyName;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public void setCompanyName(@Nullable String companyName)
+  {
+    this.companyName = companyName;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public int getCvr()
+  {
+    return cvr;
+  }
 
-    @Override
-    public String toString()
-    {
-        return "Provider{" + "id=" + id + ", companyName='" + companyName + '\'' + ", cvr=" + cvr
-            + ", phoneNumber='" + phoneNumber + '\'' + ", description='" + description + '\''
-            + ", street='" + address.getStreet() + '\'' + ", streetNumber='" + address.getStreetNumber() + '\''
-            + ", postCode=" + address.getPostCode() + '\'' + ", city='" + address.getCity() + '\'' + ", isApproved=" + isApproved + '\'' + ", email='" + email + '\'' + ", password='" + password + '}';
-    }
+  public void setCvr(int cvr)
+  {
+    this.cvr = cvr;
+  }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
+  @Nullable
+  public String getPhoneNumber()
+  {
+    return phoneNumber;
+  }
 
-    public int getCvr() {
-        return cvr;
-    }
+  public void setPhoneNumber(@Nullable String phoneNumber)
+  {
+    this.phoneNumber = phoneNumber;
+  }
 
-    public void setCvr(int cvr) {
-        this.cvr = cvr;
-    }
+  @Nullable
+  public String getDescription()
+  {
+    return description;
+  }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+  public void setDescription(@Nullable String description)
+  {
+    this.description = description;
+  }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+  public boolean isApproved()
+  {
+    return isApproved;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public void setApproved(boolean approved)
+  {
+    isApproved = approved;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  @Nullable
+  public Address getAddress()
+  {
+    return address;
+  }
 
-    public boolean isApproved() {
-        return isApproved;
-    }
+  public void setAddress(@Nullable Address address)
+  {
+    this.address = address;
+  }
 
-    public void setApproved(boolean approved) {
-        isApproved = approved;
-    }
+  public User getUser()
+  {
+    return user;
+  }
 
-    public Address getAddress() {
-        return address;
-    }
+  public void setUser(User user)
+  {
+    this.user = user;
+  }
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  @Override
+  public String toString()
+  {
+    return "Provider{" + "id=" + id + ", companyName='" + companyName + '\'' + ", cvr=" + cvr
+        + ", phoneNumber='" + phoneNumber + '\'' + ", description='" + description + '\''
+        + ", isApproved=" + isApproved + ", address=" + address + '}';
+  }
 }

@@ -1,8 +1,13 @@
 package com.example.dataserver.persistence.customer;
 
 import com.example.dataserver.models.Customer;
+import com.example.dataserver.models.User;
 
-public interface CustomerDAO {
+import java.util.ArrayList;
 
-    Customer createCustomer(Customer customer);
+public interface CustomerDAO
+{
+  User createCustomer(User customer);
+  ArrayList<User> getAllCustomers();
+  void deleteCustomer(int customerId);
 }

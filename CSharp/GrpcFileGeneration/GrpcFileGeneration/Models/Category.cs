@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
 using RiskFirst.Hateoas.Models;
 
 namespace GrpcFileGeneration.Models
