@@ -12,13 +12,11 @@ import java.util.ArrayList;
 public class LoginDAOImpl implements LoginDAO
 {
   private UserRepository repository;
-  private Gson gson;
 
   @Autowired
   public LoginDAOImpl(UserRepository repository)
   {
     this.repository = repository;
-    gson = new Gson();
   }
 
   @Override

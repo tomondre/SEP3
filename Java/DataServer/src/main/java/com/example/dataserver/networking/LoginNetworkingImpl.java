@@ -9,6 +9,7 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import networking.login.LoginServiceGrpc;
 import networking.login.ProtobufMessage;
+import networking.user.UserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @GrpcService
@@ -25,10 +26,10 @@ public class LoginNetworkingImpl extends LoginServiceGrpc.LoginServiceImplBase
   }
 
   @Override
-  public void getUserLogin(ProtobufMessage request,
-      StreamObserver<ProtobufMessage> responseObserver)
+  public void getUserLogin(UserMessage request,
+      StreamObserver<UserMessage> responseObserver)
   {
-    User user = gson.fromJson(request.getMessageOrObject(), User.class);
+    
     User userLogin = loginDAO.getUserLogin(user);
     String s = gson.toJson(userLogin);
     responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
