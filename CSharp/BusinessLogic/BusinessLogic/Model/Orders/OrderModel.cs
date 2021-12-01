@@ -10,6 +10,7 @@ using BusinessLogic.Model.Experiences;
 using BusinessLogic.Networking.Experiences;
 using BusinessLogic.Networking.Orders;
 using GrpcFileGeneration.Models;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
 using Stripe;
 using Order = GrpcFileGeneration.Models.Orders.Order;
@@ -25,12 +26,14 @@ namespace BusinessLogic.Model.Orders
         private readonly string pdfToken =
             "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJiZjI1NzI4YWRjMTZiNjJmODljN2U5NDJjNzc1MDViZDg1ODMzYjczMTAwNGY1MWZmMGYyZjI2NWEwYmY0YTE3IiwiaWF0IjpudWxsLCJleHAiOjE2Njk4MDk3OTMsImF1ZCI6IiIsInN1YiI6IjI3NTI0MUB2aWF1Yy5kayJ9.V3UGyDTTSYaDHv8Pb2qaK25GuGSKmVyYF-p2m9bTudc";
         private IExperienceModel experienceNet;
+        private IMemoryCache memoryCache;
 
-        public OrderModel(IOrderNet networking, IExperienceModel experienceNet)
+        public OrderModel(IOrderNet networking, IExperienceModel experienceNet, IMemoryCache memoryCache)
         {
             this.networking = networking;
             this.experienceNet = experienceNet;
             StripeConfiguration.ApiKey = secretKey;
+            this.memoryCache = memoryCache;
         }
 
         public async Task<IList<Order>> GetAllCustomerOrdersAsync(int id)
@@ -61,8 +64,9 @@ namespace BusinessLogic.Model.Orders
             foreach (var item in order.ShoppingCart.ShoppingCartItems)
             {
                 await experienceNet.RemoveStockAsync(item.Experience.Id, item.Quantity);
+                memoryCache.Remove("CachedExperiences");
                 var validity = DateTime.Today.AddMonths(item.Experience.ExperienceValidity).ToString();
-                var voucher = new Voucher()
+                var voucher = new Voucher
                     {ExperienceName = item.Experience.Name, Validity = validity, Img = item.Experience.Picture};
                 var vouchers = Enumerable.Repeat(voucher, item.Quantity).ToList();
                 var generateVoucher = await GenerateVoucher(vouchers);
