@@ -9,6 +9,5 @@ namespace BusinessLogic.Model.Orders
         Task<Order> CreateOrderAsync(Order order);
         Task<IList<Order>> GetAllCustomerOrdersAsync(int id);
         Task<Order> GetOrderByIdAsync(int id);
-        Task GenerateVoucher();
     }
 }
