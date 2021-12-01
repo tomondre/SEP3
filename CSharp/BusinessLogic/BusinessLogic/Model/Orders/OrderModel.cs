@@ -91,7 +91,8 @@ namespace BusinessLogic.Model.Orders
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             dynamic jObject = JObject.Parse(readAsStringAsync);
-            return jObject.response;
+            var url = jObject.response;
+            return url;
         }
 
         private async Task CreatePayment(Order order)
