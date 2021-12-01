@@ -2,5 +2,9 @@
     plugins: {
         tailwindcss: {},
         autoprefixer: {}
-    }
+    }, variants: {
+        extend: {
+            opacity: 'disabled',
+        }
+    },
 }

@@ -37,9 +37,9 @@ namespace WebShop
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<IObserverService, ObserverService>();
             services.AddScoped<IOrderService, OrderService>();
-            // services.AddSingleton<ICustomerService, CustomerService>();
-            // services.AddSingleton<ILoginService, LoginService>();
-            // services.AddSingleton<AuthenticationStateProvider, CurrentAuthenticationStateProvider>();
+            // services.AddScoped<ICustomerService, CustomerService>();
+            // services.AddScoped<ILoginService, LoginService>();
+            // services.AddScoped<AuthenticationStateProvider, CurrentAuthenticationStateProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

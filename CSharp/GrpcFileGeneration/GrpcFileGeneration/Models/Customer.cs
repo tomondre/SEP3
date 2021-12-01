@@ -7,15 +7,15 @@ namespace GrpcFileGeneration.Models
 {
     public class Customer : User, ILinkContainer
     {
-        [Required, MaxLength(50)]
+        // [Required, MaxLength(50)]
         public string FirstName { get; set; }
-        [Required, MaxLength(50)]
+        // [Required, MaxLength(50)]
         public string LastName { get; set; }
 
-        [Required, MaxLength(20)]
+        // [Required, MaxLength(20)]
         public string PhoneNumber { get; set; }
         
-        [Required]
+        // [Required]
         public Address Address { get; set; }
 
         public Dictionary<string, Link> Links { set; get; }

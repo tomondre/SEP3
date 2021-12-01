@@ -22,7 +22,7 @@ namespace WebShop.Services.Orders
             StripeConfiguration.ApiKey = secretKey;
         }
 
-        public async Task CreateOrderAsync(Order order)
+        public async Task<int> CreateOrderAsync(Order order)
         {
             //Step 1 - CreatePaymentMethod from stripe and receive payment id
             var options = new PaymentMethodCreateOptions
@@ -48,10 +48,17 @@ namespace WebShop.Services.Orders
             //Step 4 - Send order to rest api
             var serialize = JsonSerializer.Serialize(order);
             var stringContent = new StringContent(serialize, Encoding.UTF8, "application/json");
-            var postAsync =  await client.PostAsync($"{url}Orders", stringContent);
+            var postAsync =  await client.PostAsync($"{url}orders", stringContent);
+            var readAsStringAsync = await postAsync.Content.ReadAsStringAsync();
             
-            //Step 5 - If success, return, if not throw exception
+            //Step 5 - Check exception
             CheckException(postAsync);
+            
+            //Step 6 - Deserialize
+            var deserialize = JsonSerializer.Deserialize<Order>(readAsStringAsync, new JsonSerializerOptions(){PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+
+            //Step 7 - Return Id of created order
+            return deserialize.Id;
         }
 
         public async Task<Order> GetOrderByIdAsync(int id)
@@ -66,7 +73,7 @@ namespace WebShop.Services.Orders
 
         public async Task<OrderList> GetCustomerOrdersAsync(int id)
         {
-            var httpResponseMessage = await client.GetAsync($"{url}providers/{id}/orders");
+            var httpResponseMessage = await client.GetAsync($"{url}customers/{id}/orders");
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             var orderList = JsonSerializer.Deserialize<OrderList>(readAsStringAsync, new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});

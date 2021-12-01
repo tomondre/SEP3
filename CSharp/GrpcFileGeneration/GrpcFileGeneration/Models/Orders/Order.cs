@@ -9,7 +9,7 @@ namespace GrpcFileGeneration.Models.Orders
         public Customer Customer { get; set; }
         public ShoppingCart ShoppingCart { get; set; }
         public CreditCard CreditCard { get; set; }
-        public string Comment { get; set; }
+        public string Comment { get; set; } = "";
         public string PaymentId { get; set; }
         public string Date { get; set; }
 
@@ -37,8 +37,9 @@ namespace GrpcFileGeneration.Models.Orders
         {
             OrderMessage message = new OrderMessage
             {
+                CustomerId = Customer.Id,
                 Comment = Comment,
-                Total = ShoppingCart.OrderTotal,
+                Total = ShoppingCart.OrderTotal
             };
             foreach (var item in ShoppingCart.ShoppingCartItems)
             {

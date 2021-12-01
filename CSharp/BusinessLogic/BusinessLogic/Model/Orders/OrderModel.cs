@@ -78,7 +78,10 @@ namespace BusinessLogic.Model.Orders
 
         private async Task<string> GenerateVoucher(IList<Voucher> vouchers)
         {
-            var serialize = JsonSerializer.Serialize(vouchers);
+            var serialize = JsonSerializer.Serialize(vouchers, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
             HttpClient client = new();
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, pdfUri);
             httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", pdfToken);
@@ -88,7 +91,7 @@ namespace BusinessLogic.Model.Orders
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             dynamic jObject = JObject.Parse(readAsStringAsync);
-            return jObject;
+            return jObject.response;
         }
 
         private async Task CreatePayment(Order order)

@@ -5,7 +5,6 @@
 @using Order = GrpcFileGeneration.Models.Orders.Order;
 @inject IOrderService OrderService;
 @inject NavigationManager NavigationManager;
-<h3>OrdersHistoryPage</h3>
 
 @if (orders == null)
 {
@@ -60,11 +59,11 @@ else
 }
 
 @code {
-  private OrderList orders;
+  private OrderList orders = new ();
   protected override async Task OnInitializedAsync()
   {
     //TODO Fetch customer id;
-    orders = await OrderService.GetCustomerOrdersAsync(2);
+    orders = await OrderService.GetCustomerOrdersAsync(1);
   }
 
   private void OpenSingleOrderView(int orderId)

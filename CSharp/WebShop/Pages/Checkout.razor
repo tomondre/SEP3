@@ -6,9 +6,7 @@
 
 @inject IShoppingCartService ShoppingCartService
 @inject NavigationManager NavigationManager
-@inject IOrderService OrderService 
-
-
+@inject IOrderService OrderService
 
 <section class="py-20 bg-gray-100">
     <EditForm Model="@order" OnSubmit="@CheckoutHandler">
@@ -67,35 +65,29 @@
                         </div>
                         <div class="mb-12 pb-10 border-b">
                             <label class="flex items-center mb-6" for="">
-                                <input @onchange="() => isPaymentCreditCard = true" class="mr-5" type="radio" name="paymentType" checked="">
+                                <input class="mr-5" type="radio" name="paymentType" checked="">
                                 <span class="text-sm">Credit card</span>
                             </label>
-                            <label class="flex items-center" for="">
-                                <input @onchange="() => isPaymentCreditCard = false" class="mr-5" type="radio" name="paymentType">
-                                <span class="text-sm">Cash on Delivery</span>
-                            </label>
                         </div>
-                        @if (isPaymentCreditCard)
-                        {
-                            <div class="mb-8 px-8 py-10 bg-gray-100">
-                                <div class="mb-8">
-                                    <label class="font-bold font-heading text-gray-600" for="">Credit card number</label>
-                                    <input @bind-value="order.CreditCard.Number" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
-                                </div>
-                                <div class="mb-8">
-                                    <label class="font-bold font-heading text-gray-600" for="">Expiration Year</label>
-                                    <input @bind-value="order.CreditCard.Year" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
-                                </div>
-                                <div class="mb-8">
-                                    <label class="font-bold font-heading text-gray-600" for="">Expiration Month</label>
-                                    <input @bind-value="order.CreditCard.Month" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
-                                </div>
-                                <div>
-                                    <label class="font-bold font-heading text-gray-600" for="">CVC</label>
-                                    <input @bind-value="order.CreditCard.Cvv" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
-                                </div>
+                        <div class="mb-8 px-8 py-10 bg-gray-100">
+                            <div class="mb-8">
+                                <label class="font-bold font-heading text-gray-600" for="">Credit card number</label>
+                                <input @bind-value="order.CreditCard.Number" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
                             </div>
-                        }
+                            <div class="mb-8">
+                                <label class="font-bold font-heading text-gray-600" for="">Expiration Year</label>
+                                <input @bind-value="order.CreditCard.Year" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
+                            </div>
+                            <div class="mb-8">
+                                <label class="font-bold font-heading text-gray-600" for="">Expiration Month</label>
+                                <input @bind-value="order.CreditCard.Month" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
+                            </div>
+                            <div>
+                                <label class="font-bold font-heading text-gray-600" for="">CVC</label>
+                                <input @bind-value="order.CreditCard.Cvv" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
+                            </div>
+                        </div>
+
                     </div>
                     <div class="w-full lg:w-1/3 px-4">
                         <div class="flex mb-12 items-center">
@@ -141,7 +133,9 @@
                         <div>
                             <span class="block mb-4 font-medium">Order comment:</span>
                             <textarea @bind="order.Comment" class="mb-12 w-full resize-none border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" name="" id="" cols="30" rows="10"></textarea>
-                            <button type="submit" class="block w-full py-4 bg-blue-300 hover:bg-blue-400 text-center text-white font-bold font-heading uppercase rounded-md transition duration-200">Checkout</button>
+                            <button  type="submit" class="disabled:opacity-50 block w-full py-4 bg-blue-600 hover:bg-blue-400 text-center text-white font-bold font-heading uppercase rounded-md transition duration-200">
+                                Checkout
+                            </button>
                             <ValidationSummary/>
                         </div>
                     </div>
@@ -152,9 +146,11 @@
 </section>
 
 @code {
+    private bool checkingOut;
+
     private Order order = new()
     {
-        CreditCard = new CreditCard()
+        CreditCard = new CreditCard
         {
             Number = "4242 4242 4242 4242",
             Cvv = "123",
@@ -162,15 +158,16 @@
             Year = 23
         }
     };
+
     private bool isPaymentCreditCard = true;
 
     protected override void OnInitialized()
     {
         order.ShoppingCart = ShoppingCartService.ShoppingCart;
-    //TODO load logged-in customer
+        //TODO load logged-in customer
         order.Customer = new()
         {
-            Id = 10,
+            Id = 1,
             Email = "haabala@gmail.com",
             FirstName = "Peter",
             LastName = "Petersen",
@@ -188,15 +185,15 @@
 
     private async Task CheckoutHandler()
     {
+        checkingOut = true;
         try
         {
-            await OrderService.CreateOrderAsync(order);
-            NavigationManager.NavigateTo("/success");
+            var orderId = await OrderService.CreateOrderAsync(order);
+            NavigationManager.NavigateTo($"/success/orders/{orderId}");
         }
-        catch
+        catch (Exception e)
         {
-            NavigationManager.NavigateTo("/fail");
+            NavigationManager.NavigateTo($"/fail/{e.Message}");
         }
     }
-
 }

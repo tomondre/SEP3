@@ -11,13 +11,13 @@ import javax.persistence.*;
 public class OrderItem {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @SerializedName(value = "id", alternate = {"Id"})
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
-    @MapsId
+    @JoinColumn(name="order_id", nullable=false)
+    @ManyToOne
     private Order order;
 
     @SerializedName(value = "picture", alternate = {"Picture"})
@@ -45,11 +45,9 @@ public class OrderItem {
     private int quantity;
 
     public OrderItem(){
-
     }
 
     public OrderItem(OrderItemMessage item){
-        id = item.getId();
         picture = item.getPicture();
         name = item.getName();
         price = item.getPrice();
@@ -68,5 +66,61 @@ public class OrderItem {
                 .setQuantity(quantity)
                 .setVoucher(voucher)
                 .build();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

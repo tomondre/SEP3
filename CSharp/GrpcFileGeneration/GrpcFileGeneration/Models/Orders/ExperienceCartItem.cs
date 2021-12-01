@@ -34,6 +34,7 @@ namespace GrpcFileGeneration.Models.Order
         {
             return new OrderItemMessage
             {
+                Id = Experience.Id,
                 Description = Experience.Description,
                 Name = Experience.Name,
                 Picture = Experience.Picture,

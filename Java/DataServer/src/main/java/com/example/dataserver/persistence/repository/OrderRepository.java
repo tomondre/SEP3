@@ -10,4 +10,5 @@ import java.util.ArrayList;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
     ArrayList<Order> getAllByUser_Id(@Param("customer_id") int id);
+    Order getOrderById(@Param("id") int id);
 }

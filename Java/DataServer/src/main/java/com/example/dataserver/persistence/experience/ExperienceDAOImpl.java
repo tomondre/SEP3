@@ -39,7 +39,7 @@ public class ExperienceDAOImpl implements ExperienceDAO
 
     @Override
     public boolean isInStock(int id, int quantity) {
-      return repository.existsByIdAndStockIsGreaterThan(id, quantity);
+      return repository.existsByIdAndStockIsGreaterThanEqual(id, quantity);
     }
 
     @Override
