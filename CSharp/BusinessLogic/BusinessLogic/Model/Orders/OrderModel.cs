@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Experiences;
 using BusinessLogic.Networking.Experiences;
 using BusinessLogic.Networking.Orders;
+using Newtonsoft.Json.Linq;
 using Stripe;
 using Order = GrpcFileGeneration.Models.Orders.Order;
 
@@ -14,6 +18,9 @@ namespace BusinessLogic.Model.Orders
     {
         private IOrderNet networking;
         private string secretKey = "sk_test_51JyZa3HP6RYbC1HUXv6ohA4Hz6PiePRCQUdo0R6xGXDqvnEKc8E95CobkUpAj12nvHqyuhASAMtEsxfDSyHKkh3S00KY0zYi2B";
+        private readonly string pdfUri = "https://us1.pdfgeneratorapi.com/api/v3/templates/352674/output?name=My%20document&format=pdf&output=url";
+        private readonly string pdfToken =
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJiZjI1NzI4YWRjMTZiNjJmODljN2U5NDJjNzc1MDViZDg1ODMzYjczMTAwNGY1MWZmMGYyZjI2NWEwYmY0YTE3IiwiaWF0IjpudWxsLCJleHAiOjE2Njk4MDk3OTMsImF1ZCI6IiIsInN1YiI6IjI3NTI0MUB2aWF1Yy5kayJ9.V3UGyDTTSYaDHv8Pb2qaK25GuGSKmVyYF-p2m9bTudc";
         private IExperienceModel experienceNet;
 
         public OrderModel(IOrderNet networking, IExperienceModel experienceNet)
@@ -63,7 +70,23 @@ namespace BusinessLogic.Model.Orders
             //Step 6 - Return successful order
             return orderAsync;
         }
-        
+
+        public async Task GenerateVoucher()
+        {
+            HttpClient client = new();
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, pdfUri);
+            httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", pdfToken);
+            var populate = "{\"voucherId\": 1111, \"experinceName\": \"paragliding\", \"validity\": \"2121\"}";
+            var stringContent = new StringContent(populate, Encoding.UTF8, "application/json");
+            httpRequestMessage.Content = stringContent;
+
+            var httpResponseMessage = await client.SendAsync(httpRequestMessage);
+            var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
+            dynamic jObject = JObject.Parse(readAsStringAsync);
+            Console.WriteLine(jObject.response);
+            Console.WriteLine();
+        }
+
         private async Task CreatePayment(Order order)
         {
             var paymentIntentService = new PaymentIntentService();

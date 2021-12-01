@@ -1,10 +1,10 @@
-@page "/orders"
-@using WebShop.Services.Orders
+@page "/customer/{CustomerId:int}"
 @using GrpcFileGeneration.Models.Orders
-@using OrderStripe = Stripe.Order;
 @using Order = GrpcFileGeneration.Models.Orders.Order;
-@inject IOrderService OrderService;
+@using ClientBlazor.Data.Orders
 @inject NavigationManager NavigationManager;
+@inject IOrderService OrderService
+
 <h3>OrdersHistoryPage</h3>
 
 @if (orders == null)
@@ -16,7 +16,7 @@
 else if (!orders.Orders.Any())
 {
     <p class="text-center">
-        <em>Wrong order ID</em>
+        <em>No orders found for the current customer</em>
     </p>
 }
 else
@@ -61,10 +61,12 @@ else
 
 @code {
   private OrderList orders;
+  [Parameter]
+  public  int CustomerId { set; get; }
+  
   protected override async Task OnInitializedAsync()
   {
-    //TODO Fetch customer id;
-    orders = await OrderService.GetCustomerOrdersAsync(2);
+    orders = await OrderService.GetCustomerOrdersAsync(CustomerId);
   }
 
   private void OpenSingleOrderView(int orderId)

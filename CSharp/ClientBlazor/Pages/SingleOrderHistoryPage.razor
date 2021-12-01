@@ -1,8 +1,8 @@
-﻿@page "/orders/{Id:int}"
+﻿@page "/orders/{OrderId:int}"
 
 @using GrpcFileGeneration.Models.Orders
-@using WebShop.Services.Orders
 @using GrpcFileGeneration.Models.Order
+@using ClientBlazor.Data.Orders
 @inject IOrderService OrderService
 
 @if (LoadedOrder == null)
@@ -110,13 +110,13 @@ else
 @code {
 
     [Parameter]
-    public int Id { get; set; }
+    public int OrderId { get; set; }
 
     private Order LoadedOrder;
 
     protected override async Task OnInitializedAsync()
     {
-        LoadedOrder = await OrderService.GetOrderByIdAsync(Id);
+        LoadedOrder = await OrderService.GetOrderByIdAsync(OrderId);
     }
 
 }

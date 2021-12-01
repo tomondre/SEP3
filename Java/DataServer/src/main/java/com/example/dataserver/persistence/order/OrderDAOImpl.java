@@ -24,7 +24,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public ArrayList<Order> getAllCustomerOrders(int id) {
-        return repository.getAllByCustomer_Id(id);
+        return repository.getAllByUser_Id(id);
     }
 
     @Override

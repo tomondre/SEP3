@@ -3,6 +3,7 @@ using ClientBlazor.Data.Authentication;
 using ClientBlazor.Data.Customers;
 using ClientBlazor.Data.Experiences;
 using ClientBlazor.Data.Login;
+using ClientBlazor.Data.Orders;
 using ClientBlazor.Data.ProductCategory;
 using ClientBlazor.Data.Providers;
 using Microsoft.AspNetCore.Builder;
@@ -36,6 +37,7 @@ namespace ClientBlazor
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<AuthenticationStateProvider, CurrentAuthenticationStateProvider>();
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Customer",  a => 

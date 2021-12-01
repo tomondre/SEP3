@@ -3,7 +3,6 @@ package com.example.dataserver.models;
 
 import com.google.gson.annotations.SerializedName;
 import networking.order.OrderItemMessage;
-import networking.order.OrderMessage;
 
 import javax.persistence.*;
 

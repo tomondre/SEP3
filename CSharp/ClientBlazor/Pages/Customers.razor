@@ -1,8 +1,9 @@
-@page "/Customers"
+@page "/customers"
 @using GrpcFileGeneration.Models
 @using ClientBlazor.Data.Customers
 
 @inject ICustomerService CustomerService
+@inject NavigationManager NavigationManager
 
 @if (customers == null)
 {
@@ -33,7 +34,7 @@ else
                     <tbody>
                     @foreach (var customer in customers.Customers)
                     {
-                        <tr class="text-xs bg-gray-50">
+                        <tr class="text-xs bg-gray-50" @onclick="() => LoadCustomerOrders(customer)">
                             <td class="py-3 px-4">
                                 <p class="font-medium align-middle">@customer.FirstName @customer.LastName</p>
                             </td>
@@ -73,6 +74,11 @@ else
     private async Task DeleteCustomer(Customer customer)
     {
         await CustomerService.DeleteCustomer(customer);
+    }
+
+    private async Task LoadCustomerOrders(Customer customer)
+    {
+        NavigationManager.NavigateTo($"/customer/{customer.Id}");
     }
 
 }
