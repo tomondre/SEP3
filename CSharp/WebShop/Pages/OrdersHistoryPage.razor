@@ -38,6 +38,7 @@ else
             </tr>
             </thead>
             <tbody>
+            
             @foreach (Order order in orders.Orders)
             {
               <tr @onclick="() => OpenSingleOrderView(order.Id)" class="text-xs bg-gray-50">
