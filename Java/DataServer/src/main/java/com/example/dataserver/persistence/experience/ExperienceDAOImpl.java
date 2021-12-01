@@ -29,7 +29,7 @@ public class ExperienceDAOImpl implements ExperienceDAO
 
     @Override
     public ArrayList<Experience> getAllWebShopExperiences() {
-        return (ArrayList<Experience>) repository.findAll();
+        return repository.getAllByStockGreaterThan(0);
     }
 
     @Override
