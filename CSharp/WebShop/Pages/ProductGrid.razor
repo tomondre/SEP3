@@ -1,6 +1,7 @@
 ﻿@page "/experiences"
+@page "/categories/{category}/experiences"
+
 @using WebShop.Data.ProductCategory
-@using WebShop.Data.Experiences
 @using WebShop.Services.Experiences
 
 @inject NavigationManager NavigationManager
@@ -84,10 +85,20 @@
     private CategoryList categories = new();
     private ExperienceList experiences = new();
 
+    [Parameter]
+    public string category { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         categories = await ProductCategoryService.GetAllCategoriesAsync();
-        experiences = await ExperienceService.GetAllExperiences();
+        if (category == null)
+        {
+            experiences = await ExperienceService.GetAllExperiencesAsync();
+        }
+        else
+        {
+            experiences = await ExperienceService.GetExperiencesByCategoryAsync(category);
+        }
     }
 
     private void OpenProductPage(int productId)
@@ -97,7 +108,7 @@
 
     private void OpenCategoryView(int categoryId)
     {
-        NavigationManager.NavigateTo($"/categories/{categoryId}");
+        NavigationManager.NavigateTo($"/categories/{categoryId}/experiences");
     }
 
 }
