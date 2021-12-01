@@ -18,7 +18,7 @@ namespace GrpcFileGeneration.Models
         public string Description { get; set; }
         
         [Required, MaxLength(50)]
-        public string ExperienceValidity { get; set; }
+        public int ExperienceValidity { get; set; }
         
         public Category ExperienceCategory { get; set; }
         public  Provider ExperienceProvider { get; set; }
