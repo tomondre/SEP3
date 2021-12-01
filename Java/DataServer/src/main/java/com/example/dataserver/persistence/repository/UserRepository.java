@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public interface UserRepository extends JpaRepository<User, Integer>
 {
   ArrayList<User> getAllByProvider_isApproved(@Param("is_approved") boolean userInfo_approved);
-  ArrayList<User> getAllByProviderTrue();
+  User getUserById(@Param("user_id") int id);
   User getUserByEmailAndPassword(@Param("email")String email, @Param("password")String password);
   ArrayList<User> getAllByCustomer_FirstNameIsNotNull();
 }
