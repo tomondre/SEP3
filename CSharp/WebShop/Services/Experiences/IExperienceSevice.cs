@@ -7,6 +7,6 @@ namespace WebShop.Services.Experiences
     {
         Task<ExperienceList> GetAllExperiencesAsync();
         Task<Experience> GetExperienceById(int id);
-        Task<ExperienceList> GetExperiencesByCategoryAsync(string category);
+        Task<ExperienceList> GetExperiencesByCategoryAsync(int id);
     }
 }

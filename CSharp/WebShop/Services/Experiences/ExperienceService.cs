@@ -44,9 +44,9 @@ namespace WebShop.Data.Experiences
             return deserialize;
         }
 
-        public async Task<ExperienceList> GetExperiencesByCategoryAsync(string category)
+        public async Task<ExperienceList> GetExperiencesByCategoryAsync(int id)
         {
-            var httpResponseMessage = await client.GetAsync($"{uri}/categories/{category}/experiences");
+            var httpResponseMessage = await client.GetAsync($"{uri}categories/{id}/experiences");
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync, new JsonSerializerOptions()

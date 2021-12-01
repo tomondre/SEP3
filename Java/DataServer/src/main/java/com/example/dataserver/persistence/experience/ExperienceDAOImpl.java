@@ -54,4 +54,9 @@ public class ExperienceDAOImpl implements ExperienceDAO
         byId.setStock(byId.getStock() - quantity);
         repository.save(byId);
     }
+
+    @Override
+    public ArrayList<Experience> getExperienceByCategory(int id) {
+        return repository.getAllByExperienceCategoryIdAndStockGreaterThan(id, 0);
+    }
 }
