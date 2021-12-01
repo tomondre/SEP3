@@ -5,22 +5,23 @@ namespace GrpcFileGeneration.Models
     public class Experience
     {
         public int Id { get;  set; }
-        [Required]
+        // [Required]
         public string Picture { get; set; }
-        [Required, MaxLength(50)]
+        // [Required, MaxLength(50)]
         public string Name { get; set; }
-        [Required]
+        // [Required]
         public double Price { get; set; }
-        [Required]
+        // [Required]
         public int Stock { get;  set; }
-        [Required, MaxLength(500)]
+        // [Required, MaxLength(500)]
         
         public string Description { get; set; }
         
-        [Required, MaxLength(50)]
-        public string ExperienceValidity { get; set; }
+        // [Required, MaxLength(50)]
+        public int ExperienceValidity { get; set; }
         
         public Category ExperienceCategory { get; set; }
+        
         public  Provider ExperienceProvider { get; set; }
         
         public Address Address { get; set; }

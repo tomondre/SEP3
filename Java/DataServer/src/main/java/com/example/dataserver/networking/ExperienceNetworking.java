@@ -87,5 +87,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
   @Override
   public void removeStock(ProtobufStockRequest request, StreamObserver<ProtobufMessage> responseObserver) {
     experienceDAO.removeStock(request.getId(), request.getQuantity());
+    responseObserver.onNext(ProtobufMessage.newBuilder().build());
+    responseObserver.onCompleted();
   }
 }

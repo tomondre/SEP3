@@ -3,7 +3,6 @@ package com.example.dataserver.models;
 
 import com.google.gson.annotations.SerializedName;
 import networking.order.OrderItemMessage;
-import networking.order.OrderMessage;
 
 import javax.persistence.*;
 
@@ -12,13 +11,13 @@ import javax.persistence.*;
 public class OrderItem {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @SerializedName(value = "id", alternate = {"Id"})
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
-    @MapsId
+    @JoinColumn(name="order_id", nullable=false)
+    @ManyToOne
     private Order order;
 
     @SerializedName(value = "picture", alternate = {"Picture"})
@@ -37,21 +36,24 @@ public class OrderItem {
     @Column(name = "description")
     private String description;
 
+    @SerializedName(value = "voucher", alternate = "Voucher")
+    @Column(name = "voucher")
+    private String voucher;
+
     @SerializedName(value = "quantity", alternate = {"Quantity"})
     @Column(name = "quantity")
     private int quantity;
 
     public OrderItem(){
-
     }
 
     public OrderItem(OrderItemMessage item){
-        id = item.getId();
         picture = item.getPicture();
         name = item.getName();
         price = item.getPrice();
         description = item.getDescription();
         quantity = item.getQuantity();
+        voucher = item.getVoucher();
     }
 
     public OrderItemMessage toMessage(){
@@ -62,6 +64,71 @@ public class OrderItem {
                 .setPrice(price)
                 .setDescription(description)
                 .setQuantity(quantity)
+                .setVoucher(voucher)
                 .build();
+    }
+
+    public String getVoucher() {
+        return voucher;
+    }
+
+    public void setVoucher(String voucher) {
+        this.voucher = voucher;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

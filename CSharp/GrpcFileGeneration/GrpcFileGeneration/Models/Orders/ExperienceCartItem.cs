@@ -6,6 +6,8 @@ namespace GrpcFileGeneration.Models.Order
     {
         public Experience Experience { get; set; }
         public int Quantity { get; set; }
+        
+        public string Voucher { set; get; }
 
         public double TotalPrice => Quantity * Experience.Price;
 
@@ -24,6 +26,7 @@ namespace GrpcFileGeneration.Models.Order
                 Name = item.Name,
                 Price = item.Price,
             };
+            Voucher = item.Voucher;
             Quantity = item.Quantity;
         }
 
@@ -31,11 +34,13 @@ namespace GrpcFileGeneration.Models.Order
         {
             return new OrderItemMessage
             {
+                Id = Experience.Id,
                 Description = Experience.Description,
                 Name = Experience.Name,
                 Picture = Experience.Picture,
                 Price = Experience.Price,
-                Quantity = Quantity
+                Quantity = Quantity,
+                Voucher = this.Voucher
             };
         }
     }

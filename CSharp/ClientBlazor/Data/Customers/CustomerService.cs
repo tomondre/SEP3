@@ -47,11 +47,11 @@ namespace ClientBlazor.Data.Customers
         private async Task<HttpRequestMessage> GetHttpRequest(HttpMethod method, string uri)
         {
             var httpRequestMessage = new HttpRequestMessage(method, uri);
-            var token = await sessionStorage.GetAsync<string>("token");
-            if (token.Success)
-            {
-                httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
-            }
+            // var token = await sessionStorage.GetAsync<string>("token");
+            // if (token.Success)
+            // {
+            //     httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
+            // }
             //TODO add exception
             return httpRequestMessage;
         }
