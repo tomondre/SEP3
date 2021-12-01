@@ -36,6 +36,10 @@ public class OrderItem {
     @Column(name = "description")
     private String description;
 
+    @SerializedName(value = "voucher", alternate = "Voucher")
+    @Column(name = "voucher")
+    private String voucher;
+
     @SerializedName(value = "quantity", alternate = {"Quantity"})
     @Column(name = "quantity")
     private int quantity;
@@ -51,6 +55,7 @@ public class OrderItem {
         price = item.getPrice();
         description = item.getDescription();
         quantity = item.getQuantity();
+        voucher = item.getVoucher();
     }
 
     public OrderItemMessage toMessage(){
@@ -61,6 +66,7 @@ public class OrderItem {
                 .setPrice(price)
                 .setDescription(description)
                 .setQuantity(quantity)
+                .setVoucher(voucher)
                 .build();
     }
 }
