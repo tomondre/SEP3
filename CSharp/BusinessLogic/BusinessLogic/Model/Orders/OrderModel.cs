@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Experiences;
 using BusinessLogic.Networking.Experiences;
 using BusinessLogic.Networking.Orders;
+using GrpcFileGeneration.Models;
 using Newtonsoft.Json.Linq;
 using Stripe;
 using Order = GrpcFileGeneration.Models.Orders.Order;
@@ -54,37 +57,38 @@ namespace BusinessLogic.Model.Orders
             //Step 2 - Create payment call to Stripe
             await CreatePayment(order);
             
-            //Step 3 - Remove experiences stock from database
+            //Step 3/4 - Remove experiences stock from database, Generate vouchers and save them
             foreach (var item in order.ShoppingCart.ShoppingCartItems)
             {
                 await experienceNet.RemoveStockAsync(item.Experience.Id, item.Quantity);
+                var validity = DateTime.Today.AddMonths(item.Experience.ExperienceValidity).ToString();
+                var voucher = new Voucher()
+                    {ExperienceName = item.Experience.Name, Validity = validity, Img = item.Experience.Picture};
+                var vouchers = Enumerable.Repeat(voucher, item.Quantity).ToList();
+                var generateVoucher = await GenerateVoucher(vouchers);
+                item.Voucher = generateVoucher;
             }
 
-            //Step 4 - Create Order and save it
+            //Step 5 - Create Order and save it
             var orderAsync = await networking.CreateOrderAsync(order);
-            
-
-            //Step 5 - Generate vouchers and save them
-            
             
             //Step 6 - Return successful order
             return orderAsync;
         }
 
-        public async Task GenerateVoucher()
+        private async Task<string> GenerateVoucher(IList<Voucher> vouchers)
         {
+            var serialize = JsonSerializer.Serialize(vouchers);
             HttpClient client = new();
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, pdfUri);
             httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", pdfToken);
-            var populate = "{\"voucherId\": 1111, \"experinceName\": \"paragliding\", \"validity\": \"2121\"}";
-            var stringContent = new StringContent(populate, Encoding.UTF8, "application/json");
+            var stringContent = new StringContent(serialize, Encoding.UTF8, "application/json");
             httpRequestMessage.Content = stringContent;
 
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             dynamic jObject = JObject.Parse(readAsStringAsync);
-            Console.WriteLine(jObject.response);
-            Console.WriteLine();
+            return jObject;
         }
 
         private async Task CreatePayment(Order order)
