@@ -64,7 +64,7 @@
                                                     </g>
                                                 </svg>
                                             </button>
-                                            <input @bind-value="@item.Quantity" class="w-12 m-0 px-2 py-4 text-center md:text-right border-0 focus:ring-transparent focus:outline-none rounded-md" placeholder="1">
+                                            <input readonly @bind-value="@item.Quantity" class="w-12 m-0 px-2 py-4 text-center md:text-right border-0 focus:ring-transparent focus:outline-none rounded-md" placeholder="1">
                                             <button @onclick="() => AddQuantity(item)" class="py-2 hover:text-gray-700">
                                                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <g opacity="0.35">
@@ -81,13 +81,6 @@
                             }
 
                         </div>
-
-
-                        @* <div class="flex flex-wrap items-center lg:-mb-4"> *@
-                        @*     <span class="mr-12 mb-4 font-medium">Apply discount code:</span> *@
-                        @*     <input class="flex-1 md:flex-none mr-6 sm:mr-0 md:mr-6 mb-4 px-8 py-4 placeholder-gray-800 font-bold font-heading border rounded-md" type="text" placeholder="SUMMER30X"> *@
-                        @*     <a class="flex-1 md:flex-none inline-block mb-4 px-8 py-4 text-center text-white font-bold font-heading uppercase bg-gray-800 hover:bg-gray-700 rounded-md" >Apply</a> *@
-                        @* </div> *@
                     </div>
                     <div class="w-full xl:w-4/12 px-4">
                         <div class="p-6 md:p-12 bg-blue-500">
@@ -115,8 +108,6 @@
                 </div>
             }
         </div>
-
-
     </div>
 </section>
 
