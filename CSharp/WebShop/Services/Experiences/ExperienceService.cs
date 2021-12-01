@@ -18,12 +18,12 @@ namespace WebShop.Data.Experiences
         public ExperienceService()
         {
             client = new HttpClient();
-            uri = "https://localhost:5001/Experiences";
+            uri = "https://localhost:5001/";
         }
 
-        public async Task<ExperienceList> GetAllExperiences()
+        public async Task<ExperienceList> GetAllExperiencesAsync()
         {
-            var httpResponseMessage = await client.GetAsync(uri);
+            var httpResponseMessage = await client.GetAsync($"{uri}experiences");
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             var deserialize = JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync,
@@ -36,14 +36,26 @@ namespace WebShop.Data.Experiences
 
         public async Task<Experience> GetExperienceById(int id)
         {
-            var httpResponseMessage = await client.GetAsync($"{uri}/{id}");
+            var httpResponseMessage = await client.GetAsync($"{uri}experiences/{id}");
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             var deserialize = JsonSerializer.Deserialize<Experience>(readAsStringAsync,
                 new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
             return deserialize;
         }
-        
+
+        public async Task<ExperienceList> GetExperiencesByCategoryAsync(string category)
+        {
+            var httpResponseMessage = await client.GetAsync($"{uri}/categories/{category}/experiences");
+            CheckException(httpResponseMessage);
+            var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+            
+        }
+
         private void CheckException(HttpResponseMessage task)
         {
             if (!task.IsSuccessStatusCode)
