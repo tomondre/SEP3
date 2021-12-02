@@ -78,7 +78,7 @@ namespace BusinessLogic.Networking.Experiences
 
         public async Task<IList<Experience>> GetExperiencesByCategoryAsync(int id)
         {
-            var experienceByCategoryAsync = await client.getExperienceByCategoryAsync(new ProtobufMessage()
+            var experienceByCategoryAsync = await client.getExperienceByCategoryAsync(new ProtobufMessage
             {
                 MessageOrObject = id.ToString()
             });
@@ -87,6 +87,16 @@ namespace BusinessLogic.Networking.Experiences
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 });
+            return deserialize;
+        }
+
+        public async Task<IList<Experience>> GetTopExperiences(int limit)
+        {
+            var topExperiencesAsync = await client.getTopExperiencesAsync(new ProtobufMessage{MessageOrObject = limit.ToString()});
+            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(topExperiencesAsync.MessageOrObject, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
             return deserialize;
         }
     }

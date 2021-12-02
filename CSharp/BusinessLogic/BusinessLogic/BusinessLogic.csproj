@@ -33,8 +33,5 @@
     <ItemGroup>
       <Content Remove="obj\**" />
     </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Model\Checkout" />
-    </ItemGroup>
 
 </Project>
