@@ -5,7 +5,8 @@ namespace WebShop.Services.Experiences
 {
     public interface IExperienceService
     {
-        Task<ExperienceList> GetAllExperiences();
+        Task<ExperienceList> GetAllExperiencesAsync();
         Task<Experience> GetExperienceById(int id);
+        Task<ExperienceList> GetExperiencesByCategoryAsync(int id);
     }
 }

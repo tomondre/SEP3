@@ -62,5 +62,10 @@ namespace BusinessLogic.Model.Experiences
         {
             await network.DeleteExperienceAsync(experienceId);
         }
+
+        public async Task<IList<Experience>> GetExperiencesByCategoryAsync(int id)
+        {
+            return await network.GetExperiencesByCategoryAsync(id);
+        }
     }
 }
