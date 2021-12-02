@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -61,6 +62,21 @@ namespace ClientBlazor.Data.Experiences
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
             return deserialize;
+        }
+
+        public async Task<ExperienceList> GetAllProviderExperiencesByNameAsync(int? providerId, string name)
+        {
+            var httpRequestMessage = await GetHttpRequestAsync(HttpMethod.Get, $"{uri}Providers/{providerId}/Experiences?name={name}");
+            var httpResponseMessage = await client.SendAsync(httpRequestMessage);
+            
+            CheckException(httpResponseMessage);
+
+            var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
+            var experienceList = JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+            return experienceList;
         }
 
         public async Task DeleteExperienceAsync(Experience experience)

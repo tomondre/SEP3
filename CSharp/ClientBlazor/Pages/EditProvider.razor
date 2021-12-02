@@ -129,7 +129,7 @@ else
     
     protected override async Task OnInitializedAsync()
     {
-        var cachedUser = await CacheService.GetCachedUser();
+        var cachedUser = await CacheService.GetCachedUserAsync();
         providerToEdit = await ProviderService.GetProviderById(cachedUser.Id);
     }
 

@@ -84,4 +84,15 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
         responseObserver.onCompleted();
 
     }
+
+    @Override
+    public void findCustomerByName(UserMessage request, StreamObserver<CustomersMessage> responseObserver)
+    {
+        ArrayList<User> customerByName = dao.findCustomerByName(request.getEmail());
+        List<CustomerMessage> collect =
+                customerByName.stream().map(User::toCustomerMessage).collect(Collectors.toList());
+        CustomersMessage builder = CustomersMessage.newBuilder().addAllCustomers(collect).build();
+        responseObserver.onNext(builder);
+        responseObserver.onCompleted();
+    }
 }

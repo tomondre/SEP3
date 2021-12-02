@@ -51,5 +51,14 @@ namespace BusinessLogic.Networking.Customers
             return new Customer(editedCustomer);
 
         }
+
+        public async Task<IList<Customer>> FindCustomerByNameAsync(string name)
+        {
+            var userMessage = new UserMessage() {Email = name};
+            var findCustomerByNameAsync = await client.FindCustomerByNameAsync(userMessage);
+            var customerMessages = findCustomerByNameAsync.Customers;
+            var customers = customerMessages.Select(a => new Customer(a)).ToList();
+            return customers;
+        }
     }
 }

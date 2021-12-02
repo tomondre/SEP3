@@ -23,4 +23,5 @@ service CustomerService {
     rpc deleteCustomer(user.UserMessage) returns (CustomerMessage);
     rpc getCustomerById(user.UserMessage)returns (CustomerMessage);
     rpc editCustomer(CustomerMessage) returns (CustomerMessage);
+    rpc FindCustomerByName(user.UserMessage) returns (CustomersMessage);
 }

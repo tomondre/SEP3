@@ -26,4 +26,5 @@ service ProviderService{
   rpc EditProvider(ProviderMessage) returns (ProviderMessage);
   rpc RemoveProvider(user.UserMessage) returns (ProviderMessage);
   rpc GetAllNotApprovedProviders(ProviderMessage) returns (ProvidersMessage);
+  rpc GetAllByName(user.UserMessage) returns (ProvidersMessage);
 }
