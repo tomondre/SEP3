@@ -103,5 +103,15 @@ namespace BusinessLogic.Networking.Experiences
                 });
             return deserialize;
         }
+
+        public async Task<IList<Experience>> GetTopExperiences(int limit)
+        {
+            var topExperiencesAsync = await client.getTopExperiencesAsync(new ProtobufMessage{MessageOrObject = limit.ToString()});
+            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(topExperiencesAsync.MessageOrObject, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+            return deserialize;
+        }
     }
 }

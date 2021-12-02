@@ -56,6 +56,15 @@ namespace WebShop.Data.Experiences
             
         }
 
+        public async Task<ExperienceList> GetTopExperiences()
+        {
+            var httpResponseMessage = await client.GetAsync($"{uri}experiences?limit=3");
+            CheckException(httpResponseMessage);
+            var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
+            var experienceList = JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync);
+            return experienceList;
+        }
+
         private void CheckException(HttpResponseMessage task)
         {
             if (!task.IsSuccessStatusCode)

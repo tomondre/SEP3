@@ -72,5 +72,10 @@ namespace BusinessLogic.Model.Experiences
         {
             return await network.GetExperiencesByCategoryAsync(id);
         }
+
+        public async Task<IList<Experience>> GetTopExperiences(int limit)
+        {
+            return await network.GetTopExperiences(limit);
+        }
     }
 }

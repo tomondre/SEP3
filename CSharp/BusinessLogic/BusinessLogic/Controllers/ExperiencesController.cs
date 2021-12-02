@@ -58,12 +58,17 @@ namespace BusinessLogic.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<ExperienceList>> GetAllExperiencesAsync()
+        public async Task<ActionResult<ExperienceList>> GetAllExperiencesAsync([FromQuery] int? limit)
         {
-            ExperienceList experiences = new ExperienceList
+            ExperienceList experiences = new ExperienceList();
+            if (limit == null)
             {
-                Experiences = await model.GetAllWebShopExperiencesAsync()
-            };
+                experiences.Experiences = await model.GetAllWebShopExperiencesAsync();
+            }
+            else
+            {
+                experiences.Experiences = await model.GetTopExperiences(limit.Value);
+            }
             return Ok(experiences);
         }
 

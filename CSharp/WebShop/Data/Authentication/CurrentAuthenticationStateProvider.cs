@@ -18,7 +18,7 @@ namespace WebShop.Data.Authentication
 
         private User cachedUser;
         
-        public CurrentAuthenticationStateProvider( ILoginService loginService, ProtectedSessionStorage sessionStorage)
+        public CurrentAuthenticationStateProvider(ILoginService loginService, ProtectedSessionStorage sessionStorage)
         {
             this.sessionStorage = sessionStorage;
             this.loginService = loginService;
@@ -50,13 +50,12 @@ namespace WebShop.Data.Authentication
             {
                 new(ClaimTypes.Role, user.SecurityType)
             };
-            ClaimsIdentity identity = new ClaimsIdentity(claims);
+            ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth_type");
             return identity;
         }
 
         public async Task ValidateUser(User userCred)
         {
-            
             if (string.IsNullOrEmpty(userCred.Email)) throw new Exception("Enter username");
             if (string.IsNullOrEmpty(userCred.Password)) throw new Exception("Enter password");
 
