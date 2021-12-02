@@ -10,4 +10,5 @@ public interface CustomerDAO
   User createCustomer(User customer);
   ArrayList<User> getAllCustomers();
   void deleteCustomer(int customerId);
+  ArrayList<User> findCustomerByName(String name);
 }

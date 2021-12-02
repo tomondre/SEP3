@@ -1,6 +1,5 @@
 package com.example.dataserver.networking;
 
-import com.example.dataserver.models.Address;
 import com.example.dataserver.models.Customer;
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.customer.CustomerDAO;
@@ -59,6 +58,17 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
     {
         dao.deleteCustomer(request.getId());
         responseObserver.onNext(CustomerMessage.newBuilder().build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void findCustomerByName(UserMessage request, StreamObserver<CustomersMessage> responseObserver)
+    {
+        ArrayList<User> customerByName = dao.findCustomerByName(request.getEmail());
+        List<CustomerMessage> collect =
+                customerByName.stream().map(User::toCustomerMessage).collect(Collectors.toList());
+        CustomersMessage builder = CustomersMessage.newBuilder().addAllCustomers(collect).build();
+        responseObserver.onNext(builder);
         responseObserver.onCompleted();
     }
 }

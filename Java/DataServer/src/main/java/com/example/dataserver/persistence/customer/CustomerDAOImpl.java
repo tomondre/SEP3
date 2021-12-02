@@ -1,6 +1,5 @@
 package com.example.dataserver.persistence.customer;
 
-import com.example.dataserver.models.Customer;
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +35,11 @@ public class CustomerDAOImpl implements CustomerDAO
   public void deleteCustomer(int customerId)
   {
     repository.deleteById(customerId);
+  }
+
+  @Override
+  public ArrayList<User> findCustomerByName(String name)
+  {
+    return repository.findAllByCustomer_FirstNameContainingIgnoreCase(name);
   }
 }
