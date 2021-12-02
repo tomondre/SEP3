@@ -1,13 +1,11 @@
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models.Orders;
-using OrderStripe = Stripe.Order;
 using Order = GrpcFileGeneration.Models.Orders.Order;
 
-namespace WebShop.Services.Orders
+namespace ClientBlazor.Data.Orders
 {
     public interface IOrderService
     {
-        Task<int> CreateOrderAsync(Order order);
         Task<Order> GetOrderByIdAsync(int id);
         Task<OrderList> GetCustomerOrdersAsync(int id);
     }

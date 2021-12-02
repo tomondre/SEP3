@@ -29,7 +29,7 @@ public class CustomerDAOImpl implements CustomerDAO
   @Override
   public ArrayList<User> getAllCustomers()
   {
-    return repository.getAllByCustomerTrue();
+    return repository.getAllByCustomer_FirstNameIsNotNull();
   }
 
   @Override

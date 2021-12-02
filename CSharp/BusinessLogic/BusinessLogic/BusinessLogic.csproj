@@ -4,6 +4,7 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="CloudinaryDotNet" Version="1.15.2" />
         <PackageReference Include="Grpc.Net.Client" Version="2.40.0" />
         <PackageReference Include="Grpc.Tools" Version="2.41.1">
           <PrivateAssets>all</PrivateAssets>
@@ -31,6 +32,9 @@
     </ItemGroup>
     <ItemGroup>
       <Content Remove="obj\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Model\Checkout" />
     </ItemGroup>
 
 </Project>

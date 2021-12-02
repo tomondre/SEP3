@@ -87,5 +87,15 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
   @Override
   public void removeStock(ProtobufStockRequest request, StreamObserver<ProtobufMessage> responseObserver) {
     experienceDAO.removeStock(request.getId(), request.getQuantity());
+    responseObserver.onNext(ProtobufMessage.newBuilder().build());
+    responseObserver.onCompleted();
+  }
+
+    @Override
+    public void getExperienceByCategory(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
+      ArrayList<Experience> experienceByCategory = experienceDAO.getExperienceByCategory(Integer.parseInt(request.getMessageOrObject()));
+      String s = gson.toJson(experienceByCategory);
+      responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
+      responseObserver.onCompleted();
   }
 }

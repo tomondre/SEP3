@@ -16,7 +16,7 @@ namespace WebShop.Services.ShoppingCarts
         {
             try
             {
-                var experienceCartItem = ShoppingCart.ShoppingCartItems.First(e => e.Experience.Equals(experience));
+                var experienceCartItem = ShoppingCart.ShoppingCartItems.First(e => e.Experience.Id == experience.Id);
                 experienceCartItem.Quantity += quantity;
             }
             catch

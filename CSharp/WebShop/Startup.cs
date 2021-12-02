@@ -42,6 +42,7 @@ namespace WebShop
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<ICache, Cache.Cache>();
             services.AddScoped<AuthenticationStateProvider, CurrentAuthenticationStateProvider>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -36,7 +36,7 @@ public class Experience
 
     @SerializedName(value = "experienceValidity", alternate = {"ExperienceValidity"})
     @Column(name = "experience_Validity")
-    private String experienceValidity;
+    private int experienceValidity;
 
     @SerializedName(value = "experienceCategory", alternate = {"ExperienceCategory"})
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -54,7 +54,7 @@ public class Experience
     {
     }
 
-    public Experience(int id, String picture, String name, double price,int stock, String description, String experienceValidity, Category experienceCategory, User experienceProvider, Address address) {
+    public Experience(int id, String picture, String name, double price,int stock, String description, int experienceValidity, Category experienceCategory, User experienceProvider, Address address) {
         this.id = id;
         this.picture = picture;
         this.name = name;
@@ -67,21 +67,21 @@ public class Experience
         this.address = address;
     }
 
-    @Override
-    public String toString() {
-        return "Experience{" +
-                "id=" + id +
-                ", picture='" + picture + '\'' +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", stock=" + stock +
-                ", description='" + description + '\'' +
-                ", experienceValidity='" + experienceValidity + '\'' +
-                ", experienceCategory=" + experienceCategory +
-                ", experienceProvider=" + experienceProvider +
-                ", address=" + address +
-                '}';
-    }
+   @Override
+   public String toString() {
+       return "Experience{" +
+               "id=" + id +
+               ", picture='" + picture + '\'' +
+               ", name='" + name + '\'' +
+               ", price=" + price +
+               ", stock=" + stock +
+               ", description='" + description + '\'' +
+               ", experienceValidity='" + experienceValidity + '\'' +
+               ", experienceCategory=" + experienceCategory +
+               ", experienceProvider=" + experienceProvider +
+               ", address=" + address +
+               '}';
+   }
 
     public int getId() {
         return id;
@@ -123,12 +123,20 @@ public class Experience
         this.description = description;
     }
 
-    public String getExperienceValidity() {
+    public int getExperienceValidity() {
         return experienceValidity;
     }
 
-    public void setExperienceValidity(String experienceValidity) {
+    public void setExperienceValidity(int experienceValidity) {
         this.experienceValidity = experienceValidity;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public Category getExperienceCategory() {

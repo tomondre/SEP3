@@ -1,8 +1,10 @@
 ﻿@using WebShop.Services
 @using WebShop.Services.ShoppingCarts
+@using WebShop.Data.ProductCategory
 @inject NavigationManager NavigationManager
 @inject IShoppingCartService ShoppingCartService
 @inject IObserverService ObserverService 
+@inject IProductCategoryService ProductCategory
 
 <section class="relative">
   <div class="py-2 bg-blue-600">
@@ -16,10 +18,20 @@
       <a class="flex-shrink-0 text-3xl font-bold font-heading" href="#">
         <img class="h-9" src="yofte-assets/logos/yofte-logo.svg" alt="" width="auto">
       </a>
+      
       <ul class="hidden lg:flex absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:items-center lg:w-auto">
-        <li><a @onclick="OpenExperiences" class="mr-12 font-bold font-heading hover:text-gray-600" >Experiences</a></li>
+        <li><a @onclick="OpenExperiences" class="mr-12 font-bold font-heading hover:text-gray-600">Experiences</a></li>
+      
+      
+        @if (categories != null)
+        {
+          @foreach (Category category in categories.Categories.Take(6))
+          {
+              <li><a @onclick="() => OpenCategory(category.Id)" class="mr-12 font-bold font-heading hover:text-gray-600">@category.CategoryName</a></li>
+          }
+        }
       </ul>
-    </div>
+      </div>
     <div class="hidden xl:flex items-center justify-end mr-12">
 
       <a @onclick="OpenCartPage" class="flex items-center">
@@ -59,7 +71,7 @@
       </div>
       
     </div>
-    
+
     <a class="xl:hidden flex mr-6 items-center text-gray-900" href="#">
       <svg class="mr-2" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M18.1159 8.72461H2.50427C1.99709 8.72461 1.58594 9.12704 1.58594 9.62346V21.3085C1.58594 21.8049 1.99709 22.2074 2.50427 22.2074H18.1159C18.6231 22.2074 19.0342 21.8049 19.0342 21.3085V9.62346C19.0342 9.12704 18.6231 8.72461 18.1159 8.72461Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -123,10 +135,12 @@
 
 @code {
   private int cartItemsCount = 0;
+  private CategoryList categories;
 
-  protected override void OnInitialized()
+  protected override async Task OnInitializedAsync()
   {
     ObserverService.OnChange += UpdateCartNumber;
+    categories = await ProductCategory.GetAllCategoriesAsync();
   }
 
   private void UpdateCartNumber()
@@ -153,7 +167,15 @@
   {
     NavigationManager.NavigateTo("/cart");
   }
+  
+  private void OpenOrderHistory()
+  {
+    NavigationManager.NavigateTo("/orders");
+  }
 
-  
-  
+  private void OpenCategory(int categoryId)
+  {
+    NavigationManager.NavigateTo($"/categories/{categoryId}/experiences");
+  }
+
 }

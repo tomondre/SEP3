@@ -1,17 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using BusinessLogic.Model;
-using BusinessLogic.Model.Checkout;
 using BusinessLogic.Model.Customers;
 using BusinessLogic.Model.Experiences;
 using BusinessLogic.Model.Login;
 using BusinessLogic.Model.Orders;
 using BusinessLogic.Model.ProductCategory;
 using BusinessLogic.Model.Providers;
-using BusinessLogic.Networking;
 using BusinessLogic.Networking.Customers;
 using BusinessLogic.Networking.Experiences;
 using BusinessLogic.Networking.Login;
@@ -24,16 +17,12 @@ using GrpcFileGeneration.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Networking.Category;
-using Networking.Customer;
 using Networking.Experience;
 using Networking.Login;
 using Networking.Provider;
@@ -121,8 +110,6 @@ namespace BusinessLogic
 
             
             services.AddSingleton<IValidator, Validator>();
-            
-            services.AddSingleton<ICheckoutModel, CheckoutModel>();
             
             services.AddControllers();
             
