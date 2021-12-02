@@ -1,83 +1,120 @@
-﻿@page "/SignInPage"
+﻿@inject AuthenticationStateProvider AuthenticationStateProvider
+@page "/SignInPage"
+@using WebShop.Data.Authentication
 
 @inject NavigationManager NavigationManager;
 
-<section class="py-20 bg-gray-100 overflow-x-hidden">
-  <div class="relative container px-4 mx-auto">
-    <div class="absolute inset-0 bg-blue-200 my-24 -ml-4"></div>
-    <div class="relative flex flex-wrap bg-white">
-      <div class="w-full md:w-4/6 px-4">
-        <div class="lg:max-w-3xl mx-auto py-20 px-4 md:px-10 lg:px-20">
-          <a class="inline-block mb-14 text-3xl font-bold font-heading" href="#">
-            <img class="h-9" src="yofte-assets/logos/yofte-logo.svg" alt="" width="auto">
-          </a>
-          <h3 class="mb-8 text-4xl md:text-5xl font-bold font-heading">Signing up with social is super quick</h3>
-          <p class="mb-10 font-semibold font-heading">Please, do not hesitate</p>
-          <form class="flex flex-wrap -mx-4" action="">
-            <div class="w-full md:w-1/2 px-4 mb-8 md:mb-12">
-              <label for="">
-                <h4 class="mb-5 text-gray-400 uppercase font-bold font-heading">Your Email</h4>
-                <input class="p-5 w-full border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="email">
-              </label>
+<AuthorizeView>
+    <NotAuthorized>
+      <section class="py-20 bg-gray-100 overflow-x-hidden">
+        <div class="relative container px-4 mx-auto">
+          <div class="absolute inset-0 bg-blue-200 my-24 -ml-4"></div>
+          <div class="relative flex flex-wrap bg-white">
+            <div class="w-full md:w-4/6 px-4">
+              <div class="lg:max-w-3xl mx-auto py-20 px-4 md:px-10 lg:px-20">
+                <a class="inline-block mb-14 text-3xl font-bold font-heading" href="#">
+                  <img class="h-9" src="yofte-assets/logos/yofte-logo.svg" alt="" width="auto">
+                </a>
+                <h3 class="mb-8 text-4xl md:text-5xl font-bold font-heading">Signing up with social is super quick</h3>
+                <p class="mb-10 font-semibold font-heading">Please, do not hesitate</p>
+                <EditForm Model="@userCred" OnValidSubmit="@TryLoginAsync" class="flex flex-wrap -mx-4" action="" Context="formContext">
+                  <div class="w-full md:w-1/2 px-4 mb-8 md:mb-12">
+                    <label for="">
+                      <h4 class="mb-5 text-gray-400 uppercase font-bold font-heading">Your Email</h4>
+                      <InputText  @bind-Value="@userCred.Email" class="p-5 w-full border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="email"/>
+                    </label>
+                  </div>
+                  <div class="w-full md:w-1/2 px-4 mb-12">
+                    <label for="">
+                      <h4 class="mb-5 text-gray-400 uppercase font-bold font-heading">Password</h4>
+                      <InputText   @bind-Value="@userCred.Password" class="p-5 w-full border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="@(showPassword ? "text" : "password")"/>
+                      <button type="button" class="ml-4" @onclick="ToggleShowPassword">
+                        <svg class="h-6 w-6 my-auto text-blueGray-300" xmlns="http://www.w3.org/2000/svg" fill="none"
+                             viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+                          </path>
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                          </path>
+                        </svg>
+                      </button>
+                    </label>
+                  </div>
+                  <div class="w-full px-4 mb-12" for="">
+                    <label class="flex" for="">
+                      <input class="mr-4 mt-1" type="checkbox">
+                      <span class="text-sm">By singning up, you agree to our Terms, Data Policy and Cookies.</span>
+                    </label>
+                  </div>
+                  <div class="w-full px-4">
+                    <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">Log In</button>
+                  </div>
+                </EditForm>
+                <div class="w-full px-4">
+                  <button @onclick="OpenSignUpPage" class="bg-blue-800 hover:bg-blue-900 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">Sign Up</button>
+                </div>
+              </div>
             </div>
-            <div class="w-full md:w-1/2 px-4 mb-12">
-              <label for="">
-                <h4 class="mb-5 text-gray-400 uppercase font-bold font-heading">Password</h4>
-                <input class="p-5 w-full border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="password">
-              </label>
+            <div class="w-full md:w-2/6 h-128 md:h-auto flex items-center lg:items-end px-4 pb-20 bg-cover bg-no-repeat" style="">
+              <div>
+                <div class="inline-flex items-center mb-2 px-6 py-3 bg-white rounded-full">
+                  <span class="mr-6">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="18" cy="18" r="18" fill="#A692FF"></circle>
+                      <g clip-path="url(#clip0)">
+                        <path d="M15.135 24.3373L9 18.2023L9.81024 17.392L15.135 22.7168L26.1898 11.6621L27 12.4724L15.135 24.3373Z" fill="white"></path>
+                      </g>
+                      <defs><clipPath id="clip0"><rect width="18" height="18" fill="white" transform="translate(9 9)"></rect></clipPath></defs>
+                    </svg>
+                  </span>
+                  <p>A sagittis eleifend</p>
+                </div>
+                <div class="inline-flex items-center px-6 py-3 bg-white rounded-full">
+                  <span class="mr-6">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="18" cy="18" r="18" fill="#A692FF"></circle>
+                      <g clip-path="url(#clip0)">
+                        <path d="M15.135 24.3373L9 18.2023L9.81024 17.392L15.135 22.7168L26.1898 11.6621L27 12.4724L15.135 24.3373Z" fill="white"></path>
+                      </g>
+                      <defs><clipPath id="clip0"><rect width="18" height="18" fill="white" transform="translate(9 9)"></rect></clipPath></defs>
+                    </svg>
+                  </span>
+                  <p>Molestie felis, a aliquam torto</p>
+                </div>
+              </div>
             </div>
-            <div class="w-full px-4 mb-12" for="">
-              <label class="flex" for="">
-                <input class="mr-4 mt-1" type="checkbox">
-                <span class="text-sm">By singning up, you agree to our Terms, Data Policy and Cookies.</span>
-              </label>
-            </div>
-            <div class="w-full px-4">
-              <button class="bg-blue-800 hover:bg-blue-900 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">Log In</button>
-            </div>
-          </form>
-            <div class="w-full px-4">
-              <button @onclick="OpenSignUpPage" class="bg-blue-800 hover:bg-blue-900 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">Sign Up</button>
-            </div>
-        </div>
-      </div>
-      <div class="w-full md:w-2/6 h-128 md:h-auto flex items-center lg:items-end px-4 pb-20 bg-cover bg-no-repeat" style="background-image: url('yofte-assets/images/placeholder-sign2.png');">
-        <div>
-          <div class="inline-flex items-center mb-2 px-6 py-3 bg-white rounded-full">
-            <span class="mr-6">
-              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="18" cy="18" r="18" fill="#A692FF"></circle>
-                <g clip-path="url(#clip0)">
-                  <path d="M15.135 24.3373L9 18.2023L9.81024 17.392L15.135 22.7168L26.1898 11.6621L27 12.4724L15.135 24.3373Z" fill="white"></path>
-                </g>
-                <defs><clipPath id="clip0"><rect width="18" height="18" fill="white" transform="translate(9 9)"></rect></clipPath></defs>
-              </svg>
-            </span>
-            <p>A sagittis eleifend</p>
           </div>
-          <div class="inline-flex items-center px-6 py-3 bg-white rounded-full">
-            <span class="mr-6">
-              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="18" cy="18" r="18" fill="#A692FF"></circle>
-                <g clip-path="url(#clip0)">
-                  <path d="M15.135 24.3373L9 18.2023L9.81024 17.392L15.135 22.7168L26.1898 11.6621L27 12.4724L15.135 24.3373Z" fill="white"></path>
-                </g>
-                <defs><clipPath id="clip0"><rect width="18" height="18" fill="white" transform="translate(9 9)"></rect></clipPath></defs>
-              </svg>
-            </span>
-            <p>Molestie felis, a aliquam torto</p>
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
+    </NotAuthorized>
+        <Authorized>
+            <button class="block w-full p-4 text-center text-xs text-white font-semibold leading-none bg-blue-600 hover:bg-blue-700 rounded" @onclick="PerformLogoutAsync">Logout</button>
+        </Authorized>
+    </AuthorizeView>
 
 
 @code {
+  private User userCred = new();
+  private bool showPassword;
 
   private void OpenSignUpPage()
   {
     NavigationManager.NavigateTo("/SignUpCustomer");
+  }
+  private async void TryLoginAsync()
+  {
+    await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).ValidateUser(userCred);
+    NavigationManager.NavigateTo("/experiences");
+  }
+
+  private void ToggleShowPassword()
+  {
+    showPassword = !showPassword;
+  }
+  
+  private async Task PerformLogoutAsync()
+  {
+    await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).Logout();
   }
 }
