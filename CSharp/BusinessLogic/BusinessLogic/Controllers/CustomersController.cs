@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogic.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CustomersController : ControllerBase
@@ -51,6 +51,31 @@ namespace BusinessLogic.Controllers
         {
             await model.DeleteCustomerAsync(customerId);
             return Ok();
+        }
+        
+         
+        [HttpGet("{id:int}", Name = "GetCustomerByIdRoute")]
+        public async Task<ActionResult<User>> GetCustomerById([FromRoute] int id)
+        {
+            var providerById = await model.GetCustomerByIdAsync(id);
+            return Ok(providerById);
+        }
+        
+        //[Authorize(Roles = "Customer")]
+        [HttpPatch("{id:int}",Name = "EditCustomerRoute")]
+        public async Task<ActionResult<Customer>> EditCustomer([FromBody] Customer customer)
+        {
+            try
+            {
+                Customer editedCustomer = await model.EditCustomerAsync(customer);
+                return Ok(editedCustomer);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+           
         }
     }
 }
