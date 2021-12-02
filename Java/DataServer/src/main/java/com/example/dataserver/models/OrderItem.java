@@ -68,6 +68,14 @@ public class OrderItem {
                 .build();
     }
 
+    public String getVoucher() {
+        return voucher;
+    }
+
+    public void setVoucher(String voucher) {
+        this.voucher = voucher;
+    }
+
     public int getId() {
         return id;
     }

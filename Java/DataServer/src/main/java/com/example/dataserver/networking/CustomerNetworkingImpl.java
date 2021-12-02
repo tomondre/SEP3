@@ -1,5 +1,6 @@
 package com.example.dataserver.networking;
 
+import com.example.dataserver.models.Address;
 import com.example.dataserver.models.Customer;
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.customer.CustomerDAO;
@@ -11,6 +12,7 @@ import networking.customer.CustomerServiceGrpc;
 import networking.customer.CustomersMessage;
 import networking.user.UserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,28 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
         dao.deleteCustomer(request.getId());
         responseObserver.onNext(CustomerMessage.newBuilder().build());
         responseObserver.onCompleted();
+    }
+
+    @Async
+    @Override
+    public void getCustomerById(UserMessage request, StreamObserver<CustomerMessage> responseObserver) {
+        var customerById = dao.getCustomerById(request.getId());
+        var customerMessage = customerById.toCustomerMessage();
+        responseObserver.onNext(customerMessage);
+        responseObserver.onCompleted();
+    }
+
+    @Async
+    @Override
+    public void editCustomer(CustomerMessage request, StreamObserver<CustomerMessage> responseObserver) {
+        Customer customer = new Customer(request);
+        User user = customer.getUser();
+        user.setCustomer(customer);
+        User edited = dao.editCustomer(user);
+        CustomerMessage customerMessage = edited.toCustomerMessage();
+        responseObserver.onNext(customerMessage);
+        responseObserver.onCompleted();
+
     }
 
     @Override

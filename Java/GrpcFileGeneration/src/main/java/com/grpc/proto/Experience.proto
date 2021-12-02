@@ -1,25 +1,26 @@
-syntax="proto3";
+syntax = "proto3";
 option java_multiple_files = true;
 package networking.experience;
 
 import "User.proto";
 
 message ProtobufMessage{
-    string messageOrObject = 1;
+  string messageOrObject = 1;
 }
 
 message ProtobufStockRequest{
   int32 id = 1;
   int32 quantity = 2;
 }
-        
+
 service ExperienceService{
-   rpc getAllProviderExperiences(ProtobufMessage) returns (ProtobufMessage);
-   rpc getAllWebShopExperiences(ProtobufMessage) returns (ProtobufMessage);
-   rpc addExperience(ProtobufMessage) returns (ProtobufMessage);
+  rpc getAllProviderExperiences(ProtobufMessage) returns (ProtobufMessage);
+  rpc getAllWebShopExperiences(ProtobufMessage) returns (ProtobufMessage);
+  rpc addExperience(ProtobufMessage) returns (ProtobufMessage);
   rpc getExperienceById(ProtobufMessage) returns (ProtobufMessage);
   rpc isInStock(ProtobufStockRequest) returns (ProtobufMessage);
   rpc removeStock(ProtobufStockRequest) returns (ProtobufMessage);
   rpc deleteExperience(ProtobufMessage) returns (ProtobufMessage);
+  rpc getExperienceByCategory(ProtobufMessage) returns (ProtobufMessage);
   rpc GetAllProviderExperiencesByName(user.UserMessage) returns (ProtobufMessage);
 }

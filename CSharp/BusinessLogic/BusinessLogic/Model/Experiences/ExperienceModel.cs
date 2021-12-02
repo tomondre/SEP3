@@ -67,5 +67,10 @@ namespace BusinessLogic.Model.Experiences
         {
             return await network.GetAllProviderExperiencesByNameAsync(id, name);
         }
+
+        public async Task<IList<Experience>> GetExperiencesByCategoryAsync(int id)
+        {
+            return await network.GetExperiencesByCategoryAsync(id);
+        }
     }
 }

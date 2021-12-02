@@ -36,8 +36,20 @@ namespace BusinessLogic.Controllers
         }
 
         [HttpGet]
+        [Route("/Categories/{id:int}/Experiences")]
+        // [Authorize(Roles = "Administrator, Provider")]
+        public async Task<ActionResult<ExperienceList>> GetExperiencesByCategoryAsync([FromRoute] int id)
+        {
+            ExperienceList experiences = new ExperienceList
+            {
+                Experiences = await model.GetExperiencesByCategoryAsync(id)
+            };
+            return Ok(experiences);
+        }
+        
+        [HttpGet]
         [Route("{id:int}")]
-        public async Task<ActionResult<Experience>> GetExperienceById([FromRoute] int id)
+        public async Task<ActionResult<Experience>> GetExperienceByIdAsync([FromRoute] int id)
         {
             Experience experience = await model.GetExperienceByIdAsync(id);
             return Ok(experience);

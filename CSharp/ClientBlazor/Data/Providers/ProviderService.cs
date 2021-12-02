@@ -57,12 +57,18 @@ namespace ClientBlazor.Data.Providers
             return providers;
         }
 
-        public Task<Provider> GetProviderById(int id)
+        public async Task<Provider> GetProviderById(int id)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await client.GetAsync($"{uri}/{id}");
+            CheckException(response);
+            var objAsJson = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Provider>(objAsJson, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
         }
 
-        public async Task EditProvider(Provider provider)
+        public async Task<Provider> EditProvider(Provider provider)
         {
             var httpRequest = await GetHttpRequest(HttpMethod.Patch, $"{uri}/{provider.Id}");
             var json = JsonSerializer.Serialize(provider);
@@ -70,6 +76,12 @@ namespace ClientBlazor.Data.Providers
             httpRequest.Content = stringContent;
             var httpResponseMessage = await client.SendAsync(httpRequest);
             CheckException(httpResponseMessage);
+            var objAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Provider>(objAsJson, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+
         }
 
         public async Task DeleteProvider(Provider provider)

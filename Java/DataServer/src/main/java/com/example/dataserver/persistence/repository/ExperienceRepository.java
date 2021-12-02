@@ -15,5 +15,6 @@ public interface ExperienceRepository extends JpaRepository<Experience, Integer>
   Experience findById(@Param("id") int id);
   boolean existsByIdAndStockIsGreaterThanEqual(@Param("id") int id, @Param("stock") int quantity);
   ArrayList<Experience> findAllByExperienceProviderIdAndNameContainsIgnoreCase(@Param("experience_provider_id")int id, @Param("name") String name);
-
+  ArrayList<Experience> getAllByStockGreaterThan(@Param("stock") int stock);
+  ArrayList<Experience> getAllByExperienceCategoryIdAndStockGreaterThan(int experienceCategory_id, int stock);
 }

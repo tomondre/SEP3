@@ -13,4 +13,5 @@ public interface ExperienceDAO {
     void deleteExperience(int experienceId);
     void removeStock(int id, int quantity);
     ArrayList<Experience> getAllProviderExperiencesByName(int id, String name);
+    ArrayList<Experience> getExperienceByCategory(int id);
 }

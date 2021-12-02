@@ -14,5 +14,6 @@ namespace BusinessLogic.Model.Experiences
         Task RemoveStockAsync(int experienceId, int itemQuantity);
         Task DeleteExperienceAsync(int experienceId);
         Task<IList<Experience>> GetAllProviderExperiencesByNameAsync(int id, string name);
+        Task<IList<Experience>> GetExperiencesByCategoryAsync(int id);
     }
 }

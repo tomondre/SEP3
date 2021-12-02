@@ -74,7 +74,21 @@ namespace BusinessLogic.Networking.Experiences
         public async Task DeleteExperienceAsync(int experienceId)
         {
             var protobufMessage = new ProtobufMessage() {MessageOrObject = experienceId.ToString()};
-            var deleteExperienceAsync = await client.deleteExperienceAsync(protobufMessage);
+            await client.deleteExperienceAsync(protobufMessage);
+        }
+
+        public async Task<IList<Experience>> GetExperiencesByCategoryAsync(int id)
+        {
+            var experienceByCategoryAsync = await client.getExperienceByCategoryAsync(new ProtobufMessage()
+            {
+                MessageOrObject = id.ToString()
+            });
+            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(experienceByCategoryAsync.MessageOrObject,
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+            return deserialize;
         }
 
         public async Task<IList<Experience>> GetAllProviderExperiencesByNameAsync(int id, string name)

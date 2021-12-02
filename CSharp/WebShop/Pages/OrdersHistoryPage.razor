@@ -38,12 +38,13 @@ else
             </tr>
             </thead>
             <tbody>
-            @foreach (Order order in orders.Orders)
+            
+            @foreach(var order in orders.Orders.Select((value, i) => new {value, i}))
             {
-              <tr @onclick="() => OpenSingleOrderView(order.Id)" class="text-xs bg-gray-50">
-                <td class="py-5 px-6 font-medium">@order.Id</td>
-                <td class="font-medium">@order.Date</td>
-                <td class="font-medium">@order.ShoppingCart.ShoppingCartItems.Count</td>
+              <tr @onclick="() => OpenSingleOrderView(order.value.Id)" class="@(order.i % 2 == 0 ? "bg-gray-50" : "bg-white") text-xs">
+                <td class="py-5 px-6 font-medium">@order.value.Id</td>
+                <td class="font-medium">@order.value.Date</td>
+                <td class="font-medium">@order.value.ShoppingCart.ShoppingCartItems.Count</td>
                 <td class="font-medium">Credit card</td>
                 <td>
                   <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">Completed</span>
@@ -59,7 +60,8 @@ else
 }
 
 @code {
-  private OrderList orders = new ();
+  private int counter;
+  private OrderList orders;
   protected override async Task OnInitializedAsync()
   {
     //TODO Fetch customer id;

@@ -35,5 +35,15 @@ namespace BusinessLogic.Model.Customers
         {
             return await network.FindCustomerByNameAsync(name);
         }
+
+        public async Task<Customer> GetCustomerByIdAsync(int id)
+        {
+            return await network.GetCustomerByIdAsync(id);
+        }
+
+        public async Task<Customer> EditCustomerAsync(Customer customer)
+        {
+            return await network.EditCustomerAsync(customer);
+        }
     }
 }

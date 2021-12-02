@@ -16,7 +16,7 @@ namespace GrpcFileGeneration.Models
         //     "contain at least one lower case character")]
         public string Password { get; set; }
         public string Token { set; get; }
-        public string SecurityType { set; get; }
+        public string SecurityType { set; get; } = "";
 
         public User()
         {

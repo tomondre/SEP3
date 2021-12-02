@@ -63,7 +63,7 @@ namespace BusinessLogic.Controllers
         [HttpGet("{id:int}", Name = "GetProviderByIdRoute")]
         public async Task<ActionResult<User>> GetProviderById([FromRoute] int id)
         {
-            var providerById = await model.GetProviderById(id);
+            var providerById = await model.GetProviderByIdAsync(id);
             await linksService.AddLinksAsync(providerById);
             return Ok(providerById);
         }
@@ -71,11 +71,19 @@ namespace BusinessLogic.Controllers
         //TODO is it only the provider that can edit himself or also the administrator
         //[Authorize(Roles = "Provider")]
         [HttpPatch("{id:int}",Name = "EditProviderRoute")]
-        public async Task<ActionResult> EditProvider([FromBody] Provider provider, [FromRoute] int id)
+        public async Task<ActionResult<Provider>> EditProvider([FromBody] Provider provider)
         {
-            provider.Id = id;   
-            await model.EditProvider(provider);
-            return Ok();
+            try
+            {
+                Provider editedProvider = await model.EditProviderAsync(provider);
+                return Ok(editedProvider);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+           
         }
 
         [AllowAnonymous]
