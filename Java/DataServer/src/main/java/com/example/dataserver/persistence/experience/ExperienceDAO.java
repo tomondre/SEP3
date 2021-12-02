@@ -12,4 +12,5 @@ public interface ExperienceDAO {
     boolean isInStock(int id, int quantity);
     void deleteExperience(int experienceId);
     void removeStock(int id, int quantity);
+    ArrayList<Experience> getAllProviderExperiencesByName(int id, String name);
 }

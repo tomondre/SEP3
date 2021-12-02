@@ -30,5 +30,10 @@ namespace BusinessLogic.Model.Customers
         {
             await network.DeleteCustomerAsync(customerId);
         }
+
+        public async Task<IList<Customer>> FindCustomerByNameAsync(string name)
+        {
+            return await network.FindCustomerByNameAsync(name);
+        }
     }
 }

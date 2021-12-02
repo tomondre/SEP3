@@ -45,7 +45,7 @@ namespace ClientBlazor.Data.Providers
 
         public async Task<ProviderList> GetAllProviders()
         {
-            var httpRequest = await GetHttpRequest(HttpMethod.Get, uri);
+            var httpRequest = await GetHttpRequest(HttpMethod.Get, $"{uri}/?approved=true");
             var httpResponseMessage = await client.SendAsync(httpRequest);
             CheckException(httpResponseMessage);
             var providersAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -84,6 +84,22 @@ namespace ClientBlazor.Data.Providers
             var httpRequest = await GetHttpRequest(HttpMethod.Get, $"{uri}/?approved=false");
             var httpResponseMessage = await client.SendAsync(httpRequest);
             CheckException(httpResponseMessage);
+            var providersAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
+            ProviderList providers = JsonSerializer.Deserialize<ProviderList>(providersAsJson,
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+            return providers;
+        }
+
+        public async Task<ProviderList> GetAllProvidersByNameAsync(string name)
+        {
+            var httpRequestMessage = await GetHttpRequest(HttpMethod.Get, $"{uri}?approved=true&name={name}");
+            var httpResponseMessage = await client.SendAsync(httpRequestMessage);
+            
+            CheckException(httpResponseMessage);
+            
             var providersAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
             ProviderList providers = JsonSerializer.Deserialize<ProviderList>(providersAsJson,
                 new JsonSerializerOptions()

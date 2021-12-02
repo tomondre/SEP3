@@ -7,6 +7,7 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import networking.experience.ProtobufMessage;
 import networking.experience.ProtobufStockRequest;
+import networking.user.UserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import networking.experience.ExperienceServiceGrpc;
 
@@ -84,10 +85,21 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
     responseObserver.onNext(ProtobufMessage.newBuilder().build());
     responseObserver.onCompleted();
   }
+
   @Override
   public void removeStock(ProtobufStockRequest request, StreamObserver<ProtobufMessage> responseObserver) {
     experienceDAO.removeStock(request.getId(), request.getQuantity());
     responseObserver.onNext(ProtobufMessage.newBuilder().build());
+    responseObserver.onCompleted();
+  }
+
+  @Override
+  public void getAllProviderExperiencesByName(UserMessage request, StreamObserver<ProtobufMessage> responseObserver)
+  {
+    ArrayList<Experience> allProviderExperiencesByName =
+            experienceDAO.getAllProviderExperiencesByName(request.getId(), request.getEmail());
+    String s = gson.toJson(allProviderExperiencesByName);
+    responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
     responseObserver.onCompleted();
   }
 }

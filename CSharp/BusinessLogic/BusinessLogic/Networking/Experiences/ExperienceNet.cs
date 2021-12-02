@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 using Networking.Experience;
+using Networking.User;
 
 namespace BusinessLogic.Networking.Experiences
 {
@@ -49,8 +50,10 @@ namespace BusinessLogic.Networking.Experiences
 
         public async Task<Experience> GetExperienceByIdAsync(int id)
         {
-            var experienceByIdAsync = await client.getExperienceByIdAsync(new ProtobufMessage() {MessageOrObject = id.ToString()});
-            return JsonSerializer.Deserialize<Experience>(experienceByIdAsync.MessageOrObject, new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+            var experienceByIdAsync =
+                await client.getExperienceByIdAsync(new ProtobufMessage() {MessageOrObject = id.ToString()});
+            return JsonSerializer.Deserialize<Experience>(experienceByIdAsync.MessageOrObject,
+                new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
         }
 
         public async Task<bool> IsInStockAsync(int experienceId, int quantity)
@@ -59,19 +62,32 @@ namespace BusinessLogic.Networking.Experiences
             {
                 Id = experienceId, Quantity = quantity
             });
-            bool result =  bool.Parse(isInStockAsync.MessageOrObject);
+            bool result = bool.Parse(isInStockAsync.MessageOrObject);
             return result;
         }
 
         public async Task RemoveStockAsync(int experienceId, int itemQuantity)
         {
-            await client.removeStockAsync(new ProtobufStockRequest{Id = experienceId, Quantity = itemQuantity});
+            await client.removeStockAsync(new ProtobufStockRequest {Id = experienceId, Quantity = itemQuantity});
         }
 
         public async Task DeleteExperienceAsync(int experienceId)
         {
             var protobufMessage = new ProtobufMessage() {MessageOrObject = experienceId.ToString()};
             var deleteExperienceAsync = await client.deleteExperienceAsync(protobufMessage);
+        }
+
+        public async Task<IList<Experience>> GetAllProviderExperiencesByNameAsync(int id, string name)
+        {
+            var userMessage = new UserMessage() {Id = id, Email = name};
+            var allProviderExperiencesByNameAsync = await client.GetAllProviderExperiencesByNameAsync(userMessage);
+
+            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(
+                allProviderExperiencesByNameAsync.MessageOrObject, new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+            return deserialize;
         }
     }
 }

@@ -21,10 +21,17 @@ namespace BusinessLogic.Controllers
         [HttpGet]
         [Route("/Providers/{id:int}/Experiences")]
         // [Authorize(Roles = "Administrator, Provider")]
-        public async Task<ActionResult<ExperienceList>> GetExperiences([FromRoute] int id)
+        public async Task<ActionResult<ExperienceList>> GetExperiences([FromRoute] int id, [FromQuery] string name)
         {
-            ExperienceList experiences = new ExperienceList()
-                {Experiences = await model.GetAllProviderExperiencesAsync(id)};
+            ExperienceList experiences = new ExperienceList();
+            if (string.IsNullOrEmpty(name))
+            {
+                experiences.Experiences = await model.GetAllProviderExperiencesAsync(id);
+            }
+            else
+            {
+                experiences.Experiences = await model.GetAllProviderExperiencesByNameAsync(id, name);
+            }
             return Ok(experiences);
         }
 

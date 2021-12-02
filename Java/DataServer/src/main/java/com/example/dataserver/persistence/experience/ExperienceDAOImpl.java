@@ -54,4 +54,10 @@ public class ExperienceDAOImpl implements ExperienceDAO
         byId.setStock(byId.getStock() - quantity);
         repository.save(byId);
     }
+
+    @Override
+    public ArrayList<Experience> getAllProviderExperiencesByName(int id, String name)
+    {
+        return repository.findAllByExperienceProviderIdAndNameContainsIgnoreCase(id, name);
+    }
 }

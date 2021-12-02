@@ -10,5 +10,6 @@ namespace BusinessLogic.Networking.Customers
         Task<User> CreateCustomerAsync(Customer customer);
         Task<IList<Customer>> GetAllCustomersAsync();
         Task DeleteCustomerAsync(int customerId);
+        Task<IList<Customer>> FindCustomerByNameAsync(string name);
     }
 }

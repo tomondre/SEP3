@@ -1,6 +1,7 @@
 @page "/customers"
 @using GrpcFileGeneration.Models
 @using ClientBlazor.Data.Customers
+@using Microsoft.AspNetCore.Mvc.ModelBinding
 
 @inject ICustomerService CustomerService
 @inject NavigationManager NavigationManager
@@ -21,6 +22,16 @@ else
 {
     <section class="">
         <div class="container px-4 mx-auto">
+            <div class="hidden my-2 lg:flex lg:w-auto lg:space-x-10">
+                <div class="hidden lg:flex items-center mr-auto pl-4 border rounded">
+                    <button class="mr-2 text-gray-200 hover:text-gray-300" @onclick="FetchFilteredCustomers">
+                        <svg class="h-5 w-5" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20.7 19.3L17 15.6C20.1 11.7 19.5 6 15.6 2.9C11.7 -0.2 5.99999 0.5 2.89999 4.3C-0.200006 8.2 0.499995 13.9 4.29999 17C7.59999 19.6 12.3 19.6 15.6 17L19.3 20.7C19.7 21.1 20.3 21.1 20.7 20.7C21.1 20.3 21.1 19.7 20.7 19.3ZM9.99999 17C6.09999 17 2.99999 13.9 2.99999 10C2.99999 6.1 6.09999 3 9.99999 3C13.9 3 17 6.1 17 10C17 13.9 13.9 17 9.99999 17Z" fill="currentColor"></path>
+                        </svg>
+                    </button>
+                    <input class="pl-2 py-3 text-sm text-gray-500" type="text" placeholder="Type to search..." @bind="name">
+                </div>
+            </div>
             <div class="p-4 mb-6 bg-white shadow rounded">
                 <table class="table-auto w-full">
                     <thead>
@@ -64,11 +75,12 @@ else
 }
 
 @code {
+    private string name ="";
     private CustomerList customers;
 
     protected override async Task OnInitializedAsync()
     {
-        customers = await CustomerService.GetAllCustomers();
+        customers = await CustomerService.GetAllCustomersAsync();
     }
 
     private async Task DeleteCustomer(Customer customer)
@@ -81,5 +93,9 @@ else
         NavigationManager.NavigateTo($"/customer/{customer.Id}");
     }
 
+    private async Task FetchFilteredCustomers()
+    {
+        customers = new();
+        customers = await CustomerService.GetAllCustomersByNameAsync(name);
+    }
 }
-

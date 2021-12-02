@@ -60,5 +60,10 @@ namespace BusinessLogic.Model.Providers
         {
             return network.GetAllNotApprovedProvidersAsync();
         }
+
+        public Task<IList<Provider>> GetAllProvidersByNameAsync(string name)
+        {
+            return network.GetAllProvidersByNameAsync(name);
+        }
     }
 }

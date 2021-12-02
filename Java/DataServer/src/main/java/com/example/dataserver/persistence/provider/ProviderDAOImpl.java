@@ -58,4 +58,10 @@ public class ProviderDAOImpl implements ProviderDAO
     return repo.getAllByProvider_isApproved(false);
   }
 
+    @Override
+    public ArrayList<User> getAllByName(String name)
+    {
+      return repo.findAllByProvider_isApprovedAndProvider_CompanyNameContainingIgnoreCase(true, name);
+    }
+
 }

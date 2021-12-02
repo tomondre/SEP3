@@ -2,6 +2,8 @@ syntax="proto3";
 option java_multiple_files = true;
 package networking.experience;
 
+import "User.proto";
+
 message ProtobufMessage{
     string messageOrObject = 1;
 }
@@ -19,4 +21,5 @@ service ExperienceService{
   rpc isInStock(ProtobufStockRequest) returns (ProtobufMessage);
   rpc removeStock(ProtobufStockRequest) returns (ProtobufMessage);
   rpc deleteExperience(ProtobufMessage) returns (ProtobufMessage);
+  rpc GetAllProviderExperiencesByName(user.UserMessage) returns (ProtobufMessage);
 }
