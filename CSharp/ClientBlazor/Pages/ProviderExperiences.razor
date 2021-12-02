@@ -2,8 +2,10 @@
 @page "/ProviderExperiences/{Id:int}"
 @using GrpcFileGeneration.Models
 @using ClientBlazor.Data.Experiences
+@using ClientBlazor.Data.Cache
 
 @inject IExperienceService ExperienceService
+@inject ICacheService CacheService;
 
 <div class="py-6">
     @if (experiences == null)
@@ -105,7 +107,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Id = Id == null ? 
+        var cachedUserAsync = await CacheService.GetCachedUserAsync();
+        Id ??= cachedUserAsync.Id;
         experiences = await ExperienceService.GetAllProviderExperiencesAsync(Id);
     }
 
