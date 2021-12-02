@@ -19,14 +19,14 @@ namespace BusinessLogic.Networking.Customers
         public async Task<User> CreateCustomerAsync(Customer customer)
         {
             CustomerMessage customerMessage = new CustomerMessage(customer.ToMessage());
-            var protobufMessage = await client.CreateCustomerAsync(customerMessage);
+            var protobufMessage = await client.createCustomerAsync(customerMessage);
             var user = new User(protobufMessage);
             return user;
         }
 
         public async Task<IList<Customer>> GetAllCustomersAsync()
         {
-            CustomersMessage response = await client.GetAllCustomersAsync(new UserMessage());
+            CustomersMessage response = await client.getAllCustomersAsync(new UserMessage());
             var customersMessage = response.Customers;
             var customers = customersMessage.Select(a => new Customer(a)).ToList();
             return customers;
@@ -34,7 +34,22 @@ namespace BusinessLogic.Networking.Customers
 
         public async Task DeleteCustomerAsync(int customerId)
         {
-           await client.DeleteCustomerAsync(new UserMessage() {Id = customerId});
+           await client.deleteCustomerAsync(new UserMessage() {Id = customerId});
+        }
+
+        public async Task<Customer> GetCustomerByIdAsync(int id)
+        {
+            UserMessage userMessage = new UserMessage(){Id = id};
+            CustomerMessage customerByIdMessage = await client.getCustomerByIdAsync(userMessage);
+            Customer customerById = new Customer(customerByIdMessage);
+            return customerById;
+        }
+
+        public async Task<Customer> EditCustomerAsync(Customer customer)
+        {
+            CustomerMessage editedCustomer = await client.editCustomerAsync(customer.ToMessage());
+            return new Customer(editedCustomer);
+
         }
     }
 }
