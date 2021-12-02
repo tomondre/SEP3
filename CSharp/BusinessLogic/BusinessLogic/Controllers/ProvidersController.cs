@@ -24,17 +24,31 @@ namespace BusinessLogic.Controllers
 
         //[Authorize(Roles = "Administrator")]
         [HttpGet(Name = "GetProvidersRoute")]
-        public async Task<ActionResult<ProviderList>> GetProviders([FromQuery] bool? approved)
+        public async Task<ActionResult<ProviderList>> GetProviders([FromQuery] bool? approved, [FromQuery] string name)
         {
             ProviderList list = new ProviderList();
-            
-            if (approved is null or true)
+
+            if (approved is true)
             {
-                list.Providers = await model.GetAllProviders();
+                if (string.IsNullOrEmpty(name))
+                {
+                    list.Providers = await model.GetAllProviders();
+                }
+                else
+                {
+                    list.Providers = await model.GetAllProvidersByNameAsync(name);
+                }
             }
             else
             {
-                list.Providers = await model.GetAllNotApprovedProviders();
+                if (string.IsNullOrEmpty(name))
+                {
+                    list.Providers = await model.GetAllNotApprovedProviders();
+                }
+                else
+                {
+                    list.Providers = await model.GetAllProvidersByNameAsync(name);
+                }
             }
             
             foreach (var provider in list.Providers)
@@ -89,7 +103,7 @@ namespace BusinessLogic.Controllers
             
         }
         
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpDelete("{id:int}", Name = "DeleteProviderRoute")]
         public async Task<ActionResult> DeleteProvider([FromRoute] int id)
         {

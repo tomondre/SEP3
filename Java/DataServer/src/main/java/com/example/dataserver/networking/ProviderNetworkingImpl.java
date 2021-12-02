@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @GrpcService
@@ -96,6 +97,16 @@ public class ProviderNetworkingImpl extends ProviderServiceGrpc.ProviderServiceI
         .collect(Collectors.toList());
     var providersMessage = ProvidersMessage.newBuilder().addAllProviders(collect).build();
     responseObserver.onNext(providersMessage);
+    responseObserver.onCompleted();
+  }
+
+  @Override
+  public void getAllByName(UserMessage request, StreamObserver<ProvidersMessage> responseObserver)
+  {
+    ArrayList<User> allByName = model.getAllByName(request.getEmail());
+    List<ProviderMessage> collect = allByName.stream().map(User::toProviderMessage).collect(Collectors.toList());
+    ProvidersMessage build = ProvidersMessage.newBuilder().addAllProviders(collect).build();
+    responseObserver.onNext(build);
     responseObserver.onCompleted();
   }
 }

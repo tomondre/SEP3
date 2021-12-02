@@ -12,4 +12,5 @@ public interface CustomerDAO
   void deleteCustomer(int customerId);
   User getCustomerById(int id);
   User editCustomer(User customer);
+  ArrayList<User> findCustomerByName(String name);
 }

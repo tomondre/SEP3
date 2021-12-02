@@ -12,5 +12,7 @@ namespace BusinessLogic.Model.Providers
         Task<Provider> EditProviderAsync(Provider provider);
         Task DeleteProvider(int id);
         Task<IList<Provider>> GetAllNotApprovedProviders();
+        Task<IList<Provider>> GetAllProvidersByNameAsync(string name);
+
     }
 }

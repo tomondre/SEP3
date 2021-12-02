@@ -15,4 +15,6 @@ public interface UserRepository extends JpaRepository<User, Integer>
   User getUserById(@Param("user_id") int id);
   User getUserByEmailAndPassword(@Param("email")String email, @Param("password")String password);
   ArrayList<User> getAllByCustomer_FirstNameIsNotNull();
+  ArrayList<User> findAllByCustomer_FirstNameContainingIgnoreCase(@Param("first_name") String name);
+  ArrayList<User> findAllByProvider_isApprovedAndProvider_CompanyNameContainingIgnoreCase(@Param("is_approved") boolean isApproved, @Param("company_name") String name);
 }
