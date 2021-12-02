@@ -18,7 +18,9 @@ message CustomersMessage {
 }
 
 service CustomerService {
-  rpc CreateCustomer(CustomerMessage) returns (user.UserMessage);
-  rpc GetAllCustomers(user.UserMessage) returns (CustomersMessage);
-  rpc DeleteCustomer(user.UserMessage) returns (CustomerMessage);
+  rpc createCustomer(CustomerMessage) returns (user.UserMessage);
+  rpc getAllCustomers(user.UserMessage) returns (CustomersMessage);
+  rpc deleteCustomer(user.UserMessage) returns (CustomerMessage);
+  rpc getCustomerById(user.UserMessage) returns (CustomerMessage);
+  rpc editCustomer(CustomerMessage) returns (CustomerMessage);
 }
