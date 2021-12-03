@@ -1,13 +1,20 @@
 @page "/AddExperience"
-@using ClientBlazor.Data.Experiences
-@using ClientBlazor.Data.Pictures
-@using ClientBlazor.Data.ProductCategory
 @using GrpcFileGeneration.Models
+@using Networking.Experience
+@using ClientBlazor.Data.Experiences
+@using ClientBlazor.Data.ProductCategory
+@using Microsoft.Extensions.Logging
+@using System.IO
+@using ClientBlazor.Data.Cache
+@using ClientBlazor.Data.Pictures
+@using Microsoft.AspNetCore.Hosting
 
+@inject IWebHostEnvironment Environment
 @inject IExperienceService ExperienceService
 @inject NavigationManager NavigationManager
 @inject IProductCategoryService ProductCategoryService
 @inject IPicturesService PicturesService
+@inject ICacheService CacheService
 
 @* TODO transform strings in ENUM for Validity *@
 
@@ -17,12 +24,14 @@
         <ValidationSummary/>
 
         <section class="flex flex-col w-full h-full p-1 overflow-auto">
-            <label for="name" class="text-base leading-7 text-blueGray-500 mb-5">Image</label>
+
+
             <header class="flex flex-col items-center justify-center py-12 text-base text-blueGray-500 transition duration-500 ease-in-out transform bg-white border border-dashed rounded-lg focus:border-blue-500 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2">
                 <p class="flex flex-wrap justify-center mb-3 text-base leading-7 text-blueGray-500">
-                    <span>Drag and drop your</span> <span>files</span>
+                    <label>
+                        <InputFile OnChange="@LoadFiles"/>
+                    </label>
                 </p>
-                <button class="w-auto px-2 py-1 my-2 mr-2 text-blueGray-500 transition duration-500 ease-in-out transform border rounded-md hover:text-blueGray-600 text-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-gray-100"> Upload a file </button>
             </header>
 
         </section>
@@ -32,6 +41,10 @@
         <div class="relative pt-4">
             <label for="price" class="text-base leading-7 text-blueGray-500">Price: </label>
             <InputNumber id="price" name="color" class="w-full px-4 py-2 mt-2 mr-4 text-base text-black transition duration-500 ease-in-out transform rounded-lg bg-gray-100 focus:border-blueGray-500 focus:bg-white focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2"@bind-Value="newExperience.Price"/>
+        </div>
+        <div class="relative pt-4">
+            <label for="stock" class="text-base leading-7 text-blueGray-500">Stock</label>
+            <InputNumber id="stock" name="stock" class="w-full px-0 py-2 mt-2 mr-4 text-base text-black transition duration-500 ease-in-out transform rounded-lg bg-gray-100 focus:border-blueGray-500 focus:bg-white focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2" @bind-Value="newExperience.Stock"/>
         </div>
         <div class="relative pt-4">
             <label for="name" class="text-base leading-7 text-blueGray-500">Address/Street</label>
@@ -50,11 +63,11 @@
             <InputNumber id="code" name="code" class="w-full px-0 py-2 mt-2 mr-4 text-base text-black transition duration-500 ease-in-out transform rounded-lg bg-gray-100 focus:border-blueGray-500 focus:bg-white focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2" @bind-Value="newExperience.Address.PostCode"/>
         </div>
         <div class="relative mt-4">
-            <label for="name" class="text-base leading-7 text-blueGray-500">Validity</label>
+            <label for="name" class="text-base leading-7 text-blueGray-500">Validity in months</label>
             <InputSelect class="w-full px-4 py-2 mt-2 text-base text-black transition duration-500 ease-in-out transform rounded-lg bg-gray-100 focus:border-blueGray-500 focus:bg-white focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2" @bind-Value="newExperience.ExperienceValidity">
-                <option>3 Months</option>
-                <option>6 Months</option>
-                <option>1 Year</option>
+                <option>3</option>
+                <option>6</option>
+                <option>12</option>
             </InputSelect>
         </div>
         <div class="relative mt-4">
@@ -63,11 +76,10 @@
             <InputSelect @bind-Value="newExperience.ExperienceCategory" class="w-full px-4 py-2 mt-2 text-base text-black transition duration-500 ease-in-out transform rounded-lg bg-gray-100 focus:border-blueGray-500 focus:bg-white focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2">
                 @foreach (Category category in categories.Categories)
                 {
-                    <option >@category.CategoryName</option>
+                    <option value="@category">@category.CategoryName</option>
                 }
             </InputSelect>
-
-
+            
         </div>
         <div class="flex flex-wrap mt-4 mb-6 -mx-3">
             <div class="w-full px-3">
@@ -76,19 +88,18 @@
             </div>
         </div>
         <div class="flex items-center w-full pt-4 mb-4">
-            <button class="w-full py-3 text-base text-white transition duration-500 ease-in-out transform bg-blue-600 border-blue-600 rounded-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-blue-800 "> Add </button>
+            <button type="submit" class="w-full py-3 text-base text-white transition duration-500 ease-in-out transform bg-blue-600 border-blue-600 rounded-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-blue-800 "> Add </button>
         </div>
         <hr class="my-4 border-gray-200">
-
-    </EditForm>
+    </EditForm> 
 </div>
 
 @code {
 
-    private Experience newExperience = new();
+    private Experience newExperience = new ();
     private CategoryList categories = new();
-
-
+    
+    
     protected override async Task OnInitializedAsync()
     {
         categories = await ProductCategoryService.GetAllCategoriesAsync();
@@ -96,10 +107,8 @@
 
     private async Task AddNewExperience()
     {
-        newExperience.Picture = "";
-        newExperience.ExperienceCategory = null;
-        newExperience.ExperienceProvider = null;
-
+        var cachedUser = await CacheService.GetCachedUser();
+        newExperience.ProviderId = cachedUser.Id;
         await ExperienceService.AddExperienceAsync(newExperience);
         NavigationManager.NavigateTo("/AllExperiences");
     }
