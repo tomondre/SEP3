@@ -5,7 +5,8 @@ namespace ClientBlazor.Data.Customers
 {
     public interface ICustomerService
     {
-        Task<CustomerList> GetAllCustomers();
+        Task<CustomerList> GetAllCustomersAsync();
         Task DeleteCustomer(Customer customer);
+        Task<CustomerList> GetAllCustomersByNameAsync(string name);
     }
 }

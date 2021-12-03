@@ -21,7 +21,7 @@ namespace ClientBlazor.Data.Customers
             uri = "https://localhost:5001/Customers";
         }
 
-        public async Task<CustomerList> GetAllCustomers()
+        public async Task<CustomerList> GetAllCustomersAsync()
         {
             var httpRequestMessage = await GetHttpRequest(HttpMethod.Get, uri);
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
@@ -43,7 +43,22 @@ namespace ClientBlazor.Data.Customers
             
             CheckException(httpResponseMessage);
         }
-        
+
+        public async Task<CustomerList> GetAllCustomersByNameAsync(string name)
+        {
+            var httpRequestMessage = await GetHttpRequest(HttpMethod.Get, $"{uri}/?name={name}");
+            var httpResponseMessage = await client.SendAsync(httpRequestMessage);
+            
+            CheckException(httpResponseMessage);
+            
+            var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
+            var customerList = JsonSerializer.Deserialize<CustomerList>(readAsStringAsync, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+            return customerList;
+        }
+
         private async Task<HttpRequestMessage> GetHttpRequest(HttpMethod method, string uri)
         {
             var httpRequestMessage = new HttpRequestMessage(method, uri);

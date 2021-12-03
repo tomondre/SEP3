@@ -61,7 +61,18 @@ public class ExperienceDAOImpl implements ExperienceDAO
     }
 
     @Override
+    public ArrayList<Experience> getAllProviderExperiencesByName(int id, String name)
+    {
+        return repository.findAllByExperienceProviderIdAndNameContainsIgnoreCase(id, name);
+    }
+
+    @Override
     public ArrayList<Experience> getTopExperiences() {
         return repository.findTop3ByStockAfter(0);
+    }
+
+    @Override
+    public ArrayList<Experience> getExperiencesByName(String name) {
+        return repository.getAllByNameContainsIgnoreCase(name);
     }
 }

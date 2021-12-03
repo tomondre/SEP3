@@ -65,6 +65,18 @@ namespace WebShop.Data.Experiences
             return experienceList;
         }
 
+        public async Task<ExperienceList> GetExperiencesByNameAsync(string? filterByName)
+        {
+            var httpResponseMessage = await client.GetAsync($"{uri}experiences/?name={filterByName}");
+            
+            CheckException(httpResponseMessage);
+            var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+        }
+
         private void CheckException(HttpResponseMessage task)
         {
             if (!task.IsSuccessStatusCode)

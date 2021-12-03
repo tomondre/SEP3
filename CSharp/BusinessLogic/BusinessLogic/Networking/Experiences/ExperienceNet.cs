@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 using Networking.Experience;
+using Networking.User;
 
 namespace BusinessLogic.Networking.Experiences
 {
@@ -97,6 +98,30 @@ namespace BusinessLogic.Networking.Experiences
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
+            return deserialize;
+        }
+
+        public async Task<IList<Experience>> GetExperiencesByNameAsync(string name)
+        {
+            var message = await client.getExperiencesByNameAsync(new ProtobufMessage {MessageOrObject = name});
+            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(message.MessageOrObject,
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+            return deserialize;
+        }
+
+        public async Task<IList<Experience>> GetAllProviderExperiencesByNameAsync(int id, string name)
+        {
+            var userMessage = new UserMessage() {Id = id, Email = name};
+            var allProviderExperiencesByNameAsync = await client.GetAllProviderExperiencesByNameAsync(userMessage);
+
+            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(
+                allProviderExperiencesByNameAsync.MessageOrObject, new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
             return deserialize;
         }
     }

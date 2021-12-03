@@ -39,6 +39,12 @@ public class CustomerDAOImpl implements CustomerDAO
   }
 
   @Override
+  public ArrayList<User> findCustomerByName(String name)
+  {
+    return repository.findAllByCustomer_FirstNameContainingIgnoreCase(name);
+  }
+
+  @Override
   public User getCustomerById(int id) {return repository.getUserById(id);
   }
 

@@ -13,13 +13,13 @@ namespace ClientBlazor.Data.Cache
             this.sessionStorage = sessionStorage;
         }
 
-        public async Task<User> GetCachedUser()
+        public async Task<User> GetCachedUserAsync()
         {
             var protectedBrowserStorageResult = await sessionStorage.GetAsync<User>("currentUser");
             return protectedBrowserStorageResult.Value;
         }
 
-        public async Task<string> GetCachedToken()
+        public async Task<string> GetCachedTokenAsync()
         {
             var protectedBrowserStorageResult = await sessionStorage.GetAsync<string>("token");
             return protectedBrowserStorageResult.Value;

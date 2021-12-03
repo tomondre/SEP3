@@ -5,7 +5,7 @@ namespace ClientBlazor.Data.Cache
 {
     public interface ICacheService
     {
-        Task<User> GetCachedUser();
-        Task<string> GetCachedToken();
+        Task<User> GetCachedUserAsync();
+        Task<string> GetCachedTokenAsync();
     }
 }
