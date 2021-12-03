@@ -1,7 +1,6 @@
-﻿@inject AuthenticationStateProvider AuthenticationStateProvider
-@page "/SignInPage"
+﻿@page "/signin"
 @using WebShop.Data.Authentication
-
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager;
 
 <section class="py-20 bg-gray-100 overflow-x-hidden">
@@ -13,7 +12,7 @@
                     <a class="inline-block mb-14 text-3xl font-bold font-heading" href="#">
                         <img class="h-9" src="yofte-assets/logos/yofte-logo.svg" alt="" width="auto">
                     </a>
-                    <h3 class="mb-8 text-4xl md:text-5xl font-bold font-heading">Signing up with social is super quick</h3>
+                    <h3 class="mb-8 text-4xl md:text-5xl font-bold font-heading">Sign in to start shopping</h3>
                     <p class="mb-10 font-semibold font-heading">Please, do not hesitate</p>
                     <EditForm Model="@userCred" OnValidSubmit="@TryLoginAsync" class="flex flex-wrap -mx-4" action="" Context="formContext">
                         <div class="w-full md:w-1/2 px-4 mb-8 md:mb-12">
@@ -49,11 +48,12 @@
                             <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">Log In</button>
                         </div>
                     </EditForm>
-                    <div class="w-full px-4">
-                        <button @onclick="OpenSignUpPage" class="bg-blue-800 hover:bg-blue-900 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">Sign Up</button>
+
+                    <div class="pt-10">
+                        <b>Dont have an account? Register here: </b>
+                        <button @onclick="OpenSignUpPage" class="pl:10 bg-blue-300 hover:bg-blue-400 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">Sign Up</button>
                     </div>
                 </div>
-
             </div>
             <div class="w-full md:w-2/6 h-128 md:h-auto flex items-center lg:items-end px-4 pb-20 bg-cover bg-no-repeat" style="">
                 <div>
@@ -98,12 +98,17 @@
 
 
 @code {
+
+    [Parameter]
+    public Action<bool> SignupCallback { get; set; }
+
     private User userCred = new();
+
     private bool showPassword;
 
     private void OpenSignUpPage()
     {
-        NavigationManager.NavigateTo("/SignUpCustomer");
+        SignupCallback?.Invoke(false);
     }
 
     private async void TryLoginAsync()
