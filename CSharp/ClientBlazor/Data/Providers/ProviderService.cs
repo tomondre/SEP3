@@ -43,13 +43,13 @@ namespace ClientBlazor.Data.Providers
             await ((CurrentAuthenticationStateProvider) authenticationStateProvider).ValidateUser(user);
         }
 
-        public async Task<ProviderList> GetAllProviders()
+        public async Task<Page<ProviderList>> GetAllProviders(int page)
         {
-            var httpRequest = await GetHttpRequest(HttpMethod.Get, $"{uri}/?approved=true");
+            var httpRequest = await GetHttpRequest(HttpMethod.Get, $"{uri}/?approved=true&page={page}");
             var httpResponseMessage = await client.SendAsync(httpRequest);
             CheckException(httpResponseMessage);
             var providersAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
-            ProviderList providers = JsonSerializer.Deserialize<ProviderList>(providersAsJson,
+            var providers = JsonSerializer.Deserialize<Page<ProviderList>>(providersAsJson,
                 new JsonSerializerOptions()
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -91,13 +91,13 @@ namespace ClientBlazor.Data.Providers
             CheckException(httpResponseMessage);
         }
 
-        public async Task<ProviderList> GetAllNotApprovedProvidersAsync()
+        public async Task<Page<ProviderList>> GetAllNotApprovedProvidersAsync(int page)
         {
-            var httpRequest = await GetHttpRequest(HttpMethod.Get, $"{uri}/?approved=false");
+            var httpRequest = await GetHttpRequest(HttpMethod.Get, $"{uri}/?approved=false&page={page}");
             var httpResponseMessage = await client.SendAsync(httpRequest);
             CheckException(httpResponseMessage);
             var providersAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
-            ProviderList providers = JsonSerializer.Deserialize<ProviderList>(providersAsJson,
+            var providers = JsonSerializer.Deserialize<Page<ProviderList>>(providersAsJson,
                 new JsonSerializerOptions()
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -105,15 +105,15 @@ namespace ClientBlazor.Data.Providers
             return providers;
         }
 
-        public async Task<ProviderList> GetAllProvidersByNameAsync(string name)
+        public async Task<Page<ProviderList>> GetAllProvidersByNameAsync(string name, int page)
         {
-            var httpRequestMessage = await GetHttpRequest(HttpMethod.Get, $"{uri}?approved=true&name={name}");
+            var httpRequestMessage = await GetHttpRequest(HttpMethod.Get, $"{uri}?approved=true&name={name}&page={page}");
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
             
             CheckException(httpResponseMessage);
             
             var providersAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
-            ProviderList providers = JsonSerializer.Deserialize<ProviderList>(providersAsJson,
+            var providers = JsonSerializer.Deserialize<Page<ProviderList>>(providersAsJson,
                 new JsonSerializerOptions()
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase

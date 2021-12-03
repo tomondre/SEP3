@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Networking.Category;
 using RiskFirst.Hateoas.Models;
 
 namespace GrpcFileGeneration.Models
@@ -17,7 +18,22 @@ namespace GrpcFileGeneration.Models
         {
             Links = new Dictionary<string, Link>();
         }
-        
+
+        public Category(CategoryMessage categoryMessage)
+        {
+            Links = new Dictionary<string, Link>();
+            Id = categoryMessage.Id;
+            CategoryName = categoryMessage.Name;
+        }
+
+        public CategoryMessage ToMesaage()
+        {
+            return new CategoryMessage()
+            {
+                Id = Id,
+                Name = CategoryName
+            };
+        }
         public void AddLink(string id, Link link)
         {
             Links.Add(id, link);

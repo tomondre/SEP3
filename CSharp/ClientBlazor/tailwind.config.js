@@ -6,7 +6,7 @@
     },
     variants:{
         extend: {
-                backgroundColor: 'active',
+                backgroundColor: ['responsive', 'hover', 'focus', 'active'],
                 textColor: 'active',
             }
     },

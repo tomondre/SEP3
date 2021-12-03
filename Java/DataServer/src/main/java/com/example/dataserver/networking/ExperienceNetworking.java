@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import networking.experience.ExperienceServiceGrpc;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @GrpcService
 public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServiceImplBase
@@ -105,7 +106,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
 
     @Override
     public void getExperienceByCategory(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
-      ArrayList<Experience> experienceByCategory = experienceDAO.getExperienceByCategory(Integer.parseInt(request.getMessageOrObject()));
+      List<Experience> experienceByCategory = experienceDAO.getExperienceByCategory(Integer.parseInt(request.getMessageOrObject()), 0);
       String s = gson.toJson(experienceByCategory);
       responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
       responseObserver.onCompleted();

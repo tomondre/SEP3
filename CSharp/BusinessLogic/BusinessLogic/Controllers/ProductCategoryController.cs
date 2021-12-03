@@ -23,11 +23,10 @@ namespace BusinessLogic.Controllers
 
         [AllowAnonymous]
         [HttpGet(Name = "GetCategoryRoute")]
-        public async Task<ActionResult<CategoryList>>GetAllCategories()
+        public async Task<ActionResult<Page<CategoryList>>>GetAllCategories([FromQuery] int page)
         {
-            CategoryList list = new CategoryList();
-            list.Categories = await model.GetAllCategoriesAsync();
-            foreach (var item in list.Categories)
+            Page<CategoryList> categories = await model.GetAllCategoriesAsync(page);
+            foreach (var item in categories.Content.Categories)
             {
                 if (item.Links.Count == 0)
                 {
@@ -35,26 +34,10 @@ namespace BusinessLogic.Controllers
                 }
             }
 
-            await linksService.AddLinksAsync(list);
-            return Ok(list);
+            await linksService.AddLinksAsync(categories.Content);
+            return Ok(categories);
         }
-        
-        [AllowAnonymous]
-        [HttpGet("{id:int}", Name = "GetCategoryByIdRoute")]
-        public async Task<ActionResult<CategoryList>>GetCategoryById([FromRoute] int id)
-        {
-            CategoryList list = new CategoryList();
-            list.Categories = await model.GetAllCategoriesAsync();
-            foreach (var item in list.Categories)
-            {
-                await linksService.AddLinksAsync(item);
-            }
 
-            await linksService.AddLinksAsync(list);
-            
-            return Ok(list);
-        }
-        
         [Authorize(Roles = "Administrator")]
         [HttpPut("{id:int}",Name = "EditCategoryRoute")]
         public async Task<ActionResult<Category>> EditCategory([FromBody] Category category, [FromRoute] int id)

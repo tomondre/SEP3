@@ -3,9 +3,14 @@ package com.example.dataserver.persistence.experience;
 import com.example.dataserver.models.Experience;
 import com.example.dataserver.persistence.repository.ExperienceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class ExperienceDAOImpl implements ExperienceDAO
@@ -56,8 +61,11 @@ public class ExperienceDAOImpl implements ExperienceDAO
     }
 
     @Override
-    public ArrayList<Experience> getExperienceByCategory(int id) {
-        return repository.getAllByExperienceCategoryIdAndStockGreaterThan(id, 0);
+    public List<Experience> getExperienceByCategory(int id, int pageNumber) {
+        Pageable page = PageRequest.of(1, 1);
+        Page<Experience> allByExperienceCategoryIdAndStockGreaterThan =
+                repository.getAllByExperienceCategoryIdAndStockGreaterThan(id, 0, page);
+        return allByExperienceCategoryIdAndStockGreaterThan.getContent();
     }
 
     @Override

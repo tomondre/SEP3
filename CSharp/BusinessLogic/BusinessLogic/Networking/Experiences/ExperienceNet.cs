@@ -79,6 +79,7 @@ namespace BusinessLogic.Networking.Experiences
 
         public async Task<IList<Experience>> GetExperiencesByCategoryAsync(int id)
         {
+            
             var experienceByCategoryAsync = await client.getExperienceByCategoryAsync(new ProtobufMessage()
             {
                 MessageOrObject = id.ToString()
@@ -94,7 +95,7 @@ namespace BusinessLogic.Networking.Experiences
         public async Task<IList<Experience>> GetAllProviderExperiencesByNameAsync(int id, string name)
         {
             var userMessage = new UserMessage() {Id = id, Email = name};
-            var allProviderExperiencesByNameAsync = await client.GetAllProviderExperiencesByNameAsync(userMessage);
+            var allProviderExperiencesByNameAsync = await client.getAllProviderExperiencesByNameAsync(userMessage);
 
             var deserialize = JsonSerializer.Deserialize<IList<Experience>>(
                 allProviderExperiencesByNameAsync.MessageOrObject, new JsonSerializerOptions()

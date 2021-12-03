@@ -4,6 +4,8 @@ import com.example.dataserver.models.Customer;
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -27,9 +29,9 @@ public class CustomerDAOImpl implements CustomerDAO
   }
 
   @Override
-  public ArrayList<User> getAllCustomers()
+  public Page<User> getAllCustomers(Pageable pageable)
   {
-    return repository.getAllByCustomer_FirstNameIsNotNull();
+    return repository.getAllByCustomer_FirstNameIsNotNull(pageable);
   }
 
   @Override
@@ -39,9 +41,9 @@ public class CustomerDAOImpl implements CustomerDAO
   }
 
   @Override
-  public ArrayList<User> findCustomerByName(String name)
+  public Page<User> findCustomerByName(String name, Pageable pageable)
   {
-    return repository.findAllByCustomer_FirstNameContainingIgnoreCase(name);
+    return repository.findAllByCustomer_FirstNameContainingIgnoreCase(name, pageable);
   }
 
   @Override

@@ -7,7 +7,7 @@ namespace BusinessLogic.Networking.ProductCategory
     public interface IProductCategoryNet
     {
         Task<Category> AddProductCategoryAsync(Category category);
-        Task<IList<Category>> GetAllCategoriesAsync();
+        Task<Page<CategoryList>> GetAllCategoriesAsync(int page);
         Task<Category> EditProductCategoryAsync(Category category);
         Task DeleteProductCategoryAsync(int id);
     }

@@ -10,13 +10,20 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import networking.customer.CustomerMessage;
 import networking.customer.CustomerServiceGrpc;
 import networking.customer.CustomersMessage;
+import networking.page.PageMessage;
+import networking.request.PageRequestMessage;
+import networking.request.RequestMessage;
 import networking.user.UserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @GrpcService
 public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceImplBase {
@@ -43,15 +50,12 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
     }
 
     @Override
-    public void getAllCustomers(UserMessage request,
-        StreamObserver<CustomersMessage> responseObserver)
+    public void getAllCustomers(PageRequestMessage request,
+                                StreamObserver<CustomersMessage> responseObserver)
     {
-        ArrayList<User> allCustomers = dao.getAllCustomers();
-        List<CustomerMessage> collect = allCustomers.stream().map(User::toCustomerMessage)
-            .collect(Collectors.toList());
-        CustomersMessage customersMessage = CustomersMessage.newBuilder().addAllCustomers(collect).build();
-        responseObserver.onNext(customersMessage);
-        responseObserver.onCompleted();
+        var pageRequest = PageRequest.of(request.getPageNumber(), request.getPageSize());
+        var page = dao.getAllCustomers(pageRequest);
+        customers(responseObserver, page);
     }
 
     @Override
@@ -86,13 +90,22 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
     }
 
     @Override
-    public void findCustomerByName(UserMessage request, StreamObserver<CustomersMessage> responseObserver)
+    public void findCustomerByName(RequestMessage request, StreamObserver<CustomersMessage> responseObserver)
     {
-        ArrayList<User> customerByName = dao.findCustomerByName(request.getEmail());
-        List<CustomerMessage> collect =
-                customerByName.stream().map(User::toCustomerMessage).collect(Collectors.toList());
-        CustomersMessage builder = CustomersMessage.newBuilder().addAllCustomers(collect).build();
-        responseObserver.onNext(builder);
+        var name = request.getName();
+        var pageRequest = PageRequest.of(request.getPageInfo().getPageNumber(), request.getPageInfo().getPageSize());
+        var page = dao.findCustomerByName(name, pageRequest);
+        customers(responseObserver, page);
+    }
+
+    private void customers(StreamObserver<CustomersMessage> responseObserver, Page<User> page)
+    {
+        var collect = page.getContent().stream().map(User::toCustomerMessage)
+                          .collect(Collectors.toList());
+        PageMessage pageInfo = PageMessage.newBuilder().setPageNumber(page.getNumber()).setTotalPages(page.getTotalPages())
+                                          .setTotalElements(page.getTotalPages()).build();
+        CustomersMessage customersMessage = CustomersMessage.newBuilder().addAllCustomers(collect).setPage(pageInfo).build();
+        responseObserver.onNext(customersMessage);
         responseObserver.onCompleted();
     }
 }

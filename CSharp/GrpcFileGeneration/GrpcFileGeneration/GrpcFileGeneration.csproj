@@ -13,6 +13,8 @@
         <Protobuf Include="Proto/Login.proto" OutputDir="./Protobuf/Login" GrpcServices="Client" />
         <Protobuf Include="Proto/Address.proto" OutputDir="./Protobuf/Address" GrpcServices="Client" />
         <Protobuf Include="Proto/User.proto" OutputDir="./Protobuf/User" GrpcServices="Client" />
+        <Protobuf Include="Proto/Page.proto" OutputDir="./Protobuf/Page" GrpcServices="Client" />
+        <Protobuf Include="Proto/Request.proto" OutputDir="./Protobuf/Request" GrpcServices="Client" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Google.Protobuf" Version="3.19.0" />

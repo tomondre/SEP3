@@ -24,38 +24,38 @@ namespace BusinessLogic.Controllers
 
         //[Authorize(Roles = "Administrator")]
         [HttpGet(Name = "GetProvidersRoute")]
-        public async Task<ActionResult<ProviderList>> GetProviders([FromQuery] bool? approved, [FromQuery] string name)
+        public async Task<ActionResult<ProviderList>> GetProviders([FromQuery] bool? approved, [FromQuery] string name, [FromQuery] int page)
         {
-            ProviderList list = new ProviderList();
+            var list = new Page<ProviderList>();
 
             if (approved is true)
             {
                 if (string.IsNullOrEmpty(name))
                 {
-                    list.Providers = await model.GetAllProviders();
+                    list = await model.GetAllProvidersAsync(page);
                 }
                 else
                 {
-                    list.Providers = await model.GetAllProvidersByNameAsync(name);
+                    list = await model.GetAllProvidersByNameAsync(name, page);
                 }
             }
             else
             {
                 if (string.IsNullOrEmpty(name))
                 {
-                    list.Providers = await model.GetAllNotApprovedProviders();
+                    list = await model.GetAllNotApprovedProvidersAsync(page);
                 }
                 else
                 {
-                    list.Providers = await model.GetAllProvidersByNameAsync(name);
+                    list = await model.GetAllProvidersByNameAsync(name,page);
                 }
             }
             
-            foreach (var provider in list.Providers)
+            foreach (var provider in list.Content.Providers)
             {
                 await linksService.AddLinksAsync(provider);
             }
-            await linksService.AddLinksAsync(list);
+            await linksService.AddLinksAsync(list.Content);
             return Ok(list);
         }
 
@@ -92,7 +92,7 @@ namespace BusinessLogic.Controllers
         {
             try
             {
-                var user = await model.CreateProvider(provider);
+                var user = await model.CreateProviderAsync(provider);
                 return Ok(user);
 
             }
@@ -105,9 +105,9 @@ namespace BusinessLogic.Controllers
         
         //[Authorize(Roles = "Administrator")]
         [HttpDelete("{id:int}", Name = "DeleteProviderRoute")]
-        public async Task<ActionResult> DeleteProvider([FromRoute] int id)
+        public async Task<ActionResult> DeleteProviderAsync([FromRoute] int id)
         {
-            await model.DeleteProvider(id);
+            await model.DeleteProviderAsync(id);
             return Ok();
         }
     }

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 using Networking.Category;
+using Networking.Request;
 
 namespace BusinessLogic.Networking.ProductCategory
 {
@@ -17,44 +19,43 @@ namespace BusinessLogic.Networking.ProductCategory
 
         public async Task<Category> AddProductCategoryAsync(Category category)
         {
-            var serialize = JsonSerializer.Serialize(category);
+            var categoryMessage = category.ToMesaage();
             var addProductCategory =
-                await client.addProductCategoryAsync(new ProtobufMessage {MassageOrObject = serialize});
-            var massageOrObject = addProductCategory.MassageOrObject;
-            var deserialize = JsonSerializer.Deserialize<Category>(massageOrObject, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-            return deserialize;
+                await client.addProductCategoryAsync(categoryMessage);
+            var createdCategory = new Category(addProductCategory);
+            return createdCategory;
         }
 
-        public async Task<IList<Category>> GetAllCategoriesAsync()
+        public async Task<Page<CategoryList>> GetAllCategoriesAsync(int page)
         {
-            var allProductCategoriesAsync = await client.getAllProductCategoriesAsync(new ProtobufMessage());
-            var massageOrObject = allProductCategoriesAsync.MassageOrObject;
-            var deserialize = JsonSerializer.Deserialize<IList<Category>>(massageOrObject, new JsonSerializerOptions()
+            var pageRequestMessage = new PageRequestMessage() {PageNumber = page, PageSize = 5};
+            var allProductCategoriesAsync = await client.getAllProductCategoriesAsync(pageRequestMessage);
+            
+            var categoryList = new CategoryList()
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-            return deserialize;
+                Categories = allProductCategoriesAsync.Categories.Select(a => new Category(a)).ToList()
+            };
+
+            var pageContent = new Page<CategoryList>(allProductCategoriesAsync.PageInfo)
+            {
+                Content = categoryList
+            };
+            return pageContent;
         }
 
         public async Task<Category> EditProductCategoryAsync(Category category)
         {
-            var serialize = JsonSerializer.Serialize(category);
-            var addProductCategoryAsync =
-                await client.addProductCategoryAsync(new ProtobufMessage() {MassageOrObject = serialize});
-            var massageOrObject = addProductCategoryAsync.MassageOrObject;
-            var deserialize = JsonSerializer.Deserialize<Category>(massageOrObject, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-            return deserialize;
+            var categoryMessage = category.ToMesaage();
+            var editProductCategoryAsync =
+                await client.editProductCategoryAsync(categoryMessage);
+            var editedCategory = new Category(editProductCategoryAsync);
+            return editedCategory;
         }
 
         public async Task DeleteProductCategoryAsync(int id)
         {
-            await client.deleteProductCategoryAsync(new ProtobufMessage() {MassageOrObject = id.ToString()});
+            var requestMessage = new RequestMessage() {Id = id};
+            await client.deleteProductCategoryAsync(requestMessage);
         }
     }
 }

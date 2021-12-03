@@ -38,12 +38,13 @@ namespace ClientBlazor.Data.ProductCategory
             return deserialize;
         }
 
-        public async Task<CategoryList> GetAllCategoriesAsync()
+        public async Task<Page<CategoryList>> GetAllCategoriesAsync(int page)
         {
-            var httpResponseMessage = await client.GetAsync(uri);
+            var httpRequest = await GetHttpRequest(HttpMethod.Get, $"{uri}?page={page}");
+            var httpResponseMessage = await client.SendAsync(httpRequest);
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var categories = JsonSerializer.Deserialize<CategoryList>(readAsStringAsync, new JsonSerializerOptions()
+            var categories = JsonSerializer.Deserialize<Page<CategoryList>>(readAsStringAsync, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });

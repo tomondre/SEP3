@@ -21,6 +21,6 @@ service ExperienceService{
    rpc isInStock(ProtobufStockRequest) returns (ProtobufMessage);
    rpc deleteExperience(ProtobufMessage) returns (ProtobufMessage);
    rpc removeStock(ProtobufStockRequest) returns (ProtobufMessage);
-   rpc GetAllProviderExperiencesByName(user.UserMessage) returns (ProtobufMessage);
+   rpc getAllProviderExperiencesByName(user.UserMessage) returns (ProtobufMessage);
    rpc getExperienceByCategory(ProtobufMessage) returns (ProtobufMessage);
 }

@@ -3,6 +3,8 @@ package com.example.dataserver.persistence.category;
 import com.example.dataserver.models.Category;
 import com.example.dataserver.persistence.repository.ProductCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -25,9 +27,9 @@ public class CategoryDAOImpl implements CategoryDAO
   }
 
   @Override
-  public ArrayList<Category> getAllCategories()
+  public Page<Category> getAllCategories(Pageable pageable)
   {
-    return (ArrayList<Category>) repository.findAll();
+    return repository.findAll(pageable);
   }
 
   @Override

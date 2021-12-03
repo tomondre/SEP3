@@ -38,17 +38,17 @@ namespace BusinessLogic.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<CustomerList>> GetAllCustomersAsync([FromQuery(Name = "name")] string name)
+        public async Task<ActionResult<Page<CustomerList>>> GetAllCustomersAsync([FromQuery(Name = "name")] string name, [FromQuery(Name = "page")] int pageNumber)
         {
-            CustomerList allCustomersAsync = new();
+            //TODO generate the hateoas links
+            Page<CustomerList> allCustomersAsync = new();
             if (string.IsNullOrEmpty(name))
             {
-                allCustomersAsync.Customers = await model.GetAllCustomersAsync();
-
+               allCustomersAsync = await model.GetAllCustomersAsync(pageNumber);
             }
             else
             {
-                allCustomersAsync.Customers = await model.FindCustomerByNameAsync(name);
+                allCustomersAsync = await model.FindCustomerByNameAsync(name, pageNumber);
             }
             return Ok(allCustomersAsync);
         }
