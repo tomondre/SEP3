@@ -118,4 +118,13 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
     responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
     responseObserver.onCompleted();
   }
+
+  @Override
+  public void getExperiencesByName(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
+    ArrayList<Experience> experiences = experienceDAO.getExperiencesByName(request.getMessageOrObject());
+    String s = gson.toJson(experiences);
+    responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
+    responseObserver.onCompleted();
+
+  }
 }

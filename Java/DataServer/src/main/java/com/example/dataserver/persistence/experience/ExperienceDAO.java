@@ -15,4 +15,5 @@ public interface ExperienceDAO {
     ArrayList<Experience> getAllProviderExperiencesByName(int id, String name);
     ArrayList<Experience> getExperienceByCategory(int id);
     ArrayList<Experience> getTopExperiences();
+    ArrayList<Experience> getExperiencesByName(String name);
 }

@@ -79,7 +79,7 @@ namespace BusinessLogic.Networking.Experiences
 
         public async Task<IList<Experience>> GetExperiencesByCategoryAsync(int id)
         {
-            var experienceByCategoryAsync = await client.getExperienceByCategoryAsync(new ProtobufMessage()
+            var experienceByCategoryAsync = await client.getExperienceByCategoryAsync(new ProtobufMessage
             {
                 MessageOrObject = id.ToString()
             });
