@@ -1,6 +1,7 @@
 package com.example.dataserver.models;
 
 import com.google.gson.annotations.SerializedName;
+import networking.category.CategoryMessage;
 
 import javax.persistence.*;
 
@@ -20,7 +21,19 @@ public class Category
   {
   }
 
-  public int getId()
+  public Category(CategoryMessage c) {
+    categoryName = c.getCategoryName();
+    id = c.getId();
+  }
+
+  public CategoryMessage toMessage() {
+    return CategoryMessage.newBuilder()
+            .setCategoryName(categoryName)
+            .setId(id)
+            .build();
+  }
+
+    public int getId()
   {
     return id;
   }

@@ -29,12 +29,12 @@ namespace GrpcFileGeneration.Models
 
         public AddressMessage ToMessage()
         {
-            return new AddressMessage()
+            return new AddressMessage
             {
-                City = this.City,
-                Street = this.Street,
-                StreetNumber = this.StreetNumber,
-                PostCode = this.PostCode
+                City = City,
+                Street = Street,
+                StreetNumber = StreetNumber,
+                PostCode = PostCode
             };
         }
     }

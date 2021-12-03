@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 using Networking.Experience;
+using Networking.Request;
 using Networking.User;
 
 namespace BusinessLogic.Networking.Experiences
@@ -18,87 +19,66 @@ namespace BusinessLogic.Networking.Experiences
 
         public async Task<Experience> AddExperienceAsync(Experience experience)
         {
-            var serialize = JsonSerializer.Serialize(experience);
-            var protobufMessage = await client.addExperienceAsync(new ProtobufMessage() {MessageOrObject = serialize});
-            return JsonSerializer.Deserialize<Experience>(protobufMessage.MessageOrObject, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
+            var protobufMessage = await client.addExperienceAsync(experience.ToMessage());
+            return new Experience(protobufMessage);
         }
 
         public async Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider)
         {
-            var allProviderExperiences = await client.getAllProviderExperiencesAsync(new ProtobufMessage()
-                {MessageOrObject = provider.ToString()});
-            var messageOrObject = allProviderExperiences.MessageOrObject;
-            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(messageOrObject, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-            return deserialize;
+            var allProviderExperiencesAsync = await client.getAllProviderExperiencesAsync(new RequestMessage {Id = provider});
+            return ExperienceListMessageToList(allProviderExperiencesAsync);
         }
 
         public async Task<IList<Experience>> GetAllWebShopExperiencesAsync()
         {
-            var allProviderExperiences = await client.getAllWebShopExperiencesAsync(new ProtobufMessage());
-            return JsonSerializer.Deserialize<IList<Experience>>(allProviderExperiences.MessageOrObject,
-                new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
+            
+            var allWebShopExperiencesAsync = await client.getAllWebShopExperiencesAsync(new RequestMessage());
+            return ExperienceListMessageToList(allWebShopExperiencesAsync);
         }
 
         public async Task<Experience> GetExperienceByIdAsync(int id)
         {
-            var experienceByIdAsync =
-                await client.getExperienceByIdAsync(new ProtobufMessage() {MessageOrObject = id.ToString()});
-            return JsonSerializer.Deserialize<Experience>(experienceByIdAsync.MessageOrObject,
-                new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+            var experienceByIdAsync = await client.getExperienceByIdAsync(new RequestMessage {Id = id});
+            return new Experience(experienceByIdAsync);
         }
 
         public async Task<bool> IsInStockAsync(int experienceId, int quantity)
         {
-            var isInStockAsync = await client.isInStockAsync(new ProtobufStockRequest()
-            {
-                Id = experienceId, Quantity = quantity
-            });
-            bool result = bool.Parse(isInStockAsync.MessageOrObject);
-            return result;
+            var isInStockAsync = await client.isInStockAsync(new RequestMessage {Id = experienceId, Quantity = quantity});
+            return isInStockAsync.Response;
         }
 
         public async Task RemoveStockAsync(int experienceId, int itemQuantity)
         {
-            await client.removeStockAsync(new ProtobufStockRequest {Id = experienceId, Quantity = itemQuantity});
+            await client.removeStockAsync(new RequestMessage() {Id = experienceId, Quantity = itemQuantity});
         }
 
         public async Task DeleteExperienceAsync(int experienceId)
         {
-            var protobufMessage = new ProtobufMessage() {MessageOrObject = experienceId.ToString()};
-            await client.deleteExperienceAsync(protobufMessage);
+            await client.deleteExperienceAsync(new RequestMessage {Id = experienceId});
         }
 
         public async Task<IList<Experience>> GetExperiencesByCategoryAsync(int id)
         {
-            var experienceByCategoryAsync = await client.getExperienceByCategoryAsync(new ProtobufMessage
-            {
-                MessageOrObject = id.ToString()
-            });
-            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(experienceByCategoryAsync.MessageOrObject,
-                new JsonSerializerOptions()
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
-            return deserialize;
+            var experienceByCategoryAsync = await client.getExperienceByCategoryAsync(new RequestMessage() {Id = id});
+            return ExperienceListMessageToList(experienceByCategoryAsync);
         }
 
-        public async Task<IList<Experience>> GetTopExperiences(int limit)
+        public async Task<IList<Experience>> GetTopExperiences()
         {
-            var topExperiencesAsync = await client.getTopExperiencesAsync(new ProtobufMessage{MessageOrObject = limit.ToString()});
-            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(topExperiencesAsync.MessageOrObject, new JsonSerializerOptions()
+            var experienceListMessage = await client.getTopExperiencesAsync(new RequestMessage());
+            return ExperienceListMessageToList(experienceListMessage);
+        }
+
+        private List<Experience> ExperienceListMessageToList(ExperienceListMessage list)
+        {
+            var result = new List<Experience>();
+            foreach (var e in list.Experiences)
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-            return deserialize;
+                result.Add(new Experience(e));
+            }
+
+            return result;
         }
 
         public async Task<IList<Experience>> GetExperiencesByNameAsync(string name)

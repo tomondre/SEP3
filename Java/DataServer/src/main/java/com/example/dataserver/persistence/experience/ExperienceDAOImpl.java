@@ -1,15 +1,22 @@
 package com.example.dataserver.persistence.experience;
 
+import com.example.dataserver.models.Category;
+import com.example.dataserver.models.Customer;
 import com.example.dataserver.models.Experience;
+import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.repository.ExperienceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 
 @Repository
 public class ExperienceDAOImpl implements ExperienceDAO
 {
+    @PersistenceContext
+    private EntityManager em;
     private final ExperienceRepository repository;
 
     @Autowired
@@ -19,6 +26,10 @@ public class ExperienceDAOImpl implements ExperienceDAO
 
     @Override
     public Experience addExperience(Experience experience) {
+        User user = em.getReference(User.class, experience.getExperienceProvider().getId());
+        Category category = em.getReference(Category.class, experience.getExperienceCategory().getId());
+        experience.setExperienceCategory(category);
+        experience.setExperienceProvider(user);
         return repository.save(experience);
     }
 

@@ -48,7 +48,7 @@ namespace ClientBlazor.Data.Authentication
             {
                 new(ClaimTypes.Role, user.SecurityType)
             };
-            ClaimsIdentity identity = new ClaimsIdentity(claims,"apiauth_type");
+            ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth_type");
             return identity;
         }
 

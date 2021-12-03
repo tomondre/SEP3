@@ -6,6 +6,11 @@ message ProtobufMessage{
   string massageOrObject = 1;
 }
 
+message CategoryMessage {
+  int32 id = 1;
+  string categoryName = 2;
+}
+
 service CategoryService{
   rpc getAllProductCategories(ProtobufMessage) returns (ProtobufMessage);
   rpc addProductCategory(ProtobufMessage) returns (ProtobufMessage);

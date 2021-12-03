@@ -58,10 +58,10 @@ namespace BusinessLogic.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<ExperienceList>> GetAllExperiencesAsync([FromQuery] int? limit, [FromQuery(Name = "name")] string name)
+        public async Task<ActionResult<ExperienceList>> GetAllExperiencesAsync([FromQuery] bool? top, [FromQuery(Name = "name")] string name)
         {
             ExperienceList experiences = new ExperienceList();
-            if (limit == null)
+            if (top == null)
             {
                 if (string.IsNullOrEmpty(name))
                 {
@@ -74,7 +74,7 @@ namespace BusinessLogic.Controllers
             }
             else
             {
-                experiences.Experiences = await model.GetTopExperiences(limit.Value);
+                experiences.Experiences = await model.GetTopExperiences();
             }
             return Ok(experiences);
         }
