@@ -3,7 +3,6 @@ option java_multiple_files = true;
 package networking.experience;
 
 import "Proto/Address.proto";
-import "Proto/Category.proto";
 import "Proto/Request.proto";
 
 message ProtobufMessage{
@@ -23,7 +22,7 @@ message ExperienceMessage{
    int32 stock = 5;
    string description = 6;
    int32 experienceValidity = 7;
-   category.CategoryMessage experienceCategory = 8;
+   int32 categoryId = 8;
    int32 providerId = 9;
    address.AddressMessage address = 10;
 }

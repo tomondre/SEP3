@@ -40,15 +40,15 @@ public class Experience
     private int experienceValidity;
 
     @SerializedName(value = "experienceCategory", alternate = {"ExperienceCategory"})
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Category experienceCategory;
 
     @SerializedName(value = "experienceProvider", alternate = {"ExperienceProvider"})
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private User experienceProvider;
 
     @SerializedName(value = "address", alternate = {"Address"})
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private  Address address;
 
     public Experience()
@@ -76,7 +76,8 @@ public class Experience
         stock = e.getStock();
         description = e.getDescription();
         experienceValidity = e.getExperienceValidity();
-        experienceCategory = new Category(e.getExperienceCategory());
+        experienceCategory = new Category();
+        experienceCategory.setId(e.getCategoryId());
         User user = new User();
         user.setId(e.getProviderId());
         experienceProvider = user;
@@ -92,7 +93,7 @@ public class Experience
                 .setStock(stock)
                 .setDescription(description)
                 .setExperienceValidity(experienceValidity)
-                .setExperienceCategory(experienceCategory.toMessage())
+                .setCategoryId(experienceCategory.getId())
                 .setProviderId(experienceProvider.getId())
                 .setAddress(address.toMessage())
                 .build();

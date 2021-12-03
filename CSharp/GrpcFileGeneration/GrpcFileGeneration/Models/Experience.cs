@@ -10,7 +10,6 @@ namespace GrpcFileGeneration.Models
     public class Experience
     {
         public int Id { get;  set; }
-        [Required]
         public string Picture { get; set; }
         
         [Required, MaxLength(50)]
@@ -27,7 +26,7 @@ namespace GrpcFileGeneration.Models
         [Required]        
         public int ExperienceValidity { get; set; }
 
-        public Category ExperienceCategory { get; set; }
+        public int CategoryId { get; set; }
         
         public  int ProviderId { get; set; }
         
@@ -35,7 +34,6 @@ namespace GrpcFileGeneration.Models
 
         public Experience()
         {
-            ExperienceCategory = new Category();
             Address = new Address();
         }
 
@@ -48,7 +46,7 @@ namespace GrpcFileGeneration.Models
             Stock = e.Stock;
             Description = e.Description;
             ExperienceValidity = e.ExperienceValidity;
-            ExperienceCategory = new Category(e.ExperienceCategory);
+            CategoryId = e.CategoryId;
             ProviderId = ProviderId;
             Address = new Address(e.Address);
         }
@@ -64,7 +62,7 @@ namespace GrpcFileGeneration.Models
                 Price = Price,
                 Picture = Picture,
                 Stock = Stock,
-                ExperienceCategory = ExperienceCategory.ToMessage(),
+                CategoryId = CategoryId,
                 ExperienceValidity = ExperienceValidity,
                 ProviderId = ProviderId
             };
