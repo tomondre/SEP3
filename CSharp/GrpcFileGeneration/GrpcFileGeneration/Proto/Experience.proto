@@ -24,4 +24,5 @@ service ExperienceService{
    rpc GetAllProviderExperiencesByName(user.UserMessage) returns (ProtobufMessage);
    rpc getExperienceByCategory(ProtobufMessage) returns (ProtobufMessage);
    rpc getTopExperiences(ProtobufMessage) returns (ProtobufMessage);
+   rpc getExperiencesByName(ProtobufMessage) returns (ProtobufMessage);
 }
