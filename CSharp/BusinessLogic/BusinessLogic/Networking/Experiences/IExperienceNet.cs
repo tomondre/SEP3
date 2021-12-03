@@ -14,6 +14,6 @@ namespace BusinessLogic.Networking.Experiences
         Task RemoveStockAsync(int experienceId, int itemQuantity);
         Task DeleteExperienceAsync(int experienceId);
         Task<IList<Experience>> GetExperiencesByCategoryAsync(int id);
-        Task<IList<Experience>> GetTopExperiences(int limit);
+        Task<IList<Experience>> GetTopExperiences();
     }
 }
