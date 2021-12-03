@@ -83,26 +83,14 @@ namespace BusinessLogic.Networking.Experiences
 
         public async Task<IList<Experience>> GetExperiencesByNameAsync(string name)
         {
-            var message = await client.getExperiencesByNameAsync(new ProtobufMessage {MessageOrObject = name});
-            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(message.MessageOrObject,
-                new JsonSerializerOptions()
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
-            return deserialize;
+            var message = await client.getExperiencesByNameAsync(new RequestMessage(){Name = name});
+            return ExperienceListMessageToList(message);
         }
 
         public async Task<IList<Experience>> GetAllProviderExperiencesByNameAsync(int id, string name)
         {
-            var userMessage = new UserMessage() {Id = id, Email = name};
-            var allProviderExperiencesByNameAsync = await client.GetAllProviderExperiencesByNameAsync(userMessage);
-
-            var deserialize = JsonSerializer.Deserialize<IList<Experience>>(
-                allProviderExperiencesByNameAsync.MessageOrObject, new JsonSerializerOptions()
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
-            return deserialize;
+            var allProviderExperiencesByNameAsync = await client.GetAllProviderExperiencesByNameAsync(new RequestMessage {Id = id, Name = name});
+            return ExperienceListMessageToList(allProviderExperiencesByNameAsync);
         }
     }
 }

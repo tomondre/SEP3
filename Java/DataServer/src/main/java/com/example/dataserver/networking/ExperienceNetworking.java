@@ -81,21 +81,25 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
     responseObserver.onNext(arrayListToListMessage(experienceByCategory));
     responseObserver.onCompleted();
    }
- 
- @Override
- public void getAllProviderExperiencesByName(UserMessage request, StreamObserver<ProtobufMessage> responseObserver)
-  {
-    ArrayList<Experience> allProviderExperiencesByName =
-            experienceDAO.getAllProviderExperiencesByName(request.getId(), request.getEmail());
-    String s = gson.toJson(allProviderExperiencesByName);
-    responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
-    responseObserver.onCompleted();
-  }
 
   @Override
   public void getTopExperiences(RequestMessage request, StreamObserver<ExperienceListMessage> responseObserver) {
     ArrayList<Experience> topExperiences = experienceDAO.getTopExperiences();
     responseObserver.onNext(arrayListToListMessage(topExperiences));
+    responseObserver.onCompleted();
+  }
+
+  @Override
+  public void getAllProviderExperiencesByName(RequestMessage request, StreamObserver<ExperienceListMessage > responseObserver) {
+    ArrayList<Experience> allProviderExperiencesByName = experienceDAO.getAllProviderExperiencesByName(request.getId(), request.getName());
+    responseObserver.onNext(arrayListToListMessage(allProviderExperiencesByName));
+    responseObserver.onCompleted();
+  }
+
+  @Override
+  public void getExperiencesByName(RequestMessage request, StreamObserver<ExperienceListMessage> responseObserver) {
+    ArrayList<Experience> experiencesByName = experienceDAO.getExperiencesByName(request.getName());
+    responseObserver.onNext(arrayListToListMessage(experiencesByName));
     responseObserver.onCompleted();
   }
 
@@ -105,15 +109,5 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
       builder.addExperiences(e.toMessage());
     }
     return builder.build();
-  }
-}
-
-@Override
-  public void getExperiencesByName(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
-    ArrayList<Experience> experiences = experienceDAO.getExperiencesByName(request.getMessageOrObject());
-    String s = gson.toJson(experiences);
-    responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
-    responseObserver.onCompleted();
-
   }
 }

@@ -107,7 +107,7 @@
 
     private async Task AddNewExperience()
     {
-        var cachedUser = await CacheService.GetCachedUser();
+        var cachedUser = await CacheService.GetCachedUserAsync();
         newExperience.ProviderId = cachedUser.Id;
         await ExperienceService.AddExperienceAsync(newExperience);
         NavigationManager.NavigateTo("/");
