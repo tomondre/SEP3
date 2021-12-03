@@ -29,7 +29,6 @@ public class LoginNetworkingImpl extends LoginServiceGrpc.LoginServiceImplBase
   public void getUserLogin(UserMessage request,
       StreamObserver<UserMessage> responseObserver)
   {
-
     User userLogin = loginDAO.getUserLogin(new User(request));
     UserMessage userMessage = userLogin.toMessage();
     responseObserver.onNext(userMessage);

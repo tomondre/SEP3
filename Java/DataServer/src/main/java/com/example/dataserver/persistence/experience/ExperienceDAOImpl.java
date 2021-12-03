@@ -59,4 +59,9 @@ public class ExperienceDAOImpl implements ExperienceDAO
     public ArrayList<Experience> getExperienceByCategory(int id) {
         return repository.getAllByExperienceCategoryIdAndStockGreaterThan(id, 0);
     }
+
+    @Override
+    public ArrayList<Experience> getTopExperiences() {
+        return repository.findTop3ByStockAfter(0);
+    }
 }

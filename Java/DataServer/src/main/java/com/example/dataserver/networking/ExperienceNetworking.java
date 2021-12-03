@@ -98,4 +98,12 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
       responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
       responseObserver.onCompleted();
   }
+
+  @Override
+  public void getTopExperiences(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
+    ArrayList<Experience> topExperiences = experienceDAO.getTopExperiences();
+    String s = gson.toJson(topExperiences);
+    responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
+    responseObserver.onCompleted();
+  }
 }

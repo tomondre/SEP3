@@ -1,12 +1,12 @@
-@page "/SignUpCustomer"
+@page "/signup"
+@attribute [AllowAnonymous]
+
 @using Microsoft.AspNetCore.Components
 @using GrpcFileGeneration.Models
 @using WebShop.Services.Customer
 
 @inject NavigationManager NavigationManager
 @inject ICustomerService CustomerService; 
-
-@* TODO validation *@
 
 <div class="min-h-screen p-4 bg-gray-100 flex items-center justify-center">
   <EditForm Model="@newCustomer" OnSubmit="@CreateNewCustomer">
