@@ -61,7 +61,7 @@ namespace WebShop.Data.Experiences
             var httpResponseMessage = await client.GetAsync($"{uri}experiences?limit=3");
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var experienceList = JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync);
+            var experienceList = JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync, new JsonSerializerOptions(){PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
             return experienceList;
         }
 
