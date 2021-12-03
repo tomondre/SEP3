@@ -4,6 +4,7 @@ package networking.experience;
 
 import "Address.proto";
 import "Request.proto";
+import "User.proto";
 
 message ProtobufMessage{
   string messageOrObject = 1;
@@ -41,4 +42,7 @@ service ExperienceService {
   rpc removeStock(request.RequestMessage) returns (request.RequestMessage);
   rpc getExperienceByCategory(request.RequestMessage) returns (ExperienceListMessage);
   rpc getTopExperiences(request.RequestMessage) returns (ExperienceListMessage);
+  rpc GetAllProviderExperiencesByName(user.UserMessage) returns (ProtobufMessage);
+  rpc getExperiencesByName(ProtobufMessage) returns (ProtobufMessage);
+
 }

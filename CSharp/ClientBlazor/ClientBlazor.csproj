@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="CloudinaryDotNet" Version="1.15.2" />
       <PackageReference Include="Npm" Version="3.5.2" />
     </ItemGroup>
 

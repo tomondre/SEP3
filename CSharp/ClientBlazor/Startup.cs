@@ -47,13 +47,13 @@ namespace ClientBlazor
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Customer",  a => 
-                    a.RequireAuthenticatedUser().RequireClaim(ClaimTypes.Role, "Customer"));
+                    a.RequireAuthenticatedUser().RequireClaim(ClaimTypes.Role, "customer"));
                 
                 options.AddPolicy("Provider",  a => 
-                    a.RequireAuthenticatedUser().RequireClaim(ClaimTypes.Role, "Provider"));
+                    a.RequireAuthenticatedUser().RequireClaim(ClaimTypes.Role, "provider"));
                 
                 options.AddPolicy("Administrator",  a => 
-                    a.RequireAuthenticatedUser().RequireClaim(ClaimTypes.Role, "Administrator"));
+                    a.RequireAuthenticatedUser().RequireClaim(ClaimTypes.Role, "administrator"));
             });
         }
 

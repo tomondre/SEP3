@@ -12,4 +12,5 @@ public interface ProviderDAO {
     User editProvider(User provider);
     void removeProvider(int id);
     ArrayList<User> getAllNotApprovedProviders();
+    ArrayList<User> getAllByName(String name);
 }

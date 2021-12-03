@@ -7,6 +7,9 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import networking.experience.*;
 import networking.request.RequestMessage;
+import networking.experience.ProtobufMessage;
+import networking.experience.ProtobufStockRequest;
+import networking.user.UserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CompositeIterator;
 
@@ -77,6 +80,16 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
     ArrayList<Experience> experienceByCategory = experienceDAO.getExperienceByCategory(request.getId());
     responseObserver.onNext(arrayListToListMessage(experienceByCategory));
     responseObserver.onCompleted();
+   }
+ 
+ @Override
+ public void getAllProviderExperiencesByName(UserMessage request, StreamObserver<ProtobufMessage> responseObserver)
+  {
+    ArrayList<Experience> allProviderExperiencesByName =
+            experienceDAO.getAllProviderExperiencesByName(request.getId(), request.getEmail());
+    String s = gson.toJson(allProviderExperiencesByName);
+    responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
+    responseObserver.onCompleted();
   }
 
   @Override
@@ -92,5 +105,15 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
       builder.addExperiences(e.toMessage());
     }
     return builder.build();
+  }
+}
+
+@Override
+  public void getExperiencesByName(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver) {
+    ArrayList<Experience> experiences = experienceDAO.getExperiencesByName(request.getMessageOrObject());
+    String s = gson.toJson(experiences);
+    responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
+    responseObserver.onCompleted();
+
   }
 }

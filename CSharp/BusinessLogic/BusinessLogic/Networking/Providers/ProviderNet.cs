@@ -61,5 +61,14 @@ namespace BusinessLogic.Networking.Providers
             var providers = providerMessages.Select(a => new Provider(a)).ToList();
             return providers;
         }
+
+        public async Task<IList<Provider>> GetAllProvidersByNameAsync(string name)
+        {
+            var userMessage = new UserMessage() {Email = name};
+            var allByNameAsync = await client.GetAllByNameAsync(userMessage);
+            var providerMessages = allByNameAsync.Providers;
+            var providers = providerMessages.Select(a => new Provider(a)).ToList();
+            return providers;
+        }
     }
 }

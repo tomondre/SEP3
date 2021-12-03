@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Customers;
 using GrpcFileGeneration.Models;
@@ -37,13 +38,18 @@ namespace BusinessLogic.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<CustomerList>> GetAllCustomersAsync()
+        public async Task<ActionResult<CustomerList>> GetAllCustomersAsync([FromQuery(Name = "name")] string name)
         {
-            CustomerList allCustomersAsync = new()
+            CustomerList allCustomersAsync = new();
+            if (string.IsNullOrEmpty(name))
             {
-                Customers = await model.GetAllCustomersAsync()
-            };
+                allCustomersAsync.Customers = await model.GetAllCustomersAsync();
 
+            }
+            else
+            {
+                allCustomersAsync.Customers = await model.FindCustomerByNameAsync(name);
+            }
             return Ok(allCustomersAsync);
         }
 
