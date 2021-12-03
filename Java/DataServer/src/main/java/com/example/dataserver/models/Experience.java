@@ -1,6 +1,7 @@
 package com.example.dataserver.models;
 
 import com.google.gson.annotations.SerializedName;
+import networking.experience.ExperienceMessage;
 
 import javax.persistence.*;
 
@@ -67,7 +68,38 @@ public class Experience
         this.address = address;
     }
 
-   @Override
+    public Experience(ExperienceMessage e) {
+        id = e.getId();
+        picture = e.getPicture();
+        name = e.getName();
+        price = e.getPrice();
+        stock = e.getStock();
+        description = e.getDescription();
+        experienceValidity = e.getExperienceValidity();
+        experienceCategory = new Category(e.getExperienceCategory());
+        User user = new User();
+        user.setId(e.getProviderId());
+        experienceProvider = user;
+        address = new Address(e.getAddress());
+    }
+
+    public ExperienceMessage toMessage() {
+        return ExperienceMessage.newBuilder()
+                .setId(id)
+                .setPicture(picture)
+                .setName(name)
+                .setPrice(price)
+                .setStock(stock)
+                .setDescription(description)
+                .setExperienceValidity(experienceValidity)
+                .setExperienceCategory(experienceCategory.toMessage())
+                .setProviderId(experienceProvider.getId())
+                .setAddress(address.toMessage())
+                .build();
+
+    }
+
+    @Override
    public String toString() {
        return "Experience{" +
                "id=" + id +

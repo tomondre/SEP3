@@ -1,37 +1,73 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
+using System.Threading;
+using Networking.Address;
+using Networking.Experience;
 
 namespace GrpcFileGeneration.Models
 {
     public class Experience
     {
         public int Id { get;  set; }
-        // [Required]
+        [Required]
         public string Picture { get; set; }
-        // [Required, MaxLength(50)]
+        
+        [Required, MaxLength(50)]
         public string Name { get; set; }
-        // [Required]
+        
+        [Required]
         public double Price { get; set; }
-        // [Required]
+        
+        [Required]
         public int Stock { get;  set; }
-        // [Required, MaxLength(500)]
         
+        [Required, MaxLength(500)]
         public string Description { get; set; }
-        
-        // [Required, MaxLength(50)]
+        [Required]        
         public int ExperienceValidity { get; set; }
-        
+
         public Category ExperienceCategory { get; set; }
         
-        public  Provider ExperienceProvider { get; set; }
+        public  int ProviderId { get; set; }
         
         public Address Address { get; set; }
 
         public Experience()
         {
             ExperienceCategory = new Category();
-            ExperienceProvider = new Provider();
             Address = new Address();
         }
 
+        public Experience(ExperienceMessage e)
+        {
+            Id = e.Id;
+            Picture = e.Picture;
+            Name = e.Name;
+            Price = e.Price;
+            Stock = e.Stock;
+            Description = e.Description;
+            ExperienceValidity = e.ExperienceValidity;
+            ExperienceCategory = new Category(e.ExperienceCategory);
+            ProviderId = ProviderId;
+            Address = new Address(e.Address);
+        }
+
+        public ExperienceMessage ToMessage()
+        {
+            return new ExperienceMessage
+            {
+                Id = Id,
+                Address = Address.ToMessage(),
+                Description = Description,
+                Name = Name,
+                Price = Price,
+                Picture = Picture,
+                Stock = Stock,
+                ExperienceCategory = ExperienceCategory.ToMessage(),
+                ExperienceValidity = ExperienceValidity,
+                ProviderId = ProviderId
+            };
+        }
     }
 }
