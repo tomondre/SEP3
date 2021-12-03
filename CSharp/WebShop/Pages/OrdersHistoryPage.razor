@@ -1,10 +1,12 @@
 @page "/orders"
 @using WebShop.Services.Orders
 @using GrpcFileGeneration.Models.Orders
+@using WebShop.Cache
 @using OrderStripe = Stripe.Order;
 @using Order = GrpcFileGeneration.Models.Orders.Order;
 @inject IOrderService OrderService;
 @inject NavigationManager NavigationManager;
+@inject ICache Cache
 
 @if (orders == null)
 {
@@ -64,8 +66,8 @@ else
   private OrderList orders;
   protected override async Task OnInitializedAsync()
   {
-    //TODO Fetch customer id;
-    orders = await OrderService.GetCustomerOrdersAsync(1);
+    var cachedUserAsync = await Cache.GetCachedUser();
+    orders = await OrderService.GetCustomerOrdersAsync(cachedUserAsync.Id);
   }
 
   private void OpenSingleOrderView(int orderId)
