@@ -40,12 +40,12 @@
                         </div>
                         <div class="w-full px-4 mb-12" for="">
                             <label class="flex" for="">
-                                <input class="mr-4 mt-1" type="checkbox">
+                                <input @bind="isDataTicked" class="mr-4 mt-1" type="checkbox">
                                 <span class="text-sm">By singning up, you agree to our Terms, Data Policy and Cookies.</span>
                             </label>
                         </div>
                         <div class="w-full px-4">
-                            <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">Log In</button>
+                            <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">@(isDataTicked ? "Log In" : "Terms not ticked")</button>
                         </div>
                     </EditForm>
 
@@ -102,6 +102,8 @@
     [Parameter]
     public Action<bool> SignupCallback { get; set; }
 
+    private bool isDataTicked;
+
     private User userCred = new();
 
     private bool showPassword;
@@ -113,14 +115,17 @@
 
     private async void TryLoginAsync()
     {
-        try
+        if (isDataTicked)
         {
-            await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).ValidateUser(userCred);
-            NavigationManager.NavigateTo("/");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
+            try
+            {
+                await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).ValidateUser(userCred);
+                NavigationManager.NavigateTo("/");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 
