@@ -49,12 +49,12 @@ namespace WebShop.Services.Orders
             var serialize = JsonSerializer.Serialize(order);
             var stringContent = new StringContent(serialize, Encoding.UTF8, "application/json");
             var postAsync =  await client.PostAsync($"{url}orders", stringContent);
-            var readAsStringAsync = await postAsync.Content.ReadAsStringAsync();
             
             //Step 5 - Check exception
             CheckException(postAsync);
             
             //Step 6 - Deserialize
+            var readAsStringAsync = await postAsync.Content.ReadAsStringAsync();
             var deserialize = JsonSerializer.Deserialize<Order>(readAsStringAsync, new JsonSerializerOptions(){PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
 
             //Step 7 - Return Id of created order

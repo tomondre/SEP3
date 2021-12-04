@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models.Orders;
@@ -17,25 +18,46 @@ namespace BusinessLogic.Networking.Orders
         
         public async Task<Order> CreateOrderAsync(Order order)
         {
-            var result = await client.createOrderAsync(order.ToMessage());
-            return new Order(result);
+            try
+            {
+                var result = await client.createOrderAsync(order.ToMessage());
+                return new Order(result);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Order can't be created");
+            }
         }
 
         public async Task<IList<Order>> GetAllCustomerOrdersAsync(int id)
         {
-            var messages = await client.getAllCustomerOrdersAsync(new UserMessage{Id = id});
-            IList<Order> result = new List<Order>();
-            foreach (var order in messages.Orders)
+            try
             {
-                result.Add(new Order(order));
+                var messages = await client.getAllCustomerOrdersAsync(new UserMessage{Id = id});
+                IList<Order> result = new List<Order>();
+                foreach (var order in messages.Orders)
+                {
+                    result.Add(new Order(order));
+                }
+                return result;
             }
-            return result;
+            catch (Exception )
+            {
+                throw new Exception("Customer orders can't be fetched");
+            }
         }
 
         public async Task<Order> GetOrderByIdAsync(int id)
         {
-            var orderByIdAsync = await client.getOrderByIdAsync(new OrderMessage {Id = id});
-            return new Order(orderByIdAsync);
+            try
+            {
+                var orderByIdAsync = await client.getOrderByIdAsync(new OrderMessage {Id = id});
+                return new Order(orderByIdAsync);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Order cant be fetched");
+            }
         }
     }
 }

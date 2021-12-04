@@ -57,7 +57,7 @@ public class Order {
         for (OrderItemMessage item : order.getItemsList()) {
             arrayList.add(new OrderItem(item));
         }
-        items = new HashSet<OrderItem>(arrayList);
+        items = new HashSet<>(arrayList);
     }
 
     public OrderMessage toMessage() {
