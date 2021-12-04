@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using GrpcFileGeneration.Models;
 using GrpcFileGeneration.Models.Orders;
 using Networking.Order;
+using Networking.Request;
 using Networking.User;
 
 namespace BusinessLogic.Networking.Orders
@@ -21,20 +24,34 @@ namespace BusinessLogic.Networking.Orders
             return new Order(result);
         }
 
-        public async Task<IList<Order>> GetAllCustomerOrdersAsync(int id)
+        public async Task<Page<OrderList>> GetAllCustomerOrdersAsync(int id, int page)
         {
-            var messages = await client.getAllCustomerOrdersAsync(new UserMessage{Id = id});
-            IList<Order> result = new List<Order>();
-            foreach (var order in messages.Orders)
+            var requestMessage = new RequestMessage
             {
-                result.Add(new Order(order));
-            }
-            return result;
+                Id = id,
+                PageInfo = new PageRequestMessage()
+                {
+                    PageNumber = page,
+                    PageSize = 5
+                }
+            };
+            var response = await client.getAllCustomerOrdersAsync(requestMessage);
+            var orderMessage = response.Orders;
+            var orders = new OrderList
+            {
+                Orders = orderMessage.Select(a => new Order(a)).ToList()
+            };
+            
+            var ordersPage = new Page<OrderList>(response.PageInfo)
+            {
+                Content = orders
+            };
+            return ordersPage;
         }
 
         public async Task<Order> GetOrderByIdAsync(int id)
         {
-            var orderByIdAsync = await client.getOrderByIdAsync(new OrderMessage {Id = id});
+            var orderByIdAsync = await client.getOrderByIdAsync(new RequestMessage() {Id = id});
             return new Order(orderByIdAsync);
         }
     }

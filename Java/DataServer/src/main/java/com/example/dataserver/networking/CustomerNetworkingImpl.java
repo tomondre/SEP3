@@ -1,6 +1,5 @@
 package com.example.dataserver.networking;
 
-import com.example.dataserver.models.Address;
 import com.example.dataserver.models.Customer;
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.customer.CustomerDAO;
@@ -11,31 +10,32 @@ import networking.customer.CustomerMessage;
 import networking.customer.CustomerServiceGrpc;
 import networking.customer.CustomersMessage;
 import networking.page.PageMessage;
+import networking.provider.ProvidersMessage;
 import networking.request.PageRequestMessage;
 import networking.request.RequestMessage;
 import networking.user.UserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @GrpcService
+@EnableAsync
 public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceImplBase {
 
-    private Gson gson;
     private CustomerDAO dao;
+
     @Autowired
     public CustomerNetworkingImpl(CustomerDAO dao) {
         this.dao = dao;
-        gson = new Gson();
     }
 
+    @Async
     @Override
     public void createCustomer(CustomerMessage request, StreamObserver<UserMessage> responseObserver) {
 
@@ -43,12 +43,14 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
         var user = customer.getUser();
         user.setCustomer(customer);
 
-        User createdCustomer = dao.createCustomer(user);
+        var createdCustomerFuture = dao.createCustomer(user);
+        var createdCustomer = getObjectAfterDone(createdCustomerFuture);
         UserMessage userMessage = createdCustomer.toMessage();
         responseObserver.onNext(userMessage);
         responseObserver.onCompleted();
     }
 
+    @Async
     @Override
     public void getAllCustomers(PageRequestMessage request,
                                 StreamObserver<CustomersMessage> responseObserver)
@@ -58,6 +60,7 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
         customers(responseObserver, page);
     }
 
+    @Async
     @Override
     public void deleteCustomer(UserMessage request,
         StreamObserver<CustomerMessage> responseObserver)
@@ -70,7 +73,8 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
     @Async
     @Override
     public void getCustomerById(UserMessage request, StreamObserver<CustomerMessage> responseObserver) {
-        var customerById = dao.getCustomerById(request.getId());
+        var customerByIdFuture = dao.getCustomerById(request.getId());
+        var customerById = getObjectAfterDone(customerByIdFuture);
         var customerMessage = customerById.toCustomerMessage();
         responseObserver.onNext(customerMessage);
         responseObserver.onCompleted();
@@ -79,16 +83,18 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
     @Async
     @Override
     public void editCustomer(CustomerMessage request, StreamObserver<CustomerMessage> responseObserver) {
-        Customer customer = new Customer(request);
-        User user = customer.getUser();
+        var customer = new Customer(request);
+        var user = customer.getUser();
         user.setCustomer(customer);
-        User edited = dao.editCustomer(user);
+        var editedFuture = dao.editCustomer(user);
+        var edited = getObjectAfterDone(editedFuture);
         CustomerMessage customerMessage = edited.toCustomerMessage();
         responseObserver.onNext(customerMessage);
         responseObserver.onCompleted();
 
     }
 
+    @Async
     @Override
     public void findCustomerByName(RequestMessage request, StreamObserver<CustomersMessage> responseObserver)
     {
@@ -98,14 +104,36 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
         customers(responseObserver, page);
     }
 
-    private void customers(StreamObserver<CustomersMessage> responseObserver, Page<User> page)
+    private synchronized void customers(StreamObserver<CustomersMessage> responseObserver, Future<Page<User>> pageFuture)
     {
+        Page<User> page = getObjectAfterDone(pageFuture);
         var collect = page.getContent().stream().map(User::toCustomerMessage)
                           .collect(Collectors.toList());
         PageMessage pageInfo = PageMessage.newBuilder().setPageNumber(page.getNumber()).setTotalPages(page.getTotalPages())
                                           .setTotalElements(page.getTotalPages()).build();
-        CustomersMessage customersMessage = CustomersMessage.newBuilder().addAllCustomers(collect).setPage(pageInfo).build();
+        var customersMessage = CustomersMessage.newBuilder().addAllCustomers(collect).setPage(pageInfo).build();
         responseObserver.onNext(customersMessage);
         responseObserver.onCompleted();
+    }
+
+    private synchronized <T> T getObjectAfterDone(Future<T> future)
+    {
+        T object;
+        while (true)
+        {
+            if (future.isDone())
+            {
+                try
+                {
+                    object = future.get();
+                    break;
+                }
+                catch (ExecutionException | InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return object;
     }
 }

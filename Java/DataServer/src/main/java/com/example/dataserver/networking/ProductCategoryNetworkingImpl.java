@@ -2,7 +2,6 @@ package com.example.dataserver.networking;
 
 import com.example.dataserver.models.Category;
 import com.example.dataserver.persistence.category.CategoryDAO;
-import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import networking.category.CategoriesMessage;
@@ -12,63 +11,99 @@ import networking.page.PageMessage;
 import networking.request.PageRequestMessage;
 import networking.request.RequestMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 @GrpcService
+@EnableAsync
 public class ProductCategoryNetworkingImpl extends CategoryServiceGrpc.CategoryServiceImplBase
 {
     private CategoryDAO categoryDAO;
-    private Gson gson;
 
     @Autowired
     public ProductCategoryNetworkingImpl(CategoryDAO categoryDAO)
     {
         this.categoryDAO = categoryDAO;
-        gson = new Gson();
     }
 
+    @Async
     @Override
     public void getAllProductCategories(PageRequestMessage request, StreamObserver<CategoriesMessage> responseObserver)
     {
         PageRequest pageRequest = PageRequest.of(request.getPageNumber(), request.getPageSize());
-        var allCategories = categoryDAO.getAllCategories(pageRequest);
-        var collect = allCategories.getContent().stream().map(Category::toMessage).collect(Collectors.toList());
-        PageMessage pageMessage = PageMessage.newBuilder().setTotalElements(allCategories.getTotalElements())
-                                             .setTotalPages(allCategories.getTotalPages())
-                                             .setPageNumber(allCategories.getNumber()).build();
-        CategoriesMessage categoriesMessage =
-                CategoriesMessage.newBuilder().addAllCategories(collect).setPageInfo(pageMessage).build();
-        responseObserver.onNext(categoriesMessage);
-        responseObserver.onCompleted();
+        var allCategoriesFuture = categoryDAO.getAllCategories(pageRequest);
+        categories(responseObserver, allCategoriesFuture);
     }
 
+    @Async
     @Override
     public void addProductCategory(CategoryMessage request, StreamObserver<CategoryMessage> responseObserver)
     {
-        Category category = new Category(request);
-        Category createdCategory = categoryDAO.addProductCategory(category);
+        var category = new Category(request);
+        var createdCategoryFuture = categoryDAO.addProductCategory(category);
+        var createdCategory = getObjectAfterDone(createdCategoryFuture);
         CategoryMessage categoryMessage = createdCategory.toMessage();
         responseObserver.onNext(categoryMessage);
         responseObserver.onCompleted();
     }
 
+    @Async
     @Override
     public void editProductCategory(CategoryMessage request, StreamObserver<CategoryMessage> responseObserver)
     {
-        Category category = new Category(request);
-        Category editedCategory = categoryDAO.editProductCategory(category);
+        var category = new Category(request);
+        var editedCategoryFuture = categoryDAO.editProductCategory(category);
+        var editedCategory = getObjectAfterDone(editedCategoryFuture);
         CategoryMessage categoryMessage = editedCategory.toMessage();
         responseObserver.onNext(categoryMessage);
         responseObserver.onCompleted();
     }
 
+    @Async
     @Override
     public void deleteProductCategory(RequestMessage request, StreamObserver<CategoryMessage> responseObserver)
     {
         categoryDAO.deleteProductCategory(request.getId());
         responseObserver.onNext(CategoryMessage.newBuilder().build());
         responseObserver.onCompleted();
+    }
+
+    private synchronized void categories(StreamObserver<CategoriesMessage> responseObserver, Future<Page<Category>> pageFuture)
+    {
+        var page = getObjectAfterDone(pageFuture);
+        var collect = page.getContent().stream().map(Category::toMessage)
+                          .collect(Collectors.toList());
+        PageMessage pageInfo = PageMessage.newBuilder().setPageNumber(page.getNumber()).setTotalPages(page.getTotalPages())
+                                          .setTotalElements(page.getTotalPages()).build();
+        var categoriesMessage = CategoriesMessage.newBuilder().addAllCategories(collect).setPageInfo(pageInfo).build();
+        responseObserver.onNext(categoriesMessage);
+        responseObserver.onCompleted();
+    }
+
+    private synchronized <T> T getObjectAfterDone(Future<T> future)
+    {
+        T object;
+        while (true)
+        {
+            if (future.isDone())
+            {
+                try
+                {
+                    object = future.get();
+                    break;
+                }
+                catch (ExecutionException | InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return object;
     }
 }

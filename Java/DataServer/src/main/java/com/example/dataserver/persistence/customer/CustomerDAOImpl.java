@@ -1,16 +1,19 @@
 package com.example.dataserver.persistence.customer;
 
-import com.example.dataserver.models.Customer;
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.util.concurrent.Future;
 
 @Repository
+@EnableAsync
 public class CustomerDAOImpl implements CustomerDAO
 {
 
@@ -22,36 +25,43 @@ public class CustomerDAOImpl implements CustomerDAO
     this.repository = repository;
   }
 
+  @Async
   @Override
-  public User createCustomer(User customer)
+  public Future<User> createCustomer(User customer)
   {
-    return repository.save(customer);
+    return new AsyncResult<>(repository.save(customer));
   }
 
+  @Async
   @Override
-  public Page<User> getAllCustomers(Pageable pageable)
+  public Future<Page<User>> getAllCustomers(Pageable pageable)
   {
-    return repository.getAllByCustomer_FirstNameIsNotNull(pageable);
+    return new AsyncResult<>(repository.getAllByCustomer_FirstNameIsNotNull(pageable));
   }
 
+  @Async
   @Override
   public void deleteCustomer(int customerId)
   {
     repository.deleteById(customerId);
   }
 
+  @Async
   @Override
-  public Page<User> findCustomerByName(String name, Pageable pageable)
+  public Future<Page<User>> findCustomerByName(String name, Pageable pageable)
   {
-    return repository.findAllByCustomer_FirstNameContainingIgnoreCase(name, pageable);
+    return new AsyncResult<>(repository.findAllByCustomer_FirstNameContainingIgnoreCase(name, pageable));
   }
 
+  @Async
   @Override
-  public User getCustomerById(int id) {return repository.getUserById(id);
+  public Future<User> getCustomerById(int id) {
+    return new AsyncResult<>(repository.getUserById(id));
   }
 
+  @Async
   @Override
-  public User editCustomer(User customer) {
+  public Future<User> editCustomer(User customer) {
     User toEdit = repository.getUserById(customer.getId());
     toEdit.getCustomer().setFirstName(customer.getCustomer().getFirstName());
     toEdit.getCustomer().setLastName(customer.getCustomer().getLastName());
@@ -64,7 +74,6 @@ public class CustomerDAOImpl implements CustomerDAO
     toEdit.getCustomer().getAddress().setPostCode(customer.getCustomer().getAddress().getPostCode());
 
     repository.save(toEdit);
-    return toEdit;
-
+    return new AsyncResult<>(toEdit);
   }
 }

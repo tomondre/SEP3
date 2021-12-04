@@ -45,8 +45,8 @@ else
                     <tbody>
                     @foreach (var customer in customers.Content.Customers.Select((value, i) => new {value, i}))
                     {
-                        <tr class="text-xs @(customer.i % 2 != 0 ? "bg-white-50" : "bg-gray-50")" @onclick="() => LoadCustomerOrders(customer.value)">
-                            <td class="py-3 px-4">
+                        <tr class="text-xs @(customer.i % 2 != 0 ? "bg-white-50" : "bg-gray-50") hover:bg-indigo-50">
+                            <td class="cursor-pointer py-3 px-4" @onclick="() => LoadCustomerOrders(customer.value)">
                                 <p class="font-medium align-middle">@customer.value.FirstName @customer.value.LastName</p>
                             </td>
                             <td class="py-3 px-4">
@@ -70,11 +70,11 @@ else
                     </tbody>
                 </table>
             </div>
-            <div class="flex flex-wrap -mx-4 items-center justify-end">
+            <div class="flex flex-wrap mt-4 items-center justify-end">
                 <div class="w-full lg:w-auto px-4 flex items-center justify-center">
                     @foreach(var index in Enumerable.Range(1, customers.TotalPages))
                     {
-                        <a class="inline-flex mr-3 items-center justify-center w-8 h-8 text-xs @(pageNumber+1 == index ? "text-white bg-indigo-500":"text-gray-500 bg-white") border border-gray-300 hover:bg-indigo-50 rounded" @onclick="() => GetPageElements(index)">@index</a>
+                        <a class="cursor-pointer inline-flex mr-3 items-center justify-center w-8 h-8 text-xs @(pageNumber+1 == index ? "text-white bg-indigo-500":"text-gray-500 bg-white") border border-gray-300 hover:bg-indigo-50 rounded" @onclick="() => GetPageElements(index)">@index</a>
                     }
                 </div>
             </div>

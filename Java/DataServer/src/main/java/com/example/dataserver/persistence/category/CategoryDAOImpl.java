@@ -5,11 +5,15 @@ import com.example.dataserver.persistence.repository.ProductCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.util.concurrent.Future;
 
 @Repository
+@EnableAsync
 public class CategoryDAOImpl implements CategoryDAO
 {
   private final ProductCategoryRepository repository;
@@ -20,24 +24,28 @@ public class CategoryDAOImpl implements CategoryDAO
     this.repository = repository;
   }
 
+  @Async
   @Override
-  public Category addProductCategory(Category category)
+  public Future<Category> addProductCategory(Category category)
   {
-    return repository.save(category);
+    return new AsyncResult<>(repository.save(category));
   }
 
+  @Async
   @Override
-  public Page<Category> getAllCategories(Pageable pageable)
+  public Future<Page<Category>> getAllCategories(Pageable pageable)
   {
-    return repository.findAll(pageable);
+    return new AsyncResult<>(repository.findAll(pageable));
   }
 
+  @Async
   @Override
-  public Category editProductCategory(Category category)
+  public Future<Category> editProductCategory(Category category)
   {
-    return repository.save(category);
+    return new AsyncResult<>(repository.save(category));
   }
 
+  @Async
   @Override
   public void deleteProductCategory(int id)
   {

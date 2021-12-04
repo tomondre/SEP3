@@ -1,15 +1,14 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using GrpcFileGeneration.Models;
+using GrpcFileGeneration.Models.Orders;
 using OrderStripe = Stripe.Order;
-using Order = GrpcFileGeneration.Models.Orders.Order;
 
 namespace BusinessLogic.Networking.Orders
 {
     public interface IOrderNet
     {
-        Task<Order> CreateOrderAsync(GrpcFileGeneration.Models.Orders.Order order);
-        Task<IList<Order>> GetAllCustomerOrdersAsync(int id);
+        Task<Order> CreateOrderAsync(Order order);
+        Task<Page<OrderList>> GetAllCustomerOrdersAsync(int id, int page);
         Task<Order> GetOrderByIdAsync(int id);
     }
 }

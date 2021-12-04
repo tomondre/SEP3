@@ -10,6 +10,7 @@ using BusinessLogic.Model.Experiences;
 using BusinessLogic.Networking.Experiences;
 using BusinessLogic.Networking.Orders;
 using GrpcFileGeneration.Models;
+using GrpcFileGeneration.Models.Orders;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
 using Stripe;
@@ -36,9 +37,9 @@ namespace BusinessLogic.Model.Orders
             this.memoryCache = memoryCache;
         }
 
-        public async Task<IList<Order>> GetAllCustomerOrdersAsync(int id)
+        public async Task<Page<OrderList>> GetAllCustomerOrdersAsync(int id, int page)
         {
-            return await networking.GetAllCustomerOrdersAsync(id);
+            return await networking.GetAllCustomerOrdersAsync(id, page);
         }
 
         public async Task<Order> GetOrderByIdAsync(int id)
