@@ -191,6 +191,7 @@ else
         try
         {
             var orderId = await OrderService.CreateOrderAsync(order);
+            ShoppingCartService.ClearShoppingCart();
             NavigationManager.NavigateTo($"/success/orders/{orderId}");
         }
         catch (Exception e)

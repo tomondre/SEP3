@@ -40,6 +40,10 @@ public class OrderItem {
     @Column(name = "voucher")
     private String voucher;
 
+    @SerializedName(value = "provider", alternate = {"Provider"})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    private User provider;
+
     @SerializedName(value = "quantity", alternate = {"Quantity"})
     @Column(name = "quantity")
     private int quantity;
@@ -48,6 +52,8 @@ public class OrderItem {
     }
 
     public OrderItem(OrderItemMessage item){
+        provider = new User();
+        provider.setId(item.getProviderId());
         picture = item.getPicture();
         name = item.getName();
         price = item.getPrice();
@@ -65,11 +71,20 @@ public class OrderItem {
                 .setDescription(description)
                 .setQuantity(quantity)
                 .setVoucher(voucher)
+                .setProviderId(provider.getId())
                 .build();
     }
 
     public String getVoucher() {
         return voucher;
+    }
+
+    public User getProvider() {
+        return provider;
+    }
+
+    public void setProvider(User provider) {
+        this.provider = provider;
     }
 
     public void setVoucher(String voucher) {

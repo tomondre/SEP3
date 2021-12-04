@@ -10,7 +10,7 @@ namespace GrpcFileGeneration.Models
     public class Experience
     {
         public int Id { get;  set; }
-        public string Picture { get; set; }
+        public string Picture { get; set; } = "";
         
         [Required, MaxLength(50)]
         public string Name { get; set; }
@@ -47,7 +47,7 @@ namespace GrpcFileGeneration.Models
             Description = e.Description;
             ExperienceValidity = e.ExperienceValidity;
             CategoryId = e.CategoryId;
-            ProviderId = ProviderId;
+            ProviderId = e.ProviderId;
             Address = new Address(e.Address);
         }
 
