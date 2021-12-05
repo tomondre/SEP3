@@ -3,6 +3,7 @@ package com.example.dataserver.networking;
 import com.example.dataserver.models.Provider;
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.provider.ProviderDAO;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import networking.page.PageMessage;
@@ -44,11 +45,18 @@ public class ProviderNetworkingImpl extends ProviderServiceGrpc.ProviderServiceI
         user.setProvider(provider);
         var providerFuture = model.createProvider(user);
         var providerCreated = new User();
-        providerCreated = getObjectAfterDone(providerFuture);
+        try
+        {
+            providerCreated = getObjectAfterDone(providerFuture);
 
-        UserMessage userMessage = providerCreated.toMessage();
-        responseObserver.onNext(userMessage);
-        responseObserver.onCompleted();
+            UserMessage userMessage = providerCreated.toMessage();
+            responseObserver.onNext(userMessage);
+            responseObserver.onCompleted();
+        }
+        catch (Exception e)
+        {
+            responseObserver.onError(Status.INTERNAL.withDescription("Could not save the provider to the database.").asException());
+        }
     }
 
     @Async
@@ -65,10 +73,17 @@ public class ProviderNetworkingImpl extends ProviderServiceGrpc.ProviderServiceI
     public void getProviderById(RequestMessage request, StreamObserver<ProviderMessage> responseObserver)
     {
         var providerByIdFuture = model.getProviderById(request.getId());
-        var providerById = getObjectAfterDone(providerByIdFuture);
-        var provider = providerById.toProviderMessage();
-        responseObserver.onNext(provider);
-        responseObserver.onCompleted();
+        try
+        {
+            var providerById = getObjectAfterDone(providerByIdFuture);
+            var provider = providerById.toProviderMessage();
+            responseObserver.onNext(provider);
+            responseObserver.onCompleted();
+        }
+        catch (Exception e)
+        {
+            responseObserver.onError(Status.INTERNAL.withDescription("Could not fetch the data from the database.").asException());
+        }
     }
 
     @Async
@@ -79,10 +94,17 @@ public class ProviderNetworkingImpl extends ProviderServiceGrpc.ProviderServiceI
         var user = provider.getUser();
         user.setProvider(provider);
         var editedFuture = model.editProvider(user);
-        User edited = getObjectAfterDone(editedFuture);
-        ProviderMessage providerMessage = edited.toProviderMessage();
-        responseObserver.onNext(providerMessage);
-        responseObserver.onCompleted();
+        try
+        {
+            User edited = getObjectAfterDone(editedFuture);
+            ProviderMessage providerMessage = edited.toProviderMessage();
+            responseObserver.onNext(providerMessage);
+            responseObserver.onCompleted();
+        }
+        catch (Exception e)
+        {
+            responseObserver.onError(Status.INTERNAL.withDescription("Could not perform the edit in the database").asException());
+        }
     }
 
     @Async
@@ -98,9 +120,9 @@ public class ProviderNetworkingImpl extends ProviderServiceGrpc.ProviderServiceI
     @Override
     public void getAllNotApprovedProviders(PageRequestMessage request, StreamObserver<ProvidersMessage> responseObserver)
     {
-        PageRequest pageRequest = PageRequest.of(request.getPageNumber(), request.getPageSize());
-        var allNotApprovedProviders = model.getAllNotApprovedProviders(pageRequest);
-        providers(responseObserver, allNotApprovedProviders);
+            PageRequest pageRequest = PageRequest.of(request.getPageNumber(), request.getPageSize());
+            var allNotApprovedProviders = model.getAllNotApprovedProviders(pageRequest);
+            providers(responseObserver, allNotApprovedProviders);
     }
 
     @Async
@@ -114,17 +136,24 @@ public class ProviderNetworkingImpl extends ProviderServiceGrpc.ProviderServiceI
 
     private synchronized void providers(StreamObserver<ProvidersMessage> responseObserver, Future<Page<User>> pageFuture)
     {
-        Page<User> page = getObjectAfterDone(pageFuture);
-        var collect = page.getContent().stream().map(User::toProviderMessage)
-                          .collect(Collectors.toList());
-        PageMessage pageInfo = PageMessage.newBuilder().setPageNumber(page.getNumber()).setTotalPages(page.getTotalPages())
-                                          .setTotalElements(page.getTotalPages()).build();
-        var providersMessage = ProvidersMessage.newBuilder().addAllProviders(collect).setPageInfo(pageInfo).build();
-        responseObserver.onNext(providersMessage);
-        responseObserver.onCompleted();
+        try
+        {
+            Page<User> page = getObjectAfterDone(pageFuture);
+            var collect = page.getContent().stream().map(User::toProviderMessage)
+                              .collect(Collectors.toList());
+            PageMessage pageInfo = PageMessage.newBuilder().setPageNumber(page.getNumber()).setTotalPages(page.getTotalPages())
+                                              .setTotalElements(page.getTotalPages()).build();
+            var providersMessage = ProvidersMessage.newBuilder().addAllProviders(collect).setPageInfo(pageInfo).build();
+            responseObserver.onNext(providersMessage);
+            responseObserver.onCompleted();
+        }
+        catch (Exception e)
+        {
+            responseObserver.onError(Status.INTERNAL.withDescription("Could not fetch the data from the database").asException());
+        }
     }
 
-    private synchronized  <T> T getObjectAfterDone(Future<T> future)
+    private synchronized  <T> T getObjectAfterDone(Future<T> future) throws Exception
     {
         T object;
         while (true)
@@ -136,9 +165,9 @@ public class ProviderNetworkingImpl extends ProviderServiceGrpc.ProviderServiceI
                     object = future.get();
                     break;
                 }
-                catch (ExecutionException | InterruptedException e)
+                catch (Exception e)
                 {
-                    e.printStackTrace();
+                    throw new Exception();
                 }
             }
         }

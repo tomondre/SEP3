@@ -3,6 +3,7 @@ package com.example.dataserver.networking;
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.login.LoginDAO;
 import com.google.gson.Gson;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import networking.login.LoginServiceGrpc;
@@ -37,15 +38,23 @@ public class LoginNetworkingImpl extends LoginServiceGrpc.LoginServiceImplBase
   public void getUserLogin(UserMessage request,
       StreamObserver<UserMessage> responseObserver)
   {
+    try
+    {
+      var userLoginFuture = loginDAO.getUserLogin(new User(request));
+      var userLogin = getObjectAfterDone(userLoginFuture);
+      var userMessage = userLogin.toMessage();
+      responseObserver.onNext(userMessage);
+      responseObserver.onCompleted();
+    }
+    catch (Exception e)
+    {
+      responseObserver.onError(
+              Status.INTERNAL.withDescription("Could not fetch the user credentials from the database.").asException());
 
-    var userLoginFuture = loginDAO.getUserLogin(new User(request));
-    var userLogin = getObjectAfterDone(userLoginFuture);
-    var userMessage = userLogin.toMessage();
-    responseObserver.onNext(userMessage);
-    responseObserver.onCompleted();
+    }
   }
 
-  private synchronized <T> T getObjectAfterDone(Future<T> future)
+  private synchronized <T> T getObjectAfterDone(Future<T> future) throws Exception
   {
     T object;
     while (true)
@@ -59,7 +68,7 @@ public class LoginNetworkingImpl extends LoginServiceGrpc.LoginServiceImplBase
         }
         catch (ExecutionException | InterruptedException e)
         {
-          e.printStackTrace();
+          throw new Exception(e);
         }
       }
     }

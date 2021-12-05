@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
@@ -79,8 +80,10 @@ namespace BusinessLogic.Networking.Providers
                 PageNumber = page,
                 PageSize = 5
             };
+            
             var allNotApprovedProviders = await client.GetAllNotApprovedProvidersAsync(pageRequestMessage);
             var providerMessages = allNotApprovedProviders.Providers;
+            
             var providers = new ProviderList()
             {
                 Providers = providerMessages.Select(a => new Provider(a)).ToList()

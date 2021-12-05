@@ -4,6 +4,8 @@ import com.example.dataserver.models.Customer;
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.customer.CustomerDAO;
 import com.google.gson.Gson;
+import io.grpc.Status;
+import io.grpc.netty.shaded.io.netty.channel.ChannelOutboundBuffer;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import networking.customer.CustomerMessage;
@@ -43,11 +45,19 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
         var user = customer.getUser();
         user.setCustomer(customer);
 
-        var createdCustomerFuture = dao.createCustomer(user);
-        var createdCustomer = getObjectAfterDone(createdCustomerFuture);
-        UserMessage userMessage = createdCustomer.toMessage();
-        responseObserver.onNext(userMessage);
-        responseObserver.onCompleted();
+        try
+        {
+            var createdCustomerFuture = dao.createCustomer(user);
+            var createdCustomer = getObjectAfterDone(createdCustomerFuture);
+            UserMessage userMessage = createdCustomer.toMessage();
+            responseObserver.onNext(userMessage);
+            responseObserver.onCompleted();
+        }
+        catch (Exception e)
+        {
+            responseObserver.onError(Status.INTERNAL.withDescription("Could not save the customer to the database.").asException());
+
+        }
     }
 
     @Async
@@ -73,11 +83,18 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
     @Async
     @Override
     public void getCustomerById(UserMessage request, StreamObserver<CustomerMessage> responseObserver) {
-        var customerByIdFuture = dao.getCustomerById(request.getId());
-        var customerById = getObjectAfterDone(customerByIdFuture);
-        var customerMessage = customerById.toCustomerMessage();
-        responseObserver.onNext(customerMessage);
-        responseObserver.onCompleted();
+        try
+        {
+            var customerByIdFuture = dao.getCustomerById(request.getId());
+            var customerById = getObjectAfterDone(customerByIdFuture);
+            var customerMessage = customerById.toCustomerMessage();
+            responseObserver.onNext(customerMessage);
+            responseObserver.onCompleted();
+        }
+        catch (Exception e)
+        {
+            responseObserver.onError(Status.INTERNAL.withDescription("Could not fetch the customer from the database.").asException());
+        }
     }
 
     @Async
@@ -86,11 +103,18 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
         var customer = new Customer(request);
         var user = customer.getUser();
         user.setCustomer(customer);
-        var editedFuture = dao.editCustomer(user);
-        var edited = getObjectAfterDone(editedFuture);
-        CustomerMessage customerMessage = edited.toCustomerMessage();
-        responseObserver.onNext(customerMessage);
-        responseObserver.onCompleted();
+        try
+        {
+            var editedFuture = dao.editCustomer(user);
+            var edited = getObjectAfterDone(editedFuture);
+            CustomerMessage customerMessage = edited.toCustomerMessage();
+            responseObserver.onNext(customerMessage);
+            responseObserver.onCompleted();
+        }
+        catch (Exception e)
+        {
+            responseObserver.onError(Status.INTERNAL.withDescription("Could not save the edited provider to the database.").asException());
+        }
 
     }
 
@@ -106,17 +130,26 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
 
     private synchronized void customers(StreamObserver<CustomersMessage> responseObserver, Future<Page<User>> pageFuture)
     {
-        Page<User> page = getObjectAfterDone(pageFuture);
-        var collect = page.getContent().stream().map(User::toCustomerMessage)
-                          .collect(Collectors.toList());
-        PageMessage pageInfo = PageMessage.newBuilder().setPageNumber(page.getNumber()).setTotalPages(page.getTotalPages())
-                                          .setTotalElements(page.getTotalPages()).build();
-        var customersMessage = CustomersMessage.newBuilder().addAllCustomers(collect).setPage(pageInfo).build();
-        responseObserver.onNext(customersMessage);
-        responseObserver.onCompleted();
+        try
+        {
+            Page<User> page = getObjectAfterDone(pageFuture);
+            var collect = page.getContent().stream().map(User::toCustomerMessage)
+                              .collect(Collectors.toList());
+            PageMessage pageInfo = PageMessage.newBuilder().setPageNumber(page.getNumber()).setTotalPages(page.getTotalPages())
+                                              .setTotalElements(page.getTotalPages()).build();
+            var customersMessage = CustomersMessage.newBuilder().addAllCustomers(collect).setPage(pageInfo).build();
+            responseObserver.onNext(customersMessage);
+            responseObserver.onCompleted();
+        }
+        catch (Exception e)
+        {
+            responseObserver.onError(
+                    Status.INTERNAL.withDescription("Could not fetch the customers from the database.").asException());
+
+        }
     }
 
-    private synchronized <T> T getObjectAfterDone(Future<T> future)
+    private synchronized <T> T getObjectAfterDone(Future<T> future) throws Exception
     {
         T object;
         while (true)
@@ -130,7 +163,7 @@ public class CustomerNetworkingImpl extends CustomerServiceGrpc.CustomerServiceI
                 }
                 catch (ExecutionException | InterruptedException e)
                 {
-                    e.printStackTrace();
+                    throw new Exception(e);
                 }
             }
         }
