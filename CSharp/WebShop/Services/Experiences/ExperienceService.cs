@@ -65,9 +65,9 @@ namespace WebShop.Data.Experiences
             return experienceList;
         }
 
-        public async Task<ExperienceList> GetExperiencesByNameAsync(string? filterByName)
+        public async Task<ExperienceList> GetSortedExperiences(string? name, double price)
         {
-            var httpResponseMessage = await client.GetAsync($"{uri}experiences/?name={filterByName}");
+            var httpResponseMessage = await client.GetAsync($"{uri}experiences/?name={name}&price={price}");
             
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
