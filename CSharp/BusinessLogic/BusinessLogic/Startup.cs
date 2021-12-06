@@ -28,6 +28,7 @@ using Networking.Login;
 using Networking.Provider;
 using RiskFirst.Hateoas;
 using Stripe;
+using Customer = GrpcFileGeneration.Models.Customer;
 using CustomerService = Networking.Customer.CustomerService;
 using OrderService = Networking.Order.OrderService;
 
@@ -77,16 +78,16 @@ namespace BusinessLogic
             });
             services.AddSingleton(
                 new ProviderService.ProviderServiceClient(
-                    GrpcChannel.ForAddress("http://localhost:9090")));          
+                    GrpcChannel.ForAddress("http://localhost:9090")));
             services.AddSingleton<IProviderModel, ProviderModel>();
             services.AddSingleton<IProviderNet, ProviderNet>();
-            
+
             services.AddSingleton(
                 new CategoryService.CategoryServiceClient(
                     GrpcChannel.ForAddress("http://localhost:9090")));
             services.AddSingleton<IProductCategoryModel, ProductCategoryModel>();
             services.AddSingleton<IProductCategoryNet, ProductCategoryNet>();
-            
+
             services.AddSingleton(
                 new CustomerService.CustomerServiceClient(
                     GrpcChannel.ForAddress("http://localhost:9090")));
@@ -97,22 +98,22 @@ namespace BusinessLogic
                 new ExperienceService.ExperienceServiceClient(GrpcChannel.ForAddress("http://localhost:9090")));
             services.AddSingleton<IExperienceModel, ExperienceModel>();
             services.AddSingleton<IExperienceNet, ExperienceNet>();
-            
+
             services.AddSingleton(
                 new LoginService.LoginServiceClient(GrpcChannel.ForAddress("http://localhost:9090")));
             services.AddSingleton<ILoginModel>(x => new LoginModel(x.GetRequiredService<ILoginNet>(), key));
             services.AddSingleton<ILoginNet, LoginNet>();
-            
+
             services.AddSingleton(
                 new OrderService.OrderServiceClient(GrpcChannel.ForAddress("http://localhost:9090")));
             services.AddSingleton<IOrderModel, OrderModel>();
             services.AddSingleton<IOrderNet, OrderNet>();
 
-            
+
             services.AddSingleton<IValidator, Validator>();
-            
+
             services.AddControllers();
-            
+
             services.AddSingleton<ILinksService, DefaultLinksService>();
 
             services.AddMemoryCache();
@@ -127,28 +128,50 @@ namespace BusinessLogic
                     policy
                         .RequireRoutedLink("self", "GetProviderByIdRoute", x => new {id = x.Id})
                         .RequireRoutedLink("edit", "EditProviderRoute", x => new {id = x.Id})
-                        .RequireRoutedLink("remove", "DeleteProviderRoute", x => new {id = x.Id});
+                        .RequireRoutedLink("delete", "DeleteProviderRoute", x => new {id = x.Id});
                 });
                 config.AddPolicy<ProviderList>(policy =>
                 {
-                    policy.RequireRoutedLink("self", "GetProvidersRoute");
-                    policy.RequireRoutedLink("create", "CreateProviderRoute");
+                    policy
+                        .RequireRoutedLink("self", "GetProvidersRoute")
+                        .RequireRoutedLink("delete", "CreateProviderRoute");
                 });
                 config.AddPolicy<HandShake>(policy =>
                 {
-                    policy.RequireRoutedLink("allProviders", "GetProvidersRoute");
+                    policy
+                        .RequireRoutedLink("allProviders", "GetProvidersRoute");
                 });
-                //TODO add self rel
                 config.AddPolicy<Category>(policy =>
                 {
-                    policy.RequireRoutedLink("edit", "EditCategoryRoute", x => new {id = x.Id})
-                        .RequireRoutedLink("remove", "DeleteCategoryRoute", x => new {id = x.Id});
+                    policy
+                        .RequireRoutedLink("self", "GetCategoryByIdRoute", x => new {id = x.Id})
+                        .RequireRoutedLink("edit", "EditCategoryRoute", x => new {id = x.Id})
+                        .RequireRoutedLink("delete", "DeleteCategoryRoute", x => new {id = x.Id});
                 });
                 config.AddPolicy<CategoryList>(policy =>
                 {
-                    policy.RequireSelfLink();
-                    policy.RequireRoutedLink("create", "CreateCategoryRoute");
+                    policy
+                        .RequireRoutedLink("self", "GetCategoryRoute")
+                        .RequireRoutedLink("create", "CreateCategoryRoute");
                 });
+                config.AddPolicy<CustomerList>(policy =>
+                {
+                    policy
+                        .RequireRoutedLink("create", "CreateCustomerRoute")
+                        .RequireSelfLink();
+                });
+                config.AddPolicy<Customer>(policy =>
+                {
+                    policy
+                        .RequireRoutedLink("self", "GetCustomerByIdRoute", x => new {id = x.Id})
+                        .RequireRoutedLink("delete", "DeleteCustomerRoute", x => new {id = x.Id})
+                        .RequireRoutedLink("edit", "EditCustomerRoute", x => new {id = x.Id})
+                        ;
+                });
+                config.
+                    AddPolicy<Experience>(policy =>
+                    {
+                    });
             });
         }
 
