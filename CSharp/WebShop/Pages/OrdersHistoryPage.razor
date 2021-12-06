@@ -14,7 +14,7 @@
         <em>Loading...</em>
     </p>
 }
-else if (!orders.Orders.Any())
+else if (!orders.Content.Orders.Any())
 {
     <p class="text-center">
         <em>Wrong order ID</em>
@@ -41,7 +41,7 @@ else
             </thead>
             <tbody>
             
-            @foreach(var order in orders.Orders.Select((value, i) => new {value, i}))
+            @foreach(var order in orders.Content.Orders.Select((value, i) => new {value, i}))
             {
               <tr @onclick="() => OpenSingleOrderView(order.value.Id)" class="@(order.i % 2 == 0 ? "bg-gray-50" : "bg-white") text-xs">
                 <td class="py-5 px-6 font-medium">@order.value.Id</td>
@@ -57,21 +57,37 @@ else
           </table>
         </div>
       </div>
+      <div class="flex flex-wrap mt-4 items-center justify-end">
+        <div class="w-full lg:w-auto px-4 flex items-center justify-center">
+          @foreach(var index in Enumerable.Range(1, orders.TotalPages))
+          {
+            <a class="cursor-pointer inline-flex mr-3 items-center justify-center w-8 h-8 text-xs @(pageNumber+1 == index ? "text-white bg-indigo-500":"text-gray-500 bg-white") border border-gray-300 hover:bg-indigo-50 rounded" @onclick="() => GetPageElements(index)">@index</a>
+          }
+        </div>
+      </div>
     </div>
   </section>
 }
 
 @code {
-  private int counter;
-  private OrderList orders;
+  private Page<OrderList> orders;
+  private int pageNumber;
+  private User cachedUser;
   protected override async Task OnInitializedAsync()
   {
-    var cachedUserAsync = await Cache.GetCachedUser();
-    orders = await OrderService.GetCustomerOrdersAsync(cachedUserAsync.Id);
+    cachedUser = await Cache.GetCachedUser();
+    orders = await OrderService.GetCustomerOrdersAsync(cachedUser.Id, pageNumber);
   }
 
   private void OpenSingleOrderView(int orderId)
   {
     NavigationManager.NavigateTo($"/orders/{orderId}");
+  }
+  
+  private async Task GetPageElements(int i)
+  {
+  //TODO Fetch customer id;
+    pageNumber = i-1;
+    orders = await OrderService.GetCustomerOrdersAsync(cachedUser.Id, pageNumber);
   }
 }

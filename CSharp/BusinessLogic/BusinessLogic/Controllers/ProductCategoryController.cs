@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using BusinessLogic.Model.ProductCategory;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -23,53 +24,60 @@ namespace BusinessLogic.Controllers
 
         [AllowAnonymous]
         [HttpGet(Name = "GetCategoryRoute")]
-        public async Task<ActionResult<CategoryList>>GetAllCategories()
+        public async Task<ActionResult<Page<CategoryList>>>GetAllCategories([FromQuery] int page)
         {
-            CategoryList list = new CategoryList();
-            list.Categories = await model.GetAllCategoriesAsync();
-            foreach (var item in list.Categories)
+            try
             {
-                if (item.Links.Count == 0)
+                Page<CategoryList> categories = await model.GetAllCategoriesAsync(page);
+                foreach (var item in categories.Content.Categories)
                 {
-                    await linksService.AddLinksAsync(item);
+                    if (item.Links.Count == 0)
+                    {
+                        await linksService.AddLinksAsync(item);
+                    }
                 }
-            }
 
-            await linksService.AddLinksAsync(list);
-            return Ok(list);
-        }
-        
-        [AllowAnonymous]
-        [HttpGet("{id:int}", Name = "GetCategoryByIdRoute")]
-        public async Task<ActionResult<CategoryList>>GetCategoryById([FromRoute] int id)
-        {
-            CategoryList list = new CategoryList();
-            list.Categories = await model.GetAllCategoriesAsync();
-            foreach (var item in list.Categories)
+                await linksService.AddLinksAsync(categories.Content);
+                return Ok(categories);
+            }
+            catch (Exception e)
             {
-                await linksService.AddLinksAsync(item);
+                return StatusCode(403, e.Message);
             }
-
-            await linksService.AddLinksAsync(list);
-            
-            return Ok(list);
+           
         }
-        
+
         [Authorize(Roles = "Administrator")]
         [HttpPut("{id:int}",Name = "EditCategoryRoute")]
         public async Task<ActionResult<Category>> EditCategory([FromBody] Category category, [FromRoute] int id)
         {
-            category.Id = id;
-            var editProductCategoryAsync = await model.EditProductCategoryAsync(category);
-            return Ok(editProductCategoryAsync);
+            try
+            {
+                category.Id = id;
+                var editProductCategoryAsync = await model.EditProductCategoryAsync(category);
+                return Ok(editProductCategoryAsync);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(403, e.Message);
+            }
+           
         }
         
         [Authorize(Roles = "Administrator")]
         [HttpPost(Name = "CreateCategoryRoute")]
         public async Task<ActionResult<Category>> CreateCategory([FromBody] Category category)
         {
-            var addProductCategoryAsync = await model.AddProductCategoryAsync(category);    
-            return Ok(addProductCategoryAsync);
+            try
+            {
+                var addProductCategoryAsync = await model.AddProductCategoryAsync(category);    
+                return Ok(addProductCategoryAsync);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(403, e.Message);
+            }
+         
         }
         
         [Authorize(Roles = "Administrator")]

@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using RiskFirst.Hateoas.Models;
 
 namespace GrpcFileGeneration.Models
 {
-    public class ExperienceList
+    public class ExperienceList : ILinkContainer
     {
         public IList<Experience> Experiences { get; set; }
 
@@ -10,5 +11,15 @@ namespace GrpcFileGeneration.Models
         {
             Experiences = new List<Experience>();
         }
+
+        public void AddLink(string id, Link link)
+        {
+            if (!Links.ContainsKey(id))
+            {
+                Links.Add(id, link);
+            }
+        }
+
+        public Dictionary<string, Link> Links { get; set; }
     }
 }

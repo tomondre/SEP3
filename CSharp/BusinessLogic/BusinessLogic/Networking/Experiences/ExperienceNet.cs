@@ -92,7 +92,7 @@ namespace BusinessLogic.Networking.Experiences
 
         public async Task<IList<Experience>> GetAllProviderExperiencesByNameAsync(int id, string name)
         {
-            var allProviderExperiencesByNameAsync = await client.GetAllProviderExperiencesByNameAsync(new RequestMessage {Id = id, Name = name});
+            var allProviderExperiencesByNameAsync = await client.getAllProviderExperiencesByNameAsync(new RequestMessage {Id = id, Name = name});
             return ExperienceListMessageToList(allProviderExperiencesByNameAsync);
         }
     }

@@ -5,15 +5,21 @@ import com.example.dataserver.models.OrderItem;
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.concurrent.Future;
 
 @Repository
+@EnableAsync
 public class OrderDAOImpl implements OrderDAO {
 
     @PersistenceContext
@@ -25,24 +31,27 @@ public class OrderDAOImpl implements OrderDAO {
         this.repository = repository;
     }
 
+    @Async
     @Override
-    public Order createOrder(Order order) {
+    public Future<Order> createOrder(Order order) {
         for (OrderItem item : order.getItems()) {
             item.setOrder(order);
             User reference = em.getReference(User.class, item.getProvider().getId());
             item.setProvider(reference);
         }
         order.setCreated_on(LocalDateTime.now());
-        return repository.save(order);
+        return new AsyncResult<>(repository.save(order));
     }
 
+    @Async
     @Override
-    public ArrayList<Order> getAllCustomerOrders(int id) {
-        return repository.getAllByUser_Id(id);
+    public Future<Page<Order>> getAllCustomerOrders(int id, Pageable pageable) {
+        return new AsyncResult<>(repository.getAllByUser_Id(id, pageable));
     }
 
+    @Async
     @Override
-    public Order getOrderById(int id) {
-        return repository.getOrderById(id);
+    public Future<Order> getOrderById(int id) {
+        return new AsyncResult<>(repository.getOrderById(id));
     }
 }

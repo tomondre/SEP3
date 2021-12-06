@@ -27,6 +27,6 @@ namespace GrpcFileGeneration.Models.Orders
             }
         }
 
-        public double TaxAmount => (double) Tax / 100 * OrderTotal;
+        public double TaxAmount => OrderTotal - OrderTotal /(1 +Tax / 100);
     }
 }

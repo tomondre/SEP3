@@ -54,7 +54,10 @@ namespace GrpcFileGeneration.Models
         }
         public void AddLink(string id, Link link)
         {
-            Links = new Dictionary<string, Link>();
+            if (!Links.ContainsKey(id))
+            {
+                Links.Add(id, link);
+            }
         }
         
     }

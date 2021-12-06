@@ -6,13 +6,13 @@ namespace BusinessLogic.Model.Providers
 {
     public interface IProviderModel
     {
-        public Task<User> CreateProvider(Provider provider);
-        public Task<IList<Provider>> GetAllProviders();
+        public Task<User> CreateProviderAsync(Provider provider);
+        public Task<Page<ProviderList>> GetAllProvidersAsync(int page);
         Task<Provider> GetProviderByIdAsync(int id);
         Task<Provider> EditProviderAsync(Provider provider);
-        Task DeleteProvider(int id);
-        Task<IList<Provider>> GetAllNotApprovedProviders();
-        Task<IList<Provider>> GetAllProvidersByNameAsync(string name);
+        Task DeleteProviderAsync(int id);
+        Task<Page<ProviderList>> GetAllNotApprovedProvidersAsync(int page);
+        Task<Page<ProviderList>> GetAllProvidersByNameAsync(string name, int page);
 
     }
 }

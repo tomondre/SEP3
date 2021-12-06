@@ -17,7 +17,7 @@ namespace BusinessLogic.Model.Providers
             this.validator = validator;
         }
 
-        public Task<User> CreateProvider(Provider provider)
+        public Task<User> CreateProviderAsync(Provider provider)
         {
             //TODO validator redundant as we have the validation constrains in the model classes
             // if (!validator.isValidCvr(provider.Cvr))
@@ -36,9 +36,9 @@ namespace BusinessLogic.Model.Providers
             return network.CreateProviderAsync(provider);
         }
 
-        public Task<IList<Provider>> GetAllProviders()
+        public Task<Page<ProviderList>> GetAllProvidersAsync(int page)
         {
-            return network.GetAllProvidersAsync();
+            return network.GetAllProvidersAsync(page);
         }
 
         public Task<Provider> GetProviderByIdAsync(int id)
@@ -51,19 +51,19 @@ namespace BusinessLogic.Model.Providers
             return network.EditProviderAsync(provider);
         }
 
-        public Task DeleteProvider(int id)
+        public Task DeleteProviderAsync(int id)
         {
             return network.DeleteProvider(id);
         }
 
-        public Task<IList<Provider>> GetAllNotApprovedProviders()
+        public Task<Page<ProviderList>> GetAllNotApprovedProvidersAsync(int page)
         {
-            return network.GetAllNotApprovedProvidersAsync();
+            return network.GetAllNotApprovedProvidersAsync(page);
         }
 
-        public Task<IList<Provider>> GetAllProvidersByNameAsync(string name)
+        public Task<Page<ProviderList>> GetAllProvidersByNameAsync(string name, int page)
         {
-            return network.GetAllProvidersByNameAsync(name);
+            return network.GetAllProvidersByNameAsync(name, page);
         }
     }
 }

@@ -40,7 +40,7 @@ service ExperienceService {
    rpc isInStock(request.RequestMessage) returns (request.RequestMessage);
    rpc deleteExperience(request.RequestMessage) returns (request.RequestMessage);
    rpc removeStock(request.RequestMessage) returns (request.RequestMessage);
-   rpc GetAllProviderExperiencesByName(request.RequestMessage) returns (ExperienceListMessage);
+   rpc getAllProviderExperiencesByName(request.RequestMessage) returns (ExperienceListMessage);
    rpc getExperienceByCategory(request.RequestMessage) returns (ExperienceListMessage);
    rpc getTopExperiences(request.RequestMessage) returns (ExperienceListMessage);
    rpc getSortedExperiences(request.RequestMessage) returns (ExperienceListMessage);

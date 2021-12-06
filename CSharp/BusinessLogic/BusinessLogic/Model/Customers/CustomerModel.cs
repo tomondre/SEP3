@@ -21,9 +21,9 @@ namespace BusinessLogic.Model.Customers
             return network.CreateCustomerAsync(customer);
         }
 
-        public async Task<IList<Customer>> GetAllCustomersAsync()
+        public async Task<Page<CustomerList>> GetAllCustomersAsync(int pageRequest)
         {
-            return await network.GetAllCustomersAsync();
+            return await network.GetAllCustomersAsync(pageRequest);
         }
 
         public async Task DeleteCustomerAsync(int customerId)
@@ -31,9 +31,9 @@ namespace BusinessLogic.Model.Customers
             await network.DeleteCustomerAsync(customerId);
         }
 
-        public async Task<IList<Customer>> FindCustomerByNameAsync(string name)
+        public async Task<Page<CustomerList>> FindCustomerByNameAsync(string name, int pageRequest)
         {
-            return await network.FindCustomerByNameAsync(name);
+            return await network.FindCustomerByNameAsync(name, pageRequest);
         }
 
         public async Task<Customer> GetCustomerByIdAsync(int id)

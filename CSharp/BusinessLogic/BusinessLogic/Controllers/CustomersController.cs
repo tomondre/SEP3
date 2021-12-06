@@ -10,7 +10,6 @@ namespace BusinessLogic.Controllers
 {
 
     // [Authorize]
-
     [ApiController]
     [Route("[controller]")]
     public class CustomersController : ControllerBase
@@ -38,19 +37,27 @@ namespace BusinessLogic.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<CustomerList>> GetAllCustomersAsync([FromQuery(Name = "name")] string name)
+        public async Task<ActionResult<Page<CustomerList>>> GetAllCustomersAsync([FromQuery(Name = "name")] string name, [FromQuery(Name = "page")] int pageNumber)
         {
-            CustomerList allCustomersAsync = new();
-            if (string.IsNullOrEmpty(name))
+            //TODO generate the hateoas links
+            try
             {
-                allCustomersAsync.Customers = await model.GetAllCustomersAsync();
-
+                Page<CustomerList> allCustomersAsync = new();
+                if (string.IsNullOrEmpty(name))
+                {
+                    allCustomersAsync = await model.GetAllCustomersAsync(pageNumber);
+                }
+                else
+                {
+                    allCustomersAsync = await model.FindCustomerByNameAsync(name, pageNumber);
+                }
+                return Ok(allCustomersAsync);
             }
-            else
+            catch (Exception e)
             {
-                allCustomersAsync.Customers = await model.FindCustomerByNameAsync(name);
+                return StatusCode(403, e.Message);
             }
-            return Ok(allCustomersAsync);
+            
         }
 
         [HttpDelete]
@@ -65,8 +72,16 @@ namespace BusinessLogic.Controllers
         [HttpGet("{id:int}", Name = "GetCustomerByIdRoute")]
         public async Task<ActionResult<User>> GetCustomerById([FromRoute] int id)
         {
-            var providerById = await model.GetCustomerByIdAsync(id);
-            return Ok(providerById);
+            try
+            {
+                var providerById = await model.GetCustomerByIdAsync(id);
+                return Ok(providerById);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(403, e.Message);
+            }
+      
         }
         
         //[Authorize(Roles = "Customer")]
@@ -80,8 +95,7 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                return StatusCode(500, e.Message);
+                return StatusCode(403, e.Message);
             }
            
         }

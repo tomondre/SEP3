@@ -9,53 +9,52 @@ import javax.persistence.*;
 @Table(name = "category", schema = "sep3", uniqueConstraints={@UniqueConstraint(columnNames ={"id", "category_name"})})
 public class Category
 {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
-  private int id;
-  @Column(name = "category_name")
-  @SerializedName(value = "categoryName", alternate = "CategoryName")
-  private String categoryName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    @Column(name = "category_name")
+    @SerializedName(value = "categoryName", alternate = "CategoryName")
+    private String categoryName;
 
-  public Category()
-  {
-  }
+    public Category()
+    {
+    }
 
-  public Category(CategoryMessage c) {
-    categoryName = c.getCategoryName();
-    id = c.getId();
-  }
+    public Category(CategoryMessage categoryMessage)
+    {
+      this.id = categoryMessage.getId();
+      this.categoryName = categoryMessage.getCategoryName();
+    }
 
-  public CategoryMessage toMessage() {
-    return CategoryMessage.newBuilder()
-            .setCategoryName(categoryName)
-            .setId(id)
-            .build();
-  }
+    public CategoryMessage toMessage()
+    {
+        return CategoryMessage.newBuilder().setId(id).setCategoryName(categoryName).build();
+    }
 
     public int getId()
-  {
-    return id;
-  }
+    {
+        return id;
+    }
 
-  public void setId(int id)
-  {
-    this.id = id;
-  }
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 
-  public String getCategoryName()
-  {
-    return categoryName;
-  }
+    public String getCategoryName()
+    {
+        return categoryName;
+    }
 
-  public void setCategoryName(String categoryName)
-  {
-    this.categoryName = categoryName;
-  }
+    public void setCategoryName(String categoryName)
+    {
+        this.categoryName = categoryName;
+    }
 
-  @Override
-  public String toString()
-  {
-    return "Category{" + "id=" + id + ", CategoryName='" + categoryName + '\'' + '}';
-  }
+    @Override
+    public String toString()
+    {
+        return "Category{" + "id=" + id + ", CategoryName='" + categoryName + '\'' + '}';
+    }
 }

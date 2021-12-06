@@ -3,6 +3,7 @@ package com.example.dataserver.persistence.experience;
 import com.example.dataserver.models.Experience;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface ExperienceDAO {
     Experience addExperience(Experience experience);
@@ -13,7 +14,7 @@ public interface ExperienceDAO {
     void deleteExperience(int experienceId);
     void removeStock(int id, int quantity);
     ArrayList<Experience> getAllProviderExperiencesByName(int id, String name);
-    ArrayList<Experience> getExperienceByCategory(int id);
+    List<Experience> getExperienceByCategory(int id);
     ArrayList<Experience> getTopExperiences();
     ArrayList<Experience> getExperiencesByName(String name);
 }

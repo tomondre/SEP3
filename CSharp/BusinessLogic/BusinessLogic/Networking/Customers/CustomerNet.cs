@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 using Networking.Customer;
+using Networking.Request;
 using Networking.User;
 
 namespace BusinessLogic.Networking.Customers
@@ -24,12 +25,22 @@ namespace BusinessLogic.Networking.Customers
             return user;
         }
 
-        public async Task<IList<Customer>> GetAllCustomersAsync()
+        public async Task<Page<CustomerList>> GetAllCustomersAsync(int pageRequest)
         {
-            CustomersMessage response = await client.getAllCustomersAsync(new UserMessage());
+            var pageRequestMessage = new PageRequestMessage() {PageNumber = pageRequest, PageSize = 5};
+            CustomersMessage response = await client.getAllCustomersAsync(pageRequestMessage);
+            
             var customersMessage = response.Customers;
-            var customers = customersMessage.Select(a => new Customer(a)).ToList();
-            return customers;
+            var customers = new CustomerList()
+            {
+                Customers = customersMessage.Select(a => new Customer(a)).ToList()
+            };
+            
+            var customersPage = new Page<CustomerList>(response.Page)
+            {
+                Content = customers
+            };
+            return customersPage;
         }
 
         public async Task DeleteCustomerAsync(int customerId)
@@ -52,13 +63,23 @@ namespace BusinessLogic.Networking.Customers
 
         }
 
-        public async Task<IList<Customer>> FindCustomerByNameAsync(string name)
+        public async Task<Page<CustomerList>> FindCustomerByNameAsync(string name, int pageRequest)
         {
-            var userMessage = new UserMessage() {Email = name};
-            var findCustomerByNameAsync = await client.FindCustomerByNameAsync(userMessage);
-            var customerMessages = findCustomerByNameAsync.Customers;
-            var customers = customerMessages.Select(a => new Customer(a)).ToList();
-            return customers;
+            var pageRequestMessage = new PageRequestMessage() {PageNumber = pageRequest, PageSize = 5};
+            var requestMessage = new RequestMessage() {Name = name, PageInfo = pageRequestMessage};
+            var response = await client.FindCustomerByNameAsync(requestMessage);
+            
+            var customersMessage = response.Customers;
+            var customers = new CustomerList()
+            {
+                Customers = customersMessage.Select(a => new Customer(a)).ToList()
+            };
+            
+            var customersPage = new Page<CustomerList>(response.Page)
+            {
+                Content = customers
+            };
+            return customersPage;
         }
     }
 }

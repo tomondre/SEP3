@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Networking.User;
+using RiskFirst.Hateoas.Models;
 
 namespace GrpcFileGeneration.Models
 {
-    public class User
+    public class User : ILinkContainer
     {
         public int Id { set; get; }
         // [Required, EmailAddress]
@@ -41,5 +43,15 @@ namespace GrpcFileGeneration.Models
                 SecurityType = this.SecurityType
             };
         }
+
+        public void AddLink(string id, Link link)
+        {
+            if (!Links.ContainsKey(id))
+            {
+                Links.Add(id, link);
+            }
+        }
+
+        public Dictionary<string, Link> Links { get; set; }
     }
 }
