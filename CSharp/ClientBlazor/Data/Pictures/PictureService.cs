@@ -2,6 +2,8 @@ using System.Threading.Tasks;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Components.Forms;
+using Stripe;
+using Account = CloudinaryDotNet.Account;
 
 namespace ClientBlazor.Data.Pictures
 {

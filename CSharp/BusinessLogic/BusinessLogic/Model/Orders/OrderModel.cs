@@ -59,7 +59,14 @@ namespace BusinessLogic.Model.Orders
             }
 
             //Step 2 - Create payment call to Stripe
-            await CreatePayment(order);
+            try
+            {
+                await CreatePayment(order);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Payment failed");
+            }
             
             //Step 3/4 - Remove experiences stock from database, Generate vouchers and save them
             foreach (var item in order.ShoppingCart.ShoppingCartItems)

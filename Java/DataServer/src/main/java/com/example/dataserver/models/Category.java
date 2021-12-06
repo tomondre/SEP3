@@ -6,8 +6,7 @@ import networking.category.CategoryMessage;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "category", schema = "sep3",
-       uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "category_name"})})
+@Table(name = "category", schema = "sep3", uniqueConstraints={@UniqueConstraint(columnNames ={"id", "category_name"})})
 public class Category
 {
     @Id

@@ -19,5 +19,7 @@ public interface ExperienceRepository extends JpaRepository<Experience, Integer>
   boolean existsByIdAndStockIsGreaterThanEqual(@Param("id") int id, @Param("stock") int quantity);
   ArrayList<Experience> findAllByExperienceProviderIdAndNameContainsIgnoreCase(@Param("experience_provider_id")int id, @Param("name") String name);
   ArrayList<Experience> getAllByStockGreaterThan(@Param("stock") int stock);
-  Page<Experience> getAllByExperienceCategoryIdAndStockGreaterThan(int experienceCategory_id, int stock, Pageable pageable);
+  ArrayList<Experience> getAllByExperienceCategoryIdAndStockGreaterThan(int experienceCategory_id, int stock);
+  ArrayList<Experience> findTop3ByStockAfter(int stock);
+  ArrayList<Experience> getAllByNameContainsIgnoreCase(@Param("name") String name);
 }

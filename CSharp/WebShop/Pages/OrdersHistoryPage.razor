@@ -1,10 +1,12 @@
 @page "/orders"
 @using WebShop.Services.Orders
 @using GrpcFileGeneration.Models.Orders
+@using WebShop.Cache
 @using OrderStripe = Stripe.Order;
 @using Order = GrpcFileGeneration.Models.Orders.Order;
 @inject IOrderService OrderService;
 @inject NavigationManager NavigationManager;
+@inject ICache Cache
 
 @if (orders == null)
 {
@@ -70,11 +72,11 @@ else
 @code {
   private Page<OrderList> orders;
   private int pageNumber;
-  
+  private User cachedUser;
   protected override async Task OnInitializedAsync()
   {
-    //TODO Fetch customer id;
-    orders = await OrderService.GetCustomerOrdersAsync(1, pageNumber);
+    cachedUser = await Cache.GetCachedUser();
+    orders = await OrderService.GetCustomerOrdersAsync(cachedUser.Id, pageNumber);
   }
 
   private void OpenSingleOrderView(int orderId)
@@ -86,6 +88,6 @@ else
   {
   //TODO Fetch customer id;
     pageNumber = i-1;
-    orders = await OrderService.GetCustomerOrdersAsync(1, pageNumber);
+    orders = await OrderService.GetCustomerOrdersAsync(cachedUser.Id, pageNumber);
   }
 }

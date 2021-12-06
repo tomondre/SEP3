@@ -15,4 +15,6 @@ public interface ExperienceDAO {
     void removeStock(int id, int quantity);
     ArrayList<Experience> getAllProviderExperiencesByName(int id, String name);
     List<Experience> getExperienceByCategory(int id, int pageNumber);
+    ArrayList<Experience> getTopExperiences();
+    ArrayList<Experience> getExperiencesByName(String name);
 }

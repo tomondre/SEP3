@@ -27,6 +27,7 @@ message OrderItemMessage {
   double price = 5;
   int32 quantity = 6;
   string voucher = 7;
+  int32 providerId = 8;
 }
 
 service OrderService {

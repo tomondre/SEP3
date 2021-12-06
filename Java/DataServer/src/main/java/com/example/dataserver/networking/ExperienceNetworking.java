@@ -1,167 +1,125 @@
 package com.example.dataserver.networking;
 
 import com.example.dataserver.models.Experience;
-import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.experience.ExperienceDAO;
 import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
-import networking.experience.ExperienceServiceGrpc;
+import networking.experience.*;
+import networking.request.RequestMessage;
 import networking.experience.ProtobufMessage;
 import networking.experience.ProtobufStockRequest;
-import networking.page.PageMessage;
-import networking.provider.ProvidersMessage;
 import networking.user.UserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
+import networking.experience.ExperienceServiceGrpc;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.stream.Collectors;
 
 @GrpcService
 @EnableAsync
 public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServiceImplBase
 {
-    private ExperienceDAO experienceDAO;
-    private Gson gson;
+  private ExperienceDAO experienceDAO;
 
-    @Autowired
-    public ExperienceNetworking(ExperienceDAO experienceDAO)
-    {
-        this.experienceDAO = experienceDAO;
-        gson = new Gson();
-    }
+  @Autowired
+  public ExperienceNetworking(ExperienceDAO experienceDAO)
+  {
+    this.experienceDAO = experienceDAO;
+  }
 
     @Async
-    @Override
-    public void getAllProviderExperiences(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver)
-    {
-        ArrayList<Experience> allProviderExperiences =
-                experienceDAO.getAllProviderExperiences(Integer.parseInt(request.getMessageOrObject()));
-        String toJson = gson.toJson(allProviderExperiences);
-        responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(toJson).build());
-        responseObserver.onCompleted();
-    }
+  @Override
+  public void getAllProviderExperiences(RequestMessage request, StreamObserver<ExperienceListMessage> responseObserver) {
+    ArrayList<Experience> allProviderExperiences = experienceDAO.getAllProviderExperiences(request.getId());
+    responseObserver.onNext(arrayListToListMessage(allProviderExperiences));
+    responseObserver.onCompleted();
+  }
 
-    @Async
-    @Override
-    public void getAllWebShopExperiences(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver)
-    {
-        ArrayList<Experience> allWebShopExperiences = experienceDAO.getAllWebShopExperiences();
-        String s = gson.toJson(allWebShopExperiences);
-        responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
-        responseObserver.onCompleted();
-    }
+  @Async
+  @Override
+  public void getAllWebShopExperiences(RequestMessage request, StreamObserver<ExperienceListMessage> responseObserver) {
+    ArrayList<Experience> allWebShopExperiences = experienceDAO.getAllWebShopExperiences();
+    responseObserver.onNext(arrayListToListMessage(allWebShopExperiences));
+    responseObserver.onCompleted();
+  }
 
-    @Async
-    @Override
-    public void addExperience(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver)
-    {
-        Experience experience = gson.fromJson(request.getMessageOrObject(), Experience.class);
-        Experience result = experienceDAO.addExperience(experience);
-        String string = gson.toJson(result);
-        responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(string).build());
-        responseObserver.onCompleted();
-    }
+  @Async
+  @Override
+  public void addExperience(ExperienceMessage request, StreamObserver<ExperienceMessage> responseObserver) {
+    Experience experience = experienceDAO.addExperience(new Experience(request));
+    responseObserver.onNext(experience.toMessage());
+    responseObserver.onCompleted();
+  }
 
-    @Async
-    @Override
-    public void getExperienceById(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver)
-    {
-        int id = Integer.parseInt(request.getMessageOrObject());
-        Experience experienceById = experienceDAO.getExperienceById(id);
-        String json = gson.toJson(experienceById);
-        responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(json).build());
-        responseObserver.onCompleted();
-    }
+  @Async
+  @Override
+  public void getExperienceById(RequestMessage request, StreamObserver<ExperienceMessage> responseObserver) {
+    Experience experienceById = experienceDAO.getExperienceById(request.getId());
+    responseObserver.onNext(experienceById.toMessage());
+    responseObserver.onCompleted();
+  }
 
-    @Async
-    @Override
-    public void isInStock(ProtobufStockRequest request, StreamObserver<ProtobufMessage> responseObserver)
-    {
-        int id = request.getId();
-        int quantity = request.getQuantity();
-        boolean inStock = experienceDAO.isInStock(id, quantity);
-        responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(String.valueOf(inStock)).build());
-        responseObserver.onCompleted();
-    }
+  @Async
+  @Override
+  public void isInStock(RequestMessage request, StreamObserver<RequestMessage> responseObserver) {
+    boolean inStock = experienceDAO.isInStock(request.getId(), request.getQuantity());
+    responseObserver.onNext(RequestMessage.newBuilder().setResponse(inStock).build());
+    responseObserver.onCompleted();
+  }
 
-    @Async
-    @Override
-    public void deleteExperience(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver)
-    {
-        int experienceId = Integer.parseInt(request.getMessageOrObject());
-        experienceDAO.deleteExperience(experienceId);
-        responseObserver.onNext(ProtobufMessage.newBuilder().build());
-        responseObserver.onCompleted();
-    }
+  @Async
+  @Override
+  public void deleteExperience(RequestMessage request, StreamObserver<RequestMessage> responseObserver) {
+    experienceDAO.deleteExperience(request.getId());
+    responseObserver.onNext(RequestMessage.newBuilder().build());
+    responseObserver.onCompleted();
+  }
 
-    @Async
-    @Override
-    public void removeStock(ProtobufStockRequest request, StreamObserver<ProtobufMessage> responseObserver)
-    {
-        experienceDAO.removeStock(request.getId(), request.getQuantity());
-        responseObserver.onNext(ProtobufMessage.newBuilder().build());
-        responseObserver.onCompleted();
-    }
+  @Async
+  @Override
+  public void removeStock(RequestMessage request, StreamObserver<RequestMessage> responseObserver) {
+    experienceDAO.removeStock(request.getId(), request.getQuantity());
+    responseObserver.onNext(RequestMessage.newBuilder().build());
+    responseObserver.onCompleted();
+  }
 
-    @Async
-    @Override
-    public void getAllProviderExperiencesByName(UserMessage request, StreamObserver<ProtobufMessage> responseObserver)
-    {
-        ArrayList<Experience> allProviderExperiencesByName =
-                experienceDAO.getAllProviderExperiencesByName(request.getId(), request.getEmail());
-        String s = gson.toJson(allProviderExperiencesByName);
-        responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
-        responseObserver.onCompleted();
-    }
+  @Async
+  @Override
+  public void getExperienceByCategory(RequestMessage request, StreamObserver<ExperienceListMessage> responseObserver) {
+    ArrayList<Experience> experienceByCategory = experienceDAO.getExperienceByCategory(request.getId());
+    responseObserver.onNext(arrayListToListMessage(experienceByCategory));
+    responseObserver.onCompleted();
+   }
 
-    @Async
-    @Override
-    public void getExperienceByCategory(ProtobufMessage request, StreamObserver<ProtobufMessage> responseObserver)
-    {
-        List<Experience> experienceByCategory =
-                experienceDAO.getExperienceByCategory(Integer.parseInt(request.getMessageOrObject()), 0);
-        String s = gson.toJson(experienceByCategory);
-        responseObserver.onNext(ProtobufMessage.newBuilder().setMessageOrObject(s).build());
-        responseObserver.onCompleted();
-    }
+  @Async
+  @Override
+  public void getTopExperiences(RequestMessage request, StreamObserver<ExperienceListMessage> responseObserver) {
+    ArrayList<Experience> topExperiences = experienceDAO.getTopExperiences();
+    responseObserver.onNext(arrayListToListMessage(topExperiences));
+    responseObserver.onCompleted();
+  }
 
-    private synchronized void customers(StreamObserver<ProvidersMessage> responseObserver, Future<Page<User>> pageFuture)
-    {
-        Page<User> page = getObjectAfterDone(pageFuture);
-        var collect = page.getContent().stream().map(User::toProviderMessage)
-                          .collect(Collectors.toList());
-        PageMessage pageInfo = PageMessage.newBuilder().setPageNumber(page.getNumber()).setTotalPages(page.getTotalPages())
-                                          .setTotalElements(page.getTotalPages()).build();
-        var providersMessage = ProvidersMessage.newBuilder().addAllProviders(collect).setPageInfo(pageInfo).build();
-        responseObserver.onNext(providersMessage);
-        responseObserver.onCompleted();
-    }
+  @Async
+  @Override
+  public void getAllProviderExperiencesByName(RequestMessage request, StreamObserver<ExperienceListMessage > responseObserver) {
+    ArrayList<Experience> allProviderExperiencesByName = experienceDAO.getAllProviderExperiencesByName(request.getId(), request.getName());
+    responseObserver.onNext(arrayListToListMessage(allProviderExperiencesByName));
+    responseObserver.onCompleted();
+  }
 
-    private synchronized  <T> T getObjectAfterDone(Future<T> future)
-    {
-        T object;
-        while (true)
-        {
-            if (future.isDone())
-            {
-                try
-                {
-                    object = future.get();
-                    break;
-                }
-                catch (ExecutionException | InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return object;
+  @Async
+  @Override
+  public void getExperiencesByName(RequestMessage request, StreamObserver<ExperienceListMessage> responseObserver) {
+    ArrayList<Experience> experiencesByName = experienceDAO.getExperiencesByName(request.getName());
+    responseObserver.onNext(arrayListToListMessage(experiencesByName));
+    responseObserver.onCompleted();
+  }
+
+  private ExperienceListMessage arrayListToListMessage(ArrayList<Experience> experiences) {
+    ExperienceListMessage.Builder builder = ExperienceListMessage.newBuilder();
+    for (Experience e : experiences) {
+      builder.addExperiences(e.toMessage());
     }
+    return builder.build();
+  }
 }

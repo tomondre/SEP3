@@ -7,6 +7,8 @@ message RequestMessage {
   string name = 2;
   double price = 3;
   PageRequestMessage pageInfo = 4;
+  int32 quantity = 5;
+  bool response = 6;
 }
 
 message PageRequestMessage {
@@ -15,5 +17,4 @@ message PageRequestMessage {
 }
 
 service RequestService {
-  
 }

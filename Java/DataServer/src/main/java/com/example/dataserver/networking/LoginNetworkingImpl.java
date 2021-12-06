@@ -2,7 +2,6 @@ package com.example.dataserver.networking;
 
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.login.LoginDAO;
-import com.google.gson.Gson;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;

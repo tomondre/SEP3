@@ -1,6 +1,9 @@
 package com.example.dataserver.persistence.experience;
 
+import com.example.dataserver.models.Category;
+import com.example.dataserver.models.Customer;
 import com.example.dataserver.models.Experience;
+import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.repository.ExperienceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,6 +13,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +22,8 @@ import java.util.List;
 @EnableAsync
 public class ExperienceDAOImpl implements ExperienceDAO
 {
+    @PersistenceContext
+    private EntityManager em;
     private final ExperienceRepository repository;
 
     @Autowired
@@ -27,6 +34,10 @@ public class ExperienceDAOImpl implements ExperienceDAO
     @Async
     @Override
     public Experience addExperience(Experience experience) {
+        User user = em.getReference(User.class, experience.getExperienceProvider().getId());
+        Category category = em.getReference(Category.class, experience.getExperienceCategory().getId());
+        experience.setExperienceCategory(category);
+        experience.setExperienceProvider(user);
         return repository.save(experience);
     }
 
@@ -83,5 +94,15 @@ public class ExperienceDAOImpl implements ExperienceDAO
     public ArrayList<Experience> getAllProviderExperiencesByName(int id, String name)
     {
         return repository.findAllByExperienceProviderIdAndNameContainsIgnoreCase(id, name);
+    }
+
+    @Override
+    public ArrayList<Experience> getTopExperiences() {
+        return repository.findTop3ByStockAfter(0);
+    }
+
+    @Override
+    public ArrayList<Experience> getExperiencesByName(String name) {
+        return repository.getAllByNameContainsIgnoreCase(name);
     }
 }

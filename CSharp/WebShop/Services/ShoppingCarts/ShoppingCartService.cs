@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using GrpcFileGeneration.Models;
 using GrpcFileGeneration.Models.Order;
@@ -28,6 +29,11 @@ namespace WebShop.Services.ShoppingCarts
         public void RemoveExperienceItem(ExperienceCartItem experience)
         {
             ShoppingCart.ShoppingCartItems.Remove(experience);
+        }
+
+        public void ClearShoppingCart()
+        {
+            ShoppingCart.ShoppingCartItems = new List<ExperienceCartItem>();
         }
     }
 }

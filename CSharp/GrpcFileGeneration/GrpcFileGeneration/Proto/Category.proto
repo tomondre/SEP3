@@ -15,6 +15,11 @@ message CategoriesMessage {
   page.PageMessage pageInfo = 2;
 }
 
+message CategoryMessage {
+  int32 id = 1;
+  string categoryName = 2;
+}
+
 service CategoryService{
   rpc getAllProductCategories(request.PageRequestMessage) returns (CategoriesMessage);
   rpc addProductCategory(CategoryMessage) returns (CategoryMessage);

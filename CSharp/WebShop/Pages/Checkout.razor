@@ -1,13 +1,17 @@
 ﻿@page "/Checkout"
 @using GrpcFileGeneration.Models.Order
 @using GrpcFileGeneration.Models.Orders
+@using WebShop.Cache
+@using WebShop.Services.Customer
 @using WebShop.Services.Orders
 @using WebShop.Services.ShoppingCarts
+@using CustomerService = Stripe.CustomerService
 
 @inject IShoppingCartService ShoppingCartService
 @inject NavigationManager NavigationManager
 @inject IOrderService OrderService
-
+@inject ICustomerService CustomerService
+@inject ICache Cache
 
 @if (!order.ShoppingCart.ShoppingCartItems.Any())
 {
@@ -169,27 +173,13 @@ else
 
     private bool isPaymentCreditCard = true;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         order.ShoppingCart = ShoppingCartService.ShoppingCart;
-    //TODO load logged-in customer
-        order.Customer = new()
-        {
-            Id = 1,
-            Email = "haabala@gmail.com",
-            FirstName = "Peter",
-            LastName = "Petersen",
-            PhoneNumber = "+50 50 50 50 50",
-            Password = "String01",
-            Address = new Address
-            {
-                City = "Horsens",
-                Street = "Gade",
-                PostCode = 8700,
-                StreetNumber = "20"
-            }
-        };
+        var cachedUser = await Cache.GetCachedUser();
+        order.Customer = await CustomerService.GetCustomerByIdAsync(cachedUser.Id);
     }
+
 
     private async Task CheckoutHandler()
     {
@@ -201,6 +191,7 @@ else
         try
         {
             var orderId = await OrderService.CreateOrderAsync(order);
+            ShoppingCartService.ClearShoppingCart();
             NavigationManager.NavigateTo($"/success/orders/{orderId}");
         }
         catch (Exception e)

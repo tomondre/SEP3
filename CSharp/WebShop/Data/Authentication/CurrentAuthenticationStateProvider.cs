@@ -18,7 +18,7 @@ namespace WebShop.Data.Authentication
 
         private User cachedUser;
         
-        public CurrentAuthenticationStateProvider( ILoginService loginService, ProtectedSessionStorage sessionStorage)
+        public CurrentAuthenticationStateProvider(ILoginService loginService, ProtectedSessionStorage sessionStorage)
         {
             this.sessionStorage = sessionStorage;
             this.loginService = loginService;
@@ -30,7 +30,7 @@ namespace WebShop.Data.Authentication
             if (cachedUser == null)
             {
                 var userFromStorage = await sessionStorage.GetAsync<User>("currentUser");
-                if (userFromStorage.Success)
+                if (userFromStorage.Value?.Email != null)
                 {
                     await ValidateUser(userFromStorage.Value);
                 }
@@ -46,17 +46,14 @@ namespace WebShop.Data.Authentication
 
         private ClaimsIdentity SetupClaimsForUser(User user)
         {
-            List<Claim> claims = new List<Claim>
-            {
-                new(ClaimTypes.Role, user.SecurityType)
-            };
-            ClaimsIdentity identity = new ClaimsIdentity(claims);
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Role, user.SecurityType));
+            ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth_type");
             return identity;
         }
 
         public async Task ValidateUser(User userCred)
         {
-            
             if (string.IsNullOrEmpty(userCred.Email)) throw new Exception("Enter username");
             if (string.IsNullOrEmpty(userCred.Password)) throw new Exception("Enter password");
 
@@ -81,7 +78,7 @@ namespace WebShop.Data.Authentication
         {
             cachedUser = null;
             var user = new ClaimsPrincipal(new ClaimsIdentity());
-            await sessionStorage.SetAsync("currentUser", user);
+            await sessionStorage.SetAsync("currentUser", "");
             await sessionStorage.SetAsync("token", "");
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }

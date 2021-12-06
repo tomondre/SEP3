@@ -15,75 +15,106 @@
                 <h2 class="text-5xl font-bold font-heading">
                     <span>Experiences</span>
                 </h2>
-            </div>
-        </div>
-        <div class="flex flex-wrap -mx-3">
-            <div class="w-full lg:hidden px-3">
-                <div class="flex flex-wrap -mx-2">
-                    <div class="w-1/2 md:w-1/3 px-2 mb-4">
-                        <div class="py-6 px-2 text-center bg-gray-50">
-                            <a class="font-bold font-heading" href="#">Category</a>
-                            <ul class="hidden text-left mt-6">
-                                @foreach (Category category in categories.Categories)
-                                {
-                                    <li class="mb-4">
-                                        <a @onclick="() => OpenCategoryView(category.Id)">@category.CategoryName</a>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
+                <br/>
+                
+                <div class="hidden my-2 lg:flex lg:w-auto lg:space-x-10">
+                    <div class="hidden lg:flex items-center mr-auto pl-4 border rounded">
+                        <button class="mr-2 text-gray-200 hover:text-gray-300" @onclick="FilterByName">
+                            <svg class="h-5 w-5" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20.7 19.3L17 15.6C20.1 11.7 19.5 6 15.6 2.9C11.7 -0.2 5.99999 0.5 2.89999 4.3C-0.200006 8.2 0.499995 13.9 4.29999 17C7.59999 19.6 12.3 19.6 15.6 17L19.3 20.7C19.7 21.1 20.3 21.1 20.7 20.7C21.1 20.3 21.1 19.7 20.7 19.3ZM9.99999 17C6.09999 17 2.99999 13.9 2.99999 10C2.99999 6.1 6.09999 3 9.99999 3C13.9 3 17 6.1 17 10C17 13.9 13.9 17 9.99999 17Z" fill="currentColor"></path>
+                            </svg>
+                        </button>
+                        <input @bind="filterByName" class="pl-2 py-3 text-sm text-gray-500" type="text" placeholder="Search by name...">
                     </div>
                 </div>
+               
             </div>
-            <div class="w-full lg:w-3/4 px-3">
+        </div>
+     
+        @if (experiences == null)
+        {
+            <p>
+                <em> Loading...</em>
+            </p>
+        } else if (!experiences.Experiences.Any())
+        {
+            <p>
+                <em> No experiences.</em>
+            </p>
+        }
+        else
+        {
 
-                @foreach (Experience experience in experiences.Experiences)
-                {
-                    <div @onclick="() => OpenProductPage(experience.Id)" class="relative mb-6 bg-gray-50">
-                        <div class="flex flex-wrap items-center -mx-4 px-8 md:px-20 py-12">
-                            <div class="w-full md:w-1/4 px-4 mb-4 md:mb-0">
-                                <a href="#">
-                                    <img class="mx-auto md:mx-0 w-40 h-52 object-contain" src="@experience.Picture" alt="">
-                                </a>
-                            </div>
-                            <div class="w-full md:w-3/4 px-4">
-                                <a class="block mb-8" href="#">
-                                    <h3 class="mb-2 text-xl font-bold font-heading">@experience.Name</h3>
-                                    <p class="mb-6 text-lg font-bold font-heading text-blue-500">
-                                        <span>@experience.Price</span>
-                                        @* <span class="text-xs text-gray-500 font-semibold font-heading line-through">$33.69</span> *@
-                                    </p>
-                                    <p class="max-w-md text-gray-500">@experience.Description</p>
-                                </a>
+            <div class="flex flex-wrap -mx-3">
+                <div class="w-full lg:hidden px-3">
+                    <div class="flex flex-wrap -mx-2">
+                        <div class="w-1/2 md:w-1/3 px-2 mb-4">
+                            <div class="py-6 px-2 text-center bg-gray-50">
+                                <a class="font-bold font-heading" href="#">Category</a>
+                                <ul class="hidden text-left mt-6">
+                                    @foreach (Category category in categories.Categories)
+                                    {
+                                        <li class="mb-4">
+                                            <a @onclick="() => OpenCategoryView(category.Id)">@category.CategoryName</a>
+                                        </li>
+                                    }
+                                </ul>
                             </div>
                         </div>
                     </div>
-                }
-            </div>
-            <div class="hidden lg:block w-1/4 pl-8 pr-3">
-                <div class="mb-6 py-10 border-b border-gray-900">
-                    <h3 class="mb-8 text-2xl font-bold font-heading">Category</h3>
-                    <ul>
-                        @foreach (Category category in categories.Categories)
-                        {
-                            <li class="mb-4">
-                                <a @onclick="() => OpenCategoryView(category.Id)" class="text-lg">@category.CategoryName</a>
-                            </li>
-                        }
-                    </ul>
                 </div>
-                <div class="mb-6 py-10">
-                    <h3 class="mb-6 text-2xl font-bold font-heading">Location</h3>
-                    <input class="w-full px-8 py-4 bg-white border rounded-md" type="serach" placeholder="City">
+                <div class="w-full lg:w-3/4 px-3">
+
+                    @foreach (Experience experience in experiences.Experiences)
+                    {
+                        <div @onclick="() => OpenProductPage(experience.Id)" class="relative mb-6 bg-gray-50">
+                            <div class="flex flex-wrap items-center -mx-4 px-8 md:px-20 py-12">
+                                <div class="w-full md:w-1/4 px-4 mb-4 md:mb-0">
+                                    <a href="#">
+                                        <img class="mx-auto md:mx-0 w-40 h-52 object-contain" src="@experience.Picture" alt="">
+                                    </a>
+                                </div>
+                                <div class="w-full md:w-3/4 px-4">
+                                    <a class="block mb-8" href="#">
+                                        <h3 class="mb-2 text-xl font-bold font-heading">@experience.Name</h3>
+                                        <p class="mb-6 text-lg font-bold font-heading text-blue-500">
+                                            <span>@experience.Price</span>
+                                            @* <span class="text-xs text-gray-500 font-semibold font-heading line-through">$33.69</span> *@
+                                        </p>
+                                        <p class="max-w-md text-gray-500">@experience.Description</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="hidden lg:block w-1/4 pl-8 pr-3">
+                    <div class="mb-6 py-10 border-b border-gray-900">
+                        <h3 class="mb-8 text-2xl font-bold font-heading">Category</h3>
+                        <ul>
+                            @foreach (Category category in categories.Categories)
+                            {
+                                <li class="mb-4">
+                                    <a @onclick="() => OpenCategoryView(category.Id)" class="text-lg">@category.CategoryName</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="mb-6 py-10">
+                        <h3 class="mb-6 text-2xl font-bold font-heading">Location</h3>
+                        <input class="w-full px-8 py-4 bg-white border rounded-md" type="serach" placeholder="City">
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 </section>
+
 
 @code {
     private CategoryList categories = new();
     private ExperienceList experiences = new();
+    private string? filterByName;
 
     [Parameter]
     public int? Id { get; set; }
@@ -100,6 +131,14 @@
             experiences = await ExperienceService.GetExperiencesByCategoryAsync(Id.Value);
         }
     }
+    
+
+    private async Task FilterByName()
+    {
+        experiences = await ExperienceService.GetExperiencesByNameAsync(filterByName);
+    }
+   
+
 
     private void OpenProductPage(int productId)
     {
@@ -112,7 +151,7 @@
         await OnInitializedAsync();
     }
 
-    protected override async void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
         await OnInitializedAsync();
     }

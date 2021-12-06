@@ -25,6 +25,7 @@ namespace GrpcFileGeneration.Models.Order
                 Picture = item.Picture,
                 Name = item.Name,
                 Price = item.Price,
+                ProviderId = item.ProviderId
             };
             Voucher = item.Voucher;
             Quantity = item.Quantity;
@@ -40,7 +41,8 @@ namespace GrpcFileGeneration.Models.Order
                 Picture = Experience.Picture,
                 Price = Experience.Price,
                 Quantity = Quantity,
-                Voucher = this.Voucher
+                Voucher = Voucher,
+                ProviderId = Experience.ProviderId
             };
         }
     }
