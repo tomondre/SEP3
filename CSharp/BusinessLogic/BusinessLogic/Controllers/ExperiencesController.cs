@@ -24,7 +24,8 @@ namespace BusinessLogic.Controllers
 
         [HttpGet("/Providers/{id:int}/Experiences", Name = "GetProviderExperienceRoute")]
         // [Authorize(Roles = "Administrator, Provider")]
-        public async Task<ActionResult<ExperienceList>> GetProviderExperiences([FromRoute] int id, [FromQuery] string name)
+        public async Task<ActionResult<ExperienceList>> GetProviderExperiences([FromRoute] int id,
+            [FromQuery] string name)
         {
             try
             {
@@ -38,7 +39,7 @@ namespace BusinessLogic.Controllers
                     experiences.Experiences = await model.GetAllProviderExperiencesByNameAsync(id, name);
                 }
 
-                await AddLinks(experiences);                
+                await AddLinks(experiences);
                 return Ok(experiences);
             }
             catch (Exception e)
@@ -65,7 +66,7 @@ namespace BusinessLogic.Controllers
                 return StatusCode(403, e.Message);
             }
         }
-        
+
         [HttpGet("{id:int}", Name = "GetExperienceByIdRoute")]
         public async Task<ActionResult<Experience>> GetExperienceByIdAsync([FromRoute] int id)
         {
@@ -83,29 +84,30 @@ namespace BusinessLogic.Controllers
 
 
         [HttpGet(Name = "GetAllExperiencesRoute")]
-        public async Task<ActionResult<ExperienceList>> GetAllExperiencesAsync([FromQuery] bool? top, [FromQuery(Name = "name")] string name, [FromQuery] double price)
+        public async Task<ActionResult<ExperienceList>> GetAllExperiencesAsync([FromQuery] bool? top,
+            [FromQuery(Name = "name")] string name, [FromQuery] double price)
         {
             try
             {
-            ExperienceList experiences = new ExperienceList();
-            if (top == null)
-            {
-                if (string.IsNullOrEmpty(name)&& price==0)
+                ExperienceList experiences = new ExperienceList();
+                if (top == null)
                 {
-                    experiences.Experiences = await model.GetAllWebShopExperiencesAsync();
+                    if (string.IsNullOrEmpty(name) && price == 0)
+                    {
+                        experiences.Experiences = await model.GetAllWebShopExperiencesAsync();
+                    }
+                    else
+                    {
+                        experiences.Experiences = await model.GetSortedExperiencesAsync(name, price);
+                    }
                 }
                 else
                 {
-                    experiences.Experiences = await model.GetSortedExperiencesAsync(name, price);
+                    experiences.Experiences = await model.GetTopExperiences();
                 }
-            }
-            else
-            {
-                experiences.Experiences = await model.GetTopExperiences();
-            }
 
-            await AddLinks(experiences);
-            return Ok(experiences);
+                await AddLinks(experiences);
+                return Ok(experiences);
             }
             catch (Exception e)
             {
@@ -156,6 +158,7 @@ namespace BusinessLogic.Controllers
                 Console.WriteLine(e);
             }
         }
+
         private async Task AddLinks(ExperienceList list)
         {
             try
