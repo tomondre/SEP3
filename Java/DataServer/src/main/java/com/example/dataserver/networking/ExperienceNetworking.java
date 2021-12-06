@@ -137,4 +137,12 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
         }
         return builder.build();
     }
+
+    @Override
+    public void editExperience(ExperienceMessage request, StreamObserver<ExperienceMessage> responseObserver) {
+
+        Experience experience = experienceDAO.editExperience(new Experience(request));
+        responseObserver.onNext(experience.toMessage());
+        responseObserver.onCompleted();
+    }
 }
