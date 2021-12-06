@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Threading;
 using Networking.Address;
 using Networking.Experience;
+using RiskFirst.Hateoas.Models;
 
 namespace GrpcFileGeneration.Models
 {
-    public class Experience
+    public class Experience : ILinkContainer
     {
         public int Id { get;  set; }
         public string Picture { get; set; } = "";
@@ -67,5 +69,15 @@ namespace GrpcFileGeneration.Models
                 ProviderId = ProviderId
             };
         }
+
+        public void AddLink(string id, Link link)
+        {
+            if (!Links.ContainsKey(id))
+            {
+                Links.Add(id, link);
+            }
+        }
+
+        public Dictionary<string, Link> Links { get; set; }
     }
 }

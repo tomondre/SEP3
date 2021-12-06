@@ -25,14 +25,15 @@ namespace GrpcFileGeneration.Models
             Links.Add(id, link);
         }
 
-
         public Customer()
         {
             Address = new Address();
+            Links = new Dictionary<string, Link>();
         }
 
         public Customer(CustomerMessage message) : base(message.UserMessage)
         {
+            Links = new Dictionary<string, Link>();
             Address = new Address(message.Address);
             FirstName = message.FirstName;
             LastName = message.LastName;

@@ -28,7 +28,10 @@ namespace GrpcFileGeneration.Models
         }
         public void AddLink(string id, Link link)
         {
-            Links.Add(id, link);
+            if (!Links.ContainsKey(id))
+            {
+                Links.Add(id, link);
+            }
         }
 
         public CategoryMessage ToMessage()
