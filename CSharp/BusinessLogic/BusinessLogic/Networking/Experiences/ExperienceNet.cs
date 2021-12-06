@@ -80,6 +80,12 @@ namespace BusinessLogic.Networking.Experiences
             return ExperienceListMessageToList(message);
         }
 
+        public async Task<Experience> EditExperienceAsync(Experience experience)
+        {
+            var message = await client.editExperienceAsync(experience.ToMessage());
+            return new Experience(message);
+        }
+
         private List<Experience> ExperienceListMessageToList(ExperienceListMessage list)
         {
             var result = new List<Experience>();
