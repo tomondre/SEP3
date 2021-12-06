@@ -103,7 +103,25 @@ public class ExperienceDAOImpl implements ExperienceDAO
 
     @Override
     public ArrayList<Experience> getSortedExperiences(String name, double price) {
-
         return repository.findAllByNameContainingIgnoreCaseAndPriceIsLessThanEqual(name, price);
+    }
+
+    @Override
+    public Experience editExperience(Experience experience) {
+        Experience toEdit = repository.findById(experience.getId());
+
+        toEdit.setPicture(experience.getPicture());
+        toEdit.setName(experience.getName());
+        toEdit.setPrice(experience.getPrice());
+        toEdit.setStock(experience.getStock());
+        toEdit.setDescription(experience.getDescription());
+        toEdit.setExperienceValidity(experience.getExperienceValidity());
+        toEdit.getExperienceCategory().setCategoryName(experience.getExperienceCategory().getCategoryName());
+        toEdit.getAddress().setCity(experience.getAddress().getCity());
+        toEdit.getAddress().setPostCode(experience.getAddress().getPostCode());
+        toEdit.getAddress().setStreet(experience.getAddress().getStreet());
+        toEdit.getAddress().setStreetNumber(experience.getAddress().getStreetNumber());
+        repository.save(toEdit);
+        return toEdit;
     }
 }
