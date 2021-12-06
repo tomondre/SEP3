@@ -82,5 +82,10 @@ namespace BusinessLogic.Model.Experiences
         {
             return await network.GetSortedExperiencesAsync(name, price);
         }
+
+        public async Task<Experience> EditExperienceAsync(Experience experience)
+        {
+            return await network.EditExperienceAsync(experience);
+        }
     }
 }
