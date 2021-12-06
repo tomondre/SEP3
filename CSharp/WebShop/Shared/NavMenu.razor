@@ -1,7 +1,9 @@
 ﻿@using WebShop.Services
 @using WebShop.Services.ShoppingCarts
-@using WebShop.Data.ProductCategory
 @using WebShop.Data.Authentication
+@using WebShop.Models
+@using WebShop.Services.Observer
+@using WebShop.Services.ProductCategory
 @inject NavigationManager NavigationManager
 @inject IShoppingCartService ShoppingCartService
 @inject IObserverService ObserverService
@@ -31,7 +33,7 @@
 
                 @if (categories != null)
                 {
-                    @foreach (Category category in categories.Categories.Take(6))
+                    @foreach (Category category in categories.Content.Categories.Take(6))
                     {
                         <li>
                             <a @onclick="() => OpenCategory(category.Id)" class="mr-12 font-bold font-heading hover:text-gray-600">@category.CategoryName</a>
@@ -153,7 +155,7 @@
 
 @code {
     private int cartItemsCount = 0;
-    private CategoryList categories;
+    private Page<CategoryList> categories;
 
     protected override async Task OnInitializedAsync()
     {

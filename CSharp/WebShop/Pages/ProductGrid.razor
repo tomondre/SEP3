@@ -1,8 +1,8 @@
 ﻿@page "/experiences"
 @page "/categories/{Id:int}/experiences"
-
-@using WebShop.Data.ProductCategory
+@using WebShop.Models
 @using WebShop.Services.Experiences
+@using WebShop.Services.ProductCategory
 
 @inject NavigationManager NavigationManager
 @inject IProductCategoryService ProductCategoryService
@@ -24,9 +24,9 @@
                                 {
                                     <span>Experiences</span>
                                 }
-                                else
+                                else if (categories.Content != null)
                                 {
-                                    <span>Category: @categories.Categories.FirstOrDefault(a=> a.Id == Id).CategoryName</span>  
+                                    <span>Category: @categories.Content.Categories.FirstOrDefault(a=> a.Id == Id).CategoryName</span>  
                                 }
                             </h2>
                         </div>
@@ -49,7 +49,6 @@
         }
         else
         {
-
             <div class="flex flex-wrap -mx-3">
                 <div class="w-full lg:hidden px-3">
                     <div class="flex flex-wrap -mx-2">
@@ -57,11 +56,14 @@
                             <div class="py-6 px-2 text-center bg-gray-50">
                                 <a class="font-bold font-heading" href="#">Category</a>
                                 <ul class="hidden text-left mt-6">
-                                    @foreach (Category category in categories.Categories)
+                                    @if (categories.Content != null)
                                     {
-                                        <li class="mb-4">
-                                            <a @onclick="() => OpenCategoryView(category.Id)">@category.CategoryName</a>
-                                        </li>
+                                        @foreach (Category category in categories.Content.Categories)
+                                        {
+                                            <li class="mb-4">
+                                                <a @onclick="() => OpenCategoryView(category.Id)">@category.CategoryName</a>
+                                            </li>
+                                        }
                                     }
                                 </ul>
                             </div>
@@ -97,7 +99,7 @@
                     <div class="mb-6 py-10 border-b border-gray-900">
                         <h3 class="mb-8 text-2xl font-bold font-heading">Category</h3>
                         <ul>
-                            @foreach (Category category in categories.Categories)
+                            @foreach (Category category in categories.Content.Categories)
                             {
                                 <li class="mb-4">
                                     <a @onclick="() => OpenCategoryView(category.Id)" class="text-lg">@category.CategoryName</a>
@@ -133,7 +135,7 @@
 
 
 @code {
-    private CategoryList categories = new();
+    private Page<CategoryList> categories = new();
     private ExperienceList experiences = new();
     private string? filterByName;
     private double filterByPrice;

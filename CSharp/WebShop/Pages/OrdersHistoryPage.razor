@@ -1,9 +1,10 @@
 @page "/orders"
 @using WebShop.Services.Orders
-@using GrpcFileGeneration.Models.Orders
 @using WebShop.Cache
+@using WebShop.Models
+@using WebShop.Models.Orders
 @using OrderStripe = Stripe.Order;
-@using Order = GrpcFileGeneration.Models.Orders.Order;
+@using Order = WebShop.Models.Orders.Order;
 @inject IOrderService OrderService;
 @inject NavigationManager NavigationManager;
 @inject ICache Cache

@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
-using GrpcFileGeneration.Models.Order;
 using Networking.Order;
 using RiskFirst.Hateoas.Models;
+using WebShop.Models.Orders;
 
 namespace GrpcFileGeneration.Models.Orders
 {
@@ -11,7 +10,6 @@ namespace GrpcFileGeneration.Models.Orders
         public int Id { get; set; }
         public Customer Customer { get; set; }
         public ShoppingCart ShoppingCart { get; set; }
-        public CreditCard CreditCard { get; set; }
         public string Comment { get; set; } = "";
         public string PaymentId { get; set; }
         public string Date { get; set; }
@@ -21,7 +19,6 @@ namespace GrpcFileGeneration.Models.Orders
             Links = new Dictionary<string, Link>();
             Customer = new();
             ShoppingCart = new();
-            CreditCard = new();
         }
 
         public Order(OrderMessage order)
@@ -51,11 +48,6 @@ namespace GrpcFileGeneration.Models.Orders
                 message.Items.Add(item.ToMessage());
             }
             return message;
-        }
-
-        public void RemoveCreditCardInformation()
-        {
-            CreditCard = new();
         }
 
         public void AddLink(string id, Link link)

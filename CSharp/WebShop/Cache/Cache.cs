@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using WebShop.Models;
 
 namespace WebShop.Cache
 {

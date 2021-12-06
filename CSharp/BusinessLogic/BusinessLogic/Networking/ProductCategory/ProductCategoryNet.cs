@@ -19,7 +19,7 @@ namespace BusinessLogic.Networking.ProductCategory
 
         public async Task<Category> AddProductCategoryAsync(Category category)
         {
-            var categoryMessage = category.ToMesaage();
+            var categoryMessage = category.ToMessage();
             var addProductCategory =
                 await client.addProductCategoryAsync(categoryMessage);
             var createdCategory = new Category(addProductCategory);
@@ -45,7 +45,7 @@ namespace BusinessLogic.Networking.ProductCategory
 
         public async Task<Category> EditProductCategoryAsync(Category category)
         {
-            var categoryMessage = category.ToMesaage();
+            var categoryMessage = category.ToMessage();
             var editProductCategoryAsync =
                 await client.editProductCategoryAsync(categoryMessage);
             var editedCategory = new Category(editProductCategoryAsync);

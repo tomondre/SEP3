@@ -1,12 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using GrpcFileGeneration.Models;
+using WebShop.Models;
 
-namespace WebShop.Data.ProductCategory
+namespace WebShop.Services.ProductCategory
 {
     public class ProductCategoryService : IProductCategoryService
     {
@@ -19,12 +17,12 @@ namespace WebShop.Data.ProductCategory
             uri = "https://localhost:5001/ProductCategory";
         }
 
-        public async Task<CategoryList> GetAllCategoriesAsync()
+        public async Task<Page<CategoryList>> GetAllCategoriesAsync()
         {
-            var httpResponseMessage = await client.GetAsync(uri);
+            var httpResponseMessage = await client.GetAsync($"{uri}?page=0");
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var categories = JsonSerializer.Deserialize<CategoryList>(readAsStringAsync, new JsonSerializerOptions()
+            var categories = JsonSerializer.Deserialize<Page<CategoryList>>(readAsStringAsync, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });

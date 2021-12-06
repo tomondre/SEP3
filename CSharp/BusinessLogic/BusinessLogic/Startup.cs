@@ -141,7 +141,6 @@ namespace BusinessLogic
                 config.AddPolicy<Category>(policy =>
                 {
                     policy
-                        .RequireRoutedLink("self", "GetCategoryByIdRoute", x => new {id = x.Id})
                         .RequireRoutedLink("edit", "EditCategoryRoute", x => new {id = x.Id})
                         .RequireRoutedLink("delete", "DeleteCategoryRoute", x => new {id = x.Id});
                 });

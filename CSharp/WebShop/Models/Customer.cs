@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Networking.Customer;
 using RiskFirst.Hateoas.Models;
 
-namespace GrpcFileGeneration.Models
+namespace WebShop.Models
 {
     public class Customer : User, ILinkContainer
     {
@@ -29,27 +28,6 @@ namespace GrpcFileGeneration.Models
         {
             Address = new Address();
             Links = new Dictionary<string, Link>();
-        }
-
-        public Customer(CustomerMessage message) : base(message.UserMessage)
-        {
-            Links = new Dictionary<string, Link>();
-            Address = new Address(message.Address);
-            FirstName = message.FirstName;
-            LastName = message.LastName;
-            PhoneNumber = message.PhoneNumber;
-        }
-
-        public CustomerMessage ToMessage()
-        {
-            return new CustomerMessage()
-            {
-                Address = Address.ToMessage(),
-                FirstName = this.FirstName,
-                LastName = this.LastName,
-                PhoneNumber = this.PhoneNumber,
-                UserMessage = base.ToMessage()
-            };
         }
     }
 }

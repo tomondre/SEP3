@@ -1,6 +1,6 @@
 using System;
 
-namespace WebShop.Services
+namespace WebShop.Services.Observer
 {
     public class ObserverService : IObserverService
     {
@@ -9,7 +9,7 @@ namespace WebShop.Services
 
         public void ChangeHappens()
         {
-            OnChange.Invoke();
+            OnChange?.Invoke();
         }
     }
 }

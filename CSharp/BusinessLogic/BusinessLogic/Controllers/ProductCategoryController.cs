@@ -24,7 +24,7 @@ namespace BusinessLogic.Controllers
 
         [AllowAnonymous]
         [HttpGet(Name = "GetCategoryRoute")]
-        public async Task<ActionResult<Page<CategoryList>>>GetAllCategories([FromQuery] int page)
+        public async Task<ActionResult<Page<CategoryList>>> GetAllCategories([FromQuery] int page)
         {
             try
             {
@@ -36,7 +36,6 @@ namespace BusinessLogic.Controllers
             {
                 return StatusCode(403, e.Message);
             }
-           
         }
 
         [Authorize(Roles = "Administrator")]
