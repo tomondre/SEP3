@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @GrpcService
 @EnableAsync
@@ -26,7 +27,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
         this.experienceDAO = experienceDAO;
     }
 
-    @Async
+//    @Async
     @Override
     public void getAllProviderExperiences(RequestMessage request,
                                           StreamObserver<ExperienceListMessage> responseObserver)
@@ -36,7 +37,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
         responseObserver.onCompleted();
     }
 
-    @Async
+//    @Async
     @Override
     public void getAllWebShopExperiences(RequestMessage request, StreamObserver<ExperienceListMessage> responseObserver)
     {
@@ -45,7 +46,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
         responseObserver.onCompleted();
     }
 
-    @Async
+//    @Async
     @Override
     public void addExperience(ExperienceMessage request, StreamObserver<ExperienceMessage> responseObserver)
     {
@@ -54,7 +55,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
         responseObserver.onCompleted();
     }
 
-    @Async
+    // @Async
     @Override
     public void getExperienceById(RequestMessage request, StreamObserver<ExperienceMessage> responseObserver)
     {
@@ -63,7 +64,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
         responseObserver.onCompleted();
     }
 
-    @Async
+    // @Async
     @Override
     public void isInStock(RequestMessage request, StreamObserver<RequestMessage> responseObserver)
     {
@@ -72,7 +73,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
         responseObserver.onCompleted();
     }
 
-    @Async
+    // @Async
     @Override
     public void deleteExperience(RequestMessage request, StreamObserver<RequestMessage> responseObserver)
     {
@@ -81,7 +82,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
         responseObserver.onCompleted();
     }
 
-    @Async
+    // @Async
     @Override
     public void removeStock(RequestMessage request, StreamObserver<RequestMessage> responseObserver)
     {
@@ -90,7 +91,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
         responseObserver.onCompleted();
     }
 
-    @Async
+    // @Async
     @Override
     public void getExperienceByCategory(RequestMessage request, StreamObserver<ExperienceListMessage> responseObserver)
     {
@@ -99,7 +100,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
         responseObserver.onCompleted();
     }
 
-    @Async
+    // @Async
     @Override
     public void getTopExperiences(RequestMessage request, StreamObserver<ExperienceListMessage> responseObserver)
     {
@@ -108,7 +109,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
         responseObserver.onCompleted();
     }
 
-    @Async
+// @Async
     @Override
     public void getAllProviderExperiencesByName(RequestMessage request,
                                                 StreamObserver<ExperienceListMessage> responseObserver)
