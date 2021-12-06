@@ -22,11 +22,12 @@ namespace GrpcFileGeneration.Models
 
         public User()
         {
-            
+            Links = new Dictionary<string, Link>();
         }
 
         public User(UserMessage message)
         {
+            Links = new Dictionary<string, Link>();
             Id = message.Id;
             Email = message.Email;
             Password = message.Password;

@@ -36,11 +36,13 @@ namespace GrpcFileGeneration.Models
 
         public Experience()
         {
+            Links = new Dictionary<string, Link>();
             Address = new Address();
         }
 
         public Experience(ExperienceMessage e)
         {
+            Links = new Dictionary<string, Link>();
             Id = e.Id;
             Picture = e.Picture;
             Name = e.Name;

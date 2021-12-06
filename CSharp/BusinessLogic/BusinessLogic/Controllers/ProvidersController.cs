@@ -52,12 +52,8 @@ namespace BusinessLogic.Controllers
                         list = await model.GetAllProvidersByNameAsync(name,page);
                     }
                 }
-            
-                foreach (var provider in list.Content.Providers)
-                {
-                    await linksService.AddLinksAsync(provider);
-                }
-                await linksService.AddLinksAsync(list.Content);
+
+                await AddLinks(list.Content);
                 return Ok(list);
             }
             catch (Exception e)
@@ -73,7 +69,7 @@ namespace BusinessLogic.Controllers
             try
             {
                 var providerById = await model.GetProviderByIdAsync(id);
-                await linksService.AddLinksAsync(providerById);
+                await AddLink(providerById);
                 return Ok(providerById);
             }
             catch (Exception e)
@@ -90,6 +86,7 @@ namespace BusinessLogic.Controllers
             try
             {
                 Provider editedProvider = await model.EditProviderAsync(provider);
+                await AddLink(editedProvider);
                 return Ok(editedProvider);
             }
             catch (Exception e)
@@ -122,6 +119,34 @@ namespace BusinessLogic.Controllers
         {
             await model.DeleteProviderAsync(id);
             return Ok();
+        }
+        
+        private async Task AddLink(Provider provider)
+        {
+            try
+            {
+                await linksService.AddLinksAsync(provider);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private async Task AddLinks(ProviderList list)
+        {
+            try
+            {
+                foreach (var provider in list.Providers)
+                {
+                    await linksService.AddLinksAsync(provider);
+                }
+                await linksService.AddLinksAsync(list);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

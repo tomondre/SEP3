@@ -9,6 +9,7 @@ namespace GrpcFileGeneration.Models
 
         public ExperienceList()
         {
+            Links = new Dictionary<string, Link>();
             Experiences = new List<Experience>();
         }
 

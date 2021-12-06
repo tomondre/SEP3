@@ -26,11 +26,13 @@ namespace GrpcFileGeneration.Models
 
         public Provider()
         {
+            Links = new Dictionary<string, Link>();
             Address = new Address();
         }
 
         public Provider(ProviderMessage message) : base(message.User)
         {
+            Links = new Dictionary<string, Link>();
             CompanyName = message.CompanyName;
             Cvr = message.Cvr;
             Description = message.Description;

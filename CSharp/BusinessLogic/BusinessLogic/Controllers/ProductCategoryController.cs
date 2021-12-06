@@ -29,15 +29,7 @@ namespace BusinessLogic.Controllers
             try
             {
                 Page<CategoryList> categories = await model.GetAllCategoriesAsync(page);
-                foreach (var item in categories.Content.Categories)
-                {
-                    if (item.Links.Count == 0)
-                    {
-                        await linksService.AddLinksAsync(item);
-                    }
-                }
-
-                await linksService.AddLinksAsync(categories.Content);
+                await AddLinks(categories.Content);
                 return Ok(categories);
             }
             catch (Exception e)
@@ -55,6 +47,7 @@ namespace BusinessLogic.Controllers
             {
                 category.Id = id;
                 var editProductCategoryAsync = await model.EditProductCategoryAsync(category);
+                await AddLink(editProductCategoryAsync);
                 return Ok(editProductCategoryAsync);
             }
             catch (Exception e)
@@ -70,7 +63,8 @@ namespace BusinessLogic.Controllers
         {
             try
             {
-                var addProductCategoryAsync = await model.AddProductCategoryAsync(category);    
+                var addProductCategoryAsync = await model.AddProductCategoryAsync(category);
+                await AddLink(addProductCategoryAsync);
                 return Ok(addProductCategoryAsync);
             }
             catch (Exception e)
@@ -86,6 +80,35 @@ namespace BusinessLogic.Controllers
         {
             await model.DeleteProductCategoryAsync(id);
             return Ok();
+        }
+
+        private async Task AddLink(Category provider)
+        {
+            try
+            {
+                await linksService.AddLinksAsync(provider);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private async Task AddLinks(CategoryList list)
+        {
+            try
+            {
+                foreach (var provider in list.Categories)
+                {
+                    await linksService.AddLinksAsync(provider);
+                }
+                await linksService.AddLinksAsync(list);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

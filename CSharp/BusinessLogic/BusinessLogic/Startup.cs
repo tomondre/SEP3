@@ -13,6 +13,7 @@ using BusinessLogic.Networking.ProductCategory;
 using BusinessLogic.Networking.Providers;
 using Grpc.Net.Client;
 using GrpcFileGeneration.Models;
+using GrpcFileGeneration.Models.Orders;
 using GrpcFileGeneration.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -27,9 +28,10 @@ using Networking.Experience;
 using Networking.Login;
 using Networking.Provider;
 using RiskFirst.Hateoas;
-using Stripe;
 using Customer = GrpcFileGeneration.Models.Customer;
 using CustomerService = Networking.Customer.CustomerService;
+using StripeOrder = Stripe.Order;
+// using Order = GrpcFileGeneration.Models.Order.Order;
 using OrderService = Networking.Order.OrderService;
 
 namespace BusinessLogic
@@ -134,12 +136,7 @@ namespace BusinessLogic
                 {
                     policy
                         .RequireRoutedLink("self", "GetProvidersRoute")
-                        .RequireRoutedLink("delete", "CreateProviderRoute");
-                });
-                config.AddPolicy<HandShake>(policy =>
-                {
-                    policy
-                        .RequireRoutedLink("allProviders", "GetProvidersRoute");
+                        .RequireRoutedLink("create", "CreateProviderRoute");
                 });
                 config.AddPolicy<Category>(policy =>
                 {
@@ -151,8 +148,15 @@ namespace BusinessLogic
                 config.AddPolicy<CategoryList>(policy =>
                 {
                     policy
-                        .RequireRoutedLink("self", "GetCategoryRoute")
+                        .RequireRoutedLink("self", "GetCategoryRoute", x => new {page = 1})
                         .RequireRoutedLink("create", "CreateCategoryRoute");
+                });
+                config.AddPolicy<Customer>(policy =>
+                {
+                    policy
+                        .RequireRoutedLink("self", "GetCustomerByIdRoute", x => new {id = x.Id})
+                        .RequireRoutedLink("delete", "DeleteCustomerRoute", x => new {id = x.Id})
+                        .RequireRoutedLink("edit", "EditCustomerRoute", x => new {id = x.Id});
                 });
                 config.AddPolicy<CustomerList>(policy =>
                 {
@@ -160,18 +164,28 @@ namespace BusinessLogic
                         .RequireRoutedLink("create", "CreateCustomerRoute")
                         .RequireSelfLink();
                 });
-                config.AddPolicy<Customer>(policy =>
+                config.AddPolicy<Experience>(policy =>
                 {
                     policy
-                        .RequireRoutedLink("self", "GetCustomerByIdRoute", x => new {id = x.Id})
-                        .RequireRoutedLink("delete", "DeleteCustomerRoute", x => new {id = x.Id})
-                        .RequireRoutedLink("edit", "EditCustomerRoute", x => new {id = x.Id})
-                        ;
+                        .RequireRoutedLink("self", "GetExperienceByIdRoute", x => new {id = x.Id})
+                        .RequireRoutedLink("delete", "DeleteExperienceRoute", x => new {id = x.Id})
+                        .RequireRoutedLink("edit", "EditExperienceRoute", x => new {id =x.Id});
                 });
-                config.
-                    AddPolicy<Experience>(policy =>
-                    {
-                    });
+                config.AddPolicy<ExperienceList>(policy =>
+                {
+                    policy
+                        .RequireRoutedLink("self", "GetAllExperiencesRoute")
+                        .RequireRoutedLink("create", "CreateExperienceRoute");
+                });
+                config.AddPolicy<Order>(policy =>
+                {
+                    policy.RequireRoutedLink("self", "GetOrderByIdRoute", x => new {id = x.Id});
+                });
+                config.AddPolicy<OrderList>(policy =>
+                {
+                    policy
+                        .RequireRoutedLink("create", "CreateOrderRoute");
+                });
             });
         }
 
