@@ -78,9 +78,9 @@ namespace BusinessLogic.Model.Experiences
             return await network.GetTopExperiences();
         }
 
-        public async Task<IList<Experience>> GetExperiencesByNameAsync(string name)
+        public async Task<IList<Experience>> GetSortedExperiencesAsync(string name, double price)
         {
-            return await network.GetExperiencesByNameAsync(name);
+            return await network.GetSortedExperiencesAsync(name, price);
         }
     }
 }
