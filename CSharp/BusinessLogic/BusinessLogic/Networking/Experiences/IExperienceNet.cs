@@ -16,6 +16,6 @@ namespace BusinessLogic.Networking.Experiences
         Task<IList<Experience>> GetAllProviderExperiencesByNameAsync(int id, string name);
         Task<IList<Experience>> GetExperiencesByCategoryAsync(int id);
         Task<IList<Experience>> GetTopExperiences();
-        Task<IList<Experience>> GetExperiencesByNameAsync(string name);
+        Task<IList<Experience>> GetSortedExperiencesAsync(string name, double price);
     }
 }
