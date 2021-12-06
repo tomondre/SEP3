@@ -10,5 +10,7 @@ namespace ClientBlazor.Data.Experiences
         Task<ExperienceList> GetAllProviderExperiencesByNameAsync(int? providerId, string name);
 
         Task DeleteExperienceAsync(Experience experience);
+        Task<Experience> GetExperienceByIdAsync(int id);
+        Task<Experience>  EditExperienceAsync(Experience experience);
     }
 }

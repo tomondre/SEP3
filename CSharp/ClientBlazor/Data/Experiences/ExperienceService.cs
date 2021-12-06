@@ -87,6 +87,31 @@ namespace ClientBlazor.Data.Experiences
             CheckException(httpResponseMessage);
         }
 
+        public async Task<Experience> GetExperienceByIdAsync(int id)
+        {
+            HttpResponseMessage response = await client.GetAsync($"{uri}/Experiences/{id}");
+            CheckException(response);
+            var objAsJson = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Experience>(objAsJson, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+        }
+
+        public async Task<Experience> EditExperienceAsync(Experience experience)
+        {
+            string expAsJson = JsonSerializer.Serialize(experience);
+            HttpContent content = new StringContent(expAsJson, Encoding.UTF8,
+                "application/json");
+            var response = await client.PatchAsync(uri + $"/Experiences/{experience.Id}", content);
+            CheckException(response);
+            var objAsJson = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Experience>(objAsJson, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+        }
+
         private async Task<HttpRequestMessage> GetHttpRequestAsync(HttpMethod method, string uri)
         {
             var httpRequestMessage = new HttpRequestMessage(method, uri);
