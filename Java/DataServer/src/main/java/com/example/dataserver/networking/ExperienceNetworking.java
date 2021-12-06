@@ -97,9 +97,10 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
   }
 
   @Override
-  public void getExperiencesByName(RequestMessage request, StreamObserver<ExperienceListMessage> responseObserver) {
-    ArrayList<Experience> experiencesByName = experienceDAO.getExperiencesByName(request.getName());
-    responseObserver.onNext(arrayListToListMessage(experiencesByName));
+  public void getSortedExperiences(RequestMessage request, StreamObserver<ExperienceListMessage> responseObserver) {
+
+    ArrayList<Experience> sortedExperiences = experienceDAO.getSortedExperiences(request.getName(), request.getPrice());
+    responseObserver.onNext(arrayListToListMessage(sortedExperiences));
     responseObserver.onCompleted();
   }
 
