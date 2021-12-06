@@ -1,19 +1,30 @@
 package com.example.dataserver.networking;
 
 import com.example.dataserver.models.Order;
+import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.order.OrderDAO;
-import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import networking.order.OrderListMessage;
 import networking.order.OrderMessage;
 import networking.order.OrderServiceGrpc;
+import networking.page.PageMessage;
+import networking.provider.ProvidersMessage;
+import networking.request.RequestMessage;
 import networking.user.UserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 @GrpcService
+@EnableAsync
 public class OrderNetworking extends OrderServiceGrpc.OrderServiceImplBase {
 
     private OrderDAO orderDAO;
@@ -25,26 +36,59 @@ public class OrderNetworking extends OrderServiceGrpc.OrderServiceImplBase {
 
     @Override
     public void createOrder(OrderMessage request, StreamObserver<OrderMessage> responseObserver) {
-        Order order = orderDAO.createOrder(new Order(request));
+        var orderFuture = orderDAO.createOrder(new Order(request));
+        var order = getObjectAfterDone(orderFuture);
         responseObserver.onNext(order.toMessage());
         responseObserver.onCompleted();
     }
 
+    @Async
     @Override
-    public void getAllCustomerOrders(UserMessage request, StreamObserver<OrderListMessage> responseObserver) {
-        ArrayList<Order> orders = orderDAO.getAllCustomerOrders(request.getId());
-        ArrayList<OrderMessage> orderMessages = new ArrayList<>();
-        for (Order order : orders) {
-            orderMessages.add(order.toMessage());
-        }
-        responseObserver.onNext(OrderListMessage.newBuilder().addAllOrders(orderMessages).build());
+    public void getAllCustomerOrders(RequestMessage request, StreamObserver<OrderListMessage> responseObserver) {
+        PageRequest pageRequest = PageRequest.of(request.getPageInfo().getPageNumber(), request.getPageInfo().getPageSize());
+        var ordersFuture = orderDAO.getAllCustomerOrders(request.getId(), pageRequest);
+        orders(responseObserver, ordersFuture);
+    }
+
+    @Async
+    @Override
+    public void getOrderById(RequestMessage request, StreamObserver<OrderMessage> responseObserver) {
+        var orderByIdFuture = orderDAO.getOrderById(request.getId());
+        var orderById = getObjectAfterDone(orderByIdFuture);
+        responseObserver.onNext(orderById.toMessage());
         responseObserver.onCompleted();
     }
 
-    @Override
-    public void getOrderById(OrderMessage request, StreamObserver<OrderMessage> responseObserver) {
-        Order orderById = orderDAO.getOrderById(request.getId());
-        responseObserver.onNext(orderById.toMessage());
+    private void orders(StreamObserver<OrderListMessage> responseObserver, Future<Page<Order>> pageFuture)
+    {
+        var page = getObjectAfterDone(pageFuture);
+        var collect = page.getContent().stream().map(Order::toMessage)
+                          .collect(Collectors.toList());
+        PageMessage pageInfo = PageMessage.newBuilder().setPageNumber(page.getNumber()).setTotalPages(page.getTotalPages())
+                                          .setTotalElements(page.getTotalPages()).build();
+        var providersMessage = OrderListMessage.newBuilder().addAllOrders(collect).setPageInfo(pageInfo).build();
+        responseObserver.onNext(providersMessage);
         responseObserver.onCompleted();
+    }
+
+    private <T> T getObjectAfterDone(Future<T> future)
+    {
+        T object;
+        while (true)
+        {
+            if (future.isDone())
+            {
+                try
+                {
+                    object = future.get();
+                    break;
+                }
+                catch (ExecutionException | InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return object;
     }
 }

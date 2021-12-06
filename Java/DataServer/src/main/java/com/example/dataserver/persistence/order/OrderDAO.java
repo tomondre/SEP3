@@ -2,12 +2,13 @@ package com.example.dataserver.persistence.order;
 
 
 import com.example.dataserver.models.Order;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
+import java.util.concurrent.Future;
 
 public interface OrderDAO {
-    Order createOrder(Order order);
-    ArrayList<Order> getAllCustomerOrders(int id);
-    Order getOrderById(int id);
+    Future<Order> createOrder(Order order);
+    Future<Page<Order>> getAllCustomerOrders(int id, Pageable pageable);
+    Future<Order> getOrderById(int id);
 }

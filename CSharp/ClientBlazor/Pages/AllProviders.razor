@@ -11,7 +11,7 @@
         <em>Loading...</em>
     </p>
 }
-else if (!providers.Providers.Any())
+else if (!providers.Content.Providers.Any())
 {
     <p class="text-center">
         <em>No Providers currenlty exist. Please approve some.</em>
@@ -46,21 +46,29 @@ else
                     </tr>
                     </thead>
                     <tbody class="bg-white">
-                    @foreach (var item in providers.Providers)
+                    @foreach (var item in providers.Content.Providers.Select((value, i) => new {value, i}))
                     {
-                        <tr class="text-gray-700" @onclick="() => OpenExperienceView(item)">
-                            <td class="px-4 py-3 text-ms font-semibold border">@item.CompanyName</td>
-                            <td class="px-4 py-3 text-ms font-semibold border">@item.Cvr</td>
-                            <td class="px-4 py-3 text-ms font-semibold border">@item.Description</td>
-                            <td class="px-4 py-3 text-ms font-semibold border">@item.PhoneNumber</td>
-                            <td class="px-4 py-3 text-ms font-semibold border">@item.Address.City</td>
-                            <td class="px-4 py-3 text-ms font-semibold border">@item.Address.Street</td>
-                            <td class="px-4 py-3 text-ms font-semibold border">@item.Address.StreetNumber</td>
-                            <td class="px-4 py-3 text-ms font-semibold border">@item.Address.PostCode</td>
+                        <tr class="text-gray-700" @onclick="() => OpenExperienceView(item.value)">
+                            <td class="px-4 py-3 text-ms font-semibold border">@item.value.CompanyName</td>
+                            <td class="px-4 py-3 text-ms font-semibold border">@item.value.Cvr</td>
+                            <td class="px-4 py-3 text-ms font-semibold border">@item.value.Description</td>
+                            <td class="px-4 py-3 text-ms font-semibold border">@item.value.PhoneNumber</td>
+                            <td class="px-4 py-3 text-ms font-semibold border">@item.value.Address.City</td>
+                            <td class="px-4 py-3 text-ms font-semibold border">@item.value.Address.Street</td>
+                            <td class="px-4 py-3 text-ms font-semibold border">@item.value.Address.StreetNumber</td>
+                            <td class="px-4 py-3 text-ms font-semibold border">@item.value.Address.PostCode</td>
                         </tr>
                     }
                     </tbody>
                 </table>
+            </div>     
+            <div class="flex flex-wrap -mx-4 items-center justify-end">
+                <div class="w-full lg:w-auto px-4 flex items-center justify-center">
+                    @foreach(var index in Enumerable.Range(1, providers.TotalPages))
+                    {
+                        <a class="inline-flex mr-3 items-center justify-center w-8 h-8 text-xs @(++pageNumber == index ? "text-white bg-indigo-500":"text-gray-500 bg-white") border border-gray-300 hover:bg-indigo-50 rounded" @onclick="() => GetPageElements(index)">@index</a>
+                    }
+                </div>
             </div>
         </div>
     </section>
@@ -68,11 +76,12 @@ else
 
 @code {
     private string name = "";
-    private ProviderList providers;
+    private Page<ProviderList> providers;
+    private int pageNumber = 0;
 
     protected override async Task OnInitializedAsync()
     {
-        providers = await ProviderService.GetAllProviders();
+        providers = await ProviderService.GetAllProviders(pageNumber);
     }
 
     private void OpenExperienceView(Provider provider)
@@ -82,8 +91,13 @@ else
 
     private async Task FetchFilteredProviders()
     {
-        providers = new();
-        providers = await ProviderService.GetAllProvidersByNameAsync(name);
+        --pageNumber;
+        providers = await ProviderService.GetAllProvidersByNameAsync(name, pageNumber);
     }
-
+    
+    private async Task GetPageElements(int i)
+    {
+        pageNumber = i-1;
+        providers = await ProviderService.GetAllProviders(pageNumber);
+    }
 }

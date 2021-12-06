@@ -2,8 +2,12 @@ syntax="proto3";
 option java_multiple_files = true;
 package networking.category;
 
-message ProtobufMessage{
-  string massageOrObject = 1;
+import "Page.proto";
+import "Request.proto";
+
+message CategoriesMessage {
+  repeated CategoryMessage categories = 1;
+  page.PageMessage pageInfo = 2;
 }
 
 message CategoryMessage {
@@ -12,8 +16,8 @@ message CategoryMessage {
 }
 
 service CategoryService{
-  rpc getAllProductCategories(ProtobufMessage) returns (ProtobufMessage);
-  rpc addProductCategory(ProtobufMessage) returns (ProtobufMessage);
-  rpc editProductCategory(ProtobufMessage) returns (ProtobufMessage);
-  rpc deleteProductCategory(ProtobufMessage) returns (ProtobufMessage);
+  rpc getAllProductCategories(request.PageRequestMessage) returns (CategoriesMessage);
+  rpc addProductCategory(CategoryMessage) returns (CategoryMessage);
+  rpc editProductCategory(CategoryMessage) returns (CategoryMessage);
+  rpc deleteProductCategory(request.RequestMessage) returns (CategoryMessage);
 }

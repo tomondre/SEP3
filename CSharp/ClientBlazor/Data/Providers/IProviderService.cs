@@ -1,17 +1,16 @@
 ﻿using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
-using ProviderObject = GrpcFileGeneration.Models.Provider;
 
 namespace ClientBlazor.Data.Providers
 {
     public interface IProviderService
     {
-        public Task CreateProvider(ProviderObject provider);
-        public Task<ProviderList> GetAllProviders();
-        Task<ProviderObject> GetProviderById(int id);
+        public Task CreateProvider(Provider provider);
+        public Task<Page<ProviderList>> GetAllProviders(int page);
+        Task<Provider> GetProviderById(int id);
         Task<Provider> EditProvider(Provider provider);
-        Task DeleteProvider(ProviderObject provider);
-        Task<ProviderList> GetAllNotApprovedProvidersAsync();
-        Task<ProviderList> GetAllProvidersByNameAsync(string name);
+        Task DeleteProvider(Provider provider);
+        Task<Page<ProviderList>> GetAllNotApprovedProvidersAsync(int page);
+        Task<Page<ProviderList>> GetAllProvidersByNameAsync(string name, int page);
     }
 }

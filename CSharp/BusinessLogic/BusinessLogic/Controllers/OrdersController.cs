@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Orders;
+using GrpcFileGeneration.Models;
 using GrpcFileGeneration.Models.Orders;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,12 +33,10 @@ namespace BusinessLogic.Controllers
         }
 
         [HttpGet("/customers/{customerId:int}/orders", Name = "allCustomerOrdersRoute")]
-        public async Task<ActionResult<OrderList>> GetAllCustomerOrdersAsync([FromRoute] int customerId)
+        public async Task<ActionResult<Page<OrderList>>> GetAllCustomerOrdersAsync([FromRoute] int customerId, [FromQuery] int page)
         {
-            var allCustomerOrdersAsync = await model.GetAllCustomerOrdersAsync(customerId);
-            var orders = new OrderList();
-            orders.Orders = allCustomerOrdersAsync;
-            return Ok(orders);
+            var allCustomerOrdersAsync = await model.GetAllCustomerOrdersAsync(customerId, page);
+            return Ok(allCustomerOrdersAsync);
         }
         
         [HttpGet("{id:int}", Name = "getOrderByIdRoute")]

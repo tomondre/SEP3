@@ -103,7 +103,8 @@
     
     protected override async Task OnInitializedAsync()
     {
-        categories = await ProductCategoryService.GetAllCategoriesAsync();
+        var pageCategories = await ProductCategoryService.GetAllCategoriesAsync(0);
+        categories = pageCategories.Content;
     }
 
     private async Task AddNewExperience()

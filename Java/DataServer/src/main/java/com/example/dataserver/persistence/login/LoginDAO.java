@@ -2,7 +2,9 @@ package com.example.dataserver.persistence.login;
 
 import com.example.dataserver.models.User;
 
+import java.util.concurrent.Future;
+
 public interface LoginDAO
 {
-  User getUserLogin(User userCred);
+  Future<User> getUserLogin(User userCred);
 }

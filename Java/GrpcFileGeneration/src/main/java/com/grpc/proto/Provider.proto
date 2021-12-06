@@ -4,6 +4,8 @@ package networking.provider;
 
 import "Address.proto";
 import "User.proto";
+import "Page.proto";
+import "Request.proto";
 
 message ProviderMessage{
   user.UserMessage user = 1;
@@ -17,14 +19,15 @@ message ProviderMessage{
 
 message ProvidersMessage {
   repeated ProviderMessage providers = 1;
+  page.PageMessage pageInfo = 2;
 }
 
 service ProviderService{
   rpc CreateProvider(ProviderMessage) returns (user.UserMessage);
-  rpc GetAllProviders(ProviderMessage) returns (ProvidersMessage);
-  rpc GetProviderById(user.UserMessage) returns (ProviderMessage);
+  rpc GetAllProviders(request.PageRequestMessage) returns (ProvidersMessage);
+  rpc GetProviderById(request.RequestMessage) returns (ProviderMessage);
   rpc EditProvider(ProviderMessage) returns (ProviderMessage);
-  rpc RemoveProvider(user.UserMessage) returns (ProviderMessage);
-  rpc GetAllNotApprovedProviders(ProviderMessage) returns (ProvidersMessage);
-  rpc GetAllByName(user.UserMessage) returns (ProvidersMessage);
+  rpc RemoveProvider(request.RequestMessage) returns (ProviderMessage);
+  rpc GetAllNotApprovedProviders(request.PageRequestMessage) returns (ProvidersMessage);
+  rpc GetAllByName(request.RequestMessage) returns (ProvidersMessage);
 }

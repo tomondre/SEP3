@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 using Networking.Provider;
+using Networking.Request;
 using Networking.User;
 
 namespace BusinessLogic.Networking.Providers
@@ -24,18 +26,35 @@ namespace BusinessLogic.Networking.Providers
             return user;
         }
 
-        public async Task<IList<Provider>> GetAllProvidersAsync()
+        public async Task<Page<ProviderList>> GetAllProvidersAsync(int page)
         {
-            var providersMessage = await client.GetAllProvidersAsync(new ProviderMessage());
+            var pageRequestMessage = new PageRequestMessage()
+            {
+                PageNumber = page,
+                PageSize = 5
+            };
+            var providersMessage = await client.GetAllProvidersAsync(pageRequestMessage);
             var providers = providersMessage.Providers;
-            var providersList = providers.Select(a => new Provider(a)).ToList();
-            return providersList;
+
+            var providersList = new ProviderList()
+            {
+                Providers = providers.Select(a => new Provider(a)).ToList()
+            };
+
+            var pageContent = new Page<ProviderList>(providersMessage.PageInfo)
+            {
+                Content = providersList
+            };
+            return pageContent;
         }
 
         public async Task<Provider> GetProviderByIdAsync(int id)
         {
-            var userMessage = new UserMessage() {Id = id};
-            var providerById = await client.GetProviderByIdAsync(userMessage);
+            var requestMessage = new RequestMessage()
+            {
+                Id = id
+            };
+            var providerById = await client.GetProviderByIdAsync(requestMessage);
             var provider = new Provider(providerById);
             return provider;
         }
@@ -50,25 +69,56 @@ namespace BusinessLogic.Networking.Providers
 
         public async Task DeleteProvider(int id)
         {
-            var userMessage = new UserMessage() {Id = id};
-            await client.RemoveProviderAsync(userMessage);
+            var requestMessage = new RequestMessage() {Id = id};
+            await client.RemoveProviderAsync(requestMessage);
         }
 
-        public async Task<IList<Provider>> GetAllNotApprovedProvidersAsync()
+        public async Task<Page<ProviderList>> GetAllNotApprovedProvidersAsync(int page)
         {
-            var allNotApprovedProviders = await client.GetAllNotApprovedProvidersAsync(new ProviderMessage());
+            var pageRequestMessage = new PageRequestMessage()
+            {
+                PageNumber = page,
+                PageSize = 5
+            };
+            
+            var allNotApprovedProviders = await client.GetAllNotApprovedProvidersAsync(pageRequestMessage);
             var providerMessages = allNotApprovedProviders.Providers;
-            var providers = providerMessages.Select(a => new Provider(a)).ToList();
-            return providers;
+            
+            var providers = new ProviderList()
+            {
+                Providers = providerMessages.Select(a => new Provider(a)).ToList()
+            };
+
+            var pageContent = new Page<ProviderList>(allNotApprovedProviders.PageInfo)
+            {
+                Content = providers
+            };
+            return pageContent;
         }
 
-        public async Task<IList<Provider>> GetAllProvidersByNameAsync(string name)
+        public async Task<Page<ProviderList>> GetAllProvidersByNameAsync(string name, int page)
         {
-            var userMessage = new UserMessage() {Email = name};
-            var allByNameAsync = await client.GetAllByNameAsync(userMessage);
+            var requestMessage = new RequestMessage()
+            {
+                Name = name,
+                PageInfo = new PageRequestMessage()
+                {
+                    PageNumber = page,
+                    PageSize = 5
+                }
+            };
+            var allByNameAsync = await client.GetAllByNameAsync(requestMessage);
             var providerMessages = allByNameAsync.Providers;
-            var providers = providerMessages.Select(a => new Provider(a)).ToList();
-            return providers;
+            var providers = new ProviderList()
+            {
+                Providers = providerMessages.Select(a => new Provider(a)).ToList()
+            };
+
+            var pageContent = new Page<ProviderList>(allByNameAsync.PageInfo)
+            {
+                Content = providers
+            };
+            return pageContent;
         }
     }
 }

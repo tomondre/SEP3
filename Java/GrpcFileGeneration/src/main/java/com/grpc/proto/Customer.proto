@@ -4,6 +4,8 @@ package networking.customer;
 
 import "Address.proto";
 import "User.proto";
+import "Request.proto";
+import "Page.proto";
 
 message CustomerMessage {
   user.UserMessage user = 1;
@@ -15,13 +17,14 @@ message CustomerMessage {
 
 message CustomersMessage {
   repeated CustomerMessage customers = 1;
+  page.PageMessage page = 2;
 }
 
 service CustomerService {
   rpc createCustomer(CustomerMessage) returns (user.UserMessage);
-  rpc getAllCustomers(user.UserMessage) returns (CustomersMessage);
+  rpc getAllCustomers(request.PageRequestMessage) returns (CustomersMessage);
   rpc deleteCustomer(user.UserMessage) returns (CustomerMessage);
   rpc getCustomerById(user.UserMessage) returns (CustomerMessage);
   rpc editCustomer(CustomerMessage) returns (CustomerMessage);
-  rpc FindCustomerByName(user.UserMessage) returns (CustomersMessage);
+  rpc FindCustomerByName(request.RequestMessage) returns (CustomersMessage);
 }

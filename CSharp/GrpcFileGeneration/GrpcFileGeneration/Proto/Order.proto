@@ -2,7 +2,8 @@ syntax="proto3";
 option java_multiple_files = true;
 package networking.order;
 
-import "Proto/User.proto";
+import "Proto/Request.proto";
+import "Proto/Page.proto";
 
 message OrderMessage {
   int32 id = 1;
@@ -15,6 +16,7 @@ message OrderMessage {
 
 message OrderListMessage {
   repeated OrderMessage orders = 1;
+  page.PageMessage pageInfo = 2;
 }
 
 message OrderItemMessage {
@@ -30,6 +32,6 @@ message OrderItemMessage {
 
 service OrderService {
   rpc createOrder (OrderMessage) returns (OrderMessage);
-  rpc getAllCustomerOrders (user.UserMessage) returns (OrderListMessage);
-  rpc getOrderById (OrderMessage) returns (OrderMessage);
+  rpc getAllCustomerOrders (request.RequestMessage) returns (OrderListMessage);
+  rpc getOrderById (request.RequestMessage) returns (OrderMessage);
 }

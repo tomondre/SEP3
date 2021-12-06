@@ -2,6 +2,7 @@ using System;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using GrpcFileGeneration.Models;
 using GrpcFileGeneration.Models.Orders;
 using Order = GrpcFileGeneration.Models.Orders.Order;
 
@@ -27,12 +28,12 @@ namespace ClientBlazor.Data.Orders
             return deserialize;
         }
 
-        public async Task<OrderList> GetCustomerOrdersAsync(int id)
+        public async Task<Page<OrderList>> GetCustomerOrdersAsync(int id, int page)
         {
-            var httpResponseMessage = await client.GetAsync($"{url}customers/{id}/orders");
+            var httpResponseMessage = await client.GetAsync($"{url}customers/{id}/orders?page={page}");
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var orderList = JsonSerializer.Deserialize<OrderList>(readAsStringAsync, new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+            var orderList = JsonSerializer.Deserialize<Page<OrderList>>(readAsStringAsync, new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
             return orderList;
         }
 

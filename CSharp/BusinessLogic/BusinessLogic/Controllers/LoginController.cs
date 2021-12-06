@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Login;
 using GrpcFileGeneration.Models;
@@ -22,13 +23,16 @@ namespace BusinessLogic.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> AuthenticateUser([FromBody] User userCred)
         {
-            var authenticate = await model.AuthenticateUserAsync(userCred);
-            if (authenticate == null)
+            try
             {
-                return Unauthorized();
+                var authenticate = await model.AuthenticateUserAsync(userCred);
+                return Ok(authenticate);
             }
-            
-            return Ok(authenticate);
+            catch (Exception e)
+            {
+                return StatusCode(401, e.Message);
+            }
+         
         }
     }
 }

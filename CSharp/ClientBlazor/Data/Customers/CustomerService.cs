@@ -2,6 +2,7 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
@@ -21,15 +22,15 @@ namespace ClientBlazor.Data.Customers
             uri = "https://localhost:5001/Customers";
         }
 
-        public async Task<CustomerList> GetAllCustomersAsync()
+        public async Task<Page<CustomerList>> GetAllCustomersAsync(int pageNumber)
         {
-            var httpRequestMessage = await GetHttpRequest(HttpMethod.Get, uri);
+            var httpRequestMessage = await GetHttpRequest(HttpMethod.Get, $"{uri}?page={pageNumber}");
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
             
             CheckException(httpResponseMessage);
 
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var customerList = JsonSerializer.Deserialize<CustomerList>(readAsStringAsync, new JsonSerializerOptions()
+            var customerList = JsonSerializer.Deserialize<Page<CustomerList>>(readAsStringAsync, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
@@ -44,15 +45,15 @@ namespace ClientBlazor.Data.Customers
             CheckException(httpResponseMessage);
         }
 
-        public async Task<CustomerList> GetAllCustomersByNameAsync(string name)
+        public async Task<Page<CustomerList>> GetAllCustomersByNameAsync(string name, int pageNumber)
         {
-            var httpRequestMessage = await GetHttpRequest(HttpMethod.Get, $"{uri}/?name={name}");
+            var httpRequestMessage = await GetHttpRequest(HttpMethod.Get, $"{uri}?name={name}&page={pageNumber}");
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
             
             CheckException(httpResponseMessage);
             
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var customerList = JsonSerializer.Deserialize<CustomerList>(readAsStringAsync, new JsonSerializerOptions()
+            var customerList = JsonSerializer.Deserialize<Page<CustomerList>>(readAsStringAsync, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
