@@ -16,5 +16,5 @@ public interface ExperienceDAO {
     ArrayList<Experience> getAllProviderExperiencesByName(int id, String name);
     List<Experience> getExperienceByCategory(int id);
     ArrayList<Experience> getTopExperiences();
-    ArrayList<Experience> getExperiencesByName(String name);
+    ArrayList<Experience> getSortedExperiences(String name, double price);
 }

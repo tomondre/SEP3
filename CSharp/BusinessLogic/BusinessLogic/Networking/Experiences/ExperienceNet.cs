@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
@@ -68,6 +69,17 @@ namespace BusinessLogic.Networking.Experiences
             return ExperienceListMessageToList(experienceListMessage);
         }
 
+        public async Task<IList<Experience>> GetSortedExperiencesAsync(string name, double price)
+        {
+            
+            var message = await client.getSortedExperiencesAsync(new RequestMessage()
+            {
+                Name = string.IsNullOrEmpty(name) ? "" : name,
+                Price = price == 0 ? double.MaxValue : price
+            });
+            return ExperienceListMessageToList(message);
+        }
+
         private List<Experience> ExperienceListMessageToList(ExperienceListMessage list)
         {
             var result = new List<Experience>();
@@ -75,14 +87,7 @@ namespace BusinessLogic.Networking.Experiences
             {
                 result.Add(new Experience(e));
             }
-
             return result;
-        }
-
-        public async Task<IList<Experience>> GetExperiencesByNameAsync(string name)
-        {
-            var message = await client.getExperiencesByNameAsync(new RequestMessage(){Name = name});
-            return ExperienceListMessageToList(message);
         }
 
         public async Task<IList<Experience>> GetAllProviderExperiencesByNameAsync(int id, string name)

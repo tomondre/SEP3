@@ -102,7 +102,8 @@ public class ExperienceDAOImpl implements ExperienceDAO
     }
 
     @Override
-    public ArrayList<Experience> getExperiencesByName(String name) {
-        return repository.getAllByNameContainsIgnoreCase(name);
+    public ArrayList<Experience> getSortedExperiences(String name, double price) {
+
+        return repository.findAllByNameContainingIgnoreCaseAndPriceIsLessThanEqual(name, price);
     }
 }

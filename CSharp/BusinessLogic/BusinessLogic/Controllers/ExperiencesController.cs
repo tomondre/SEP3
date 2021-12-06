@@ -83,29 +83,29 @@ namespace BusinessLogic.Controllers
 
 
         [HttpGet(Name = "GetAllExperiencesRoute")]
-        public async Task<ActionResult<ExperienceList>> GetAllExperiencesAsync([FromQuery] bool? top, [FromQuery(Name = "name")] string name)
+        public async Task<ActionResult<ExperienceList>> GetAllExperiencesAsync([FromQuery] bool? top, [FromQuery(Name = "name")] string name, [FromQuery] double price)
         {
             try
             {
-                ExperienceList experiences = new ExperienceList();
-                if (top == null)
+            ExperienceList experiences = new ExperienceList();
+            if (top == null)
+            {
+                if (string.IsNullOrEmpty(name)&& price==0)
                 {
-                    if (string.IsNullOrEmpty(name))
-                    {
-                        experiences.Experiences = await model.GetAllWebShopExperiencesAsync();
-                    }
-                    else
-                    {
-                        experiences.Experiences = await model.GetExperiencesByNameAsync(name);
-                    }
+                    experiences.Experiences = await model.GetAllWebShopExperiencesAsync();
                 }
                 else
                 {
-                    experiences.Experiences = await model.GetTopExperiences();
+                    experiences.Experiences = await model.GetSortedExperiencesAsync(name, price);
                 }
+            }
+            else
+            {
+                experiences.Experiences = await model.GetTopExperiences();
+            }
 
-                await AddLinks(experiences);
-                return Ok(experiences);
+            await AddLinks(experiences);
+            return Ok(experiences);
             }
             catch (Exception e)
             {

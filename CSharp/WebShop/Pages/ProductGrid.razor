@@ -12,19 +12,24 @@
     <div class="container mx-auto px-4">
         <div class="flex flex-wrap -mx-4 mb-20 items-center justify-between">
             <div class="w-full lg:w-auto px-4 mb-12 xl:mb-0">
-                <h2 class="text-5xl font-bold font-heading">
-                    <span>Experiences</span>
-                </h2>
+               
                 <br/>
                 
                 <div class="hidden my-2 lg:flex lg:w-auto lg:space-x-10">
-                    <div class="hidden lg:flex items-center mr-auto pl-4 border rounded">
-                        <button class="mr-2 text-gray-200 hover:text-gray-300" @onclick="FilterByName">
-                            <svg class="h-5 w-5" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.7 19.3L17 15.6C20.1 11.7 19.5 6 15.6 2.9C11.7 -0.2 5.99999 0.5 2.89999 4.3C-0.200006 8.2 0.499995 13.9 4.29999 17C7.59999 19.6 12.3 19.6 15.6 17L19.3 20.7C19.7 21.1 20.3 21.1 20.7 20.7C21.1 20.3 21.1 19.7 20.7 19.3ZM9.99999 17C6.09999 17 2.99999 13.9 2.99999 10C2.99999 6.1 6.09999 3 9.99999 3C13.9 3 17 6.1 17 10C17 13.9 13.9 17 9.99999 17Z" fill="currentColor"></path>
-                            </svg>
-                        </button>
-                        <input @bind="filterByName" class="pl-2 py-3 text-sm text-gray-500" type="text" placeholder="Search by name...">
+                   
+                    <div class="flex flex-wrap -mx-4 mb-20 items-center justify-between">
+                        <div class="w-full lg:w-auto px-4 mb-12 xl:mb-0">
+                            <h2 class="text-5xl font-bold font-heading">
+                                @if (Id == null)
+                                {
+                                    <span>Experiences</span>
+                                }
+                                else
+                                {
+                                    <span>Category: @categories.Categories.FirstOrDefault(a=> a.Id == Id).CategoryName</span>  
+                                }
+                            </h2>
+                        </div>
                     </div>
                 </div>
                
@@ -101,8 +106,24 @@
                         </ul>
                     </div>
                     <div class="mb-6 py-10">
-                        <h3 class="mb-6 text-2xl font-bold font-heading">Location</h3>
-                        <input class="w-full px-8 py-4 bg-white border rounded-md" type="serach" placeholder="City">
+                        <h3 class="mb-6 text-2xl font-bold font-heading">Filter</h3>
+                        <button class="mr-2 text-gray-200 hover:text-gray-300" @onclick="Filter">
+                            <svg class="h-5 w-5" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20.7 19.3L17 15.6C20.1 11.7 19.5 6 15.6 2.9C11.7 -0.2 5.99999 0.5 2.89999 4.3C-0.200006 8.2 0.499995 13.9 4.29999 17C7.59999 19.6 12.3 19.6 15.6 17L19.3 20.7C19.7 21.1 20.3 21.1 20.7 20.7C21.1 20.3 21.1 19.7 20.7 19.3ZM9.99999 17C6.09999 17 2.99999 13.9 2.99999 10C2.99999 6.1 6.09999 3 9.99999 3C13.9 3 17 6.1 17 10C17 13.9 13.9 17 9.99999 17Z" fill="currentColor"></path>
+                            </svg>
+                        </button>
+                        <input @bind="filterByName" class="pl-2 py-3 text-sm text-gray-500" type="text" placeholder="Search by name...">
+                        <br/>
+                        <br/>
+                        <h3 class="mb-8 text-2xl font-bold font-heading">Price @filterByPrice</h3>
+                    
+                        <div class=" mb-5 py-8 px-10 bg-gray-50">
+                            <input @onmouseout="Filter" class="w-full mb-4 outline-none appearance-none bg-gray-100 h-1 rounded cursor-pointer" type="range" min="0" max="10000" @bind="filterByPrice">
+                            <div class="flex justify-between">
+                                <span class="inline-block text-lg font-bold font-heading text-blue-300">0</span>
+                                <span class="inline-block text-lg font-bold font-heading text-blue-300">10000</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -115,6 +136,7 @@
     private CategoryList categories = new();
     private ExperienceList experiences = new();
     private string? filterByName;
+    private double filterByPrice;
 
     [Parameter]
     public int? Id { get; set; }
@@ -132,13 +154,10 @@
         }
     }
     
-
-    private async Task FilterByName()
+    private async Task Filter()
     {
-        experiences = await ExperienceService.GetExperiencesByNameAsync(filterByName);
+        experiences = await ExperienceService.GetSortedExperiences(filterByName, filterByPrice);
     }
-   
-
 
     private void OpenProductPage(int productId)
     {
