@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Experiences;
 using GrpcFileGeneration.Models;
@@ -95,6 +96,22 @@ namespace BusinessLogic.Controllers
         {
             await model.DeleteExperienceAsync(experienceId);
             return Ok();
+        }
+        
+        [HttpPatch]
+        [Route("{id:int}")]
+        public async Task<ActionResult<Experience>> EditExperience([FromBody] Experience experience)
+        {
+            try
+            {
+                Experience editExperience = await model.EditExperienceAsync(experience);
+                return Ok(editExperience);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
         }
     }
 }
