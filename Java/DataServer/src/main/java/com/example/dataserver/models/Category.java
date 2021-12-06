@@ -24,12 +24,12 @@ public class Category
     public Category(CategoryMessage categoryMessage)
     {
       this.id = categoryMessage.getId();
-      this.categoryName = categoryMessage.getName();
+      this.categoryName = categoryMessage.getCategoryName();
     }
 
     public CategoryMessage toMessage()
     {
-        return CategoryMessage.newBuilder().setId(id).setName(categoryName).build();
+        return CategoryMessage.newBuilder().setId(id).setCategoryName(categoryName).build();
     }
 
     public int getId()

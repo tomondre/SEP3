@@ -23,7 +23,7 @@ namespace GrpcFileGeneration.Models
         {
             Links = new Dictionary<string, Link>();
             Id = categoryMessage.Id;
-            CategoryName = categoryMessage.Name;
+            CategoryName = categoryMessage.CategoryName;
         }
 
         public CategoryMessage ToMesaage()
@@ -31,7 +31,7 @@ namespace GrpcFileGeneration.Models
             return new CategoryMessage()
             {
                 Id = Id,
-                Name = CategoryName
+                CategoryName = CategoryName
             };
         }
         public void AddLink(string id, Link link)

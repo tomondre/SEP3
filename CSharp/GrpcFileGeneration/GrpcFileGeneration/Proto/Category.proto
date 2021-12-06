@@ -5,11 +5,6 @@ package networking.category;
 import "Proto/Page.proto";
 import "Proto/Request.proto";
 
-message CategoryMessage{
-  int32 id = 1;
-  string name = 2;
-}
-
 message CategoriesMessage {
   repeated CategoryMessage categories = 1;
   page.PageMessage pageInfo = 2;

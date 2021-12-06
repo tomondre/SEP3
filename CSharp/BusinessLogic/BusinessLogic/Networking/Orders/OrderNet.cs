@@ -68,7 +68,7 @@ namespace BusinessLogic.Networking.Orders
         {
             try
             {
-                var orderByIdAsync = await client.getOrderByIdAsync(new OrderMessage {Id = id});
+                var orderByIdAsync = await client.getOrderByIdAsync(new RequestMessage() {Id = id});
                 return new Order(orderByIdAsync);
             }
             catch (Exception e)

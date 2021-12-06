@@ -82,11 +82,11 @@ public class ExperienceDAOImpl implements ExperienceDAO
 
     @Async
     @Override
-    public List<Experience> getExperienceByCategory(int id, int pageNumber) {
+    public List<Experience> getExperienceByCategory(int id) {
         Pageable page = PageRequest.of(1, 1);
-        Page<Experience> allByExperienceCategoryIdAndStockGreaterThan =
-                repository.getAllByExperienceCategoryIdAndStockGreaterThan(id, 0, page);
-        return allByExperienceCategoryIdAndStockGreaterThan.getContent();
+        var allByExperienceCategoryIdAndStockGreaterThan =
+                repository.getAllByExperienceCategoryIdAndStockGreaterThan(id, 0);
+        return allByExperienceCategoryIdAndStockGreaterThan;
     }
 
     @Async
