@@ -2,6 +2,7 @@ package com.example.dataserver.persistence.order;
 
 import com.example.dataserver.models.Order;
 import com.example.dataserver.models.OrderItem;
+import com.example.dataserver.models.ProviderVouchers;
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,12 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public Future<Order> getOrderById(int id) {
         return new AsyncResult<>(repository.getOrderById(id));
+    }
+
+    @Async
+    @Override
+    public Future<Page<ProviderVouchers>> getProviderVouchers(int providerId, Pageable pageable)
+    {
+        return new AsyncResult<>(repository.getProvidersVouchers(providerId, pageable));
     }
 }
