@@ -81,7 +81,7 @@ namespace ClientBlazor.Data.Experiences
 
         public async Task DeleteExperienceAsync(Experience experience)
         {
-            var httpRequest = await GetHttpRequestAsync(HttpMethod.Delete, $"{uri}{experience.Id}");
+            var httpRequest = await GetHttpRequestAsync(HttpMethod.Delete, $"{uri}Experiences/{experience.Id}");
             var httpResponseMessage = await client.SendAsync(httpRequest);
             
             CheckException(httpResponseMessage);

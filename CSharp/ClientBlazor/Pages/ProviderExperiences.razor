@@ -119,9 +119,9 @@
         NavigationManager.NavigateTo($"EditExperience/{Id}");
     }
 
-    private void DeleteExperience(Experience experience)
+    private async Task DeleteExperience(Experience experience)
     {
-        ExperienceService.DeleteExperienceAsync(experience);
+        await ExperienceService.DeleteExperienceAsync(experience);
         NavigationManager.NavigateTo("/ProviderExperiences");
     }
 
