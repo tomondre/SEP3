@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@EnableAsync
+//@EnableAsync
 public class ExperienceDAOImpl implements ExperienceDAO
 {
     @PersistenceContext
@@ -115,7 +115,7 @@ public class ExperienceDAOImpl implements ExperienceDAO
         toEdit.setStock(experience.getStock());
         toEdit.setDescription(experience.getDescription());
         toEdit.setExperienceValidity(experience.getExperienceValidity());
-        Category reference = em.getReference(Category.class, experience.getExperienceProvider().getId());
+        Category reference = em.getReference(Category.class, experience.getExperienceCategory().getId());
         toEdit.setExperienceCategory(reference);
         toEdit.getAddress().setCity(experience.getAddress().getCity());
         toEdit.getAddress().setPostCode(experience.getAddress().getPostCode());
