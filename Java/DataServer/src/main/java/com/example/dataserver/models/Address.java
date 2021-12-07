@@ -14,22 +14,17 @@ public class Address
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @SerializedName(value = "id", alternate = {"Id"})
     private int id;
 
-    @SerializedName(value = "street", alternate = {"Street"})
     @Column(name = "street")
     private String street;
 
-    @SerializedName(value = "streetNumber", alternate = {"StreetNumber"})
     @Column(name = "street_no")
     private String streetNumber;
 
-    @SerializedName(value = "postCode", alternate = {"PostCode"})
     @Column(name = "post_code")
     private int postCode;
 
-    @SerializedName(value = "city", alternate = {"City"})
     @Column(name = "city")
     private String city;
 
