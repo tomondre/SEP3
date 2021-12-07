@@ -33,7 +33,7 @@ namespace BusinessLogic.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return StatusCode(403);
+                return StatusCode(403, e.Message);
             }
         }
 

@@ -16,7 +16,7 @@ else
 {
   <div class="min-h-screen p-4 bg-gray-100 flex items-center justify-center">
     <EditForm Model="@newCustomer" OnValidSubmit="@Save">
-      <DataAnnotationsValidator/>
+      <ObjectGraphDataAnnotationsValidator /> 
       <ValidationSummary/>
       <div class="container min-w-screen-lg mx-auto">
         <div>
@@ -93,7 +93,6 @@ else
                       <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -118,5 +117,4 @@ else
     await CustomerService.EditCustomerAsync(newCustomer);
     NavigationManager.NavigateTo("/");
   }
-    
 }

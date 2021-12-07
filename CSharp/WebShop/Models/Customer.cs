@@ -14,7 +14,7 @@ namespace WebShop.Models
         [Required, MaxLength(20)]
         public string PhoneNumber { get; set; }
         
-        [Required]
+        [ValidateComplexType]
         public Address Address { get; set; }
 
         public Dictionary<string, Link> Links { set; get; }
