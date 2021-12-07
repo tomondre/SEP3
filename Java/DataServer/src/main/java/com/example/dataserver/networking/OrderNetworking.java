@@ -1,6 +1,7 @@
 package com.example.dataserver.networking;
 
 import com.example.dataserver.models.Order;
+import com.example.dataserver.models.ProviderVouchers;
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.order.OrderDAO;
 import io.grpc.stub.StreamObserver;
@@ -8,6 +9,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import networking.order.OrderListMessage;
 import networking.order.OrderMessage;
 import networking.order.OrderServiceGrpc;
+import networking.order.VoucherListMessages;
 import networking.page.PageMessage;
 import networking.provider.ProvidersMessage;
 import networking.request.RequestMessage;
@@ -56,6 +58,20 @@ public class OrderNetworking extends OrderServiceGrpc.OrderServiceImplBase {
         var orderByIdFuture = orderDAO.getOrderById(request.getId());
         var orderById = getObjectAfterDone(orderByIdFuture);
         responseObserver.onNext(orderById.toMessage());
+        responseObserver.onCompleted();
+    }
+    @Async
+    @Override
+    public void getAllProviderVouchers(RequestMessage request, StreamObserver<VoucherListMessages> responseObserver) {
+        PageRequest pageRequest = PageRequest.of(request.getPageInfo().getPageNumber(), request.getPageInfo().getPageSize());
+        var vouchersFuture = orderDAO.getProviderVouchers(request.getId(), pageRequest);
+        Page<ProviderVouchers> page = getObjectAfterDone(vouchersFuture);
+        var collect = page.getContent().stream().map(ProviderVouchers::toMessage)
+                .collect(Collectors.toList());
+        PageMessage pageInfo = PageMessage.newBuilder().setPageNumber(page.getNumber()).setTotalPages(page.getTotalPages())
+                .setTotalElements(page.getTotalPages()).build();
+        var voucherMessage = VoucherListMessages.newBuilder().addAllVouchers(collect).setPageInfo(pageInfo).build();
+        responseObserver.onNext(voucherMessage);
         responseObserver.onCompleted();
     }
 

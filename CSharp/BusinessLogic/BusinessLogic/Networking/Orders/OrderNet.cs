@@ -76,5 +76,37 @@ namespace BusinessLogic.Networking.Orders
                 throw new Exception("Order cant be fetched");
             }
         }
+
+        public async Task<Page<ProvidersVoucherList>> GetProvidersVouchersAsync(int id, int page)
+        {
+            try
+            {
+                var requestMessage = new RequestMessage
+                {
+                    Id = id,
+                    PageInfo = new PageRequestMessage()
+                    {
+                        PageNumber = page,
+                        PageSize = 5
+                    }
+                };
+                var response = await client.getAllProviderVouchersAsync(requestMessage);
+                var voucherMessage = response.Vouchers;
+                var vouchers = new ProvidersVoucherList()
+                {
+                    Vouchers = voucherMessage.Select(a => new ProviderVouchers(a)).ToList()
+                };
+
+                var vouchersPage = new Page<ProvidersVoucherList>(response.PageInfo)
+                {
+                    Content = vouchers
+                };
+                return vouchersPage;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Provider vouchers can't be fetched");
+            }
+        }
     }
 }

@@ -47,6 +47,11 @@ namespace BusinessLogic.Model.Orders
             return await networking.GetOrderByIdAsync(id);
         }
 
+        public async Task<Page<ProvidersVoucherList>> GetProvidersVouchersAsync(int id, int page)
+        {
+            return await networking.GetProvidersVouchersAsync(id, page);
+        }
+
         public async Task<Order> CreateOrderAsync(Order order)
         {
             //Step 1 - Check if the experiences are in stock
