@@ -16,7 +16,7 @@
             <svg class="mr-2" width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect y="3.07129" width="4" height="10" rx="2" transform="rotate(-45 0 3.07129)" fill="white"></rect><rect x="8" y="2.82861" width="4" height="10" rx="2" transform="rotate(-45 8 2.82861)" fill="white"></rect>
             </svg>
-            <p class="text-xs font-bold font-heading text-blue-100">Hi, you’ re new here! Get 20% off card!</p>
+            <p class="text-xs font-bold font-heading text-blue-100">Unforgotable gifts</p>
         </div>
     </div>
     <nav class="relative flex justify-between bg-blue-50 bg-opacity-30">
@@ -58,24 +58,15 @@
                 <div class="absolute z-10 hidden bg-grey-200 group-hover:block">
 
                     <div class="px-2 pt-2 pb-4 bg-white bg-gray-200 shadow-lg">
-                        <AuthorizeView>
-                            <NotAuthorized>
-                                <a @onclick="OpenSignInPage" class="hidden xl:flex items-center px-12 border-l font-semibold font-heading">
-                                    <span>Login</span>
-                                </a>
-                            </NotAuthorized>
-                            <Authorized>
-                                <a @onclick="OpenOrderHistory" class="hidden xl:flex items-center px-12 border-l font-semibold font-heading">
-                                    <span>Orders</span>
-                                </a>
-                                <a @onclick="OpenEditPage" class="hidden xl:flex items-center px-12 border-l font-semibold font-heading">
-                                    <span>Edit</span>
-                                </a>
-                                <a @onclick="Logout" class="hidden xl:flex items-center px-12 border-l font-semibold font-heading">
-                                    <span>Logout</span>
-                                </a>
-                            </Authorized>
-                        </AuthorizeView>
+                        <a @onclick="OpenOrderHistory" class="hidden xl:flex items-center px-12 border-l font-semibold font-heading">
+                            <span>Orders</span>
+                        </a>
+                        <a @onclick="OpenEditPage" class="hidden xl:flex items-center px-12 border-l font-semibold font-heading">
+                            <span>Edit</span>
+                        </a>
+                        <a @onclick="Logout" class="hidden xl:flex items-center px-12 border-l font-semibold font-heading">
+                            <span>Logout</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -171,12 +162,12 @@
 
     private void OpenSignInPage()
     {
-        NavigationManager.NavigateTo("/SignInPage");
+        NavigationManager.NavigateTo("/signin");
     }
 
     private void OpenEditPage()
     {
-        NavigationManager.NavigateTo("/EditCustomer");
+        NavigationManager.NavigateTo("/customer/information");
     }
 
     private void OpenExperiences()

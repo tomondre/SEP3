@@ -26,10 +26,6 @@
       <_ContentIncludedByDefault Remove="wwwroot\css\site.css" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="wwwroot" />
-    </ItemGroup>
-
     <!--    <Target Name="CheckForNpm" BeforeTargets="NpmInstall">-->
 <!--        <Exec Command="npm -v" ContinueOnError="true">-->
 <!--            <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />-->
