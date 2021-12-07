@@ -1,10 +1,11 @@
-@page "/AddExperience"
+@page "/experiences/create"
 @using GrpcFileGeneration.Models
 @using Networking.Experience
 @using ClientBlazor.Data.Experiences
 @using ClientBlazor.Data.ProductCategory
 @using Microsoft.Extensions.Logging
 @using System.IO
+@using ClientBlazor.Data.Authentication
 @using ClientBlazor.Data.Cache
 @using ClientBlazor.Data.Pictures
 @using Microsoft.AspNetCore.Hosting
@@ -16,6 +17,7 @@
 @inject IProductCategoryService ProductCategoryService
 @inject IPicturesService PicturesService
 @inject ICacheService CacheService
+@attribute [Authorize(Roles = "provider")]
 
 @* TODO transform strings in ENUM for Validity *@
 

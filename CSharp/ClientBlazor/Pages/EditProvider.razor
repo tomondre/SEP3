@@ -1,4 +1,4 @@
-@page "/EditProvider"
+@page "/edit"
 
 @using GrpcFileGeneration.Models
 @using ClientBlazor.Data.Providers
@@ -7,6 +7,7 @@
 @inject IProviderService ProviderService
 @inject NavigationManager NavigationManager
 @inject ICacheService CacheService
+@attribute [Authorize(Roles = "provider")]
 
 
 @if (providerToEdit == null)

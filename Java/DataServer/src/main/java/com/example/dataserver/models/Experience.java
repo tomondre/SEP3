@@ -44,7 +44,7 @@ public class Experience
     private Category experienceCategory;
 
     @SerializedName(value = "experienceProvider", alternate = {"ExperienceProvider"})
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private User experienceProvider;
 
     @SerializedName(value = "address", alternate = {"Address"})

@@ -12,7 +12,8 @@ namespace BusinessLogic.Controllers
     //[Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class ProviderController : ControllerBase
+    public class 
+        ProviderController : ControllerBase
     {
         private IProviderModel model;
         private ILinksService linksService;
@@ -93,7 +94,6 @@ namespace BusinessLogic.Controllers
             {
                 return StatusCode(403, e.Message);
             }
-           
         }
 
         [AllowAnonymous]

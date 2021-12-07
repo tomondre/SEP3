@@ -1,8 +1,9 @@
-﻿@page "/AddProductCategory"
+﻿@page "/categories"
 @using GrpcFileGeneration.Models
 @using ClientBlazor.Data.ProductCategory
 @inject NavigationManager NavigationManager
 @inject IProductCategoryService ProductCategoryService
+@attribute [Authorize(Roles = "administrator")]
 
 <div class="py-6">
     <section class="">
