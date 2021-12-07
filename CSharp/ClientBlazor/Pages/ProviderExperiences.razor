@@ -1,10 +1,4 @@
-@page "/providers/{Id:int}/experiences"
+@page "/experiences"
 @attribute [Authorize(Roles = "provider")]
 
-<Experiences Id="Id"/>
-
-@code
-{
-    [Parameter]
-    public int Id { get; set; }
-}
+<Experiences/>
