@@ -3,6 +3,7 @@
 @using GrpcFileGeneration.Models
 @using ClientBlazor.Data.Experiences
 @using ClientBlazor.Data.Cache
+@using System.Drawing.Design
 
 @inject IExperienceService ExperienceService
 @inject ICacheService CacheService;
@@ -43,7 +44,7 @@
                             <th class="pb-3 font-medium">Price</th>
                             <th class="pb-3 font-medium">Stock</th>
                             <th class="pb-3 font-medium">Validity</th>
-                            <th class="pb-3 font-medium">Category</th>
+                            @* <th class="pb-3 font-medium">Category</th> *@
                             <th class="pb-3 font-medium">Description</th>
                             <th class="pb-3 font-medium">Action</th>
                         </tr>
@@ -65,7 +66,7 @@
                                     <p class="font-medium align-middle">@experience.ExperienceValidity</p>
                                 </td>
                                 @* <td class="py-3 px-4"> *@
-                                @*     <p class="font-medium align-middle">@experience.ExperienceCategory</p> *@
+                                @*     <p class="font-medium align-middle">@experience.CategoryId </p> *@
                                 @* </td> *@
                                 <td class="py-3 px-4">
                                     <p class="font-medium align-middle">@experience.Description</p>
@@ -121,6 +122,7 @@
     private void DeleteExperience(Experience experience)
     {
         ExperienceService.DeleteExperienceAsync(experience);
+        NavigationManager.NavigateTo("/ProviderExperiences");
     }
 
     private async Task FetchFilteredExperiences()

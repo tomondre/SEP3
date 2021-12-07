@@ -81,7 +81,7 @@ namespace ClientBlazor.Data.Experiences
 
         public async Task DeleteExperienceAsync(Experience experience)
         {
-            var httpRequest = await GetHttpRequestAsync(HttpMethod.Delete, $"{uri}/{experience.Id}");
+            var httpRequest = await GetHttpRequestAsync(HttpMethod.Delete, $"{uri}{experience.Id}");
             var httpResponseMessage = await client.SendAsync(httpRequest);
             
             CheckException(httpResponseMessage);
@@ -89,7 +89,7 @@ namespace ClientBlazor.Data.Experiences
 
         public async Task<Experience> GetExperienceByIdAsync(int id)
         {
-            HttpResponseMessage response = await client.GetAsync($"{uri}/Experiences/{id}");
+            HttpResponseMessage response = await client.GetAsync($"{uri}Experiences/{id}");
             CheckException(response);
             var objAsJson = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Experience>(objAsJson, new JsonSerializerOptions()
@@ -103,7 +103,7 @@ namespace ClientBlazor.Data.Experiences
             string expAsJson = JsonSerializer.Serialize(experience);
             HttpContent content = new StringContent(expAsJson, Encoding.UTF8,
                 "application/json");
-            var response = await client.PatchAsync(uri + $"/Experiences/{experience.Id}", content);
+            var response = await client.PatchAsync(uri + $"Experiences/{experience.Id}", content);
             CheckException(response);
             var objAsJson = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Experience>(objAsJson, new JsonSerializerOptions()

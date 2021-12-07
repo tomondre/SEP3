@@ -110,13 +110,13 @@ public class ExperienceDAOImpl implements ExperienceDAO
     public Experience editExperience(Experience experience) {
         Experience toEdit = repository.findById(experience.getId());
 
-        toEdit.setPicture(experience.getPicture());
         toEdit.setName(experience.getName());
         toEdit.setPrice(experience.getPrice());
         toEdit.setStock(experience.getStock());
         toEdit.setDescription(experience.getDescription());
         toEdit.setExperienceValidity(experience.getExperienceValidity());
-        toEdit.getExperienceCategory().setCategoryName(experience.getExperienceCategory().getCategoryName());
+        Category reference = em.getReference(Category.class, experience.getExperienceProvider().getId());
+        toEdit.setExperienceCategory(reference);
         toEdit.getAddress().setCity(experience.getAddress().getCity());
         toEdit.getAddress().setPostCode(experience.getAddress().getPostCode());
         toEdit.getAddress().setStreet(experience.getAddress().getStreet());
