@@ -20,6 +20,7 @@ namespace GrpcFileGeneration.Models
         
         public bool IsApproved { set; get; }
 
+        [ValidateComplexType]
         public Address Address { get; set; }
 
 
