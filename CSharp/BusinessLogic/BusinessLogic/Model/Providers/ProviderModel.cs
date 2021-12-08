@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using BusinessLogic.Models;
+using BusinessLogic.Models.Orders;
 using BusinessLogic.Networking.Providers;
 using GrpcFileGeneration.Models;
 using GrpcFileGeneration.Services;
+using User = BusinessLogic.Models.User;
 
 namespace BusinessLogic.Model.Providers
 {

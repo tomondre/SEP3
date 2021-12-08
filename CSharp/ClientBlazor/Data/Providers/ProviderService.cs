@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -8,6 +9,9 @@ using ClientBlazor.Data.Authentication;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using Provider = ClientBlazor.Models.Provider;
+using ProviderList = ClientBlazor.Models.Orders.ProviderList;
+using User = ClientBlazor.Models.User;
 
 namespace ClientBlazor.Data.Providers
 {
@@ -29,6 +33,7 @@ namespace ClientBlazor.Data.Providers
 
         public async Task CreateProvider(Provider provider)
         {
+            provider.SecurityType = "provider";
             string providerAsJson = JsonSerializer.Serialize(provider);
             var stringContent = new StringContent(providerAsJson, Encoding.UTF8, "application/json");
             var httpResponseMessage = await client.PostAsync(uri, stringContent);
@@ -139,6 +144,15 @@ namespace ClientBlazor.Data.Providers
             {
                 throw new Exception($"Code: {task.StatusCode}, {task.ReasonPhrase} ");
             }
+        }
+        
+        private string HashPassword(string password)
+        {
+            SHA1CryptoServiceProvider sha1 = new SHA1CryptoServiceProvider();
+
+            var bytes = Encoding.ASCII.GetBytes(password);
+            var computeHash = sha1.ComputeHash(bytes);
+            return Convert.ToBase64String(computeHash);
         }
     }
 }

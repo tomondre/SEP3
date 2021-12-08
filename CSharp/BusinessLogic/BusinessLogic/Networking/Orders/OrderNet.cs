@@ -1,12 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogic.Models;
+using BusinessLogic.Models.Orders;
 using GrpcFileGeneration.Models;
-using GrpcFileGeneration.Models.Orders;
 using Networking.Order;
 using Networking.Request;
-using Networking.User;
 
 namespace BusinessLogic.Networking.Orders
 {

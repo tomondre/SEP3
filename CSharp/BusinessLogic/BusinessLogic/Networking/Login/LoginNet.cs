@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 using Networking.Login;
 using Networking.User;
+using User = BusinessLogic.Models.User;
 
 namespace BusinessLogic.Networking.Login
 {

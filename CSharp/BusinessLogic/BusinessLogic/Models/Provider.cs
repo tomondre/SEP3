@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using GrpcFileGeneration.Models;
 using Networking.Provider;
 using RiskFirst.Hateoas.Models;
 
-namespace GrpcFileGeneration.Models
+namespace BusinessLogic.Models
 {
     public class Provider : User, ILinkContainer
     {

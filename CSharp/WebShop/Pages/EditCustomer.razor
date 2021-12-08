@@ -3,6 +3,8 @@
 @using WebShop.Cache
 @using WebShop.Models
 @using WebShop.Services.Customer
+@using System.Security.Cryptography
+@using System.Text
 
 @inject ICustomerService CustomerService
 @inject ICache CacheService
@@ -110,11 +112,24 @@ else
   {
     var cachedUser = await CacheService.GetCachedUser();
     newCustomer = await CustomerService.GetCustomerByIdAsync(cachedUser.Id);
+    newCustomer.Password = "";
   }
 
   private async Task Save()
   {
-    await CustomerService.EditCustomerAsync(newCustomer);
+    var c = new Customer(newCustomer);
+    c.Password = HashPassword(c.Password);
+
+    await CustomerService.EditCustomerAsync(c);
     NavigationManager.NavigateTo("/");
+  }
+  
+  
+  private string HashPassword(string password)
+  {
+    using var sha256 = SHA256.Create();
+    var result = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));  
+    var hash = BitConverter.ToString(result).Replace("-", "").ToLower();  
+    return hash;
   }
 }

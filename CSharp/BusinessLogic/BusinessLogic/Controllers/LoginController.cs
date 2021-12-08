@@ -4,6 +4,7 @@ using BusinessLogic.Model.Login;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using User = BusinessLogic.Models.User;
 
 namespace BusinessLogic.Controllers
 {

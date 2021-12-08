@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using Networking.Order;
 using RiskFirst.Hateoas.Models;
-using WebShop.Models.Orders;
+using ExperienceCartItem = GrpcFileGeneration.Models.Orders.ExperienceCartItem;
+using ShoppingCart = GrpcFileGeneration.Models.Orders.ShoppingCart;
 
-namespace GrpcFileGeneration.Models.Orders
+namespace ClientBlazor.Models.Orders
 {
     public class Order : ILinkContainer
     {
         public int Id { get; set; }
-        public Customer Customer { get; set; }
         public ShoppingCart ShoppingCart { get; set; }
+        public Customer Customer { get; set; }
         public string Comment { get; set; } = "";
         public string PaymentId { get; set; }
         public string Date { get; set; }

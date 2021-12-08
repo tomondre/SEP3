@@ -1,7 +1,8 @@
 @page "/customers"
 @using GrpcFileGeneration.Models
+@using CustomerList = ClientBlazor.Models.Orders.CustomerList
 @using ClientBlazor.Data.Customers
-@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using ClientBlazor.Models
 
 @inject ICustomerService CustomerService
 @inject NavigationManager NavigationManager
@@ -90,7 +91,6 @@ else
     
     protected override async Task OnInitializedAsync()
     {
-    //TODO use the PageRequest object to send request with the page number and the limit the the server
         customers = await CustomerService.GetAllCustomersAsync(pageNumber);
     }
 

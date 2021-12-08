@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using GrpcFileGeneration.Models;
 using Networking.Customer;
 using RiskFirst.Hateoas.Models;
 
-namespace GrpcFileGeneration.Models
+namespace ClientBlazor.Models
 {
     public class Customer : User, ILinkContainer
     {

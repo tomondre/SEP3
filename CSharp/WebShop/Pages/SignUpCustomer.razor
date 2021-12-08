@@ -4,6 +4,8 @@
 @using Microsoft.AspNetCore.Components
 @using WebShop.Models
 @using WebShop.Services.Customer
+@using System.Security.Cryptography
+@using System.Text
 
 @inject NavigationManager NavigationManager
 @inject ICustomerService CustomerService; 
@@ -104,8 +106,18 @@
 
     private async Task CreateNewCustomer()
     {
-        await CustomerService.CreateCustomerAsync(newCustomer);
+        var c = new Customer(newCustomer);
+        c.Password = HashPassword(c.Password);
+        
+        await CustomerService.CreateCustomerAsync(c);
         NavigationManager.NavigateTo("/");
     }
-
+    
+    private string HashPassword(string password)
+    {
+        using var sha256 = SHA256.Create();
+        var result = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));  
+        var hash = BitConverter.ToString(result).Replace("-", "").ToLower();  
+        return hash;
+    }
 }

@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
+using ClientBlazor.Models;
 using GrpcFileGeneration.Models;
+using CustomerList = ClientBlazor.Models.Orders.CustomerList;
 
 namespace ClientBlazor.Data.Customers
 {

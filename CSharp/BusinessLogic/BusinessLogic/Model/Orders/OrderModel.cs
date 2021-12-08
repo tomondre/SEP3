@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Experiences;
+using BusinessLogic.Models;
 using BusinessLogic.Networking.Experiences;
 using BusinessLogic.Networking.Orders;
 using GrpcFileGeneration.Models;
@@ -14,7 +15,7 @@ using GrpcFileGeneration.Models.Orders;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
 using Stripe;
-using Order = GrpcFileGeneration.Models.Orders.Order;
+using Order = BusinessLogic.Models.Orders.Order;
 
 
 namespace BusinessLogic.Model.Orders

@@ -1,6 +1,8 @@
 ﻿@page "/signin"
 @using WebShop.Data.Authentication
 @using Models
+@using System.Security.Cryptography
+@using System.Text
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager;
 
@@ -120,7 +122,9 @@
         {
             try
             {
-                await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).ValidateUser(userCred);
+                var copy = new User(userCred);
+                copy.Password = HashPassword(copy.Password);
+                await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).ValidateUser(copy);
                 NavigationManager.NavigateTo("/");
             }
             catch (Exception e)
@@ -139,5 +143,12 @@
     {
         await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).Logout();
     }
-
+    
+    private string HashPassword(string password)
+    {
+        using var sha256 = SHA256.Create();
+        var result = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));  
+        var hash = BitConverter.ToString(result).Replace("-", "").ToLower();  
+        return hash;
+    }
 }

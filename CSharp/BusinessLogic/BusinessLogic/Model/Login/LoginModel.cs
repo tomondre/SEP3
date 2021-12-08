@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BusinessLogic.Networking.Login;
 using GrpcFileGeneration.Models;
 using Microsoft.IdentityModel.Tokens;
+using User = BusinessLogic.Models.User;
 
 namespace BusinessLogic.Model.Login
 {

@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using BusinessLogic.Models;
+using BusinessLogic.Models.Orders;
 using BusinessLogic.Networking.Customers;
 using GrpcFileGeneration.Models;
+using User = BusinessLogic.Models.User;
 
 
 // TODO data validation

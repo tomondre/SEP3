@@ -4,6 +4,9 @@
 @using ClientBlazor.Data.Providers
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @using ClientBlazor.Data.Cache
+@using Provider = ClientBlazor.Models.Provider
+@using System.Security.Cryptography
+@using System.Text
 @inject IProviderService ProviderService
 @inject NavigationManager NavigationManager
 @inject ICacheService CacheService
@@ -132,13 +135,22 @@ else
     {
         var cachedUser = await CacheService.GetCachedUserAsync();
         providerToEdit = await ProviderService.GetProviderById(cachedUser.Id);
+        providerToEdit.Password = "";
     }
 
     private async Task Save()
     {
-        await ProviderService.EditProvider(providerToEdit);
+        var copy = new Provider(providerToEdit);
+        copy.Password = HashPassword(copy.Password);
+        await ProviderService.EditProvider(copy);
         NavigationManager.NavigateTo("/");
     }
     
-
+    private string HashPassword(string password)
+    {
+        using var sha256 = SHA256.Create();
+        var result = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));  
+        var hash = BitConverter.ToString(result).Replace("-", "").ToLower();  
+        return hash;
+    }
 }

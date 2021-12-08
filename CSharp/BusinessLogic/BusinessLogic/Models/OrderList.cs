@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using BusinessLogic.Models.Orders;
 
-namespace GrpcFileGeneration.Models.Orders
+namespace BusinessLogic.Models
 {
     public class OrderList
     {

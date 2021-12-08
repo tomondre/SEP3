@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BusinessLogic.Models;
+using BusinessLogic.Models.Orders;
 using GrpcFileGeneration.Models;
 using GrpcFileGeneration.Models.Orders;
 

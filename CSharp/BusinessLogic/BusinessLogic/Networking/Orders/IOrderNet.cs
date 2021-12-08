@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
+using BusinessLogic.Models;
+using BusinessLogic.Models.Orders;
 using GrpcFileGeneration.Models;
-using GrpcFileGeneration.Models.Orders;
 using OrderStripe = Stripe.Order;
 
 namespace BusinessLogic.Networking.Orders

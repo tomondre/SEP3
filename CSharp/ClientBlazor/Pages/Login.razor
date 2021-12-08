@@ -3,6 +3,10 @@
 @page "/login"
 @using GrpcFileGeneration.Models
 @using ClientBlazor.Data.Authentication
+@using User = ClientBlazor.Models.User
+@using System.Security.Cryptography
+@using System.Text
+@using Google.Protobuf.WellKnownTypes
 @inject NavigationManager NavigationManager
 
 <section class="py-12 bg-blue-600">
@@ -46,6 +50,7 @@
                 <button @onclick="OpenSignup" class="block w-full p-4 text-center text-xs text-black font-semibold leading-none bg-gray-200 hover:bg-gray-300 rounded">
                     Sign Up
                 </button>
+                <h4>@errorMessage</h4>
             </div>
             <div>
                 <p class="text-xs text-blue-200 text-center">
@@ -67,11 +72,22 @@
     private User userCred = new();
     private bool showPassword;
     private string selected;
+    private string errorMessage = "";
 
     private async void TryLoginAsync()
     {
-        await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).ValidateUser(userCred);
-        NavigationManager.NavigateTo("/");
+        try
+        {
+            var copy = new User(userCred);
+            copy.Password = HashPassword(copy.Password);
+            await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).ValidateUser(copy);
+            NavigationManager.NavigateTo("/");
+        }
+        catch (Exception e)
+        {
+            errorMessage = "Invalid login";
+            StateHasChanged();
+        }
     }
 
     private void ToggleShowPassword()
@@ -88,5 +104,12 @@
     {
         SignupCallback?.Invoke();
     }
-
+    
+    private string HashPassword(string password)
+    {
+        using var sha256 = SHA256.Create();
+        var result = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));  
+        var hash = BitConverter.ToString(result).Replace("-", "").ToLower();  
+        return hash;
+    }
 }

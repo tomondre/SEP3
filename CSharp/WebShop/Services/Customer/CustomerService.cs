@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -27,6 +28,7 @@ namespace WebShop.Services.Customer
 
         public async Task CreateCustomerAsync(Models.Customer customer)
         {
+            customer.SecurityType = "customer";
             string customerAsJson = JsonSerializer.Serialize(customer);
             var stringContent = new StringContent(customerAsJson, Encoding.UTF8, "application/json");
             var httpResponseMessage = await client.PostAsync(uri, stringContent);
@@ -86,6 +88,14 @@ namespace WebShop.Services.Customer
             }
             //TODO add exception
             return httpRequestMessage;
+        }
+
+        private string Hash(string password)
+        {
+            using var sha256 = SHA256.Create();
+            var result = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));  
+            var hash = BitConverter.ToString(result).Replace("-", "").ToLower();  
+            return hash;
         }
     }
 }

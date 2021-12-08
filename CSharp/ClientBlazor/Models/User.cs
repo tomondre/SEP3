@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Networking.User;
 using RiskFirst.Hateoas.Models;
 
-namespace GrpcFileGeneration.Models
+namespace ClientBlazor.Models
 {
     public class User : ILinkContainer
     {
@@ -24,6 +24,16 @@ namespace GrpcFileGeneration.Models
             Links = new Dictionary<string, Link>();
         }
 
+        public User(User user)
+        {
+            Links = new Dictionary<string, Link>();
+            Email = user.Email;
+            Id = user.Id;
+            Password = user.Password;
+            SecurityType = user.SecurityType;
+            Token = user.Token;
+        }
+        
         public User(UserMessage message)
         {
             Links = new Dictionary<string, Link>();

@@ -2,9 +2,10 @@ using System;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ClientBlazor.Models;
 using GrpcFileGeneration.Models;
 using GrpcFileGeneration.Models.Orders;
-using Order = GrpcFileGeneration.Models.Orders.Order;
+using Order = ClientBlazor.Models.Orders.Order;
 
 namespace ClientBlazor.Data.Orders
 {

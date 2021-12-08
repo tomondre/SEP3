@@ -1,9 +1,12 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogic.Models;
+using BusinessLogic.Models.Orders;
 using GrpcFileGeneration.Models;
 using Networking.Customer;
 using Networking.Request;
 using Networking.User;
+using User = BusinessLogic.Models.User;
 
 namespace BusinessLogic.Networking.Customers
 {

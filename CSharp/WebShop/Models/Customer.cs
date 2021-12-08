@@ -19,15 +19,29 @@ namespace WebShop.Models
 
         public Dictionary<string, Link> Links { set; get; }
 
-        public void AddLink(string id, Link link)
-        {
-            Links.Add(id, link);
-        }
-
         public Customer()
         {
             Address = new Address();
             Links = new Dictionary<string, Link>();
+        }
+
+        public Customer(Customer customer)
+        {
+            Address = customer.Address;
+            Links = customer.Links;
+            FirstName = customer.FirstName;
+            LastName = customer.LastName;
+            PhoneNumber = customer.PhoneNumber;
+            Email = customer.Email;
+            Id = customer.Id;
+            Token = customer.Token;
+            SecurityType = customer.SecurityType;
+            Password = customer.Password;
+        }
+
+        public void AddLink(string id, Link link)
+        {
+            Links.Add(id, link);
         }
     }
 }

@@ -1,20 +1,19 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using RiskFirst.Hateoas.Models;
 
-namespace GrpcFileGeneration.Models
+namespace ClientBlazor.Models.Orders
 {
-    public class ProviderList : ILinkContainer
+    public class CustomerList : ILinkContainer
     {
-        public IList<Provider> Providers { get; set; }
         public Dictionary<string, Link> Links { get; set; }
+        public IList<Customer> Customers { set; get; }
 
-
-        public ProviderList()
+        public CustomerList()
         {
             Links = new Dictionary<string, Link>();
-            Providers = new List<Provider>();
+            Customers = new List<Customer>();
         }
-
+        
         public void AddLink(string id, Link link)
         {
             if (!Links.ContainsKey(id))
@@ -22,5 +21,6 @@ namespace GrpcFileGeneration.Models
                 Links.Add(id, link);
             }
         }
+
     }
 }

@@ -1,12 +1,11 @@
 using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Reflection;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ClientBlazor.Models;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using CustomerList = ClientBlazor.Models.Orders.CustomerList;
 
 namespace ClientBlazor.Data.Customers
 {

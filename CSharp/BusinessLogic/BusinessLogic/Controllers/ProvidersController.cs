@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Providers;
+using BusinessLogic.Models;
+using BusinessLogic.Models.Orders;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RiskFirst.Hateoas;
+using User = BusinessLogic.Models.User;
 
 namespace BusinessLogic.Controllers
 {

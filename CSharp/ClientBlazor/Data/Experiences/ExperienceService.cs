@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using User = ClientBlazor.Models.User;
 
 namespace ClientBlazor.Data.Experiences
 {

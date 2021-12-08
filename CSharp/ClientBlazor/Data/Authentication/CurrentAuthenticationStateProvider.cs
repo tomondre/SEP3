@@ -6,6 +6,7 @@ using ClientBlazor.Data.Login;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using User = ClientBlazor.Models.User;
 
 namespace ClientBlazor.Data.Authentication
 {

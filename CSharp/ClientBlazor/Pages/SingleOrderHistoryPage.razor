@@ -1,7 +1,7 @@
 ﻿@page "/orders/{OrderId:int}"
 
-@using GrpcFileGeneration.Models.Orders
 @using ClientBlazor.Data.Orders
+@using Order = ClientBlazor.Models.Orders.Order
 @inject IOrderService OrderService
 @inject IJSRuntime jsRuntime
 

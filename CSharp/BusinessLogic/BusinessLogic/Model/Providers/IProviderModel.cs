@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using BusinessLogic.Models;
+using BusinessLogic.Models.Orders;
 using GrpcFileGeneration.Models;
+using User = BusinessLogic.Models.User;
 
 namespace BusinessLogic.Model.Providers
 {

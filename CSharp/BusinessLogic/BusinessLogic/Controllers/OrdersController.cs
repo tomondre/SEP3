@@ -1,8 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using BusinessLogic.Model.Orders;
+using BusinessLogic.Models;
+using BusinessLogic.Models.Orders;
 using GrpcFileGeneration.Models;
-using GrpcFileGeneration.Models.Orders;
 using Microsoft.AspNetCore.Mvc;
 using RiskFirst.Hateoas;
 
