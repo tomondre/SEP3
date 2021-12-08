@@ -6,4 +6,4 @@ namespace GrpcFileGeneration.Models
         public string Validity { set; get; }
         public string Img { set; get; }
     }
-}
+}   

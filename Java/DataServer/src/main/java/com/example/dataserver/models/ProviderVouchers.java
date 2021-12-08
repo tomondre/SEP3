@@ -5,30 +5,18 @@ import networking.order.OrderItemMessage;
 import networking.order.VoucherMessages;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
-
-@SqlResultSetMapping(name = "voucherResult", classes = {
-        @ConstructorResult(targetClass = com.example.dataserver.models.ProviderVouchers.class,
-        columns = {
-                @ColumnResult(name = "name"),
-                @ColumnResult(name = "dateCreated"),
-                @ColumnResult(name = "voucher"),
-                @ColumnResult(name = "quantity"),
-                @ColumnResult(name = "experienceName")})})
-
-@NamedNativeQuery(name = "getVouchers",
-        query = "SELECT CONCAT_WS(' ', cust.first_name, cust.last_name) AS name, o.created_on AS dateCreated, oi.voucher AS voucher, oi.quantity AS quantity, oi.name AS experienceName FROM sep3.users us INNER JOIN sep3.customer AS cust ON us.user_id = cust.user_user_id INNER JOIN sep3.order AS o ON o.user_user_id = cust.user_user_id INNER JOIN sep3.order_item AS oi ON oi.order_id = o.id WHERE provider_user_id = ?1",
-        resultSetMapping = "voucherResult")
 
 public class ProviderVouchers {
 
     private String name;
-    private String dateCreated;
+    private LocalDateTime dateCreated;
     private String voucher;
     private int quantity;
     private String experienceName;
 
-    public ProviderVouchers(String name, String dateCreated, String voucher, int quantity, String experienceName) {
+    public ProviderVouchers(String name, String voucher, int quantity, String experienceName) {
         this.name = name;
         this.dateCreated = dateCreated;
         this.voucher = voucher;
@@ -44,11 +32,11 @@ public class ProviderVouchers {
         this.name = name;
     }
 
-    public String getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(String dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 

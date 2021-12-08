@@ -62,8 +62,8 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public Future<Page<ProviderVouchers>> getProviderVouchers(int providerId, Pageable pageable)
     {
-        List<ProviderVouchers> vouchers = em.createNamedQuery("getVouchers", ProviderVouchers.class).setParameter(1, providerId).getResultList();
-        return null;
-//        return new AsyncResult<>(repository.getProvidersVouchers(providerId, pageable));
+//        List<ProviderVouchers> vouchers = em.createNamedQuery("getVouchers", ProviderVouchers.class).setParameter(1, providerId).getResultList();
+//
+        return new AsyncResult<>(repository.getProviderVouchers(providerId, pageable));
     }
 }

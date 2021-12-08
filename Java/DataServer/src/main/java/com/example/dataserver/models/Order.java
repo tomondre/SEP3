@@ -13,6 +13,17 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+@NamedNativeQuery(name = "Order.getProviderVouchers",
+                  query = "SELECT CONCAT_WS(' ', cust.first_name, cust.last_name) AS name, o.created_on AS dateCreated, oi.voucher AS voucher, oi.quantity AS quantity, oi.name AS experienceName FROM sep3.users us INNER JOIN sep3.customer AS cust ON us.user_id = cust.user_user_id INNER JOIN sep3.order AS o ON o.user_user_id = cust.user_user_id INNER JOIN sep3.order_item AS oi ON oi.order_id = o.id WHERE provider_user_id = ?1",
+                  resultSetMapping = "Mapping.ProviderVouchers")
+
+@SqlResultSetMapping(name = "Mapping.ProviderVouchers",
+                     classes = @ConstructorResult(targetClass = ProviderVouchers.class,
+                                                  columns = {@ColumnResult(name = "name"),
+                                                             @ColumnResult(name = "dateCreated"),
+                                                             @ColumnResult(name = "voucher"),
+                                                             @ColumnResult(name = "quantity"),
+                                                             @ColumnResult(name = "experienceName")}))
 
 @Entity
 @Table(name = "order", schema = "sep3")
