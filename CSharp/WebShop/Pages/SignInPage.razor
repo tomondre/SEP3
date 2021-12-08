@@ -3,6 +3,7 @@
 @using Models
 @using System.Security.Cryptography
 @using System.Text
+@using System.IO
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager;
 
@@ -56,6 +57,7 @@
                         <b>Dont have an account? Register here: </b>
                         <button @onclick="OpenSignUpPage" class="pl:10 bg-blue-300 hover:bg-blue-400 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">Sign Up</button>
                     </div>
+                    <h6>@errorMessage</h6>
                 </div>
             </div>
             <div class="w-full md:w-2/6 h-128 md:h-auto flex items-center lg:items-end px-4 pb-20 bg-cover bg-no-repeat" style="">
@@ -111,6 +113,8 @@
 
     private bool showPassword;
 
+    private string errorMessage = "";
+
     private void OpenSignUpPage()
     {
         SignupCallback?.Invoke(false);
@@ -129,7 +133,7 @@
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                errorMessage = "Login is not correct";
             }
         }
     }
@@ -137,11 +141,6 @@
     private void ToggleShowPassword()
     {
         showPassword = !showPassword;
-    }
-
-    private async Task PerformLogoutAsync()
-    {
-        await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).Logout();
     }
     
     private string HashPassword(string password)
