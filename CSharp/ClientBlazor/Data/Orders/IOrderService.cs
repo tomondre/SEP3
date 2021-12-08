@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ClientBlazor.Models;
 using GrpcFileGeneration.Models;
@@ -10,5 +11,6 @@ namespace ClientBlazor.Data.Orders
     {
         Task<Order> GetOrderByIdAsync(int id);
         Task<Page<OrderList>> GetCustomerOrdersAsync(int id, int page);
+        Task<ProvidersVoucherList> GetAllProviderVouchersAsync(int? id);
     }
 }

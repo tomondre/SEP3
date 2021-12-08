@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -35,6 +36,15 @@ namespace ClientBlazor.Data.Orders
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             var orderList = JsonSerializer.Deserialize<Page<OrderList>>(readAsStringAsync, new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+            return orderList;
+        }
+
+        public async Task<ProvidersVoucherList> GetAllProviderVouchersAsync(int? id)
+        {
+            var httpResponseMessage = await client.GetAsync($"{url}providers/{id}/vouchers");
+            CheckException(httpResponseMessage);
+            var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
+            var orderList = JsonSerializer.Deserialize<ProvidersVoucherList>(readAsStringAsync, new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
             return orderList;
         }
 

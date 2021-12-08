@@ -2,6 +2,7 @@ package com.example.dataserver.persistence.order;
 
 import com.example.dataserver.models.Order;
 import com.example.dataserver.models.OrderItem;
+import com.example.dataserver.models.ProviderVouchers;
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Future;
 
 @Repository
@@ -53,5 +56,14 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public Future<Order> getOrderById(int id) {
         return new AsyncResult<>(repository.getOrderById(id));
+    }
+
+    @Async
+    @Override
+    public Future<List<ProviderVouchers>> getProviderVouchers(int providerId)
+    {
+//        List<ProviderVouchers> vouchers = em.createNamedQuery("getVouchers", ProviderVouchers.class).setParameter(1, providerId).getResultList();
+//
+        return new AsyncResult<>(repository.getProviderVouchers(providerId));
     }
 }
