@@ -48,23 +48,23 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach (var item in vouchers.Vouchers)
-                        {
-                            <tr class="text-xs bg-gray-50">
+                        @foreach (var item in vouchers.Vouchers.Select((value, i) => new {value, i}))
+        {
+                            <tr class="text-xs @(item.i % 2 != 0 ? "bg-white-50" : "bg-gray-50") hover:bg-indigo-50">
                                 <td class="py-3 px-4">
-                                    <p class="font-medium align-middle">@item.CustomerName</p>
+                                    <p class="font-medium align-middle">@item.value.CustomerName</p>
                                 </td>
                                 <td class="py-3 px-4">
-                                    <p class="font-medium align-middle">@item.Date</p>
+                                    <p class="font-medium align-middle">@item.value.Date</p>
                                 </td>
                                 <td class="py-3 px-4">
-                                    <p class="font-medium align-middle">@item.Voucher</p>
+                                    <p class="font-medium align-middle">@item.value.Voucher</p>
                                 </td>
                                 <td class="py-3 px-4">
-                                    <p class="font-medium align-middle">@item.Quantity</p>
+                                    <p class="font-medium align-middle">@item.value.Quantity</p>
                                 </td>
                                 <td class="py-3 px-4">
-                                    <p class="font-medium align-middle">@item.ExperienceName</p>
+                                    <p class="font-medium align-middle">@item.value.ExperienceName</p>
                                 </td>
                                 
                                 @* <td> *@
