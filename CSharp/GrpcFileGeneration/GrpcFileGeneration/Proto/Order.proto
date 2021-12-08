@@ -19,6 +19,19 @@ message OrderListMessage {
   page.PageMessage pageInfo = 2;
 }
 
+message  VoucherMessages{
+  string customerName = 1;
+  string date = 2;
+  string voucher =3;
+  int32 quantity =4;
+  string experienceName =5;
+}
+
+message VoucherListMessages {
+  repeated VoucherMessages vouchers = 1;
+  page.PageMessage pageInfo =2;
+}
+
 message OrderItemMessage {
   int32 id = 1;
   string description = 2;
@@ -34,4 +47,5 @@ service OrderService {
   rpc createOrder (OrderMessage) returns (OrderMessage);
   rpc getAllCustomerOrders (request.RequestMessage) returns (OrderListMessage);
   rpc getOrderById (request.RequestMessage) returns (OrderMessage);
+  rpc getAllProviderVouchers(request.RequestMessage) returns (VoucherListMessages);
 }

@@ -17,4 +17,5 @@ public interface ExperienceDAO {
     List<Experience> getExperienceByCategory(int id);
     ArrayList<Experience> getTopExperiences();
     ArrayList<Experience> getSortedExperiences(String name, double price);
+    Experience editExperience(Experience experience);
 }

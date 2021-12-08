@@ -175,5 +175,21 @@ namespace BusinessLogic.Controllers
                 Console.WriteLine(e);
             }
         }
+        
+        [HttpPatch]
+        [Route("{id:int}")]
+        public async Task<ActionResult<Experience>> EditExperience([FromBody] Experience experience)
+        {
+            try
+            {
+                Experience editExperience = await model.EditExperienceAsync(experience);
+                return Ok(editExperience);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }

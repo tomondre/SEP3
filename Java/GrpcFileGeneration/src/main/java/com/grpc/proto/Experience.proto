@@ -44,4 +44,5 @@ service ExperienceService {
   rpc getExperienceByCategory(request.RequestMessage) returns (ExperienceListMessage);
   rpc getTopExperiences(request.RequestMessage) returns (ExperienceListMessage);
   rpc getSortedExperiences(request.RequestMessage) returns (ExperienceListMessage);
+  rpc editExperience(ExperienceMessage) returns (ExperienceMessage);
 }

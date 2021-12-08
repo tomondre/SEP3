@@ -95,5 +95,12 @@ namespace BusinessLogic.Controllers
                 Console.WriteLine(e);
             }
         }
+        
+        [HttpGet("/providers/{providerId:int}/vouchers", Name = "getProvidersVouchersAsyncRoute")]
+        public async Task<ActionResult<ProvidersVoucherList>> GetProvidersVouchersAsync([FromRoute] int providerId)
+        {
+            var allProvidersVouchers = await model.GetProvidersVouchersAsync(providerId);
+            return Ok(allProvidersVouchers);
+        }
     }
 }

@@ -17,5 +17,6 @@ namespace BusinessLogic.Model.Experiences
         Task<IList<Experience>> GetExperiencesByCategoryAsync(int id);
         Task<IList<Experience>> GetTopExperiences();
         Task<IList<Experience>> GetSortedExperiencesAsync(string name, double price);
+        Task<Experience> EditExperienceAsync(Experience experience);
     }
 }
