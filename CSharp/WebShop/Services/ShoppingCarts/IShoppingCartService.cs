@@ -1,6 +1,5 @@
-using GrpcFileGeneration.Models;
-using GrpcFileGeneration.Models.Order;
-using GrpcFileGeneration.Models.Orders;
+using WebShop.Models;
+using WebShop.Models.Orders;
 
 namespace WebShop.Services.ShoppingCarts
 {

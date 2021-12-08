@@ -12,42 +12,32 @@ public class Experience
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @SerializedName(value = "id", alternate = {"Id"})
     private int id;
 
-    @SerializedName(value = "picture", alternate = {"Picture"})
     @Column(name = "picture")
     private String picture;
 
-    @SerializedName(value = "name", alternate = {"Name"})
     @Column(name = "name")
     private String name;
 
-    @SerializedName(value = "price", alternate = {"Price"})
     @Column(name = "price")
     private double price;
 
-    @SerializedName(value = "stock", alternate = {"Stock"})
     @Column(name = "stock")
     private int stock;
 
-    @SerializedName(value = "description", alternate = {"Description"})
     @Column(name = "description")
     private String description;
 
-    @SerializedName(value = "experienceValidity", alternate = {"ExperienceValidity"})
     @Column(name = "experience_Validity")
     private int experienceValidity;
 
-    @SerializedName(value = "experienceCategory", alternate = {"ExperienceCategory"})
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Category experienceCategory;
 
-    @SerializedName(value = "experienceProvider", alternate = {"ExperienceProvider"})
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private User experienceProvider;
 
-    @SerializedName(value = "address", alternate = {"Address"})
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private  Address address;
 

@@ -1,6 +1,6 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-@page "/Login"
+@page "/login"
 @using GrpcFileGeneration.Models
 @using ClientBlazor.Data.Authentication
 @inject NavigationManager NavigationManager
@@ -71,7 +71,7 @@
     private async void TryLoginAsync()
     {
         await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).ValidateUser(userCred);
-        NavigationManager.NavigateTo("/AddExperience");
+        NavigationManager.NavigateTo("/");
     }
 
     private void ToggleShowPassword()

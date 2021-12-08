@@ -5,6 +5,7 @@ using BusinessLogic.Model.Customers;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RiskFirst.Hateoas;
 
 namespace BusinessLogic.Controllers
 {
@@ -15,9 +16,11 @@ namespace BusinessLogic.Controllers
     public class CustomersController : ControllerBase
     {
         private ICustomerModel model;
+        private ILinksService linksService;
 
-        public CustomersController(ICustomerModel model)
+        public CustomersController(ILinksService linksService, ICustomerModel model)
         {
+            this.linksService = linksService;
             this.model = model;
         }
         
@@ -36,10 +39,9 @@ namespace BusinessLogic.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetAllCustomersRoute")]
         public async Task<ActionResult<Page<CustomerList>>> GetAllCustomersAsync([FromQuery(Name = "name")] string name, [FromQuery(Name = "page")] int pageNumber)
         {
-            //TODO generate the hateoas links
             try
             {
                 Page<CustomerList> allCustomersAsync = new();
@@ -51,6 +53,8 @@ namespace BusinessLogic.Controllers
                 {
                     allCustomersAsync = await model.FindCustomerByNameAsync(name, pageNumber);
                 }
+
+                await AddLinks(allCustomersAsync.Content);
                 return Ok(allCustomersAsync);
             }
             catch (Exception e)
@@ -60,11 +64,10 @@ namespace BusinessLogic.Controllers
             
         }
 
-        [HttpDelete]
-        [Route("{customerId:int}")]
-        public async Task<ActionResult> DeleteCustomer([FromRoute] int customerId)
+        [HttpDelete("{id:int}", Name = "DeleteCustomerRoute")]
+        public async Task<ActionResult> DeleteCustomer([FromRoute] int id)
         {
-            await model.DeleteCustomerAsync(customerId);
+            await model.DeleteCustomerAsync(id);
             return Ok();
         }
         
@@ -75,6 +78,7 @@ namespace BusinessLogic.Controllers
             try
             {
                 var providerById = await model.GetCustomerByIdAsync(id);
+                await AddLink(providerById);
                 return Ok(providerById);
             }
             catch (Exception e)
@@ -91,6 +95,7 @@ namespace BusinessLogic.Controllers
             try
             {
                 Customer editedCustomer = await model.EditCustomerAsync(customer);
+                await AddLink(editedCustomer);
                 return Ok(editedCustomer);
             }
             catch (Exception e)
@@ -98,6 +103,35 @@ namespace BusinessLogic.Controllers
                 return StatusCode(403, e.Message);
             }
            
+        }
+
+        private async Task AddLink(Customer customer)
+        {
+            try
+            {
+                await linksService.AddLinksAsync(customer);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private async Task AddLinks(CustomerList list)
+        {
+            try
+            {
+                foreach (var c  in list.Customers)
+                {
+                    await linksService.AddLinksAsync(c);
+                }
+
+                await linksService.AddLinksAsync(list);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

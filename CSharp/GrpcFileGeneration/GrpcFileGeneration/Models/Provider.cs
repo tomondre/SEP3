@@ -9,28 +9,30 @@ namespace GrpcFileGeneration.Models
     {
         public Dictionary<string, Link> Links { set; get; }
         
-        // [Required, MaxLength(50)]
+        [Required, MaxLength(50)]
         public string CompanyName { get; set; }
-        // [Required]
-        // [Range(10000000,99999999)]
+        [Required, Range(10000000,99999999)]
         public int Cvr { get; set; }
-        // [Required, MaxLength(20)]
+        [Required, MaxLength(20)]
         public string PhoneNumber { get; set; }
-        // [Required, MaxLength(500)]
+        [Required, MaxLength(500)]
         public string Description { get; set; }
         
         public bool IsApproved { set; get; }
 
+        [ValidateComplexType]
         public Address Address { get; set; }
 
 
         public Provider()
         {
+            Links = new Dictionary<string, Link>();
             Address = new Address();
         }
 
         public Provider(ProviderMessage message) : base(message.User)
         {
+            Links = new Dictionary<string, Link>();
             CompanyName = message.CompanyName;
             Cvr = message.Cvr;
             Description = message.Description;
@@ -44,11 +46,11 @@ namespace GrpcFileGeneration.Models
             return new ProviderMessage()
             {
                 Address = Address.ToMessage(),
-                Cvr = this.Cvr,
-                Description = this.Description,
-                CompanyName = this.CompanyName,
-                IsApproved = this.IsApproved,
-                PhoneNumber = this.PhoneNumber,
+                Cvr = Cvr,
+                Description = Description,
+                CompanyName = CompanyName,
+                IsApproved = IsApproved,
+                PhoneNumber = PhoneNumber,
                 User = base.ToMessage()
             };
         }

@@ -1,9 +1,11 @@
-@page "/customer/{CustomerId:int}"
+@page "/customers/{CustomerId:int}/orders"
 @using ClientBlazor.Data.Orders
 @using GrpcFileGeneration.Models.Orders
 @using GrpcFileGeneration.Models
 @inject NavigationManager NavigationManager;
 @inject IOrderService OrderService
+
+@attribute [Authorize(Roles = "administrator")]
 
 <h3>OrdersHistoryPage</h3>
 

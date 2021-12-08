@@ -9,8 +9,7 @@ namespace GrpcFileGeneration.Models
     {
         public Dictionary<string, Link> Links { set; get; }
         public int Id { set; get; }
-        // [Required(ErrorMessage = "Please add a category name")]
-        
+        [Required(ErrorMessage = "Please add a category name")]
         public string CategoryName { get; set; }
 
 
@@ -26,7 +25,7 @@ namespace GrpcFileGeneration.Models
             CategoryName = categoryMessage.CategoryName;
         }
 
-        public CategoryMessage ToMesaage()
+        public CategoryMessage ToMessage()
         {
             return new CategoryMessage
             {
@@ -37,7 +36,10 @@ namespace GrpcFileGeneration.Models
         
         public void AddLink(string id, Link link)
         {
-            Links.Add(id, link);
+            if (!Links.ContainsKey(id))
+            {
+                Links.Add(id, link);
+            }
         }
 
         public override string ToString()

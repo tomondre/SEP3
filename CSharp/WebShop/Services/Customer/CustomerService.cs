@@ -4,7 +4,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using WebShop.Data.Authentication;
@@ -26,7 +25,7 @@ namespace WebShop.Services.Customer
             uri = "https://localhost:5001/Customers";
         }
 
-        public async Task CreateCustomerAsync(GrpcFileGeneration.Models.Customer customer)
+        public async Task CreateCustomerAsync(Models.Customer customer)
         {
             string customerAsJson = JsonSerializer.Serialize(customer);
             var stringContent = new StringContent(customerAsJson, Encoding.UTF8, "application/json");
@@ -35,7 +34,7 @@ namespace WebShop.Services.Customer
             CheckException(httpResponseMessage);
             
             var json = await httpResponseMessage.Content.ReadAsStringAsync();
-            var deserialize = JsonSerializer.Deserialize<GrpcFileGeneration.Models.Customer>(json,
+            var deserialize = JsonSerializer.Deserialize<Models.Customer>(json,
                 new JsonSerializerOptions()
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -43,18 +42,18 @@ namespace WebShop.Services.Customer
             await ((CurrentAuthenticationStateProvider) authenticationStateProvider).ValidateUser(deserialize);
         }
 
-        public async Task<GrpcFileGeneration.Models.Customer> GetCustomerByIdAsync(int id)
+        public async Task<Models.Customer> GetCustomerByIdAsync(int id)
         {
             HttpResponseMessage response = await client.GetAsync($"{uri}/{id}");
             CheckException(response);
             var objAsJson = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<GrpcFileGeneration.Models.Customer>(objAsJson, new JsonSerializerOptions()
+            return JsonSerializer.Deserialize<Models.Customer>(objAsJson, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
         }
 
-        public async Task<GrpcFileGeneration.Models.Customer> EditCustomerAsync(GrpcFileGeneration.Models.Customer customer)
+        public async Task<Models.Customer> EditCustomerAsync(Models.Customer customer)
         {
             var httpRequest = await GetHttpRequest(HttpMethod.Patch, $"{uri}/{customer.Id}");
             var json = JsonSerializer.Serialize(customer);
@@ -63,7 +62,7 @@ namespace WebShop.Services.Customer
             var httpResponseMessage = await client.SendAsync(httpRequest);
             CheckException(httpResponseMessage);
             var objAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<GrpcFileGeneration.Models.Customer>(objAsJson, new JsonSerializerOptions()
+            return JsonSerializer.Deserialize<Models.Customer>(objAsJson, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });

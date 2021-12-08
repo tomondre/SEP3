@@ -1,9 +1,10 @@
-﻿@page "/ApproveProviders"
+﻿@page "/providers/approve"
 @using GrpcFileGeneration.Models
 @using ClientBlazor.Data.Providers
 
 @inject IProviderService ProviderService
 @inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "administrator")]
 
 @if (providers == null)
 {
@@ -66,7 +67,7 @@ else
                 <div class="w-full lg:w-auto px-4 flex items-center justify-center">
                     @foreach(var index in Enumerable.Range(1, providers.TotalPages))
                     {
-                        <a class="inline-flex mr-3 items-center justify-center w-8 h-8 text-xs @(++pageNumber == index ? "text-white bg-indigo-500":"text-gray-500 bg-white") border border-gray-300 hover:bg-indigo-50 rounded" @onclick="() => GetPageElements(index)">@index</a>
+                        <a class="inline-flex mr-3 items-center justify-center w-8 h-8 text-xs @(providers.PageNumber == index ? "text-white bg-indigo-500":"text-gray-500 bg-white") border border-gray-300 hover:bg-indigo-50 rounded" @onclick="() => GetPageElements(index)">@index</a>
                     }
                 </div>
             </div>
@@ -88,6 +89,7 @@ else
         provider.IsApproved = true;
         await ProviderService.EditProvider(provider);
         await OnInitializedAsync();
+        StateHasChanged();
     }
 
 
@@ -95,6 +97,7 @@ else
     {
         await ProviderService.DeleteProvider(provider);
         await OnInitializedAsync();
+        StateHasChanged();
     }
 
     private async Task GetPageElements(int i)

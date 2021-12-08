@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using GrpcFileGeneration.Models;
+using WebShop.Models;
 
 namespace WebShop.Services.Login
 {

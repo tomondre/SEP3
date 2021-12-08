@@ -6,13 +6,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebShop.Cache;
 using WebShop.Data.Authentication;
-using WebShop.Data.Experiences;
-using WebShop.Data.ProductCategory;
 using WebShop.Services;
 using WebShop.Services.Customer;
 using WebShop.Services.Experiences;
 using WebShop.Services.Login;
+using WebShop.Services.Observer;
 using WebShop.Services.Orders;
+using WebShop.Services.ProductCategory;
 using WebShop.Services.ShoppingCarts;
 
 namespace WebShop

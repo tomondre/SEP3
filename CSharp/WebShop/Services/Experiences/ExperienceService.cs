@@ -1,14 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using GrpcFileGeneration.Models;
-using WebShop.Services.Experiences;
+using WebShop.Models;
 
-namespace WebShop.Data.Experiences
+namespace WebShop.Services.Experiences
 {
     public class ExperienceService : IExperienceService
     {

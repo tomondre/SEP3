@@ -13,38 +13,30 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @SerializedName(value = "id", alternate = {"Id"})
     private int id;
 
     @JoinColumn(name="order_id", nullable=false)
     @ManyToOne
     private Order order;
 
-    @SerializedName(value = "picture", alternate = {"Picture"})
     @Column(name = "picture")
     private String picture;
 
-    @SerializedName(value = "name", alternate = {"Name"})
     @Column(name = "name")
     private String name;
 
-    @SerializedName(value = "price", alternate = {"Price"})
     @Column(name = "price")
     private double price;
 
-    @SerializedName(value = "description", alternate = {"Description"})
     @Column(name = "description")
     private String description;
 
-    @SerializedName(value = "voucher", alternate = "Voucher")
     @Column(name = "voucher")
     private String voucher;
 
-    @SerializedName(value = "provider", alternate = {"Provider"})
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private User provider;
 
-    @SerializedName(value = "quantity", alternate = {"Quantity"})
     @Column(name = "quantity")
     private int quantity;
 

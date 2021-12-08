@@ -1,8 +1,9 @@
-﻿@page "/Providers"
+﻿@page "/providers"
 @using GrpcFileGeneration.Models
 @using ClientBlazor.Data.Providers
 @inject NavigationManager NavigationManager
 @inject IProviderService ProviderService
+@attribute [Authorize(Roles = "administrator")]
 
 
 @if (providers == null)
@@ -86,7 +87,7 @@ else
 
     private void OpenExperienceView(Provider provider)
     {
-        NavigationManager.NavigateTo($"/ProviderExperiences/{provider.Id}");
+        NavigationManager.NavigateTo($"/providers/{provider.Id}/experiences");
     }
 
     private async Task FetchFilteredProviders()

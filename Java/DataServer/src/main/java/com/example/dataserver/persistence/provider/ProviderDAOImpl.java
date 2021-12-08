@@ -56,6 +56,7 @@ public class ProviderDAOImpl implements ProviderDAO
         toEdit.getProvider().setCvr(provider.getProvider().getCvr());
         toEdit.getProvider().setDescription(provider.getProvider().getDescription());
         toEdit.getProvider().setPhoneNumber(provider.getProvider().getPhoneNumber());
+        toEdit.getProvider().setApproved(provider.getProvider().isApproved());
         toEdit.setEmail(provider.getEmail());
         toEdit.setPassword(provider.getPassword());
         toEdit.getProvider().getAddress().setStreet(provider.getProvider().getAddress().getStreet());

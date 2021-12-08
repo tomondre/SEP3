@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
-using GrpcFileGeneration.Models;
+using WebShop.Models;
 
-namespace WebShop.Data.ProductCategory
+namespace WebShop.Services.ProductCategory
 {
     public interface IProductCategoryService
     {
-        Task<CategoryList> GetAllCategoriesAsync();
+        Task<Page<CategoryList>> GetAllCategoriesAsync();
     }
 }

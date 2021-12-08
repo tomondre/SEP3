@@ -1,17 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
-using GrpcFileGeneration.Models;
-using GrpcFileGeneration.Models.Order;
+using WebShop.Models;
+using WebShop.Models.Orders;
 
 namespace WebShop.Services.ShoppingCarts
 {
     public class ShoppingCartService : IShoppingCartService
     {
-        public GrpcFileGeneration.Models.Orders.ShoppingCart ShoppingCart { get; set; }
+        public ShoppingCart ShoppingCart { get; set; }
 
         public ShoppingCartService()
         {
-            ShoppingCart = new GrpcFileGeneration.Models.Orders.ShoppingCart();
+            ShoppingCart = new ShoppingCart();
         }
         public void AddExperience(Experience experience, int quantity)
         {

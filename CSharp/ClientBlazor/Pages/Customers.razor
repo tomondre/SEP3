@@ -5,6 +5,7 @@
 
 @inject ICustomerService CustomerService
 @inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "administrator")]
 
 @if (customers == null)
 {
@@ -100,7 +101,7 @@ else
 
     private async Task LoadCustomerOrders(Customer customer)
     {
-        NavigationManager.NavigateTo($"/customer/{customer.Id}");
+        NavigationManager.NavigateTo($"/customers/{customer.Id}/orders");
     }
 
     private async Task FetchFilteredCustomers()

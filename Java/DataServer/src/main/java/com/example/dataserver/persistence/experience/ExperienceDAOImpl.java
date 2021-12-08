@@ -31,7 +31,7 @@ public class ExperienceDAOImpl implements ExperienceDAO
         this.repository = repository;
     }
 
-//    @Async
+    // @Async
     @Override
     public Experience addExperience(Experience experience) {
         User user = em.getReference(User.class, experience.getExperienceProvider().getId());
@@ -41,38 +41,38 @@ public class ExperienceDAOImpl implements ExperienceDAO
         return repository.save(experience);
     }
 
-//    @Async
+    // @Async
     @Override
     public ArrayList<Experience> getAllProviderExperiences(int provider) {
         return repository.getAllByExperienceProviderId(provider);
     }
 
-//    @Async
+    // @Async
     @Override
     public ArrayList<Experience> getAllWebShopExperiences() {
         return repository.getAllByStockGreaterThan(0);
     }
 
-//    @Async
+    // @Async
     @Override
     public Experience getExperienceById(int id) {
         return repository.findById(id);
     }
 
-//    @Async
+    // @Async
     @Override
     public boolean isInStock(int id, int quantity) {
       return repository.existsByIdAndStockIsGreaterThanEqual(id, quantity);
     }
 
-//    @Async
+    // @Async
     @Override
     public void deleteExperience(int experienceId)
     {
         repository.deleteById(experienceId);
     }
 
-//    @Async
+    // @Async
     @Override
     public void removeStock(int id, int quantity) {
         Experience byId = repository.findById(id);
@@ -80,7 +80,7 @@ public class ExperienceDAOImpl implements ExperienceDAO
         repository.save(byId);
     }
 
-//    @Async
+    // @Async
     @Override
     public List<Experience> getExperienceByCategory(int id) {
         Pageable page = PageRequest.of(1, 1);
@@ -89,7 +89,7 @@ public class ExperienceDAOImpl implements ExperienceDAO
         return allByExperienceCategoryIdAndStockGreaterThan;
     }
 
-//    @Async
+    // @Async
     @Override
     public ArrayList<Experience> getAllProviderExperiencesByName(int id, String name)
     {

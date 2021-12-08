@@ -79,8 +79,7 @@ namespace BusinessLogic.Model.Orders
                 await experienceNet.RemoveStockAsync(item.Experience.Id, item.Quantity);
                 memoryCache.Remove("CachedExperiences");
                 var validity = DateTime.Today.AddMonths(item.Experience.ExperienceValidity).ToString();
-                var voucher = new Voucher
-                    {ExperienceName = item.Experience.Name, Validity = validity, Img = item.Experience.Picture};
+                var voucher = new Voucher {ExperienceName = item.Experience.Name, Validity = validity, Img = item.Experience.Picture};
                 var vouchers = Enumerable.Repeat(voucher, item.Quantity).ToList();
                 var generateVoucher = await GenerateVoucher(vouchers);
                 item.Voucher = generateVoucher;

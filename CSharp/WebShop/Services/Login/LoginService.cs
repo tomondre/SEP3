@@ -2,7 +2,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using GrpcFileGeneration.Models;
+using WebShop.Models;
 
 namespace WebShop.Services.Login
 {

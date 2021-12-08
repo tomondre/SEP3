@@ -1,27 +1,29 @@
-using GrpcFileGeneration.Models.Order;
+using System.Collections.Generic;
 using Networking.Order;
+using RiskFirst.Hateoas.Models;
+using WebShop.Models.Orders;
 
 namespace GrpcFileGeneration.Models.Orders
 {
-    public class Order
+    public class Order : ILinkContainer
     {
         public int Id { get; set; }
         public Customer Customer { get; set; }
         public ShoppingCart ShoppingCart { get; set; }
-        public CreditCard CreditCard { get; set; }
         public string Comment { get; set; } = "";
         public string PaymentId { get; set; }
         public string Date { get; set; }
 
         public Order()
         {
+            Links = new Dictionary<string, Link>();
             Customer = new();
             ShoppingCart = new();
-            CreditCard = new();
         }
 
         public Order(OrderMessage order)
         {
+            Links = new Dictionary<string, Link>();
             Comment = order.Comment;
             Customer = new Customer() {Id = order.CustomerId};
             Id = order.Id;
@@ -48,9 +50,14 @@ namespace GrpcFileGeneration.Models.Orders
             return message;
         }
 
-        public void RemoveCreditCardInformation()
+        public void AddLink(string id, Link link)
         {
-            CreditCard = new();
+            if (!Links.ContainsKey(id))
+            {
+                Links.Add(id, link);
+            }
         }
+
+        public Dictionary<string, Link> Links { get; set; }
     }
 }

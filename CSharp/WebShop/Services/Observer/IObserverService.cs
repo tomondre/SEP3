@@ -1,6 +1,6 @@
 using System;
 
-namespace WebShop.Services
+namespace WebShop.Services.Observer
 {
     public interface IObserverService
     {

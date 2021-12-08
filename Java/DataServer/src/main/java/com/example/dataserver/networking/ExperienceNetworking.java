@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @GrpcService
-@EnableAsync
+//@EnableAsync
 public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServiceImplBase
 {
     private ExperienceDAO experienceDAO;
@@ -37,7 +37,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
         responseObserver.onCompleted();
     }
 
-//    @Async
+    // @Async
     @Override
     public void getAllWebShopExperiences(RequestMessage request, StreamObserver<ExperienceListMessage> responseObserver)
     {
@@ -46,7 +46,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
         responseObserver.onCompleted();
     }
 
-//    @Async
+    // @Async
     @Override
     public void addExperience(ExperienceMessage request, StreamObserver<ExperienceMessage> responseObserver)
     {
@@ -109,7 +109,7 @@ public class ExperienceNetworking extends ExperienceServiceGrpc.ExperienceServic
         responseObserver.onCompleted();
     }
 
-// @Async
+    // @Async
     @Override
     public void getAllProviderExperiencesByName(RequestMessage request,
                                                 StreamObserver<ExperienceListMessage> responseObserver)

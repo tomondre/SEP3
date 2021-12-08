@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using GrpcFileGeneration.Models.Order;
 
 namespace GrpcFileGeneration.Models.Orders
 {

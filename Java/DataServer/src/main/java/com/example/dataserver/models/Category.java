@@ -13,8 +13,8 @@ public class Category
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
     @Column(name = "category_name")
-    @SerializedName(value = "categoryName", alternate = "CategoryName")
     private String categoryName;
 
     public Category()

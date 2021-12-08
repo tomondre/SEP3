@@ -1,6 +1,6 @@
 using Networking.Order;
 
-namespace GrpcFileGeneration.Models.Order
+namespace GrpcFileGeneration.Models.Orders
 {
     public class ExperienceCartItem
     {

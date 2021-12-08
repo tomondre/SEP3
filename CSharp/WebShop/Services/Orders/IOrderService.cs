@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using GrpcFileGeneration.Models;
-using GrpcFileGeneration.Models.Orders;
+using WebShop.Models;
+using WebShop.Models.Orders;
 using OrderStripe = Stripe.Order;
-using Order = GrpcFileGeneration.Models.Orders.Order;
+using Order = WebShop.Models.Orders.Order;
 
 namespace WebShop.Services.Orders
 {
