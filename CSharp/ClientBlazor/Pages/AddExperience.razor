@@ -19,7 +19,6 @@
 @inject ICacheService CacheService
 @attribute [Authorize(Roles = "provider")]
 
-@* TODO transform strings in ENUM for Validity *@
 
 <div class="container items-center px-5 py-12 lg:px-20">
     <EditForm Model="@newExperience" OnValidSubmit="@AddNewExperience" class="flex flex-col w-full p-10 px-8 pt-6 mx-auto my-6 mb-4 transition duration-500 ease-in-out transform bg-white border rounded-lg lg:w-1/2 ">
@@ -91,7 +90,7 @@
             </div>
         </div>
         <div class="flex items-center w-full pt-4 mb-4">
-            <button type="submit" class="@(isPictureLoading? "hover:bg-blue-800 bg-blue-600" : "hover:bg-blue-400 bg-blue-400" ) w-full py-3 text-base text-white transition duration-500 ease-in-out transform bg-blue-600 border-blue-600 rounded-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">@(isPictureLoading ? "Picture is being loaded" : "Create")</button>
+            <button type="submit" class="@(isPictureLoading? "hover:bg-blue-800 bg-blue-600" : "hover:bg-blue-400 bg-blue-400" ) w-full py-3 text-base text-white transition duration-500 ease-in-out transform bg-blue-600 border-blue-600 rounded-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">@(isPictureLoading ? "Picture is being loaded" : "Save")</button>
         </div>
         <hr class="my-4 border-gray-200">
     </EditForm>
@@ -117,7 +116,7 @@
             var cachedUser = await CacheService.GetCachedUserAsync();
             newExperience.ProviderId = cachedUser.Id;
             await ExperienceService.AddExperienceAsync(newExperience);
-            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo("/experiences");
         }
     }
 
