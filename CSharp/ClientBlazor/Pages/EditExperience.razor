@@ -1,4 +1,4 @@
-@page "/EditExperience/{Id:int}"
+@page "/experiences/{Id:int}/information"
 @using Microsoft.AspNetCore.Hosting
 @using ClientBlazor.Data.Experiences
 @using ClientBlazor.Data.Pictures
@@ -92,7 +92,7 @@
             </div>
         </div>
         <div class="flex items-center w-full pt-4 mb-4">
-            <button type="submit" class="@(isPictureLoading? "hover:bg-blue-800 bg-blue-600" : "hover:bg-blue-400 bg-blue-400" ) w-full py-3 text-base text-white transition duration-500 ease-in-out transform bg-blue-600 border-blue-600 rounded-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">@(isPictureLoading ? "Picture is being loaded" : "Create")</button>
+            <button type="submit" class="@(isPictureLoading? "hover:bg-blue-800 bg-blue-600" : "hover:bg-blue-400 bg-blue-400" ) w-full py-3 text-base text-white transition duration-500 ease-in-out transform bg-blue-600 border-blue-600 rounded-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">@(isPictureLoading ? "Picture is being loaded" : "Save")</button>
         </div>
         <hr class="my-4 border-gray-200">
     </EditForm>
@@ -121,7 +121,7 @@
             var cachedUser = await CacheService.GetCachedUserAsync();
             newExperience.ProviderId = cachedUser.Id;
             await ExperienceService.EditExperienceAsync(newExperience);
-            NavigationManager.NavigateTo("/ProviderExperiences");
+            NavigationManager.NavigateTo("/experiences");
         }
     }
 
