@@ -63,16 +63,17 @@ public class OrderNetworking extends OrderServiceGrpc.OrderServiceImplBase {
     @Async
     @Override
     public void getAllProviderVouchers(RequestMessage request, StreamObserver<VoucherListMessages> responseObserver) {
-        PageRequest pageRequest = PageRequest.of(request.getPageInfo().getPageNumber(), request.getPageInfo().getPageSize());
-        var vouchersFuture = orderDAO.getProviderVouchers(request.getId(), pageRequest);
-        var page = getObjectAfterDone(vouchersFuture);
-//        var collect = page.stream().map(ProviderVouchers::toMessage)
-//                .collect(Collectors.toList());
-//        PageMessage pageInfo = PageMessage.newBuilder().setPageNumber(page.getNumber()).setTotalPages(page.getTotalPages())
-//                .setTotalElements(page.getTotalPages()).build();
-//        var voucherMessage = VoucherListMessages.newBuilder().addAllVouchers(collect).setPageInfo(pageInfo).build();
-//        responseObserver.onNext(voucherMessage);
-//        responseObserver.onCompleted();
+       // PageRequest pageRequest = PageRequest.of(request.getPageInfo().getPageNumber(), request.getPageInfo().getPageSize());
+        var vouchersFuture = orderDAO.getProviderVouchers(request.getId());
+        var list = getObjectAfterDone(vouchersFuture);
+
+        var collect = list.stream().map(ProviderVouchers::toMessage)
+                .collect(Collectors.toList());
+        var voucherMessage = VoucherListMessages.newBuilder().addAllVouchers(collect).build();
+
+        responseObserver.onNext(voucherMessage);
+        responseObserver.onCompleted();
+
         System.out.println();
     }
 

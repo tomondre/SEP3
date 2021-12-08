@@ -20,7 +20,7 @@ import java.util.Set;
 @SqlResultSetMapping(name = "Mapping.ProviderVouchers",
                      classes = @ConstructorResult(targetClass = ProviderVouchers.class,
                                                   columns = {@ColumnResult(name = "name"),
-                                                             @ColumnResult(name = "dateCreated"),
+                                                             @ColumnResult(name = "dateCreated", type = LocalDateTime.class),
                                                              @ColumnResult(name = "voucher"),
                                                              @ColumnResult(name = "quantity"),
                                                              @ColumnResult(name = "experienceName")}))

@@ -10,6 +10,6 @@ namespace BusinessLogic.Networking.Orders
         Task<Order> CreateOrderAsync(Order order);
         Task<Page<OrderList>> GetAllCustomerOrdersAsync(int id, int page);
         Task<Order> GetOrderByIdAsync(int id);
-        Task<Page<ProvidersVoucherList>> GetProvidersVouchersAsync(int id, int page);
+        Task<ProvidersVoucherList> GetProvidersVouchersAsync(int id);
     }
 }

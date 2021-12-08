@@ -16,7 +16,7 @@ public class ProviderVouchers {
     private int quantity;
     private String experienceName;
 
-    public ProviderVouchers(String name, String voucher, int quantity, String experienceName) {
+    public ProviderVouchers(String name,LocalDateTime dateCreated, String voucher, int quantity, String experienceName) {
         this.name = name;
         this.dateCreated = dateCreated;
         this.voucher = voucher;
@@ -74,11 +74,11 @@ public class ProviderVouchers {
 
     public VoucherMessages toMessage() {
         return VoucherMessages.newBuilder()
-//                .setCustomerName(customerName)
-//                .setDate(date)
-//                .setVoucher(voucher)
-//                .setQuantity(quantity)
-//                .setExperienceName(experienceName)
+                .setCustomerName(name)
+                .setDate(dateCreated.toString())
+                .setVoucher(voucher)
+                .setQuantity(quantity)
+                .setExperienceName(experienceName)
                 .build();
     }
 

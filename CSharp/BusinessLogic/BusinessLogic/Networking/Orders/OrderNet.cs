@@ -77,18 +77,13 @@ namespace BusinessLogic.Networking.Orders
             }
         }
 
-        public async Task<Page<ProvidersVoucherList>> GetProvidersVouchersAsync(int id, int page)
+        public async Task<ProvidersVoucherList> GetProvidersVouchersAsync(int id)
         {
             try
             {
                 var requestMessage = new RequestMessage
                 {
-                    Id = id,
-                    PageInfo = new PageRequestMessage()
-                    {
-                        PageNumber = page,
-                        PageSize = 5
-                    }
+                    Id = id
                 };
                 var response = await client.getAllProviderVouchersAsync(requestMessage);
                 var voucherMessage = response.Vouchers;
@@ -96,12 +91,7 @@ namespace BusinessLogic.Networking.Orders
                 {
                     Vouchers = voucherMessage.Select(a => new ProviderVouchers(a)).ToList()
                 };
-
-                var vouchersPage = new Page<ProvidersVoucherList>(response.PageInfo)
-                {
-                    Content = vouchers
-                };
-                return vouchersPage;
+                return vouchers;
             }
             catch (Exception)
             {

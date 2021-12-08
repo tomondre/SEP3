@@ -13,5 +13,5 @@ public interface OrderDAO {
     Future<Order> createOrder(Order order);
     Future<Page<Order>> getAllCustomerOrders(int id, Pageable pageable);
     Future<Order> getOrderById(int id);
-    Future<Page<ProviderVouchers>> getProviderVouchers(int providerId, Pageable pageable);
+    Future<List<ProviderVouchers>> getProviderVouchers(int providerId);
 }
