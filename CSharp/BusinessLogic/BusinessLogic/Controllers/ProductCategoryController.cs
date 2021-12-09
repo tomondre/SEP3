@@ -38,8 +38,8 @@ namespace BusinessLogic.Controllers
             }
         }
 
-        [Authorize(Roles = "Administrator")]
-        [HttpPut("{id:int}",Name = "EditCategoryRoute")]
+        [Authorize(Roles = "administrator")]
+        [HttpPatch("{id:int}",Name = "EditCategoryRoute")]
         public async Task<ActionResult<Category>> EditCategory([FromBody] Category category, [FromRoute] int id)
         {
             try
