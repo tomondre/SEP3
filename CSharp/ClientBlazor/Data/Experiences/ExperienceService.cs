@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ClientBlazor.Data.Cache;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using User = ClientBlazor.Models.User;
@@ -13,13 +14,13 @@ namespace ClientBlazor.Data.Experiences
 {
     public class ExperienceService : IExperienceService
     {
-        private readonly ProtectedSessionStorage sessionStorage;
+        private readonly ICacheService cacheService;
         private HttpClient client;
         private string uri;
 
-        public ExperienceService(ProtectedSessionStorage sessionStorage)
+        public ExperienceService(ICacheService cacheService)
         {
-            this.sessionStorage = sessionStorage;
+            this.cacheService = cacheService;
             client = new HttpClient();
             uri = "https://localhost:5001/";
         }
@@ -31,7 +32,7 @@ namespace ClientBlazor.Data.Experiences
             var stringContent = new StringContent(experienceAsJson, Encoding.UTF8, "application/json");
             httpRequest.Content = stringContent;
             var httpResponse = await client.SendAsync(httpRequest);
-            
+
             CheckException(httpResponse);
 
             var readAsString = await httpResponse.Content.ReadAsStringAsync();
@@ -42,41 +43,44 @@ namespace ClientBlazor.Data.Experiences
             return deserialize;
         }
 
-        public async Task<ExperienceList> GetAllProviderExperiencesAsync(int? providerId)
+        public async Task<Page<ExperienceList>> GetAllProviderExperiencesAsync(int? providerId, int page)
         {
             if (providerId == null)
             {
-                var protectedBrowserStorageResult = await sessionStorage.GetAsync<User>("currentUser");
-                if (protectedBrowserStorageResult.Success)
-                {
-                    providerId = protectedBrowserStorageResult.Value.Id;
-                }
+                var cachedUserAsync = await cacheService.GetCachedUserAsync();
+                providerId = cachedUserAsync.Id;
             }
-            var httpRequest = await GetHttpRequestAsync(HttpMethod.Get, $"{uri}Providers/{providerId}/Experiences");
+
+            var httpRequest =
+                await GetHttpRequestAsync(HttpMethod.Get, $"{uri}Providers/{providerId}/Experiences?page={page}");
             var httpResponseMessage = await client.SendAsync(httpRequest);
-            
+
             CheckException(httpResponseMessage);
-            
+
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var deserialize = JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
+            var deserialize = JsonSerializer.Deserialize<Page<ExperienceList>>(readAsStringAsync,
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
             return deserialize;
         }
 
-        public async Task<ExperienceList> GetAllProviderExperiencesByNameAsync(int? providerId, string name)
+        public async Task<Page<ExperienceList>> GetAllProviderExperiencesByNameAsync(int? providerId, string name,
+            int page)
         {
-            var httpRequestMessage = await GetHttpRequestAsync(HttpMethod.Get, $"{uri}Providers/{providerId}/Experiences?name={name}");
+            var httpRequestMessage = await GetHttpRequestAsync(HttpMethod.Get,
+                $"{uri}Providers/{providerId}/Experiences?name={name}&page={page}");
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
-            
+
             CheckException(httpResponseMessage);
 
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var experienceList = JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
+            var experienceList = JsonSerializer.Deserialize<Page<ExperienceList>>(readAsStringAsync,
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
             return experienceList;
         }
 
@@ -84,7 +88,7 @@ namespace ClientBlazor.Data.Experiences
         {
             var httpRequest = await GetHttpRequestAsync(HttpMethod.Delete, $"{uri}Experiences/{experience.Id}");
             var httpResponseMessage = await client.SendAsync(httpRequest);
-            
+
             CheckException(httpResponseMessage);
         }
 
@@ -116,15 +120,13 @@ namespace ClientBlazor.Data.Experiences
         private async Task<HttpRequestMessage> GetHttpRequestAsync(HttpMethod method, string uri)
         {
             var httpRequestMessage = new HttpRequestMessage(method, uri);
-            var token = await sessionStorage.GetAsync<string>("token");
-            if (token.Success)
-            {
-                httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
-            }
+            var cachedTokenAsync = await cacheService.GetCachedTokenAsync();
+            httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", cachedTokenAsync);
+
             //TODO add exception
             return httpRequestMessage;
         }
-        
+
         private void CheckException(HttpResponseMessage task)
         {
             if (!task.IsSuccessStatusCode)

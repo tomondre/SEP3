@@ -7,16 +7,16 @@ namespace BusinessLogic.Networking.Experiences
     public interface IExperienceNet
     {
         Task<Experience> AddExperienceAsync(Experience experience);
-        Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider);
-        Task<IList<Experience>> GetAllWebShopExperiencesAsync();
+        Task<Page<ExperienceList>> GetAllProviderExperiencesAsync(int provider, int page);
+        Task<Page<ExperienceList>> GetAllWebShopExperiencesAsync(int page);
         Task<Experience> GetExperienceByIdAsync(int id);
         Task<bool> IsInStockAsync(int experienceId,int quantity );
         Task RemoveStockAsync(int experienceId, int itemQuantity);
         Task DeleteExperienceAsync(int experienceId);
-        Task<IList<Experience>> GetAllProviderExperiencesByNameAsync(int id, string name);
-        Task<IList<Experience>> GetExperiencesByCategoryAsync(int id);
-        Task<IList<Experience>> GetTopExperiences();
-        Task<IList<Experience>> GetSortedExperiencesAsync(string name, double price);
+        Task<Page<ExperienceList>> GetAllProviderExperiencesByNameAsync(int id, string name, int page);
+        Task<Page<ExperienceList>> GetExperiencesByCategoryAsync(int id, int page);
+        Task<Page<ExperienceList>> GetTopExperiences();
+        Task<Page<ExperienceList>> GetSortedExperiencesAsync(string name, double price, int page);
         Task<Experience> EditExperienceAsync(Experience experience);
     }
 }

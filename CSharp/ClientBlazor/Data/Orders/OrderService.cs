@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ClientBlazor.Data.Cache;
 using ClientBlazor.Models;
 using GrpcFileGeneration.Models;
-using GrpcFileGeneration.Models.Orders;
 using Order = ClientBlazor.Models.Orders.Order;
 
 namespace ClientBlazor.Data.Orders
@@ -13,11 +12,13 @@ namespace ClientBlazor.Data.Orders
     public class OrderService : IOrderService
     {
         private HttpClient client;
+        private readonly ICacheService cacheService;
         private string url = "https://localhost:5001/";
         
-        public OrderService(HttpClient client)
+        public OrderService(HttpClient client, ICacheService cacheService)
         {
             this.client = client;
+            this.cacheService = cacheService;
         }
 
         public async Task<Order> GetOrderByIdAsync(int id)
@@ -39,12 +40,13 @@ namespace ClientBlazor.Data.Orders
             return orderList;
         }
 
-        public async Task<ProvidersVoucherList> GetAllProviderVouchersAsync(int? id)
+        public async Task<Page<ProvidersVoucherList>> GetAllProviderVouchersAsync(int page)
         {
-            var httpResponseMessage = await client.GetAsync($"{url}providers/{id}/vouchers");
+            var cachedUserAsync = await cacheService.GetCachedUserAsync();
+            var httpResponseMessage = await client.GetAsync($"{url}providers/{cachedUserAsync.Id}/vouchers?page={page}");
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var orderList = JsonSerializer.Deserialize<ProvidersVoucherList>(readAsStringAsync, new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+            var orderList = JsonSerializer.Deserialize<Page<ProvidersVoucherList>>(readAsStringAsync, new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
             return orderList;
         }
 

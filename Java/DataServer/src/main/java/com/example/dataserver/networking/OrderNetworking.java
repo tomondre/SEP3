@@ -2,7 +2,6 @@ package com.example.dataserver.networking;
 
 import com.example.dataserver.models.Order;
 import com.example.dataserver.models.ProviderVouchers;
-import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.order.OrderDAO;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -11,16 +10,13 @@ import networking.order.OrderMessage;
 import networking.order.OrderServiceGrpc;
 import networking.order.VoucherListMessages;
 import networking.page.PageMessage;
-import networking.provider.ProvidersMessage;
 import networking.request.RequestMessage;
-import networking.user.UserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
@@ -63,18 +59,16 @@ public class OrderNetworking extends OrderServiceGrpc.OrderServiceImplBase {
     @Async
     @Override
     public void getAllProviderVouchers(RequestMessage request, StreamObserver<VoucherListMessages> responseObserver) {
-       // PageRequest pageRequest = PageRequest.of(request.getPageInfo().getPageNumber(), request.getPageInfo().getPageSize());
-        var vouchersFuture = orderDAO.getProviderVouchers(request.getId());
-        var list = getObjectAfterDone(vouchersFuture);
-
-        var collect = list.stream().map(ProviderVouchers::toMessage)
-                .collect(Collectors.toList());
-        var voucherMessage = VoucherListMessages.newBuilder().addAllVouchers(collect).build();
-
+        PageRequest pageRequest = PageRequest.of(request.getPageInfo().getPageNumber(), request.getPageInfo().getPageSize());
+        var vouchersFuture = orderDAO.getProviderVouchers(request.getId(), pageRequest);
+        var page = getObjectAfterDone(vouchersFuture);
+        var collect = page.getPageList().stream().map(ProviderVouchers::toMessage).collect(Collectors.toList());
+        PageMessage pageInfo =
+                PageMessage.newBuilder().setPageNumber(page.getPage()).setTotalPages(page.getPageCount())
+                           .setTotalElements(page.getNrOfElements()).build();
+        var voucherMessage = VoucherListMessages.newBuilder().addAllVouchers(collect).setPageInfo(pageInfo).build();
         responseObserver.onNext(voucherMessage);
         responseObserver.onCompleted();
-
-        System.out.println();
     }
 
     private void orders(StreamObserver<OrderListMessage> responseObserver, Future<Page<Order>> pageFuture)

@@ -6,6 +6,7 @@ import networking.order.VoucherMessages;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class ProviderVouchers {
@@ -16,7 +17,7 @@ public class ProviderVouchers {
     private int quantity;
     private String experienceName;
 
-    public ProviderVouchers(String name,LocalDateTime dateCreated, String voucher, int quantity, String experienceName) {
+    public ProviderVouchers(String name, LocalDateTime dateCreated, String voucher, int quantity, String experienceName) {
         this.name = name;
         this.dateCreated = dateCreated;
         this.voucher = voucher;
@@ -64,12 +65,13 @@ public class ProviderVouchers {
         this.experienceName = experienceName;
     }
 
-    public ProviderVouchers(ProviderVouchers item) {
-//        customerName = item.getCustomerName();
-//        date = item.getCustomerName();
-//        voucher = item.getVoucher();
-//        quantity = item.getQuantity();
-        experienceName = item.experienceName;
+    public ProviderVouchers(VoucherMessages item) {
+        DateTimeFormatter formatter = DateTimeFormatter. ofPattern("yyyy-MM-dd HH:mm");
+        name = item.getCustomerName();
+        dateCreated = LocalDateTime.parse(item.getDate(), formatter);
+        voucher = item.getVoucher();
+        quantity = item.getQuantity();
+        experienceName = item.getExperienceName();
     }
 
     public VoucherMessages toMessage() {

@@ -24,9 +24,9 @@
                                 {
                                     <span>Experiences</span>
                                 }
-                                else if (categories.Content != null)
+                                else if (categories != null)
                                 {
-                                    <span>Category: @categories.Content.Categories.FirstOrDefault(a => a.Id == Id).CategoryName</span>
+                                    <span>Category: @categories.Categories.FirstOrDefault(a => a.Id == Id).CategoryName</span>
                                 }
                             </h2>
                         </div>
@@ -42,7 +42,7 @@
                 <em> Loading...</em>
             </p>
         }
-        else if (!experiences.Experiences.Any())
+        else if (!experiences.Content.Experiences.Any())
         {
             <p>
                 <em> No experiences.</em>
@@ -57,9 +57,9 @@
                             <div class="py-6 px-2 text-center bg-gray-50">
                                 <a class="font-bold font-heading" href="#">Category</a>
                                 <ul class="hidden text-left mt-6">
-                                    @if (categories.Content != null)
+                                    @if (categories != null)
                                     {
-                                        @foreach (Category category in categories.Content.Categories)
+                                        @foreach (Category category in categories.Categories)
                                         {
                                             <li class="mb-4">
                                                 <a @onclick="() => OpenCategoryView(category.Id)">@category.CategoryName</a>
@@ -73,7 +73,7 @@
                 </div>
                 <div class="w-full lg:w-3/4 px-3">
 
-                    @foreach (Experience experience in experiences.Experiences)
+                    @foreach (Experience experience in experiences.Content.Experiences)
                     {
                         <div @onclick="() => OpenProductPage(experience.Id)" class="relative mb-6 bg-gray-50">
                             <div class="flex flex-wrap items-center -mx-4 px-8 md:px-20 py-12">
@@ -103,7 +103,7 @@
                     <div class="mb-6 py-10 border-b border-gray-900">
                         <h3 class="mb-8 text-2xl font-bold font-heading">Category</h3>
                         <ul>
-                            @foreach (Category category in categories.Content.Categories)
+                            @foreach (Category category in categories.Categories)
                             {
                                 <li class="mb-4">
                                     <a @onclick="() => OpenCategoryView(category.Id)" class="text-lg">@category.CategoryName</a>
@@ -132,6 +132,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="flex flex-wrap mt-4 items-center justify-end">
+                    <div class="w-full lg:w-auto px-4 flex items-center justify-center">
+                        @foreach(var index in Enumerable.Range(1, experiences.TotalPages))
+                        {
+                            <a class="cursor-pointer inline-flex mr-3 items-center justify-center w-8 h-8 text-xs @(experiences.PageNumber == index ? "text-white bg-indigo-500":"text-gray-500 bg-white") border border-gray-300 hover:bg-indigo-50 rounded" @onclick="() => GetPageElements(index)">@index</a>
+                        }
+                    </div>
+                </div>
             </div>
         }
     </div>
@@ -139,10 +147,11 @@
 
 
 @code {
-    private Page<CategoryList> categories = new();
-    private ExperienceList experiences = new();
-    private string? filterByName;
+    private CategoryList categories = new();
+    private Page<ExperienceList> experiences = new();
+    private string filterByName;
     private double filterByPrice;
+    private int pageNumber = 0;
 
     [Parameter]
     public int? Id { get; set; }
@@ -152,17 +161,17 @@
         categories = await ProductCategoryService.GetAllCategoriesAsync();
         if (Id == null)
         {
-            experiences = await ExperienceService.GetAllExperiencesAsync();
+            experiences = await ExperienceService.GetAllExperiencesAsync(pageNumber);
         }
         else
         {
-            experiences = await ExperienceService.GetExperiencesByCategoryAsync(Id.Value);
+            experiences = await ExperienceService.GetExperiencesByCategoryAsync(Id.Value, pageNumber);
         }
     }
 
     private async Task Filter()
     {
-        experiences = await ExperienceService.GetSortedExperiences(filterByName, filterByPrice);
+        experiences = await ExperienceService.GetSortedExperiences(filterByName, filterByPrice, pageNumber);
     }
 
     private void OpenProductPage(int productId)
@@ -181,5 +190,10 @@
         await OnInitializedAsync();
     }
 
+    private async Task GetPageElements(int i)
+    {
+        pageNumber = i-1;
+        experiences = await ExperienceService.GetAllExperiencesAsync(pageNumber);
+    }
 }
 

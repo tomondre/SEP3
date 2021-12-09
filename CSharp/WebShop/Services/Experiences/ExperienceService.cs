@@ -17,12 +17,12 @@ namespace WebShop.Services.Experiences
             uri = "https://localhost:5001/";
         }
 
-        public async Task<ExperienceList> GetAllExperiencesAsync()
+        public async Task<Page<ExperienceList>> GetAllExperiencesAsync(int page)
         {
-            var httpResponseMessage = await client.GetAsync($"{uri}experiences");
+            var httpResponseMessage = await client.GetAsync($"{uri}experiences?page={page}");
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var deserialize = JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync,
+            var deserialize = JsonSerializer.Deserialize<Page<ExperienceList>>(readAsStringAsync,
                 new JsonSerializerOptions()
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -40,12 +40,12 @@ namespace WebShop.Services.Experiences
             return deserialize;
         }
 
-        public async Task<ExperienceList> GetExperiencesByCategoryAsync(int id)
+        public async Task<Page<ExperienceList>> GetExperiencesByCategoryAsync(int id, int page)
         {
-            var httpResponseMessage = await client.GetAsync($"{uri}categories/{id}/experiences");
+            var httpResponseMessage = await client.GetAsync($"{uri}categories/{id}/experiences?page={page}");
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync, new JsonSerializerOptions()
+            return JsonSerializer.Deserialize<Page<ExperienceList>>(readAsStringAsync, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
@@ -57,17 +57,17 @@ namespace WebShop.Services.Experiences
             var httpResponseMessage = await client.GetAsync($"{uri}experiences?top=true");
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var experienceList = JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync, new JsonSerializerOptions(){PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
-            return experienceList;
+            var experienceList = JsonSerializer.Deserialize<Page<ExperienceList>>(readAsStringAsync, new JsonSerializerOptions(){PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+            return experienceList.Content;
         }
 
-        public async Task<ExperienceList> GetSortedExperiences(string? name, double price)
+        public async Task<Page<ExperienceList>> GetSortedExperiences(string name, double price, int page)
         {
-            var httpResponseMessage = await client.GetAsync($"{uri}experiences/?name={name}&price={price}");
+            var httpResponseMessage = await client.GetAsync($"{uri}experiences/?name={name}&price={price}&page={page}");
             
             CheckException(httpResponseMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<ExperienceList>(readAsStringAsync, new JsonSerializerOptions()
+            return JsonSerializer.Deserialize<Page<ExperienceList>>(readAsStringAsync, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });

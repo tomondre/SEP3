@@ -48,9 +48,9 @@ namespace BusinessLogic.Model.Orders
             return await networking.GetOrderByIdAsync(id);
         }
 
-        public async Task<ProvidersVoucherList> GetProvidersVouchersAsync(int id)
+        public async Task<Page<ProvidersVoucherList>> GetProvidersVouchersAsync(int id, int page)
         {
-            return await networking.GetProvidersVouchersAsync(id);
+            return await networking.GetProvidersVouchersAsync(id, page);
         }
 
         public async Task<Order> CreateOrderAsync(Order order)

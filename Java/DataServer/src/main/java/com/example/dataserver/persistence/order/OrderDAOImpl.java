@@ -6,6 +6,7 @@ import com.example.dataserver.models.ProviderVouchers;
 import com.example.dataserver.models.User;
 import com.example.dataserver.persistence.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
@@ -60,10 +61,30 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Async
     @Override
-    public Future<List<ProviderVouchers>> getProviderVouchers(int providerId)
+    public Future<PagedListHolder<ProviderVouchers>> getProviderVouchers(int providerId, Pageable pageable)
     {
-//        List<ProviderVouchers> vouchers = em.createNamedQuery("getVouchers", ProviderVouchers.class).setParameter(1, providerId).getResultList();
-//
-        return new AsyncResult<>(repository.getProviderVouchers(providerId));
+        var providerVouchersAsyncResult =
+                new AsyncResult<>(repository.getProviderVouchers(providerId));
+        var await = new ArrayList<ProviderVouchers>();
+        try
+        {
+            while (true)
+            {
+                if (providerVouchersAsyncResult.isDone())
+                {
+                    await = providerVouchersAsyncResult.get();
+                    break;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        PagedListHolder<ProviderVouchers> pages = new PagedListHolder<>(await);
+        pages.setPage(pageable.getPageNumber());
+        pages.setPageSize(pageable.getPageSize());
+
+        return new AsyncResult<>(pages);
     }
 }
