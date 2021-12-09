@@ -12,7 +12,6 @@ using User = BusinessLogic.Models.User;
 
 namespace BusinessLogic.Controllers
 {
-
     [Authorize]
     [ApiController]
     [Route("[controller]")]

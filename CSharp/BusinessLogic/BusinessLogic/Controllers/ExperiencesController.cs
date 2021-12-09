@@ -49,7 +49,7 @@ namespace BusinessLogic.Controllers
         }
 
         [HttpGet("/Categories/{id:int}/Experiences", Name = "GetExperienceByCategoryRoute")]
-        [Authorize(Roles = "administrator, provider")]
+        [Authorize(Roles = "administrator, provider, customer")]
         public async Task<ActionResult<Page<ExperienceList>>> GetExperiencesByCategoryAsync([FromRoute] int id, [FromQuery] int page)
         {
             try

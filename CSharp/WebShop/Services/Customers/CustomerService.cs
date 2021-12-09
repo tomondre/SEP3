@@ -47,7 +47,8 @@ namespace WebShop.Services.Customers
 
         public async Task<Customer> GetCustomerByIdAsync(int id)
         {
-            HttpResponseMessage response = await client.GetAsync($"{uri}/{id}");
+            var httpRequestMessage = await GetHttpRequestAsync(HttpMethod.Get, $"{uri}/{id}");
+            HttpResponseMessage response = await client.SendAsync(httpRequestMessage);
             CheckException(response);
             var objAsJson = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Customer>(objAsJson, new JsonSerializerOptions()
@@ -58,7 +59,7 @@ namespace WebShop.Services.Customers
 
         public async Task<Customer> EditCustomerAsync(Customer customer)
         {
-            var httpRequest = await GetHttpRequest(HttpMethod.Patch, $"{uri}/{customer.Id}");
+            var httpRequest = await GetHttpRequestAsync(HttpMethod.Patch, $"{uri}/{customer.Id}");
             var json = JsonSerializer.Serialize(customer);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             httpRequest.Content = stringContent;
@@ -81,7 +82,7 @@ namespace WebShop.Services.Customers
             }
         }
 
-        private async Task<HttpRequestMessage> GetHttpRequest(HttpMethod method, string uri)
+        private async Task<HttpRequestMessage> GetHttpRequestAsync(HttpMethod method, string uri)
         {
             var httpRequestMessage = new HttpRequestMessage(method, uri);
             var token = await cacheService.GetCachedTokenAsync();
