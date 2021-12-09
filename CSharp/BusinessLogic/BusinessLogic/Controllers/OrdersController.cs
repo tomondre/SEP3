@@ -4,11 +4,13 @@ using BusinessLogic.Model.Orders;
 using BusinessLogic.Models;
 using BusinessLogic.Models.Orders;
 using GrpcFileGeneration.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RiskFirst.Hateoas;
 
 namespace BusinessLogic.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class OrdersController : ControllerBase
@@ -22,6 +24,7 @@ namespace BusinessLogic.Controllers
             model = orderModel;
         }
         
+        [Authorize(Roles = "customer")]
         [HttpPost(Name = "CreateOrderRoute")]
         public async Task<ActionResult<Order>> CreateOrderAsync([FromBody] Order order)
         {
@@ -38,6 +41,7 @@ namespace BusinessLogic.Controllers
             }
         }
 
+        [Authorize(Roles = "administrator, customer")]
         [HttpGet("/customers/{customerId:int}/orders", Name = "AllCustomerOrdersRoute")]
         public async Task<ActionResult<Page<OrderList>>> GetAllCustomerOrdersAsync([FromRoute] int customerId, [FromQuery] int page)
         {
@@ -54,6 +58,7 @@ namespace BusinessLogic.Controllers
             }
         }
         
+        [Authorize(Roles = "administrator, customer")]
         [HttpGet("{id:int}", Name = "GetOrderByIdRoute")]
         public async Task<ActionResult<Order>> GetOrderByIdAsync([FromRoute] int id)
         {
@@ -69,7 +74,23 @@ namespace BusinessLogic.Controllers
                 return StatusCode(403);
             }
         }
-
+        
+        [Authorize(Roles = "provider")]
+        [HttpGet("/providers/{providerId:int}/vouchers", Name = "getProvidersVouchersAsyncRoute")]
+        public async Task<ActionResult<ProvidersVoucherList>> GetProvidersVouchersAsync([FromRoute] int providerId, [FromQuery] int page)
+        {
+            try
+            {
+                var allProvidersVouchers = await model.GetProvidersVouchersAsync(providerId, page);
+                return Ok(allProvidersVouchers);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(403);
+                
+            }
+        }
+        
         private async Task AddLink(Order order)
         {
             try
@@ -94,21 +115,6 @@ namespace BusinessLogic.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
-            }
-        }
-        
-        [HttpGet("/providers/{providerId:int}/vouchers", Name = "getProvidersVouchersAsyncRoute")]
-        public async Task<ActionResult<ProvidersVoucherList>> GetProvidersVouchersAsync([FromRoute] int providerId, [FromQuery] int page)
-        {
-            try
-            {
-                var allProvidersVouchers = await model.GetProvidersVouchersAsync(providerId, page);
-                return Ok(allProvidersVouchers);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(403);
-                
             }
         }
     }

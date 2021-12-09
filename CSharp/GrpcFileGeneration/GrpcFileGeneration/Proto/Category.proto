@@ -19,5 +19,4 @@ service CategoryService{
   rpc getAllProductCategories(request.PageRequestMessage) returns (CategoriesMessage);
   rpc addProductCategory(CategoryMessage) returns (CategoryMessage);
   rpc editProductCategory(CategoryMessage) returns (CategoryMessage);
-  rpc deleteProductCategory(request.RequestMessage) returns (CategoryMessage);
 }

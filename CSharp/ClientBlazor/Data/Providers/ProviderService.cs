@@ -36,11 +36,13 @@ namespace ClientBlazor.Data.Providers
             provider.SecurityType = "provider";
             string providerAsJson = JsonSerializer.Serialize(provider);
             var stringContent = new StringContent(providerAsJson, Encoding.UTF8, "application/json");
-            var httpResponseMessage = await client.PostAsync(uri, stringContent);
+            var httpRequestMessage = await GetHttpRequestAsync(HttpMethod.Post, uri);
+            httpRequestMessage.Content = stringContent;
+            var httpResponseMessage = await client.SendAsync(httpRequestMessage);
+            
             CheckException(httpResponseMessage);
 
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-
             var user = JsonSerializer.Deserialize<User>(readAsStringAsync, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -50,9 +52,11 @@ namespace ClientBlazor.Data.Providers
 
         public async Task<Page<ProviderList>> GetAllProviders(int page)
         {
-            var httpRequest = await GetHttpRequest(HttpMethod.Get, $"{uri}/?approved=true&page={page}");
+            var httpRequest = await GetHttpRequestAsync(HttpMethod.Get, $"{uri}/?approved=true&page={page}");
             var httpResponseMessage = await client.SendAsync(httpRequest);
+            
             CheckException(httpResponseMessage);
+            
             var providersAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
             var providers = JsonSerializer.Deserialize<Page<ProviderList>>(providersAsJson,
                 new JsonSerializerOptions()
@@ -64,8 +68,11 @@ namespace ClientBlazor.Data.Providers
 
         public async Task<Provider> GetProviderById(int id)
         {
-            HttpResponseMessage response = await client.GetAsync($"{uri}/{id}");
+            var httpRequestMessage = await GetHttpRequestAsync(HttpMethod.Get, $"{uri}/{id}");
+            HttpResponseMessage response = await client.SendAsync(httpRequestMessage);
+            
             CheckException(response);
+            
             var objAsJson = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Provider>(objAsJson, new JsonSerializerOptions()
             {
@@ -75,12 +82,14 @@ namespace ClientBlazor.Data.Providers
 
         public async Task<Provider> EditProvider(Provider provider)
         {
-            var httpRequest = await GetHttpRequest(HttpMethod.Patch, $"{uri}/{provider.Id}");
+            var httpRequest = await GetHttpRequestAsync(HttpMethod.Patch, $"{uri}/{provider.Id}");
             var json = JsonSerializer.Serialize(provider);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             httpRequest.Content = stringContent;
             var httpResponseMessage = await client.SendAsync(httpRequest);
+            
             CheckException(httpResponseMessage);
+            
             var objAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Provider>(objAsJson, new JsonSerializerOptions()
             {
@@ -89,18 +98,21 @@ namespace ClientBlazor.Data.Providers
 
         }
 
-        public async Task DeleteProvider(Provider provider)
+        public async Task DeleteProviderAsync(Provider provider)
         {
-            var httpRequest = await GetHttpRequest(HttpMethod.Delete, $"{uri}/{provider.Id}");
+            var httpRequest = await GetHttpRequestAsync(HttpMethod.Delete, $"{uri}/{provider.Id}");
             var httpResponseMessage = await client.SendAsync(httpRequest);
+            
             CheckException(httpResponseMessage);
         }
 
         public async Task<Page<ProviderList>> GetAllNotApprovedProvidersAsync(int page)
         {
-            var httpRequest = await GetHttpRequest(HttpMethod.Get, $"{uri}/?approved=false&page={page}");
+            var httpRequest = await GetHttpRequestAsync(HttpMethod.Get, $"{uri}/?approved=false&page={page}");
             var httpResponseMessage = await client.SendAsync(httpRequest);
+            
             CheckException(httpResponseMessage);
+            
             var providersAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
             var providers = JsonSerializer.Deserialize<Page<ProviderList>>(providersAsJson,
                 new JsonSerializerOptions()
@@ -112,7 +124,7 @@ namespace ClientBlazor.Data.Providers
 
         public async Task<Page<ProviderList>> GetAllProvidersByNameAsync(string name, int page)
         {
-            var httpRequestMessage = await GetHttpRequest(HttpMethod.Get, $"{uri}?approved=true&name={name}&page={page}");
+            var httpRequestMessage = await GetHttpRequestAsync(HttpMethod.Get, $"{uri}?approved=true&name={name}&page={page}");
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
             
             CheckException(httpResponseMessage);
@@ -126,7 +138,7 @@ namespace ClientBlazor.Data.Providers
             return providers;
         }
 
-        private async Task<HttpRequestMessage> GetHttpRequest(HttpMethod method, string uri)
+        private async Task<HttpRequestMessage> GetHttpRequestAsync(HttpMethod method, string uri)
         {
             var httpRequestMessage = new HttpRequestMessage(method, uri);
             var token = await sessionStorage.GetAsync<string>("token");
@@ -144,15 +156,6 @@ namespace ClientBlazor.Data.Providers
             {
                 throw new Exception($"Code: {task.StatusCode}, {task.ReasonPhrase} ");
             }
-        }
-        
-        private string HashPassword(string password)
-        {
-            SHA1CryptoServiceProvider sha1 = new SHA1CryptoServiceProvider();
-
-            var bytes = Encoding.ASCII.GetBytes(password);
-            var computeHash = sha1.ComputeHash(bytes);
-            return Convert.ToBase64String(computeHash);
         }
     }
 }

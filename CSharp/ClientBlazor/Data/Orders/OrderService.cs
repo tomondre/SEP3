@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ClientBlazor.Data.Cache;
@@ -23,8 +24,11 @@ namespace ClientBlazor.Data.Orders
 
         public async Task<Order> GetOrderByIdAsync(int id)
         {
-            var httpResponseMessage = await client.GetAsync($"{url}orders/{id}");
+            var httpRequestMessage = await GetHttpRequestAsync(HttpMethod.Get, $"{url}orders/{id}");
+            var httpResponseMessage = await client.SendAsync(httpRequestMessage);
+            
             CheckException(httpResponseMessage);
+            
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             var deserialize = JsonSerializer.Deserialize<Order>(readAsStringAsync,
                 new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
@@ -33,8 +37,11 @@ namespace ClientBlazor.Data.Orders
 
         public async Task<Page<OrderList>> GetCustomerOrdersAsync(int id, int page)
         {
-            var httpResponseMessage = await client.GetAsync($"{url}customers/{id}/orders?page={page}");
+            var httpRequestMessage = await GetHttpRequestAsync(HttpMethod.Get, $"{url}customers/{id}/orders?page={page}");
+            var httpResponseMessage = await client.SendAsync(httpRequestMessage);
+            
             CheckException(httpResponseMessage);
+            
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             var orderList = JsonSerializer.Deserialize<Page<OrderList>>(readAsStringAsync, new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
             return orderList;
@@ -43,11 +50,23 @@ namespace ClientBlazor.Data.Orders
         public async Task<Page<ProvidersVoucherList>> GetAllProviderVouchersAsync(int page)
         {
             var cachedUserAsync = await cacheService.GetCachedUserAsync();
-            var httpResponseMessage = await client.GetAsync($"{url}providers/{cachedUserAsync.Id}/vouchers?page={page}");
+            var httpRequestMessage = await GetHttpRequestAsync(HttpMethod.Get, $"{url}providers/{cachedUserAsync.Id}/vouchers?page={page}");
+            var httpResponseMessage = await client.SendAsync(httpRequestMessage);
+            
             CheckException(httpResponseMessage);
+            
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             var orderList = JsonSerializer.Deserialize<Page<ProvidersVoucherList>>(readAsStringAsync, new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
             return orderList;
+        }
+        
+        private async Task<HttpRequestMessage> GetHttpRequestAsync(HttpMethod method, string uri)
+        {
+            var httpRequestMessage = new HttpRequestMessage(method, uri);
+            var cachedTokenAsync = await cacheService.GetCachedTokenAsync();
+            httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", cachedTokenAsync);
+            //TODO add exception
+            return httpRequestMessage;
         }
 
         private void CheckException(HttpResponseMessage task)

@@ -12,8 +12,7 @@ using User = BusinessLogic.Models.User;
 
 namespace BusinessLogic.Controllers
 {
-
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CustomersController : ControllerBase
@@ -42,6 +41,7 @@ namespace BusinessLogic.Controllers
             }
         }
 
+        [Authorize(Roles = "administrator")]
         [HttpGet(Name = "GetAllCustomersRoute")]
         public async Task<ActionResult<Page<CustomerList>>> GetAllCustomersAsync([FromQuery(Name = "name")] string name, [FromQuery(Name = "page")] int pageNumber)
         {
@@ -67,6 +67,7 @@ namespace BusinessLogic.Controllers
             
         }
 
+        [Authorize(Roles = "administrator")]
         [HttpDelete("{id:int}", Name = "DeleteCustomerRoute")]
         public async Task<ActionResult> DeleteCustomer([FromRoute] int id)
         {
@@ -74,7 +75,7 @@ namespace BusinessLogic.Controllers
             return Ok();
         }
         
-         
+        [Authorize(Roles = "customer")]
         [HttpGet("{id:int}", Name = "GetCustomerByIdRoute")]
         public async Task<ActionResult<User>> GetCustomerById([FromRoute] int id)
         {
@@ -91,7 +92,7 @@ namespace BusinessLogic.Controllers
       
         }
         
-        //[Authorize(Roles = "Customer")]
+        [Authorize(Roles = "customer")]
         [HttpPatch("{id:int}",Name = "EditCustomerRoute")]
         public async Task<ActionResult<Customer>> EditCustomer([FromBody] Customer customer)
         {

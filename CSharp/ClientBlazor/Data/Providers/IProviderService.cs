@@ -11,7 +11,7 @@ namespace ClientBlazor.Data.Providers
         public Task<Page<ProviderList>> GetAllProviders(int page);
         Task<Provider> GetProviderById(int id);
         Task<Provider> EditProvider(Provider provider);
-        Task DeleteProvider(Provider provider);
+        Task DeleteProviderAsync(Provider provider);
         Task<Page<ProviderList>> GetAllNotApprovedProvidersAsync(int page);
         Task<Page<ProviderList>> GetAllProvidersByNameAsync(string name, int page);
     }
