@@ -19,8 +19,8 @@
 else
 {
     <section class="py-20 bg-gray-100">
-        <EditForm Model="@order" OnSubmit="@CheckoutHandler">
-            <DataAnnotationsValidator/>
+        <EditForm Model="@order" OnValidSubmit="@CheckoutHandler">
+            <ObjectGraphDataAnnotationsValidator/>
             <div class="container mx-auto px-4">
                 <div class="p-8 lg:p-20 bg-white">
                     <div class="flex flex-wrap -mx-4">
@@ -162,7 +162,7 @@ else
     {
         CreditCard = new CreditCard
         {
-            Number = "4242 4242 4242 4242",
+            Number = "4242424242424242",
             Cvv = "123",
             Month = 12,
             Year = 23

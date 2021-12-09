@@ -9,11 +9,11 @@ namespace WebShop.Models.Orders
         public string Number { get; set; }
 
         [Required]
-        [Range(1, 12, ErrorMessage = "Month is a two digit number")]
+        [Range(1, 12, ErrorMessage = "Month is not valid")]
         public int Month { get; set; }
 
         [Required]
-        [Range(21, 30, ErrorMessage = "Please add a valid expiry year")]
+        [Range(21, 30, ErrorMessage = "Year not valid. Please add last two digits of year")]
         public int Year { get; set; }
         [Required]
         [RegularExpression(@"^[0-9]{3}$", ErrorMessage = "Cvv should be a three digit number")]
