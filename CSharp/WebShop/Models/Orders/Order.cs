@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using RiskFirst.Hateoas.Models;
 
 namespace WebShop.Models.Orders
@@ -8,6 +9,7 @@ namespace WebShop.Models.Orders
         public int Id { get; set; }
         public Customer Customer { get; set; }
         public ShoppingCart ShoppingCart { get; set; }
+        [ValidateComplexType]
         public CreditCard CreditCard { get; set; }
         public string Comment { get; set; } = "";
         public string PaymentId { get; set; }

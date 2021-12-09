@@ -60,7 +60,7 @@ else
                         </div>
                         <div class="flex flex-wrap -mx-4 mb-14 items-center">
                             <div class="w-full xl:w-2/3 px-4 mb-4 xl:mb-0">
-                                <a @onclick="AddProductToCart" class=" @(ItemAdded ? "bg-blue-700" : "bg-blue-500") block bg-blue-500 hover:bg-blue-700 text-center text-white font-bold font-heading py-5 px-8 rounded-md uppercase transition duration-200">
+                                <a @onclick="AddProductToCart" class=" @(ItemAdded ? "bg-blue-700" : "bg-blue-500") cursor-pointer block bg-blue-500 hover:bg-blue-700 text-center text-white font-bold font-heading py-5 px-8 rounded-md uppercase transition duration-200">
                                     @(ItemAdded ? "In cart" : "Add To Cart")
                                 </a>
                             </div>

@@ -3,12 +3,14 @@
 @using WebShop.Services.Orders
 @inject IOrderService OrderService
 @inject IJSRuntime jsRuntime
+@inject NavigationManager NavigationManager
 
 @if (Order == null)
 {
     <h2 class="mb-8 text-5xl font-bold font-heading">Order doesnt exist</h2>
 }
-else {
+else
+{
     <section class="relative py-20 bg-gray-100">
         <div class="absolute top-0 left-0 w-full lg:w-2/5 h-64 lg:h-full bottom-0 bg-blue-300">
             <img class="absolute bottom-0 left-0 w-1/2 lg:w-auto" src="" alt="">
@@ -42,13 +44,12 @@ else {
                                         <div class="flex">
                                             <div class="mr-auto">
                                                 <h3 class="text-xl font-bold font-heading">@item.Experience.Name</h3>
-                                                <p class="text-gray-500">@item.Experience.Description</p>
                                                 <p class="text-gray-500">
                                                     <span>Quantity:</span>
                                                     <span class="text-gray-900 font-bold font-heading">@item.Quantity</span>
                                                 </p>
                                             </div>
-                                            <span class="text-2xl font-bold font-heading text-blue-600">@item.TotalPrice DKK</span>
+                                            <h3 class="text-xl font-bold font-heading">@item.TotalPrice DKK</h3>
                                         </div>
                                     </div>
                                     <a @onclick="() => OpenVoucherSite(item.Voucher)" class="inline-flex w-full md:w-auto justify-center items-center px-8 py-6 font-bold font-heading uppercase border hover:border-gray-500 rounded-md" href="">
@@ -81,7 +82,7 @@ else {
                                 </div>
                             </div>
                         </div>
-                        <a class="block text-center px-8 py-4 bg-orange-300 hover:bg-orange-400 text-white font-bold font-heading uppercase rounded-md transition duration-200" href="#">Go back Shopping</a>
+                        <a @onclick="OpenOrderView" class="cursor-pointer block text-center px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white font-bold font-heading uppercase rounded-md transition duration-200">Open Order</a>
                     </div>
                 </div>
             </div>
@@ -100,10 +101,14 @@ else {
     {
         Order = await OrderService.GetOrderByIdAsync(Id);
     }
-    
+
     private async Task OpenVoucherSite(string url)
     {
         await jsRuntime.InvokeAsync<object>("open", url, "_blank");
     }
-}
 
+    private void OpenOrderView()
+    {
+        NavigationManager.NavigateTo($"/orders/{Id}");
+    }
+}
