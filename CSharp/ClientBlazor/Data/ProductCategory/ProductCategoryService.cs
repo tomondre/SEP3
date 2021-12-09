@@ -53,7 +53,7 @@ namespace ClientBlazor.Data.ProductCategory
 
         public async Task<Category> EditProductCategoryAsync(Category category)
         {
-            var httpRequest = await GetHttpRequest(HttpMethod.Put, uri);
+            var httpRequest = await GetHttpRequest(HttpMethod.Patch, $"{uri}/{category.Id}");
             var categoryAsJson = JsonSerializer.Serialize(category);
             var stringContent = new StringContent(categoryAsJson, Encoding.UTF8, "application/json");
             httpRequest.Content = stringContent;
