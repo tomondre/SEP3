@@ -117,7 +117,12 @@ else
         await Task.WhenAll(loggedInProvider, pageCategories);
         categories = pageCategories.Result.Content;
         isValid = loggedInProvider.Result.IsApproved;
-        newExperience.CategoryId = pageCategories.Result.Content.Categories[0].Id;
+
+        //Default values
+        if (pageCategories.Result.Content != null)
+        {
+            newExperience.CategoryId = pageCategories.Result.Content.Categories[0].Id;
+        }
         newExperience.ExperienceValidity = 6;
     }
 
