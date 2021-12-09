@@ -98,11 +98,11 @@ namespace BusinessLogic.Controllers
         }
         
         [HttpGet("/providers/{providerId:int}/vouchers", Name = "getProvidersVouchersAsyncRoute")]
-        public async Task<ActionResult<ProvidersVoucherList>> GetProvidersVouchersAsync([FromRoute] int providerId)
+        public async Task<ActionResult<ProvidersVoucherList>> GetProvidersVouchersAsync([FromRoute] int providerId, [FromQuery] int page)
         {
             try
             {
-                var allProvidersVouchers = await model.GetProvidersVouchersAsync(providerId);
+                var allProvidersVouchers = await model.GetProvidersVouchersAsync(providerId, page);
                 return Ok(allProvidersVouchers);
             }
             catch (Exception e)

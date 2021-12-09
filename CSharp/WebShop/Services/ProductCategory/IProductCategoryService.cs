@@ -5,6 +5,6 @@ namespace WebShop.Services.ProductCategory
 {
     public interface IProductCategoryService
     {
-        Task<Page<CategoryList>> GetAllCategoriesAsync();
+        Task<CategoryList> GetAllCategoriesAsync();
     }
 }

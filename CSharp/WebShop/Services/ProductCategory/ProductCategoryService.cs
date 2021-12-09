@@ -17,7 +17,7 @@ namespace WebShop.Services.ProductCategory
             uri = "https://localhost:5001/ProductCategory";
         }
 
-        public async Task<Page<CategoryList>> GetAllCategoriesAsync()
+        public async Task<CategoryList> GetAllCategoriesAsync()
         {
             var httpResponseMessage = await client.GetAsync($"{uri}?page=0");
             CheckException(httpResponseMessage);
@@ -26,7 +26,7 @@ namespace WebShop.Services.ProductCategory
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
-            return categories;
+            return categories.Content;
         }
 
         private void CheckException(HttpResponseMessage task)

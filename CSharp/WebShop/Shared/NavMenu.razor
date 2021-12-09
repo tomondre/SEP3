@@ -33,7 +33,7 @@
 
                 @if (categories != null)
                 {
-                    @foreach (Category category in categories.Content.Categories.Take(6))
+                    @foreach (Category category in categories.Categories.Take(6))
                     {
                         <li>
                             <a @onclick="() => OpenCategory(category.Id)" class="cursor-pointer mr-12 font-bold font-heading hover:text-gray-600">@category.CategoryName</a>
@@ -146,7 +146,7 @@
 
 @code {
     private int cartItemsCount = 0;
-    private Page<CategoryList> categories;
+    private CategoryList categories;
 
     protected override async Task OnInitializedAsync()
     {

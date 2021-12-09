@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 using Networking.Experience;
@@ -22,17 +21,30 @@ namespace BusinessLogic.Networking.Experiences
             return new Experience(protobufMessage);
         }
 
-        public async Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider)
+        public async Task<Page<ExperienceList>> GetAllProviderExperiencesAsync(int provider, int page)
         {
-            var allProviderExperiencesAsync = await client.getAllProviderExperiencesAsync(new RequestMessage {Id = provider});
-            return ExperienceListMessageToList(allProviderExperiencesAsync);
+            var requestMessage = new RequestMessage
+            {
+                Id = provider,
+                PageInfo = new PageRequestMessage
+                {
+                    PageNumber = page,
+                    PageSize = 5
+                }
+            };
+            var allProviderExperiencesAsync = await client.getAllProviderExperiencesAsync(requestMessage);
+            return PageContent(allProviderExperiencesAsync);
         }
 
-        public async Task<IList<Experience>> GetAllWebShopExperiencesAsync()
+        public async Task<Page<ExperienceList>> GetAllWebShopExperiencesAsync(int page)
         {
-            
-            var allWebShopExperiencesAsync = await client.getAllWebShopExperiencesAsync(new RequestMessage());
-            return ExperienceListMessageToList(allWebShopExperiencesAsync);
+            var pageRequestMessage = new PageRequestMessage
+            {
+                PageNumber = page,
+                PageSize = 5
+            };
+            var allWebShopExperiencesAsync = await client.getAllWebShopExperiencesAsync(pageRequestMessage);
+            return PageContent(allWebShopExperiencesAsync);
         }
 
         public async Task<Experience> GetExperienceByIdAsync(int id)
@@ -57,27 +69,41 @@ namespace BusinessLogic.Networking.Experiences
             await client.deleteExperienceAsync(new RequestMessage {Id = experienceId});
         }
 
-        public async Task<IList<Experience>> GetExperiencesByCategoryAsync(int id)
+        public async Task<Page<ExperienceList>> GetExperiencesByCategoryAsync(int id, int page)
         {
-            var experienceByCategoryAsync = await client.getExperienceByCategoryAsync(new RequestMessage() {Id = id});
-            return ExperienceListMessageToList(experienceByCategoryAsync);
+            var requestMessage = new RequestMessage()
+            {
+                Id = id,
+                PageInfo = new PageRequestMessage
+                {
+                    PageNumber = page,
+                    PageSize = 5
+                }
+            };
+            var experienceByCategoryAsync = await client.getExperienceByCategoryAsync(requestMessage);
+            return PageContent(experienceByCategoryAsync);
         }
 
-        public async Task<IList<Experience>> GetTopExperiences()
+        public async Task<Page<ExperienceList>> GetTopExperiences()
         {
             var experienceListMessage = await client.getTopExperiencesAsync(new RequestMessage());
-            return ExperienceListMessageToList(experienceListMessage);
+            var experiences = experienceListMessage.Experiences.Select(a => new Experience(a)).ToList();
+            return new Page<ExperienceList> {Content = new ExperienceList{Experiences = experiences}};
         }
 
-        public async Task<IList<Experience>> GetSortedExperiencesAsync(string name, double price)
+        public async Task<Page<ExperienceList>> GetSortedExperiencesAsync(string name, double price, int page)
         {
-            
-            var message = await client.getSortedExperiencesAsync(new RequestMessage()
+            var message = await client.getSortedExperiencesAsync(new RequestMessage
             {
                 Name = string.IsNullOrEmpty(name) ? "" : name,
-                Price = price == 0 ? double.MaxValue : price
+                Price = price == 0 ? double.MaxValue : price,
+                PageInfo = new PageRequestMessage
+                {
+                    PageNumber = page,
+                    PageSize = 5
+                }
             });
-            return ExperienceListMessageToList(message);
+            return PageContent(message);
         }
 
         public async Task<Experience> EditExperienceAsync(Experience experience)
@@ -86,20 +112,34 @@ namespace BusinessLogic.Networking.Experiences
             return new Experience(message);
         }
 
-        private List<Experience> ExperienceListMessageToList(ExperienceListMessage list)
+        public async Task<Page<ExperienceList>> GetAllProviderExperiencesByNameAsync(int id, string name, int page)
         {
-            var result = new List<Experience>();
-            foreach (var e in list.Experiences)
+            var requestMessage = new RequestMessage
             {
-                result.Add(new Experience(e));
-            }
-            return result;
+                Id = id,
+                Name = name,
+                PageInfo = new PageRequestMessage
+                {
+                    PageNumber = page,
+                    PageSize = 5
+                }
+            };
+            var allProviderExperiencesByNameAsync = await client.getAllProviderExperiencesByNameAsync(requestMessage);
+            return PageContent(allProviderExperiencesByNameAsync);
         }
 
-        public async Task<IList<Experience>> GetAllProviderExperiencesByNameAsync(int id, string name)
+        private static Page<ExperienceList> PageContent(ExperienceListMessage allProviderExperiencesAsync)
         {
-            var allProviderExperiencesByNameAsync = await client.getAllProviderExperiencesByNameAsync(new RequestMessage {Id = id, Name = name});
-            return ExperienceListMessageToList(allProviderExperiencesByNameAsync);
+            var experiences = new ExperienceList
+            {
+                Experiences = allProviderExperiencesAsync.Experiences.Select(a => new Experience(a)).ToList()
+            };
+
+            var pageContent = new Page<ExperienceList>(allProviderExperiencesAsync.PageInfo)
+            {
+                Content = experiences
+            };
+            return pageContent;
         }
     }
 }

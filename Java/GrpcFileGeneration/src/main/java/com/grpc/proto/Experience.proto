@@ -5,10 +5,7 @@ package networking.experience;
 import "Address.proto";
 import "Request.proto";
 import "User.proto";
-
-message ProtobufMessage{
-  string messageOrObject = 1;
-}
+import "Page.proto";
 
 message ProtobufStockRequest{
   int32 id =1;
@@ -30,17 +27,18 @@ message ExperienceMessage{
 
 message ExperienceListMessage {
   repeated ExperienceMessage experiences = 1;
+  page.PageMessage pageInfo = 2;
 }
 
 service ExperienceService {
   rpc getAllProviderExperiences(request.RequestMessage) returns (ExperienceListMessage);
-  rpc getAllWebShopExperiences(request.RequestMessage) returns (ExperienceListMessage);
+  rpc getAllWebShopExperiences(request.PageRequestMessage) returns (ExperienceListMessage);
   rpc addExperience(ExperienceMessage) returns (ExperienceMessage);
   rpc getExperienceById(request.RequestMessage) returns (ExperienceMessage);
   rpc isInStock(request.RequestMessage) returns (request.RequestMessage);
   rpc deleteExperience(request.RequestMessage) returns (request.RequestMessage);
   rpc removeStock(request.RequestMessage) returns (request.RequestMessage);
-  rpc GetAllProviderExperiencesByName(request.RequestMessage) returns (ExperienceListMessage);
+  rpc getAllProviderExperiencesByName(request.RequestMessage) returns (ExperienceListMessage);
   rpc getExperienceByCategory(request.RequestMessage) returns (ExperienceListMessage);
   rpc getTopExperiences(request.RequestMessage) returns (ExperienceListMessage);
   rpc getSortedExperiences(request.RequestMessage) returns (ExperienceListMessage);

@@ -14,12 +14,12 @@ import java.util.ArrayList;
 @Repository
 public interface ExperienceRepository extends JpaRepository<Experience, Integer>
 {
-  ArrayList<Experience> getAllByExperienceProviderId(@Param("experience_provider_user_id") int id);
+  Page<Experience> getAllByExperienceProviderId(@Param("experience_provider_user_id") int id, Pageable pageable);
   Experience findById(@Param("id") int id);
   boolean existsByIdAndStockIsGreaterThanEqual(@Param("id") int id, @Param("stock") int quantity);
-  ArrayList<Experience> findAllByExperienceProviderIdAndNameContainsIgnoreCase(@Param("experience_provider_id")int id, @Param("name") String name);
-  ArrayList<Experience> getAllByStockGreaterThan(@Param("stock") int stock);
-  ArrayList<Experience> getAllByExperienceCategoryIdAndStockGreaterThan(int experienceCategory_id, int stock);
+  Page<Experience> findAllByExperienceProviderIdAndNameContainsIgnoreCase(@Param("experience_provider_id")int id, @Param("name") String name, Pageable pageable);
+  Page<Experience> getAllByStockGreaterThan(@Param("stock") int stock, Pageable pageable);
+  Page<Experience> getAllByExperienceCategoryIdAndStockGreaterThan(int experienceCategory_id, int stock, Pageable pageable);
   ArrayList<Experience> findTop3ByStockAfter(int stock);
-  ArrayList<Experience> findAllByNameContainingIgnoreCaseAndPriceIsLessThanEqual(@Param("name") String name, @Param("price") double price);
+  Page<Experience> findAllByNameContainingIgnoreCaseAndPriceIsLessThanEqual(@Param("name") String name, @Param("price") double price, Pageable pageable);
 }

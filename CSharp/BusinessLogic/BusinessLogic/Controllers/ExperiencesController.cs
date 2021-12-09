@@ -24,22 +24,22 @@ namespace BusinessLogic.Controllers
 
         [HttpGet("/Providers/{id:int}/Experiences", Name = "GetProviderExperienceRoute")]
         // [Authorize(Roles = "Administrator, Provider")]
-        public async Task<ActionResult<ExperienceList>> GetProviderExperiences([FromRoute] int id,
-            [FromQuery] string name)
+        public async Task<ActionResult<Page<ExperienceList>>> GetProviderExperiences([FromRoute] int id,
+            [FromQuery] string name, [FromQuery] int page)
         {
             try
             {
-                ExperienceList experiences = new ExperienceList();
+                var experiences = new Page<ExperienceList>();
                 if (string.IsNullOrEmpty(name))
                 {
-                    experiences.Experiences = await model.GetAllProviderExperiencesAsync(id);
+                    experiences = await model.GetAllProviderExperiencesAsync(id, page);
                 }
                 else
                 {
-                    experiences.Experiences = await model.GetAllProviderExperiencesByNameAsync(id, name);
+                    experiences = await model.GetAllProviderExperiencesByNameAsync(id, name, page);
                 }
 
-                await AddLinks(experiences);
+                await AddLinks(experiences.Content);
                 return Ok(experiences);
             }
             catch (Exception e)
@@ -50,15 +50,12 @@ namespace BusinessLogic.Controllers
 
         [HttpGet("/Categories/{id:int}/Experiences", Name = "GetExperienceByCategoryRoute")]
         // [Authorize(Roles = "Administrator, Provider")]
-        public async Task<ActionResult<ExperienceList>> GetExperiencesByCategoryAsync([FromRoute] int id)
+        public async Task<ActionResult<Page<ExperienceList>>> GetExperiencesByCategoryAsync([FromRoute] int id, [FromQuery] int page)
         {
             try
             {
-                ExperienceList experiences = new ExperienceList
-                {
-                    Experiences = await model.GetExperiencesByCategoryAsync(id)
-                };
-                await AddLinks(experiences);
+                var experiences = await model.GetExperiencesByCategoryAsync(id, page);
+                await AddLinks(experiences.Content);
                 return Ok(experiences);
             }
             catch (Exception e)
@@ -84,29 +81,29 @@ namespace BusinessLogic.Controllers
 
 
         [HttpGet(Name = "GetAllExperiencesRoute")]
-        public async Task<ActionResult<ExperienceList>> GetAllExperiencesAsync([FromQuery] bool? top,
-            [FromQuery(Name = "name")] string name, [FromQuery] double price)
+        public async Task<ActionResult<Page<ExperienceList>>> GetAllExperiencesAsync([FromQuery] bool? top,
+            [FromQuery(Name = "name")] string name, [FromQuery] double price, [FromQuery] int? page)
         {
             try
             {
-                ExperienceList experiences = new ExperienceList();
+                var experiences = new Page<ExperienceList>();
                 if (top == null)
                 {
                     if (string.IsNullOrEmpty(name) && price == 0)
                     {
-                        experiences.Experiences = await model.GetAllWebShopExperiencesAsync();
+                        experiences = await model.GetAllWebShopExperiencesAsync(page.Value);
                     }
                     else
                     {
-                        experiences.Experiences = await model.GetSortedExperiencesAsync(name, price);
+                        experiences = await model.GetSortedExperiencesAsync(name, price, page.Value);
                     }
                 }
                 else
                 {
-                    experiences.Experiences = await model.GetTopExperiences();
+                    experiences = await model.GetTopExperiences();
                 }
 
-                await AddLinks(experiences);
+                await AddLinks(experiences.Content);
                 return Ok(experiences);
             }
             catch (Exception e)

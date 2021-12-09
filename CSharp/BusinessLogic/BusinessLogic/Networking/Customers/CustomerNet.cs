@@ -29,7 +29,7 @@ namespace BusinessLogic.Networking.Customers
 
         public async Task<Page<CustomerList>> GetAllCustomersAsync(int pageRequest)
         {
-            var pageRequestMessage = new PageRequestMessage() {PageNumber = pageRequest, PageSize = 5};
+            var pageRequestMessage = new PageRequestMessage {PageNumber = pageRequest, PageSize = 5};
             CustomersMessage response = await client.getAllCustomersAsync(pageRequestMessage);
             
             var customersMessage = response.Customers;
@@ -52,7 +52,7 @@ namespace BusinessLogic.Networking.Customers
 
         public async Task<Customer> GetCustomerByIdAsync(int id)
         {
-            UserMessage userMessage = new UserMessage(){Id = id};
+            UserMessage userMessage = new UserMessage{Id = id};
             CustomerMessage customerByIdMessage = await client.getCustomerByIdAsync(userMessage);
             Customer customerById = new Customer(customerByIdMessage);
             return customerById;
@@ -69,7 +69,7 @@ namespace BusinessLogic.Networking.Customers
         {
             var pageRequestMessage = new PageRequestMessage() {PageNumber = pageRequest, PageSize = 5};
             var requestMessage = new RequestMessage() {Name = name, PageInfo = pageRequestMessage};
-            var response = await client.FindCustomerByNameAsync(requestMessage);
+            var response = await client.findCustomerByNameAsync(requestMessage);
             
             var customersMessage = response.Customers;
             var customers = new CustomerList()

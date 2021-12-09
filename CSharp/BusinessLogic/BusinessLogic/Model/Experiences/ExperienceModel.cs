@@ -10,37 +10,25 @@ namespace BusinessLogic.Model.Experiences
     public class ExperienceModel : IExperienceModel
     {
         private IExperienceNet network;
-        private IMemoryCache memoryCache;
 
-        public ExperienceModel(IExperienceNet network, IMemoryCache memoryCache)
+        public ExperienceModel(IExperienceNet network)
         {
             this.network = network;
-            this.memoryCache = memoryCache;
         }
         
         public async Task<Experience> AddExperienceAsync(Experience experience)
         {
-            memoryCache.Remove("CachedExperiences");
             return await network.AddExperienceAsync(experience);
         }
 
-        public async Task<IList<Experience>> GetAllProviderExperiencesAsync(int provider)
+        public async Task<Page<ExperienceList>> GetAllProviderExperiencesAsync(int provider, int page)
         {
-            return await network.GetAllProviderExperiencesAsync(provider);
+            return await network.GetAllProviderExperiencesAsync(provider, page);
         }
 
-        public async Task<IList<Experience>> GetAllWebShopExperiencesAsync()
+        public async Task<Page<ExperienceList>> GetAllWebShopExperiencesAsync(int page)
         {
-            IList<Experience> result;
-            bool AlreadyExists = memoryCache.TryGetValue("CachedExperiences", out result);
-            if (!AlreadyExists)
-            { 
-                result = await network.GetAllWebShopExperiencesAsync();
-                var slidingExpiration = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(1));
-                memoryCache.Set("CachedExperiences", result, slidingExpiration);
-            }
-
-            return result;
+            return await network.GetAllWebShopExperiencesAsync(page);
         }
 
         public async Task<Experience> GetExperienceByIdAsync(int id)
@@ -63,24 +51,24 @@ namespace BusinessLogic.Model.Experiences
             await network.DeleteExperienceAsync(experienceId);
         }
 
-        public async Task<IList<Experience>> GetAllProviderExperiencesByNameAsync(int id, string name)
+        public async Task<Page<ExperienceList>> GetAllProviderExperiencesByNameAsync(int id, string name, int page)
         {
-            return await network.GetAllProviderExperiencesByNameAsync(id, name);
+            return await network.GetAllProviderExperiencesByNameAsync(id, name, page);
         }
 
-        public async Task<IList<Experience>> GetExperiencesByCategoryAsync(int id)
+        public async Task<Page<ExperienceList>> GetExperiencesByCategoryAsync(int id, int page)
         {
-            return await network.GetExperiencesByCategoryAsync(id);
+            return await network.GetExperiencesByCategoryAsync(id, page);
         }
 
-        public async Task<IList<Experience>> GetTopExperiences()
+        public async Task<Page<ExperienceList>> GetTopExperiences()
         {
             return await network.GetTopExperiences();
         }
 
-        public async Task<IList<Experience>> GetSortedExperiencesAsync(string name, double price)
+        public async Task<Page<ExperienceList>> GetSortedExperiencesAsync(string name, double price, int page)
         {
-            return await network.GetSortedExperiencesAsync(name, price);
+            return await network.GetSortedExperiencesAsync(name, price, page);
         }
 
         public async Task<Experience> EditExperienceAsync(Experience experience)

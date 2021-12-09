@@ -1,21 +1,23 @@
 package com.example.dataserver.persistence.experience;
 
 import com.example.dataserver.models.Experience;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.Future;
 
 public interface ExperienceDAO {
-    Experience addExperience(Experience experience);
-    ArrayList<Experience> getAllProviderExperiences(int provider);
-    ArrayList<Experience> getAllWebShopExperiences();
-    Experience getExperienceById(int id);
-    boolean isInStock(int id, int quantity);
+    Future<Experience> addExperience(Experience experience);
+    Future<Page<Experience>> getAllProviderExperiences(int provider , Pageable pageable);
+    Future<Page<Experience>> getAllWebShopExperiences(Pageable pageable);
+    Future<Experience> getExperienceById(int id);
+    Future<Boolean> isInStock(int id, int quantity);
     void deleteExperience(int experienceId);
     void removeStock(int id, int quantity);
-    ArrayList<Experience> getAllProviderExperiencesByName(int id, String name);
-    List<Experience> getExperienceByCategory(int id);
-    ArrayList<Experience> getTopExperiences();
-    ArrayList<Experience> getSortedExperiences(String name, double price);
-    Experience editExperience(Experience experience);
+    Future<Page<Experience>> getAllProviderExperiencesByName(int id, String name, Pageable pageable);
+    Future<Page<Experience>> getExperienceByCategory(int id, Pageable pageable);
+    Future<ArrayList<Experience>> getTopExperiences();
+    Future<Page<Experience>> getSortedExperiences(String name, double price, Pageable pageable);
+    Future<Experience> editExperience(Experience experience);
 }

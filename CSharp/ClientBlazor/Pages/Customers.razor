@@ -113,7 +113,14 @@ else
     private async Task GetPageElements(int i)
     {
         pageNumber = i-1;
-        customers = await CustomerService.GetAllCustomersAsync(pageNumber);
+        if (string.IsNullOrEmpty(name))
+        {
+            customers = await CustomerService.GetAllCustomersAsync(pageNumber);
+        }
+        else
+        {
+            customers = await CustomerService.GetAllCustomersByNameAsync(name, pageNumber);
+        }
     }
 
 }
