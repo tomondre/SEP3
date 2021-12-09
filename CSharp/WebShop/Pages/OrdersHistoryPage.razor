@@ -7,7 +7,7 @@
 @using Order = WebShop.Models.Orders.Order;
 @inject IOrderService OrderService;
 @inject NavigationManager NavigationManager;
-@inject ICache Cache
+@inject ICacheService cacheService
 
 @if (orders == null)
 {
@@ -76,7 +76,7 @@ else
   private User cachedUser;
   protected override async Task OnInitializedAsync()
   {
-    cachedUser = await Cache.GetCachedUser();
+    cachedUser = await cacheService.GetCachedUserAsync();
     orders = await OrderService.GetCustomerOrdersAsync(cachedUser.Id, pageNumber);
   }
 

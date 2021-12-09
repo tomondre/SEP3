@@ -2,12 +2,12 @@
 @using Microsoft.AspNetCore.Components
 @using WebShop.Cache
 @using WebShop.Models
-@using WebShop.Services.Customer
 @using System.Security.Cryptography
 @using System.Text
+@using WebShop.Services.Customers
 
 @inject ICustomerService CustomerService
-@inject ICache CacheService
+@inject ICacheService cacheServiceService
 @inject NavigationManager NavigationManager
 
 @if (newCustomer == null)
@@ -110,7 +110,7 @@ else
 
   protected override async Task OnInitializedAsync()
   {
-    var cachedUser = await CacheService.GetCachedUser();
+    var cachedUser = await cacheServiceService.GetCachedUserAsync();
     newCustomer = await CustomerService.GetCustomerByIdAsync(cachedUser.Id);
     newCustomer.Password = "";
   }

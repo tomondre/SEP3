@@ -56,7 +56,7 @@ namespace BusinessLogic.Controllers
            
         }
         
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "administrator")]
         [HttpPost(Name = "CreateCategoryRoute")]
         public async Task<ActionResult<Category>> CreateCategory([FromBody] Category category)
         {
@@ -70,15 +70,6 @@ namespace BusinessLogic.Controllers
             {
                 return StatusCode(403, e.Message);
             }
-         
-        }
-        
-        [Authorize(Roles = "Administrator")]
-        [HttpDelete("{id:int}", Name = "DeleteCategoryRoute")]
-        public async Task<ActionResult> DeleteProvider([FromRoute] int id)
-        {
-            await model.DeleteProductCategoryAsync(id);
-            return Ok();
         }
 
         private async Task AddLink(Category provider)

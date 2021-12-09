@@ -1,7 +1,7 @@
 ﻿@page "/Checkout"
 @using WebShop.Cache
 @using WebShop.Models.Orders
-@using WebShop.Services.Customer
+@using WebShop.Services.Customers
 @using WebShop.Services.Orders
 @using WebShop.Services.ShoppingCarts
 @using CustomerService = Stripe.CustomerService
@@ -10,7 +10,7 @@
 @inject NavigationManager NavigationManager
 @inject IOrderService OrderService
 @inject ICustomerService CustomerService
-@inject ICache Cache
+@inject ICacheService cacheService
 
 @if (!order.ShoppingCart.ShoppingCartItems.Any())
 {
@@ -174,7 +174,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         order.ShoppingCart = ShoppingCartService.ShoppingCart;
-        var cachedUser = await Cache.GetCachedUser();
+        var cachedUser = await cacheService.GetCachedUserAsync();
         order.Customer = await CustomerService.GetCustomerByIdAsync(cachedUser.Id);
     }
 

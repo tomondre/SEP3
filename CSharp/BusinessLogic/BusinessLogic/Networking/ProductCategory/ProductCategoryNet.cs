@@ -51,11 +51,5 @@ namespace BusinessLogic.Networking.ProductCategory
             var editedCategory = new Category(editProductCategoryAsync);
             return editedCategory;
         }
-
-        public async Task DeleteProductCategoryAsync(int id)
-        {
-            var requestMessage = new RequestMessage() {Id = id};
-            await client.deleteProductCategoryAsync(requestMessage);
-        }
     }
 }

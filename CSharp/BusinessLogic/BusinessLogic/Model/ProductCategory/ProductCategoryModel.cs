@@ -30,10 +30,5 @@ namespace BusinessLogic.Model.ProductCategory
         {
             return await network.EditProductCategoryAsync(category);
         }
-
-        public async Task DeleteProductCategoryAsync(int id)
-        {
-            await network.DeleteProductCategoryAsync(id);
-        }
     }
 }
