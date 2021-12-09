@@ -9,5 +9,6 @@ namespace WebShop.Services.ShoppingCarts
         void AddExperience(Experience experience, int quantity);
         void RemoveExperienceItem(ExperienceCartItem experience);
         void ClearShoppingCart();
+        bool IsInCart(Experience experience);
     }
 }
