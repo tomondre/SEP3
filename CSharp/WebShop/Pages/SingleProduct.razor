@@ -1,6 +1,5 @@
 ﻿@page "/experiences/{Id:int}"
 @using WebShop.Models
-@using WebShop.Services
 @using WebShop.Services.Experiences
 @using WebShop.Services.Observer
 @using WebShop.Services.ShoppingCarts
@@ -8,13 +7,13 @@
 @inject IShoppingCartService ShoppingCartService
 @inject IExperienceService ExperienceService
 @inject IObserverService ObserverService
+@inject NavigationManager NavigationManager
 
 @if (LoadedExperience == null)
 {
     <p>
         <em>Loading...</em>
     </p>
-    
 }
 else
 {
@@ -46,7 +45,7 @@ else
                                             </g>
                                         </svg>
                                     </button>
-                                    <input @bind-value="Quantity" readonly class="w-12 m-0 px-2 py-4 text-center md:text-right border-0 focus:ring-transparent focus:outline-none rounded-md" placeholder="1">
+                                    <input @bind-value="Quantity" readonly class="w-12 m-0 px-2 py-4 text-center md:text-center border-0 focus:ring-transparent focus:outline-none rounded-md" placeholder="1">
                                     <button @onclick="IncreaseQuantity" class="py-2 hover:text-gray-700">
                                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g opacity="0.35">
@@ -61,7 +60,7 @@ else
                         <div class="flex flex-wrap -mx-4 mb-14 items-center">
                             <div class="w-full xl:w-2/3 px-4 mb-4 xl:mb-0">
                                 <a @onclick="AddProductToCart" class=" @(ItemAdded ? "bg-blue-700" : "bg-blue-500") cursor-pointer block bg-blue-500 hover:bg-blue-700 text-center text-white font-bold font-heading py-5 px-8 rounded-md uppercase transition duration-200">
-                                    @(ItemAdded ? "In cart" : "Add To Cart")
+                                    @(ItemAdded ? "Go To Cart" : "Add To Cart")
                                 </a>
                             </div>
                         </div>
@@ -94,10 +93,16 @@ else
     protected override async Task OnInitializedAsync()
     {
         LoadedExperience = await ExperienceService.GetExperienceById(Id);
+        ItemAdded = ShoppingCartService.IsInCart(LoadedExperience);
     }
 
     private void AddProductToCart()
     {
+        if (ItemAdded)
+        {
+            NavigationManager.NavigateTo("/cart");
+            return;
+        }
         ShoppingCartService.AddExperience(LoadedExperience, Quantity);
         ObserverService.ChangeHappens();
         ItemAdded = true;

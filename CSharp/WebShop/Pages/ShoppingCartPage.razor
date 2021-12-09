@@ -12,7 +12,8 @@
     <div class="container mx-auto px-4">
         <div class="p-8 lg:p-20 bg-white">
 
-            @if(ShoppingCart.ShoppingCartItems.Count == 0) {
+            @if (ShoppingCart.ShoppingCartItems.Count == 0)
+            {
                 <h2 class="mb-20 text-5xl font-bold font-heading">Your cart is empty</h2>
             }
             else
@@ -62,7 +63,7 @@
                                                     </g>
                                                 </svg>
                                             </button>
-                                            <input readonly @bind-value="@item.Quantity" class="w-12 m-0 px-2 py-4 text-center md:text-right border-0 focus:ring-transparent focus:outline-none rounded-md" placeholder="1">
+                                            <input readonly @bind-value="@item.Quantity" class="w-12 m-0 px-2 py-4 text-center md:text-center border-0 focus:ring-transparent focus:outline-none rounded-md" placeholder="1">
                                             <button @onclick="() => AddQuantity(item)" class="py-2 hover:text-gray-700">
                                                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <g opacity="0.35">
@@ -77,7 +78,6 @@
                                     </div>
                                 </div>
                             }
-
                         </div>
                     </div>
                     <div class="w-full xl:w-4/12 px-4">
@@ -131,12 +131,16 @@
 
     private void AddQuantity(ExperienceCartItem item)
     {
-        item.Quantity++;
+        if (item.Experience.Stock > item.Quantity)
+        {
+            item.Quantity++;
+        }
     }
 
-    
+
     private void OpenCheckoutPage()
     {
         NavigationManager.NavigateTo("/checkout");
     }
+
 }

@@ -35,5 +35,11 @@ namespace WebShop.Services.ShoppingCarts
         {
             ShoppingCart.ShoppingCartItems = new List<ExperienceCartItem>();
         }
+
+        public bool IsInCart(Experience experience)
+        {
+            var experienceCartItem = ShoppingCart.ShoppingCartItems.FirstOrDefault(e => e.Experience.Id == experience.Id);
+            return experienceCartItem != null;
+        }
     }
 }
