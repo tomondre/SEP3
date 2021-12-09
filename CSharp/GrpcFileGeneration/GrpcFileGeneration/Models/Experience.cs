@@ -25,13 +25,13 @@ namespace GrpcFileGeneration.Models
         
         [Required, MaxLength(500)]
         public string Description { get; set; }
-        [Required]        
+        [Required]       
         public int ExperienceValidity { get; set; }
-
+        [Required]
         public int CategoryId { get; set; }
         
         public  int ProviderId { get; set; }
-        
+        [ValidateComplexType]
         public Address Address { get; set; }
 
         public Experience()
