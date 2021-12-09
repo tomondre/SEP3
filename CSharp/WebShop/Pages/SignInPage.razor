@@ -48,6 +48,7 @@
                                 <span class="text-sm">By singning up, you agree to our Terms, Data Policy and Cookies.</span>
                             </label>
                         </div>
+                        <h6>@errorMessage</h6>
                         <div class="w-full px-4">
                             <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">@(isDataTicked ? "Log In" : "Terms not ticked")</button>
                         </div>
@@ -57,7 +58,6 @@
                         <b>Dont have an account? Register here: </b>
                         <button @onclick="OpenSignUpPage" class="pl:10 bg-blue-300 hover:bg-blue-400 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">Sign Up</button>
                     </div>
-                    <h6>@errorMessage</h6>
                 </div>
             </div>
             <div class="w-full md:w-2/6 h-128 md:h-auto flex items-center lg:items-end px-4 pb-20 bg-cover bg-no-repeat" style="">
@@ -134,6 +134,7 @@
             catch (Exception e)
             {
                 errorMessage = "Login is not correct";
+                StateHasChanged();
             }
         }
     }

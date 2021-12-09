@@ -21,11 +21,11 @@ namespace WebShop.Models.Orders
                 {
                     total += item.TotalPrice;
                 }
-
+                
                 return total;
             }
         }
 
-        public double TaxAmount => OrderTotal - OrderTotal /(1 +Tax / 100);
+        public double TaxAmount => OrderTotal * ((double) Tax / 100);
     }
 }

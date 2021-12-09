@@ -97,7 +97,6 @@ else
                                     <input @bind-value="order.CreditCard.Cvv" class="block w-full mt-4 py-4 px-4 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md" type="text">
                                 </div>
                             </div>
-
                         </div>
                         <div class="w-full lg:w-1/3 px-4">
                             <div class="flex mb-12 items-center">
@@ -114,7 +113,7 @@ else
                                             <img class="w-20 h-24 object-cover" src="@item.Experience.Picture">
                                             <div class="pl-6">
                                                 <h3 class="mb-3 text-xl font-bold font-heading text-white">@item.Experience.Name</h3>
-                                                <p class="text-lg font-bold font-heading text-white">dkk @item.Experience.Price x @item.Quantity</p>
+                                                <p class="text-lg font-bold font-heading text-white">@item.Experience.Price DKK x @item.Quantity</p>
                                             </div>
                                         </div>
                                     </div>
@@ -122,15 +121,15 @@ else
 
                                 <div class="flex mb-2 justify-between items-center">
                                     <span class="text-blue-50">Order subtotal</span>
-                                    <span class="text-xl font-bold font-heading text-white">dkk @order.ShoppingCart.OrderTotal</span>
+                                    <span class="text-xl font-bold font-heading text-white">@order.ShoppingCart.OrderTotal DKK</span>
                                 </div>
                                 <div class="flex mb-5 justify-between items-center">
                                     <span class="text-blue-50">Tax</span>
-                                    <span class="text-xl font-bold font-heading text-white">dkk @order.ShoppingCart.TaxAmount</span>
+                                    <span class="text-xl font-bold font-heading text-white">@order.ShoppingCart.TaxAmount DKK</span>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <span class="text-xl font-bold font-heading text-white">Total</span>
-                                    <span class="text-xl font-bold font-heading text-white">@order.ShoppingCart.OrderTotal</span>
+                                    <span class="text-xl font-bold font-heading text-white">@order.ShoppingCart.OrderTotal DKK</span>
                                 </div>
                             </div>
                             <div class="mb-10">

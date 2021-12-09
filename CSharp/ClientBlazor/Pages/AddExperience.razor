@@ -1,15 +1,12 @@
 @page "/experiences/create"
 @using GrpcFileGeneration.Models
-@using Networking.Experience
 @using ClientBlazor.Data.Experiences
 @using ClientBlazor.Data.ProductCategory
-@using Microsoft.Extensions.Logging
-@using System.IO
-@using ClientBlazor.Data.Authentication
 @using ClientBlazor.Data.Cache
 @using ClientBlazor.Data.Pictures
+@using ClientBlazor.Data.Providers
 @using Microsoft.AspNetCore.Hosting
-@using Networking.Category
+@inject IProviderService ProviderService
 
 @inject IWebHostEnvironment Environment
 @inject IExperienceService ExperienceService
@@ -20,6 +17,14 @@
 @attribute [Authorize(Roles = "provider")]
 
 
+@if (!isValid)
+{
+    <p class="text-center">
+        <em>You can add exerience after you'll be approved</em>
+    </p>
+}
+else
+{
 <div class="container items-center px-5 py-12 lg:px-20">
     <EditForm Model="@newExperience" OnValidSubmit="@AddNewExperience" class="flex flex-col w-full p-10 px-8 pt-6 mx-auto my-6 mb-4 transition duration-500 ease-in-out transform bg-white border rounded-lg lg:w-1/2 ">
         <DataAnnotationsValidator/>
@@ -81,7 +86,7 @@
                     <option value="@category.Id">@category.CategoryName</option>
                 }
             </InputSelect>
-            
+
         </div>
         <div class="flex flex-wrap mt-4 mb-6 -mx-3">
             <div class="w-full px-3">
@@ -90,23 +95,28 @@
             </div>
         </div>
         <div class="flex items-center w-full pt-4 mb-4">
-            <button type="submit" class="@(isPictureLoading? "hover:bg-blue-800 bg-blue-600" : "hover:bg-blue-400 bg-blue-400" ) w-full py-3 text-base text-white transition duration-500 ease-in-out transform bg-blue-600 border-blue-600 rounded-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">@(isPictureLoading ? "Picture is being loaded" : "Save")</button>
+            <button type="submit" class="@(isPictureLoading ? "hover:bg-blue-800 bg-blue-600" : "hover:bg-blue-400 bg-blue-400") w-full py-3 text-base text-white transition duration-500 ease-in-out transform bg-blue-600 border-blue-600 rounded-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">@(isPictureLoading ? "Picture is being loaded" : "Save")</button>
         </div>
         <hr class="my-4 border-gray-200">
     </EditForm>
-    
-</div>
+
+</div>}
 
 @code {
 
-    private Experience newExperience = new ();
+    private Experience newExperience = new();
     private CategoryList categories = new();
     private bool isPictureLoading;
-    
+    private bool isValid = false;
+
     protected override async Task OnInitializedAsync()
     {
-        var pageCategories = await ProductCategoryService.GetAllCategoriesAsync(0);
-        categories = pageCategories.Content;
+        var user = await CacheService.GetCachedUserAsync();
+        var pageCategories = ProductCategoryService.GetAllCategoriesAsync(0);
+        var loggedInProvider = ProviderService.GetProviderById(user.Id);
+        await Task.WhenAll(loggedInProvider, pageCategories);
+        isValid = loggedInProvider.Result.IsApproved;
+        categories = pageCategories.Result.Content;
     }
 
     private async Task AddNewExperience()

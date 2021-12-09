@@ -48,7 +48,7 @@ else {
                                                     <span class="text-gray-900 font-bold font-heading">@item.Quantity</span>
                                                 </p>
                                             </div>
-                                            <span class="text-2xl font-bold font-heading text-blue-600">@item.TotalPrice</span>
+                                            <span class="text-2xl font-bold font-heading text-blue-600">@item.TotalPrice DKK</span>
                                         </div>
                                     </div>
                                     <a @onclick="() => OpenVoucherSite(item.Voucher)" class="inline-flex w-full md:w-auto justify-center items-center px-8 py-6 font-bold font-heading uppercase border hover:border-gray-500 rounded-md" href="">
@@ -71,13 +71,13 @@ else {
                             <div class="py-3 px-10 bg-gray-100 rounded-full">
                                 <div class="flex justify-between">
                                     <span class="font-medium">Tax Amount</span>
-                                    <span class="font-bold font-heading">@Order.ShoppingCart.TaxAmount</span>
+                                    <span class="font-bold font-heading">@Order.ShoppingCart.TaxAmount DKK</span>
                                 </div>
                             </div>
                             <div class="py-3 px-10 rounded-full">
                                 <div class="flex justify-between">
                                     <span class="text-base md:text-xl font-bold font-heading">Order Total</span>
-                                    <span class="font-bold font-heading">@Order.ShoppingCart.OrderTotal</span>
+                                    <span class="font-bold font-heading">@Order.ShoppingCart.OrderTotal DKK</span>
                                 </div>
                             </div>
                         </div>
