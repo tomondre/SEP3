@@ -109,7 +109,7 @@
 
     private void OpenExperienceView(Provider provider)
     {
-        NavigationManager.NavigateTo($"/ProviderExperiences/{provider.Id}");
+        NavigationManager.NavigateTo($"/providers/{provider.Id}/experiences");
     }
 
     private async Task FetchFilteredProviders()
