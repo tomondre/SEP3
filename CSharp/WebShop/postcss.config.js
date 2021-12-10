@@ -1,10 +1,7 @@
-﻿module.exports = {
+﻿module.exports = ({ env }) => ({ 
     plugins: {
         tailwindcss: {},
-        autoprefixer: {}
-    }, variants: {
-        extend: {
-            opacity: 'disabled',
-        }
-    },
-}
+        autoprefixer: {},
+        cssnano: env === "production" ? { preset: "default" } : false
+    }
+});
