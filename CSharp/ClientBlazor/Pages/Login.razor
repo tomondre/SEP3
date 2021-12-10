@@ -95,11 +95,6 @@
         showPassword = !showPassword;
     }
 
-    private async Task PerformLogoutAsync()
-    {
-        await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).Logout();
-    }
-
     private void OpenSignup()
     {
         SignupCallback?.Invoke();
