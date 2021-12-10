@@ -6,8 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebShop.Cache;
 using WebShop.Data.Authentication;
-using WebShop.Services;
-using WebShop.Services.Customer;
+using WebShop.Services.Customers;
 using WebShop.Services.Experiences;
 using WebShop.Services.Login;
 using WebShop.Services.Observer;
@@ -33,14 +32,14 @@ namespace WebShop
             services.AddRazorPages(); 
             services.AddServerSideBlazor();
             services.AddHttpClient();
-            services.AddSingleton<IProductCategoryService, ProductCategoryService>();
-            services.AddSingleton<IExperienceService, ExperienceService>();
+            services.AddScoped<IProductCategoryService, ProductCategoryService>();
+            services.AddScoped<IExperienceService, ExperienceService>();
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<IObserverService, ObserverService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<ILoginService, LoginService>();
-            services.AddScoped<ICache, Cache.Cache>();
+            services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<AuthenticationStateProvider, CurrentAuthenticationStateProvider>();
         }
 

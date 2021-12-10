@@ -1,7 +1,9 @@
 using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ClientBlazor.Data.Cache;
 using ClientBlazor.Models;
 using GrpcFileGeneration.Models;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
@@ -11,12 +13,13 @@ namespace ClientBlazor.Data.Customers
 {
     public class CustomerService : ICustomerService
     {
+        private readonly ICacheService cacheService;
         private HttpClient client;
         private string uri;
-        private readonly ProtectedSessionStorage sessionStorage;
 
-        public CustomerService()
+        public CustomerService(ICacheService cacheService)
         {
+            this.cacheService = cacheService;
             client = new HttpClient();
             uri = "https://localhost:5001/Customers";
         }
@@ -25,14 +28,15 @@ namespace ClientBlazor.Data.Customers
         {
             var httpRequestMessage = await GetHttpRequest(HttpMethod.Get, $"{uri}?page={pageNumber}");
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
-            
+
             CheckException(httpResponseMessage);
 
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var customerList = JsonSerializer.Deserialize<Page<CustomerList>>(readAsStringAsync, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
+            var customerList = JsonSerializer.Deserialize<Page<CustomerList>>(readAsStringAsync,
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
             return customerList;
         }
 
@@ -40,7 +44,7 @@ namespace ClientBlazor.Data.Customers
         {
             var httpRequestMessage = await GetHttpRequest(HttpMethod.Delete, $"{uri}/{customer.Id}");
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
-            
+
             CheckException(httpResponseMessage);
         }
 
@@ -48,25 +52,23 @@ namespace ClientBlazor.Data.Customers
         {
             var httpRequestMessage = await GetHttpRequest(HttpMethod.Get, $"{uri}?name={name}&page={pageNumber}");
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
-            
+
             CheckException(httpResponseMessage);
-            
+
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
-            var customerList = JsonSerializer.Deserialize<Page<CustomerList>>(readAsStringAsync, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
+            var customerList = JsonSerializer.Deserialize<Page<CustomerList>>(readAsStringAsync,
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
             return customerList;
         }
 
         private async Task<HttpRequestMessage> GetHttpRequest(HttpMethod method, string uri)
         {
             var httpRequestMessage = new HttpRequestMessage(method, uri);
-            // var token = await sessionStorage.GetAsync<string>("token");
-            // if (token.Success)
-            // {
-            //     httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
-            // }
+            var token = await cacheService.GetCachedTokenAsync();
+            httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             //TODO add exception
             return httpRequestMessage;
         }

@@ -29,7 +29,9 @@ namespace ClientBlazor.Data.ProductCategory
             var stringContent = new StringContent(categoryAsJson, Encoding.UTF8, "application/json");
             httpRequest.Content = stringContent;
             var httpResponseMessage = await client.SendAsync(httpRequest);
+            
             CheckException(httpResponseMessage);
+            
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             var deserialize = JsonSerializer.Deserialize<Category>(readAsStringAsync, new JsonSerializerOptions()
             {
@@ -42,7 +44,9 @@ namespace ClientBlazor.Data.ProductCategory
         {
             var httpRequest = await GetHttpRequest(HttpMethod.Get, $"{uri}?page={page}");
             var httpResponseMessage = await client.SendAsync(httpRequest);
+           
             CheckException(httpResponseMessage);
+            
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             var categories = JsonSerializer.Deserialize<Page<CategoryList>>(readAsStringAsync, new JsonSerializerOptions()
             {
@@ -58,7 +62,9 @@ namespace ClientBlazor.Data.ProductCategory
             var stringContent = new StringContent(categoryAsJson, Encoding.UTF8, "application/json");
             httpRequest.Content = stringContent;
             var httpResponseMessage = await client.SendAsync(httpRequest);
+            
             CheckException(httpResponseMessage);
+            
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             var deserialize = JsonSerializer.Deserialize<Category>(readAsStringAsync, new JsonSerializerOptions()
             {
@@ -68,13 +74,6 @@ namespace ClientBlazor.Data.ProductCategory
             return deserialize;
         }
 
-        public async Task DeleteProductCategoryAsync(int id)
-        {
-            var httpRequest = await GetHttpRequest(HttpMethod.Delete, $"{uri}/{id}");
-            var httpResponseMessage = await client.SendAsync(httpRequest);
-            CheckException(httpResponseMessage);
-        }
-        
         private async Task<HttpRequestMessage> GetHttpRequest(HttpMethod method, string uri)
         {
             var httpRequest = new HttpRequestMessage(method, uri);

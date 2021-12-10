@@ -94,8 +94,11 @@ namespace ClientBlazor.Data.Experiences
 
         public async Task<Experience> GetExperienceByIdAsync(int id)
         {
-            HttpResponseMessage response = await client.GetAsync($"{uri}Experiences/{id}");
+            var httpRequestMessage = await GetHttpRequestAsync(HttpMethod.Get, $"{uri}Experiences/{id}");
+            var response = await client.SendAsync(httpRequestMessage);
+            
             CheckException(response);
+            
             var objAsJson = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Experience>(objAsJson, new JsonSerializerOptions()
             {
@@ -105,11 +108,15 @@ namespace ClientBlazor.Data.Experiences
 
         public async Task<Experience> EditExperienceAsync(Experience experience)
         {
+            var httpRequestMessage = await GetHttpRequestAsync(HttpMethod.Patch, $"{uri}Experiences/{experience.Id}");
             string expAsJson = JsonSerializer.Serialize(experience);
             HttpContent content = new StringContent(expAsJson, Encoding.UTF8,
                 "application/json");
-            var response = await client.PatchAsync(uri + $"Experiences/{experience.Id}", content);
+            httpRequestMessage.Content = content;
+            var response = await client.SendAsync(httpRequestMessage);
+            
             CheckException(response);
+            
             var objAsJson = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Experience>(objAsJson, new JsonSerializerOptions()
             {
@@ -122,7 +129,6 @@ namespace ClientBlazor.Data.Experiences
             var httpRequestMessage = new HttpRequestMessage(method, uri);
             var cachedTokenAsync = await cacheService.GetCachedTokenAsync();
             httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", cachedTokenAsync);
-
             //TODO add exception
             return httpRequestMessage;
         }

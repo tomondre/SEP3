@@ -11,8 +11,7 @@ using User = BusinessLogic.Models.User;
 
 namespace BusinessLogic.Controllers
 {
-    //TODO set authorization depending on the role for each method [Authorize(Roles = "Administrator")]
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class 
@@ -26,9 +25,9 @@ namespace BusinessLogic.Controllers
             this.model = model;
         }
 
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "administrator")]
         [HttpGet(Name = "GetProvidersRoute")]
-        public async Task<ActionResult<ProviderList>> GetProviders([FromQuery] bool? approved, [FromQuery] string name, [FromQuery] int page)
+        public async Task<ActionResult<ProviderList>> GetProvidersAsync([FromQuery] bool? approved, [FromQuery] string name, [FromQuery] int page)
         {
             var list = new Page<ProviderList>();
 
@@ -67,6 +66,7 @@ namespace BusinessLogic.Controllers
         }
 
         
+        [Authorize(Roles = "administrator, provider")]
         [HttpGet("{id:int}", Name = "GetProviderByIdRoute")]
         public async Task<ActionResult<User>> GetProviderById([FromRoute] int id)
         {
@@ -83,7 +83,7 @@ namespace BusinessLogic.Controllers
            
         }
 
-        //[Authorize(Roles = "Provider")]
+        [Authorize(Roles = "provider")]
         [HttpPatch("{id:int}",Name = "EditProviderRoute")]
         public async Task<ActionResult<Provider>> EditProvider([FromBody] Provider provider)
         {
@@ -113,10 +113,9 @@ namespace BusinessLogic.Controllers
             {
                 return StatusCode(403, e.Message);
             }
-            
         }
         
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "administrator")]
         [HttpDelete("{id:int}", Name = "DeleteProviderRoute")]
         public async Task<ActionResult> DeleteProviderAsync([FromRoute] int id)
         {

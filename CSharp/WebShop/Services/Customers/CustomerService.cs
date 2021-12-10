@@ -1,42 +1,43 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using WebShop.Cache;
 using WebShop.Data.Authentication;
+using WebShop.Models;
+using StripeCustomer = Stripe.Customer;
 
-namespace WebShop.Services.Customer
+namespace WebShop.Services.Customers
 {
     public class CustomerService : ICustomerService
     {
         private HttpClient client;
         private readonly AuthenticationStateProvider authenticationStateProvider;
+        private readonly ICacheService cacheService;
         private string uri;
-        private readonly ProtectedSessionStorage sessionStorage;
-        
-        public CustomerService(HttpClient client, AuthenticationStateProvider authenticationStateProvider, ProtectedSessionStorage sessionStorage )
+
+        public CustomerService(HttpClient client, AuthenticationStateProvider authenticationStateProvider, ICacheService cacheService)
         {
             this.client = client;
-            this.sessionStorage = sessionStorage;
             this.authenticationStateProvider = authenticationStateProvider;
+            this.cacheService = cacheService;
             uri = "https://localhost:5001/Customers";
         }
 
-        public async Task CreateCustomerAsync(Models.Customer customer)
+        public async Task CreateCustomerAsync(Customer customer)
         {
             customer.SecurityType = "customer";
             string customerAsJson = JsonSerializer.Serialize(customer);
             var stringContent = new StringContent(customerAsJson, Encoding.UTF8, "application/json");
             var httpResponseMessage = await client.PostAsync(uri, stringContent);
-            
+
             CheckException(httpResponseMessage);
-            
+
             var json = await httpResponseMessage.Content.ReadAsStringAsync();
-            var deserialize = JsonSerializer.Deserialize<Models.Customer>(json,
+            var deserialize = JsonSerializer.Deserialize<Customer>(json,
                 new JsonSerializerOptions()
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -44,27 +45,30 @@ namespace WebShop.Services.Customer
             await ((CurrentAuthenticationStateProvider) authenticationStateProvider).ValidateUser(deserialize);
         }
 
-        public async Task<Models.Customer> GetCustomerByIdAsync(int id)
+        public async Task<Customer> GetCustomerByIdAsync(int id)
         {
-            HttpResponseMessage response = await client.GetAsync($"{uri}/{id}");
+            var httpRequestMessage = await GetHttpRequestAsync(HttpMethod.Get, $"{uri}/{id}");
+            HttpResponseMessage response = await client.SendAsync(httpRequestMessage);
             CheckException(response);
             var objAsJson = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<Models.Customer>(objAsJson, new JsonSerializerOptions()
+            return JsonSerializer.Deserialize<Customer>(objAsJson, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
         }
 
-        public async Task<Models.Customer> EditCustomerAsync(Models.Customer customer)
+        public async Task<Customer> EditCustomerAsync(Customer customer)
         {
-            var httpRequest = await GetHttpRequest(HttpMethod.Patch, $"{uri}/{customer.Id}");
+            var httpRequest = await GetHttpRequestAsync(HttpMethod.Patch, $"{uri}/{customer.Id}");
             var json = JsonSerializer.Serialize(customer);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             httpRequest.Content = stringContent;
             var httpResponseMessage = await client.SendAsync(httpRequest);
+            
             CheckException(httpResponseMessage);
+            
             var objAsJson = await httpResponseMessage.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<Models.Customer>(objAsJson, new JsonSerializerOptions()
+            return JsonSerializer.Deserialize<Customer>(objAsJson, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
@@ -74,28 +78,17 @@ namespace WebShop.Services.Customer
         {
             if (!task.IsSuccessStatusCode)
             {
-                throw new Exception($"Code: {task.StatusCode}, {task.ReasonPhrase} ");
+                throw new Exception($"Code: {task.StatusCode}, {task.ReasonPhrase}");
             }
-        }
-        
-        private async Task<HttpRequestMessage> GetHttpRequest(HttpMethod method, string uri)
-        {
-            var httpRequestMessage = new HttpRequestMessage(method, uri);
-            var token = await sessionStorage.GetAsync<string>("token");
-            if (token.Success)
-            {
-                httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
-            }
-            //TODO add exception
-            return httpRequestMessage;
         }
 
-        private string Hash(string password)
+        private async Task<HttpRequestMessage> GetHttpRequestAsync(HttpMethod method, string uri)
         {
-            using var sha256 = SHA256.Create();
-            var result = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));  
-            var hash = BitConverter.ToString(result).Replace("-", "").ToLower();  
-            return hash;
+            var httpRequestMessage = new HttpRequestMessage(method, uri);
+            var token = await cacheService.GetCachedTokenAsync();
+            httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            //TODO add exception
+            return httpRequestMessage;
         }
     }
 }

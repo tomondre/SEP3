@@ -8,7 +8,7 @@ using RiskFirst.Hateoas;
 
 namespace BusinessLogic.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ExperiencesController : ControllerBase
@@ -23,7 +23,7 @@ namespace BusinessLogic.Controllers
         }
 
         [HttpGet("/Providers/{id:int}/Experiences", Name = "GetProviderExperienceRoute")]
-        // [Authorize(Roles = "Administrator, Provider")]
+        [Authorize(Roles = "administrator, provider")]
         public async Task<ActionResult<Page<ExperienceList>>> GetProviderExperiences([FromRoute] int id,
             [FromQuery] string name, [FromQuery] int page)
         {
@@ -49,7 +49,7 @@ namespace BusinessLogic.Controllers
         }
 
         [HttpGet("/Categories/{id:int}/Experiences", Name = "GetExperienceByCategoryRoute")]
-        // [Authorize(Roles = "Administrator, Provider")]
+        [Authorize(Roles = "administrator, provider, customer")]
         public async Task<ActionResult<Page<ExperienceList>>> GetExperiencesByCategoryAsync([FromRoute] int id, [FromQuery] int page)
         {
             try
@@ -64,6 +64,7 @@ namespace BusinessLogic.Controllers
             }
         }
 
+        [Authorize(Roles = "customer, provider, administrator")]
         [HttpGet("{id:int}", Name = "GetExperienceByIdRoute")]
         public async Task<ActionResult<Experience>> GetExperienceByIdAsync([FromRoute] int id)
         {
@@ -79,7 +80,7 @@ namespace BusinessLogic.Controllers
             }
         }
 
-
+        [Authorize(Roles = "customer")]
         [HttpGet(Name = "GetAllExperiencesRoute")]
         public async Task<ActionResult<Page<ExperienceList>>> GetAllExperiencesAsync([FromQuery] bool? top,
             [FromQuery(Name = "name")] string name, [FromQuery] double price, [FromQuery] int? page)
@@ -112,8 +113,8 @@ namespace BusinessLogic.Controllers
             }
         }
 
+        [Authorize(Roles = "provider")]
         [HttpPost(Name = "CreateExperienceRoute")]
-        // [Authorize(Roles = "Provider")]
         public async Task<ActionResult<Experience>> AddExperienceAsync([FromBody] Experience experience)
         {
             try
@@ -128,9 +129,8 @@ namespace BusinessLogic.Controllers
             }
         }
 
+        [Authorize(Roles = "provider")]
         [HttpDelete("{id:int}", Name = "DeleteExperienceRoute")]
-        [AllowAnonymous]
-        // [Authorize(Roles = "Administrator, Provider")]
         public async Task<ActionResult> DeleteExperienceAsync([FromRoute] int id)
         {
             try
@@ -174,6 +174,7 @@ namespace BusinessLogic.Controllers
         }
         
         [HttpPatch]
+        [Authorize(Roles = "provider")]
         [Route("{id:int}")]
         public async Task<ActionResult<Experience>> EditExperience([FromBody] Experience experience)
         {

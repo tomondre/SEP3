@@ -97,7 +97,7 @@ else
 
     private async Task DeleteProvider(Provider provider)
     {
-        await ProviderService.DeleteProvider(provider);
+        await ProviderService.DeleteProviderAsync(provider);
         await OnInitializedAsync();
         StateHasChanged();
     }
