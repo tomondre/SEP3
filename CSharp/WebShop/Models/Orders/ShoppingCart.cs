@@ -26,6 +26,6 @@ namespace WebShop.Models.Orders
             }
         }
 
-        public double TaxAmount => OrderTotal * ((double) Tax / 100);
+        public double TaxAmount => OrderTotal - (OrderTotal / (1 + (double) Tax / 100));
     }
 }
