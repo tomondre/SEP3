@@ -83,7 +83,7 @@ namespace BusinessLogic.Controllers
            
         }
 
-        [Authorize(Roles = "provider")]
+        [Authorize(Roles = "provider, administrator")]
         [HttpPatch("{id:int}",Name = "EditProviderRoute")]
         public async Task<ActionResult<Provider>> EditProvider([FromBody] Provider provider)
         {
