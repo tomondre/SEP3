@@ -2,6 +2,7 @@
 @using WebShop.Cache
 @using WebShop.Models.Orders
 @using WebShop.Services.Customers
+@using WebShop.Services.Observer
 @using WebShop.Services.Orders
 @using WebShop.Services.ShoppingCarts
 @using CustomerService = Stripe.CustomerService
@@ -11,6 +12,7 @@
 @inject IOrderService OrderService
 @inject ICustomerService CustomerService
 @inject ICacheService cacheService
+@inject IObserverService ObserverService
 
 @if (!order.ShoppingCart.ShoppingCartItems.Any())
 {
@@ -189,7 +191,7 @@ else
         try
         {
             var orderId = await OrderService.CreateOrderAsync(order);
-            ShoppingCartService.ClearShoppingCart();
+            ClearShoppingCart();
             NavigationManager.NavigateTo($"/orders/{orderId}/success");
         }
         catch (Exception e)
@@ -198,4 +200,9 @@ else
         }
     }
 
+    private void ClearShoppingCart()
+    {
+        ShoppingCartService.ClearShoppingCart();
+        ObserverService.ChangeHappens();
+    }
 }
