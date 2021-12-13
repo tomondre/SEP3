@@ -80,14 +80,6 @@ public class ProductCategoryNetworkingImpl extends CategoryServiceGrpc.CategoryS
         }
     }
 
-    @Async
-    @Override
-    public void deleteProductCategory(RequestMessage request, StreamObserver<CategoryMessage> responseObserver)
-    {
-        categoryDAO.deleteProductCategory(request.getId());
-        responseObserver.onNext(CategoryMessage.newBuilder().build());
-        responseObserver.onCompleted();
-    }
 
     private synchronized void categories(StreamObserver<CategoriesMessage> responseObserver, Future<Page<Category>> pageFuture)
     {
