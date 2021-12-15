@@ -80,7 +80,6 @@ namespace BusinessLogic.Controllers
             {
                 return StatusCode(403, e.Message);
             }
-           
         }
 
         [Authorize(Roles = "provider, administrator")]
@@ -119,8 +118,15 @@ namespace BusinessLogic.Controllers
         [HttpDelete("{id:int}", Name = "DeleteProviderRoute")]
         public async Task<ActionResult> DeleteProviderAsync([FromRoute] int id)
         {
-            await model.DeleteProviderAsync(id);
-            return Ok();
+            try
+            {
+                await model.DeleteProviderAsync(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(403);
+            }
         }
         
         private async Task AddLink(Provider provider)

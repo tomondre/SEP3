@@ -163,3 +163,4 @@ C:\Users\PC1\SEPO\CSharp\ApiTest\obj\Debug\net5.0\ApiTest.dll
 C:\Users\PC1\SEPO\CSharp\ApiTest\obj\Debug\net5.0\ref\ApiTest.dll
 C:\Users\PC1\SEPO\CSharp\ApiTest\obj\Debug\net5.0\ApiTest.pdb
 C:\Users\PC1\SEPO\CSharp\ApiTest\obj\Debug\net5.0\ApiTest.genruntimeconfig.cache
+C:\Users\PC1\SEPO\CSharp\ApiTest\bin\Debug\net5.0\BusinessLogic.StaticWebAssets.xml
