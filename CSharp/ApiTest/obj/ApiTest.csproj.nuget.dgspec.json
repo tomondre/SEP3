@@ -1,0 +1,358 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\PC1\\SEPO\\CSharp\\ApiTest\\ApiTest.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\PC1\\SEPO\\CSharp\\ApiTest\\ApiTest.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\PC1\\SEPO\\CSharp\\ApiTest\\ApiTest.csproj",
+        "projectName": "ApiTest",
+        "projectPath": "C:\\Users\\PC1\\SEPO\\CSharp\\ApiTest\\ApiTest.csproj",
+        "packagesPath": "C:\\Users\\PC1\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC1\\SEPO\\CSharp\\ApiTest\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\PC1\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "C:\\Users\\PC1\\SEPO\\CSharp\\BusinessLogic\\BusinessLogic\\BusinessLogic.csproj": {
+                "projectPath": "C:\\Users\\PC1\\SEPO\\CSharp\\BusinessLogic\\BusinessLogic\\BusinessLogic.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "FakeItEasy": {
+              "target": "Package",
+              "version": "[7.2.0, )"
+            },
+            "FakeItEasy.Analyzer.CSharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.1.0, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.9.4, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.0.2, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.4.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\PC1\\SEPO\\CSharp\\BusinessLogic\\BusinessLogic\\BusinessLogic.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\PC1\\SEPO\\CSharp\\BusinessLogic\\BusinessLogic\\BusinessLogic.csproj",
+        "projectName": "BusinessLogic",
+        "projectPath": "C:\\Users\\PC1\\SEPO\\CSharp\\BusinessLogic\\BusinessLogic\\BusinessLogic.csproj",
+        "packagesPath": "C:\\Users\\PC1\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC1\\SEPO\\CSharp\\BusinessLogic\\BusinessLogic\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\PC1\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "C:\\Users\\PC1\\SEPO\\CSharp\\GrpcFileGeneration\\GrpcFileGeneration\\GrpcFileGeneration.csproj": {
+                "projectPath": "C:\\Users\\PC1\\SEPO\\CSharp\\GrpcFileGeneration\\GrpcFileGeneration\\GrpcFileGeneration.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.15.2, )"
+            },
+            "Grpc.Net.Client": {
+              "target": "Package",
+              "version": "[2.40.0, )"
+            },
+            "Grpc.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.41.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.AspNetCore.Authorization": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.Extensions.Caching.Memory": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "RiskFirst.Hateoas": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[39.80.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.6.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.14.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\PC1\\SEPO\\CSharp\\GrpcFileGeneration\\GrpcFileGeneration\\GrpcFileGeneration.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\PC1\\SEPO\\CSharp\\GrpcFileGeneration\\GrpcFileGeneration\\GrpcFileGeneration.csproj",
+        "projectName": "GrpcFileGeneration",
+        "projectPath": "C:\\Users\\PC1\\SEPO\\CSharp\\GrpcFileGeneration\\GrpcFileGeneration\\GrpcFileGeneration.csproj",
+        "packagesPath": "C:\\Users\\PC1\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC1\\SEPO\\CSharp\\GrpcFileGeneration\\GrpcFileGeneration\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\PC1\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "C:\\Users\\PC1\\SEPO\\CSharp\\WebShop\\WebShop.csproj": {
+                "projectPath": "C:\\Users\\PC1\\SEPO\\CSharp\\WebShop\\WebShop.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Google.Protobuf": {
+              "target": "Package",
+              "version": "[3.19.0, )"
+            },
+            "Grpc.Net.Client": {
+              "target": "Package",
+              "version": "[2.40.0, )"
+            },
+            "Grpc.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.41.1, )"
+            },
+            "Microsoft.JSInterop": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "RiskFirst.Hateoas": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\PC1\\SEPO\\CSharp\\WebShop\\WebShop.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\PC1\\SEPO\\CSharp\\WebShop\\WebShop.csproj",
+        "projectName": "WebShop",
+        "projectPath": "C:\\Users\\PC1\\SEPO\\CSharp\\WebShop\\WebShop.csproj",
+        "packagesPath": "C:\\Users\\PC1\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC1\\SEPO\\CSharp\\WebShop\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\PC1\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Components.DataAnnotations.Validation": {
+              "target": "Package",
+              "version": "[3.2.0-rc1.20223.4, )"
+            },
+            "Npm": {
+              "target": "Package",
+              "version": "[3.5.2, )"
+            },
+            "RiskFirst.Hateoas": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[39.80.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

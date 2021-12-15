@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientBlazor", "ClientBlazo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebShop", "WebShop\WebShop.csproj", "{91E422EF-B7C4-4B57-A1FA-A803DA7D848B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTest", "ApiTest\ApiTest.csproj", "{35DCBED3-E1F8-4394-892C-7826B6AAC74F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{91E422EF-B7C4-4B57-A1FA-A803DA7D848B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91E422EF-B7C4-4B57-A1FA-A803DA7D848B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91E422EF-B7C4-4B57-A1FA-A803DA7D848B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35DCBED3-E1F8-4394-892C-7826B6AAC74F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35DCBED3-E1F8-4394-892C-7826B6AAC74F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35DCBED3-E1F8-4394-892C-7826B6AAC74F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35DCBED3-E1F8-4394-892C-7826B6AAC74F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

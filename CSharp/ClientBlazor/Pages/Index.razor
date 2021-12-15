@@ -1,2 +1,19 @@
 @page "/"
-<p>I am here!</p>
+@using ClientBlazor.Data.Cache
+@inject ICacheService CacheService
+
+
+<h2 class="mb-8 text-5xl font-bold font-heading">Hello @loggedInUser</h2>
+
+
+@code {
+    private string loggedInUser = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var cachedUserAsync = await CacheService.GetCachedUserAsync();
+        loggedInUser = cachedUserAsync.SecurityType;
+        loggedInUser = Char.ToUpper(loggedInUser[0]) + loggedInUser.Substring(1);
+    }
+
+}

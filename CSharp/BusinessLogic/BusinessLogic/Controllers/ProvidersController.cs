@@ -27,7 +27,7 @@ namespace BusinessLogic.Controllers
 
         [Authorize(Roles = "administrator")]
         [HttpGet(Name = "GetProvidersRoute")]
-        public async Task<ActionResult<ProviderList>> GetProvidersAsync([FromQuery] bool? approved, [FromQuery] string name, [FromQuery] int page)
+        public async Task<ActionResult<Page<ProviderList>>> GetProvidersAsync([FromQuery] bool? approved, [FromQuery] string name, [FromQuery] int page)
         {
             var list = new Page<ProviderList>();
 

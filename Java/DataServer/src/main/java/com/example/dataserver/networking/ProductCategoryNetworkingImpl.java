@@ -80,7 +80,6 @@ public class ProductCategoryNetworkingImpl extends CategoryServiceGrpc.CategoryS
         }
     }
 
-
     private synchronized void categories(StreamObserver<CategoriesMessage> responseObserver, Future<Page<Category>> pageFuture)
     {
         try
