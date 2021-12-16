@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-
+/**
+ * Interface for CRUD operations of Product Category object
+ */
 public interface CategoryDAO
 {
   /**

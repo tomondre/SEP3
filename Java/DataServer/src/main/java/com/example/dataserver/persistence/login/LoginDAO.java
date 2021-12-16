@@ -4,6 +4,9 @@ import com.example.dataserver.models.User;
 
 import java.util.concurrent.Future;
 
+/**
+ * Interface for logging in of user
+ */
 public interface LoginDAO
 {
   /**

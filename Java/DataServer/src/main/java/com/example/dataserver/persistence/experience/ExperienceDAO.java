@@ -7,6 +7,9 @@ import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.concurrent.Future;
 
+/**
+ * Interface for CRUD operations of Experience object
+ */
 public interface ExperienceDAO {
     /**
      * Method for creating experience

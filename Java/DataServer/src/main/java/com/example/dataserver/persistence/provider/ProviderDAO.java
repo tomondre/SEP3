@@ -1,13 +1,14 @@
 package com.example.dataserver.persistence.provider;
 
-import com.example.dataserver.models.Provider;
 import com.example.dataserver.models.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
 import java.util.concurrent.Future;
 
+/**
+ * Interface for CRUD operations of Provider object
+ */
 public interface ProviderDAO {
     /**
      * Method for creating provider

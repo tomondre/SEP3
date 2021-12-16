@@ -10,6 +10,9 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.concurrent.Future;
 
+/**
+ * Interface for CRUD operations of Order object
+ */
 public interface OrderDAO {
     /**
      * Method for creating order
