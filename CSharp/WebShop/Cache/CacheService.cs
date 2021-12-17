@@ -24,5 +24,15 @@ namespace WebShop.Cache
             var protectedBrowserStorageResult = await sessionStorage.GetAsync<string>("token");
             return protectedBrowserStorageResult.Value;
         }
+        
+        public async Task SetUserToCacheAsync(User user)
+        {
+            await sessionStorage.SetAsync("currentUser", user);
+        }
+
+        public async Task SetTokenToCacheAsync(string token)
+        {
+            await sessionStorage.SetAsync("token", token);
+        }
     }
 }

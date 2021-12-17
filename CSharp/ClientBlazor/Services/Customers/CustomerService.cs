@@ -3,13 +3,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
-using ClientBlazor.Data.Cache;
+using ClientBlazor.Cache;
 using ClientBlazor.Models;
 using GrpcFileGeneration.Models;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using CustomerList = ClientBlazor.Models.Orders.CustomerList;
 
-namespace ClientBlazor.Data.Customers
+namespace ClientBlazor.Services.Customers
 {
     public class CustomerService : ICustomerService
     {

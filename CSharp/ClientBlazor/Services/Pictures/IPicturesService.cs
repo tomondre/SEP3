@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace ClientBlazor.Data.Pictures
+namespace ClientBlazor.Services.Pictures
 {
     public interface IPicturesService
     {

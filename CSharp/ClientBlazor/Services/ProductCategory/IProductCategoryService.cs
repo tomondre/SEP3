@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 
-namespace ClientBlazor.Data.ProductCategory
+namespace ClientBlazor.Services.ProductCategory
 {
     public interface IProductCategoryService
     {

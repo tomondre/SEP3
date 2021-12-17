@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using GrpcFileGeneration.Models;
 
-namespace ClientBlazor.Data.Experiences
+namespace ClientBlazor.Services.Experiences
 {
     public interface IExperienceService
     {

@@ -10,15 +10,15 @@
 
 <section class="py-20 bg-gray-100">
     <div class="container mx-auto px-4">
-        <div class="flex flex-wrap -mx-4 mb-20 items-center justify-between">
-            <div class="w-full lg:w-auto px-4 mb-12 xl:mb-0">
+        <div class="flex flex-wrap -mx-4 mb-5 items-center justify-between">
+            <div class="w-full lg:w-auto px-4 mb-5 xl:mb-0">
 
                 <br/>
 
-                <div class="hidden my-2 lg:flex lg:w-auto lg:space-x-10">
+                <div class="my-2 lg:flex lg:w-auto lg:space-x-10">
 
-                    <div class="flex flex-wrap -mx-4 mb-20 items-center justify-between">
-                        <div class="w-full lg:w-auto px-4 mb-12 xl:mb-0">
+                    <div class="flex flex-wrap -mx-4 mb-5 items-center justify-between">
+                        <div class="w-full lg:w-auto px-4 mb-5">
                             <h2 class="text-5xl font-bold font-heading">
                                 @if (Id == null)
                                 {
@@ -52,9 +52,9 @@
         {
             <div class="flex flex-wrap -mx-3">
                 <div class="w-full lg:hidden px-3">
-                    <div class="flex flex-wrap -mx-2">
+                    <div class="hidden flex flex-wrap -mx-2">
                         <div class="w-1/2 md:w-1/3 px-2 mb-4">
-                            <div class="py-6 px-2 text-center bg-gray-50">
+                            <div class=" py-6 px-2 text-center bg-gray-50">
                                 <a class="font-bold font-heading" >Category</a>
                                 <ul class="hidden text-left mt-6">
                                     @if (categories != null)
@@ -98,8 +98,8 @@
                         </div>
                     }
                 </div>
-                <div class=" hidden lg:block w-1/4 pl-8 pr-3">
-                    <div class="mb-6 py-10 border-b border-gray-900">
+                <div class="block w-1/4 pl-8 pr-3">
+                    <div class="mb-6 py-10 border-b border-gray-900 hidden lg:block">
                         <h3 class="mb-8 text-2xl font-bold font-heading">Category</h3>
                         <ul>
                             @foreach (Category category in categories.Categories)
@@ -110,32 +110,34 @@
                             }
                         </ul>
                     </div>
-                    <div class="mb-6 py-10">
+                    <div class="mb-6 py-10 block">
                         <h3 class="mb-6 text-2xl font-bold font-heading">Filter</h3>
-                        <button class="mr-2 text-gray-200 hover:text-gray-300" @onclick="Filter">
-                            <svg class="h-5 w-5" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.7 19.3L17 15.6C20.1 11.7 19.5 6 15.6 2.9C11.7 -0.2 5.99999 0.5 2.89999 4.3C-0.200006 8.2 0.499995 13.9 4.29999 17C7.59999 19.6 12.3 19.6 15.6 17L19.3 20.7C19.7 21.1 20.3 21.1 20.7 20.7C21.1 20.3 21.1 19.7 20.7 19.3ZM9.99999 17C6.09999 17 2.99999 13.9 2.99999 10C2.99999 6.1 6.09999 3 9.99999 3C13.9 3 17 6.1 17 10C17 13.9 13.9 17 9.99999 17Z" fill="currentColor"></path>
-                            </svg>
-                        </button>
-                        <input @bind="filterByName" class="pl-2 py-3 text-sm text-gray-500" type="text" placeholder="Search by name...">
-                        <br/>
-                        <br/>
-                        <h3 class="mb-8 text-2xl font-bold font-heading">Price @filterByPrice</h3>
+                        <div class="pb-4">
+                            <button class="mr-2 text-gray-200 hover:text-gray-300" @onclick="Filter">
+                                <svg class="h-5 w-5" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20.7 19.3L17 15.6C20.1 11.7 19.5 6 15.6 2.9C11.7 -0.2 5.99999 0.5 2.89999 4.3C-0.200006 8.2 0.499995 13.9 4.29999 17C7.59999 19.6 12.3 19.6 15.6 17L19.3 20.7C19.7 21.1 20.3 21.1 20.7 20.7C21.1 20.3 21.1 19.7 20.7 19.3ZM9.99999 17C6.09999 17 2.99999 13.9 2.99999 10C2.99999 6.1 6.09999 3 9.99999 3C13.9 3 17 6.1 17 10C17 13.9 13.9 17 9.99999 17Z" fill="currentColor"></path>
+                                </svg>
+                            </button>
+                            <input @bind="filterByName" class="pl-2 py-3 text-sm text-gray-500" type="text" placeholder="Search by name...">
+                        </div>
+                        <div class="block">
+                            <h3 class="mb-8 text-2xl font-bold font-heading">Price @filterByPrice</h3>
 
-                        <div class=" mb-5 py-8 px-10 bg-gray-50">
-                            <input @onmouseout="Filter" class="w-full mb-4 outline-none appearance-none bg-gray-100 h-1 rounded cursor-pointer" type="range" min="0" max="10000" @bind="filterByPrice">
-                            <div class="flex justify-between">
-                                <span class="inline-block text-lg font-bold font-heading text-blue-300">0</span>
-                                <span class="inline-block text-lg font-bold font-heading text-blue-300">10000</span>
+                            <div class=" mb-5 py-8 px-10 bg-gray-50">
+                                <input @onmouseout="Filter" class="w-full mb-4 outline-none appearance-none bg-gray-100 h-1 rounded cursor-pointer" type="range" min="0" max="10000" @bind="filterByPrice">
+                                <div class="flex justify-between">
+                                    <span class="inline-block text-lg font-bold font-heading text-blue-300">0</span>
+                                    <span class="inline-block text-lg font-bold font-heading text-blue-300">10000</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-wrap mt-4 items-center justify-end">
+                <div class="block my-2  items-center justify-end">
                     <div class="w-full lg:w-auto px-4 flex items-center justify-center">
                         @foreach(var index in Enumerable.Range(1, experiences.TotalPages))
                         {
-                            <a class="cursor-pointer inline-flex mr-3 items-center justify-center w-8 h-8 text-xs @(experiences.PageNumber == index ? "text-white bg-indigo-500":"text-gray-500 bg-white") border border-gray-300 hover:bg-indigo-50 rounded" @onclick="() => GetPageElements(index)">@index</a>
+                            <a class="cursor-pointer inline-flex mr-3 items-center justify-center w-8 h-8 text-xs @(experiences.PageNumber+1 == index ? "text-white bg-indigo-500":"text-gray-500 bg-white") border border-gray-300 hover:bg-indigo-50 hover:text-gray-500 rounded" @onclick="() => GetPageElements(index)">@index</a>
                         }
                     </div>
                 </div>

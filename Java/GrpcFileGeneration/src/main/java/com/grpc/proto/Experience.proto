@@ -4,7 +4,6 @@ package networking.experience;
 
 import "Address.proto";
 import "Request.proto";
-import "User.proto";
 import "Page.proto";
 
 message ProtobufStockRequest{

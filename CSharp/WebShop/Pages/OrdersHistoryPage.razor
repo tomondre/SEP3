@@ -62,7 +62,7 @@ else
         <div class="w-full lg:w-auto px-4 flex items-center justify-center">
           @foreach(var index in Enumerable.Range(1, orders.TotalPages))
           {
-            <a class="cursor-pointer inline-flex mr-3 items-center justify-center w-8 h-8 text-xs @(pageNumber+1 == index ? "text-white bg-indigo-500":"text-gray-500 bg-white") border border-gray-300 hover:bg-indigo-50 rounded" @onclick="() => GetPageElements(index)">@index</a>
+            <a class="cursor-pointer inline-flex mr-3 items-center justify-center w-8 h-8 text-xs @(orders.PageNumber+1 == index ? "text-white bg-indigo-500":"text-gray-500 bg-white") border border-gray-300 hover:bg-indigo-50 hover:text-gray-500 rounded" @onclick="() => GetPageElements(index)">@index</a>
           }
         </div>
       </div>

@@ -104,7 +104,7 @@ namespace BusinessLogic.Model.Orders
             httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", pdfToken);
             var stringContent = new StringContent(serialize, Encoding.UTF8, "application/json");
             httpRequestMessage.Content = stringContent;
-
+            
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
             var readAsStringAsync = await httpResponseMessage.Content.ReadAsStringAsync();
             dynamic jObject = JObject.Parse(readAsStringAsync);

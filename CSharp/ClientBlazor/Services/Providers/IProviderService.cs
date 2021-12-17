@@ -3,7 +3,7 @@ using GrpcFileGeneration.Models;
 using Provider = ClientBlazor.Models.Provider;
 using ProviderList = ClientBlazor.Models.Orders.ProviderList;
 
-namespace ClientBlazor.Data.Providers
+namespace ClientBlazor.Services.Providers
 {
     public interface IProviderService
     {

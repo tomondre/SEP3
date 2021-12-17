@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using User = ClientBlazor.Models.User;
 
-namespace ClientBlazor.Data.Cache
+namespace ClientBlazor.Cache
 {
     public class CacheService : ICacheService
     {
@@ -23,6 +23,16 @@ namespace ClientBlazor.Data.Cache
         {
             var protectedBrowserStorageResult = await sessionStorage.GetAsync<string>("token");
             return protectedBrowserStorageResult.Value;
+        }
+
+        public async Task SetUserToCacheAsync(User user)
+        {
+            await sessionStorage.SetAsync("currentUser", user);
+        }
+
+        public async Task SetTokenToCacheAsync(string token)
+        {
+            await sessionStorage.SetAsync("token", token);
         }
     }
 }

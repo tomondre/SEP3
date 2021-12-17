@@ -13,6 +13,26 @@
     <ItemGroup>
       <ProjectReference Include="..\GrpcFileGeneration\GrpcFileGeneration\GrpcFileGeneration.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Data\Cache" />
+      <Folder Include="Data\Customers" />
+      <Folder Include="Data\Experiences" />
+      <Folder Include="Data\Login" />
+      <Folder Include="Data\Orders" />
+      <Folder Include="Data\Pictures" />
+      <Folder Include="Data\ProductCategory" />
+      <Folder Include="Data\Providers" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Data\Customers\CustomerService.cs" />
+      <Compile Remove="Data\Providers\IProviderService.cs" />
+      <Compile Remove="Data\Experiences\IExperienceSevice.cs" />
+      <Compile Remove="Data\ProductCategory\ProductCategoryService.cs" />
+      <Compile Remove="Data\Pictures\IPicturesService.cs" />
+      <Compile Remove="Data\Cache\CacheService.cs" />
+    </ItemGroup>
     
 <!--    <Target Name="CheckForNpm" BeforeTargets="NpmInstall">-->
 <!--        <Exec Command="npm -v" ContinueOnError="true">-->

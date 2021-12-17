@@ -1,10 +1,9 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using ClientBlazor.Models;
 using GrpcFileGeneration.Models;
 using Order = ClientBlazor.Models.Orders.Order;
 
-namespace ClientBlazor.Data.Orders
+namespace ClientBlazor.Services.Orders
 {
     public interface IOrderService
     {

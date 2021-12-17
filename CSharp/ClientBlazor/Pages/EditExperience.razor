@@ -1,11 +1,11 @@
 @page "/experiences/{Id:int}/information"
 @using Microsoft.AspNetCore.Hosting
-@using ClientBlazor.Data.Experiences
-@using ClientBlazor.Data.Pictures
-@using ClientBlazor.Data.ProductCategory
-@using ClientBlazor.Data.Cache
 @using GrpcFileGeneration.Models
 @using Microsoft.AspNetCore.Components
+@using ClientBlazor.Cache
+@using ClientBlazor.Services.Experiences
+@using ClientBlazor.Services.Pictures
+@using ClientBlazor.Services.ProductCategory
 
 @inject IWebHostEnvironment Environment
 @inject IExperienceService ExperienceService

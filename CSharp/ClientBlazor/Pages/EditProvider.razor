@@ -1,12 +1,11 @@
 @page "/edit"
 
-@using GrpcFileGeneration.Models
-@using ClientBlazor.Data.Providers
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
-@using ClientBlazor.Data.Cache
 @using Provider = ClientBlazor.Models.Provider
 @using System.Security.Cryptography
 @using System.Text
+@using ClientBlazor.Cache
+@using ClientBlazor.Services.Providers
 @inject IProviderService ProviderService
 @inject NavigationManager NavigationManager
 @inject ICacheService CacheService

@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using WebShop.Cache;
 using WebShop.Models;
 using WebShop.Services.Login;
 
@@ -12,14 +13,14 @@ namespace WebShop.Data.Authentication
     public class CurrentAuthenticationStateProvider : AuthenticationStateProvider
     {
         private readonly ILoginService loginService;
-        private readonly ProtectedSessionStorage sessionStorage;
+        private readonly ICacheService cacheService;
 
         private User cachedUser;
         
-        public CurrentAuthenticationStateProvider(ILoginService loginService, ProtectedSessionStorage sessionStorage)
+        public CurrentAuthenticationStateProvider(ILoginService loginService, ICacheService cacheService)
         {
-            this.sessionStorage = sessionStorage;
             this.loginService = loginService;
+            this.cacheService = cacheService;
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
@@ -27,10 +28,11 @@ namespace WebShop.Data.Authentication
             var identity = new ClaimsIdentity();
             if (cachedUser == null)
             {
-                var userFromStorage = await sessionStorage.GetAsync<User>("currentUser");
-                if (userFromStorage.Value?.Email != null)
+                var userFromStorage = await cacheService.GetCachedUserAsync();
+                if (userFromStorage != null)
                 {
-                    await ValidateUser(userFromStorage.Value);
+                    await ValidateUser(userFromStorage);
+                    identity = SetupClaimsForUser(userFromStorage);
                 }
             }
             else
@@ -60,8 +62,8 @@ namespace WebShop.Data.Authentication
             {
                 var user = await loginService.ValidateUser(userCred);
                 identity = SetupClaimsForUser(user);
-                await sessionStorage.SetAsync("currentUser", user);
-                await sessionStorage.SetAsync("token", user.Token);
+                await cacheService.SetUserToCacheAsync(user);
+                await cacheService.SetTokenToCacheAsync(user.Token);
                 cachedUser = user;
             }
             catch (Exception e)
@@ -76,8 +78,8 @@ namespace WebShop.Data.Authentication
         {
             cachedUser = null;
             var user = new ClaimsPrincipal(new ClaimsIdentity());
-            await sessionStorage.SetAsync("currentUser", "");
-            await sessionStorage.SetAsync("token", "");
+            await cacheService.SetUserToCacheAsync(cachedUser);
+            await cacheService.SetTokenToCacheAsync("");
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }
     }

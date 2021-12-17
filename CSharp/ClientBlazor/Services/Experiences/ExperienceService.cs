@@ -1,16 +1,13 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using ClientBlazor.Data.Cache;
+using ClientBlazor.Cache;
 using GrpcFileGeneration.Models;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
-using User = ClientBlazor.Models.User;
 
-namespace ClientBlazor.Data.Experiences
+namespace ClientBlazor.Services.Experiences
 {
     public class ExperienceService : IExperienceService
     {

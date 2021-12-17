@@ -4,7 +4,6 @@ package networking.experience;
 
 import "Proto/Address.proto";
 import "Proto/Request.proto";
-import "Proto/User.proto";
 import "Proto/Page.proto";
 
 message ProtobufMessage{

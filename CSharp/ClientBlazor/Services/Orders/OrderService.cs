@@ -3,12 +3,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
-using ClientBlazor.Data.Cache;
+using ClientBlazor.Cache;
 using ClientBlazor.Models;
 using GrpcFileGeneration.Models;
 using Order = ClientBlazor.Models.Orders.Order;
 
-namespace ClientBlazor.Data.Orders
+namespace ClientBlazor.Services.Orders
 {
     public class OrderService : IOrderService
     {

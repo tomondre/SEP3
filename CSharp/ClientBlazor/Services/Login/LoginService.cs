@@ -3,10 +3,9 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using GrpcFileGeneration.Models;
 using User = ClientBlazor.Models.User;
 
-namespace ClientBlazor.Data.Login
+namespace ClientBlazor.Services.Login
 {
     public class LoginService : ILoginService
     {
