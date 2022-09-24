@@ -20,7 +20,7 @@ namespace ClientBlazor.Services.Customers
         {
             this.cacheService = cacheService;
             client = new HttpClient();
-            uri = "https://localhost:5001/Customers";
+            uri = $"{Environment.GetEnvironmentVariable("HOST")}/Customers";
         }
 
         public async Task<Page<CustomerList>> GetAllCustomersAsync(int pageNumber)

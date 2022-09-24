@@ -19,7 +19,7 @@ namespace ClientBlazor.Services.ProductCategory
         {
             this.client = client;
             this.cacheService = cacheService;
-            uri = "https://localhost:5001/ProductCategory";
+            uri = $"{Environment.GetEnvironmentVariable("HOST")}/ProductCategory";
         }
 
         public async Task<Category> AddProductCategoryAsync(Category category)

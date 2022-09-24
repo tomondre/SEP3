@@ -17,7 +17,7 @@ namespace ClientBlazor.Services.Login
         public LoginService(HttpClient client)
         {
             this.client = client;
-            uri = "https://localhost:5001/Login";
+            uri = $"{Environment.GetEnvironmentVariable("HOST")}/Login";
         }
         
         public async Task<User> ValidateUser(User userCred)

@@ -6,12 +6,15 @@
 
     <ItemGroup>
       <PackageReference Include="CloudinaryDotNet" Version="1.15.2" />
+      <PackageReference Include="Google.Protobuf" Version="3.21.6" />
+      <PackageReference Include="Grpc.Net.Client" Version="2.49.0-pre1" />
+      <PackageReference Include="Grpc.Tools" Version="2.49.0-pre3">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />
       <PackageReference Include="Npm" Version="3.5.2" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\GrpcFileGeneration\GrpcFileGeneration\GrpcFileGeneration.csproj" />
+      <PackageReference Include="RiskFirst.Hateoas" Version="3.1.1" />
     </ItemGroup>
 
     <ItemGroup>

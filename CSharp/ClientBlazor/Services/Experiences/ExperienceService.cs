@@ -19,7 +19,7 @@ namespace ClientBlazor.Services.Experiences
         {
             this.cacheService = cacheService;
             client = new HttpClient();
-            uri = "https://localhost:5001/";
+            uri = $"{Environment.GetEnvironmentVariable("HOST")}/";
         }
 
         public async Task<Experience> AddExperienceAsync(Experience experience)
@@ -93,9 +93,9 @@ namespace ClientBlazor.Services.Experiences
         {
             var httpRequestMessage = await GetHttpRequestAsync(HttpMethod.Get, $"{uri}Experiences/{id}");
             var response = await client.SendAsync(httpRequestMessage);
-            
+
             CheckException(response);
-            
+
             var objAsJson = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Experience>(objAsJson, new JsonSerializerOptions()
             {
@@ -111,9 +111,9 @@ namespace ClientBlazor.Services.Experiences
                 "application/json");
             httpRequestMessage.Content = content;
             var response = await client.SendAsync(httpRequestMessage);
-            
+
             CheckException(response);
-            
+
             var objAsJson = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Experience>(objAsJson, new JsonSerializerOptions()
             {

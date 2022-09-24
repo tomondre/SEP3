@@ -27,7 +27,7 @@ namespace ClientBlazor.Services.Providers
             this.client = client;
             this.authenticationStateProvider = authenticationStateProvider;
             this.cacheService = cacheService;
-            uri = "https://localhost:5001/Provider";
+            uri = $"{Environment.GetEnvironmentVariable("HOST")}/Provider";
         }
 
         public async Task CreateProvider(Provider provider)

@@ -14,12 +14,13 @@ namespace ClientBlazor.Services.Orders
     {
         private HttpClient client;
         private readonly ICacheService cacheService;
-        private string url = "https://localhost:5001/";
+        private string url;
         
         public OrderService(HttpClient client, ICacheService cacheService)
         {
             this.client = client;
             this.cacheService = cacheService;
+            url = $"{Environment.GetEnvironmentVariable("HOST")}/";
         }
 
         public async Task<Order> GetOrderByIdAsync(int id)
