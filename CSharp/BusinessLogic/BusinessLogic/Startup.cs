@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using BusinessLogic.Model.Customers;
 using BusinessLogic.Model.Experiences;
@@ -50,6 +51,8 @@ namespace BusinessLogic
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var grpcServer = Environment.GetEnvironmentVariable("GRPC_SERVER") ?? "http://localhost:9090";
+        
             var key = @"MIICXgIBAAKBgQDy0/9fpTqf/U49RkU5/49TQi9WB3YzbsxCvKQe22mpWzVUiODW
             1Td3Uuoq7Jkla2qD2o4QIhXk+c7q9nG+8TYxCYBehjmGiHCALuWetYjrPpJ97chP
             uNZYhzBn27+16I/unSqgrFwEKQH79dAOaZtpPmKIq4y1UdIBM7swU5UqeQIDAQAB
@@ -82,34 +85,34 @@ namespace BusinessLogic
             });
             services.AddSingleton(
                 new ProviderService.ProviderServiceClient(
-                    GrpcChannel.ForAddress("http://localhost:9090")));
+                    GrpcChannel.ForAddress(grpcServer)));
             services.AddSingleton<IProviderModel, ProviderModel>();
             services.AddSingleton<IProviderNet, ProviderNet>();
 
             services.AddSingleton(
                 new CategoryService.CategoryServiceClient(
-                    GrpcChannel.ForAddress("http://localhost:9090")));
+                    GrpcChannel.ForAddress(grpcServer)));
             services.AddSingleton<IProductCategoryModel, ProductCategoryModel>();
             services.AddSingleton<IProductCategoryNet, ProductCategoryNet>();
 
             services.AddSingleton(
                 new CustomerService.CustomerServiceClient(
-                    GrpcChannel.ForAddress("http://localhost:9090")));
+                    GrpcChannel.ForAddress(grpcServer)));
             services.AddSingleton<ICustomerModel, CustomerModel>();
             services.AddSingleton<ICustomerNet, CustomerNet>();
 
             services.AddSingleton(
-                new ExperienceService.ExperienceServiceClient(GrpcChannel.ForAddress("http://localhost:9090")));
+                new ExperienceService.ExperienceServiceClient(GrpcChannel.ForAddress(grpcServer)));
             services.AddSingleton<IExperienceModel, ExperienceModel>();
             services.AddSingleton<IExperienceNet, ExperienceNet>();
 
             services.AddSingleton(
-                new LoginService.LoginServiceClient(GrpcChannel.ForAddress("http://localhost:9090")));
+                new LoginService.LoginServiceClient(GrpcChannel.ForAddress(grpcServer)));
             services.AddSingleton<ILoginModel>(x => new LoginModel(x.GetRequiredService<ILoginNet>(), key));
             services.AddSingleton<ILoginNet, LoginNet>();
 
             services.AddSingleton(
-                new OrderService.OrderServiceClient(GrpcChannel.ForAddress("http://localhost:9090")));
+                new OrderService.OrderServiceClient(GrpcChannel.ForAddress(grpcServer)));
             services.AddSingleton<IOrderModel, OrderModel>();
             services.AddSingleton<IOrderNet, OrderNet>();
 
