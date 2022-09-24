@@ -34,12 +34,13 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
         }
 
         [Authorize(Roles = "administrator")]
-        [HttpPatch("{id:int}",Name = "EditCategoryRoute")]
+        [HttpPatch("{id:int}", Name = "EditCategoryRoute")]
         public async Task<ActionResult<Category>> EditCategory([FromBody] Category category, [FromRoute] int id)
         {
             try
@@ -51,11 +52,11 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
-           
         }
-        
+
         [Authorize(Roles = "administrator")]
         [HttpPost(Name = "CreateCategoryRoute")]
         public async Task<ActionResult<Category>> CreateCategory([FromBody] Category category)
@@ -68,6 +69,7 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
         }
@@ -77,7 +79,6 @@ namespace BusinessLogic.Controllers
             try
             {
                 await linksService.AddLinksAsync(provider);
-
             }
             catch (Exception e)
             {
@@ -93,6 +94,7 @@ namespace BusinessLogic.Controllers
                 {
                     await linksService.AddLinksAsync(provider);
                 }
+
                 await linksService.AddLinksAsync(list);
             }
             catch (Exception e)

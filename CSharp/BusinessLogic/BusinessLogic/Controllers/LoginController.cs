@@ -19,7 +19,7 @@ namespace BusinessLogic.Controllers
         {
             this.model = model;
         }
-        
+
         [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<User>> AuthenticateUser([FromBody] User userCred)
@@ -31,9 +31,9 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(401, e.Message);
             }
-         
         }
     }
 }

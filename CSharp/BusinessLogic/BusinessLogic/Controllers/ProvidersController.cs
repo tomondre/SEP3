@@ -14,11 +14,12 @@ namespace BusinessLogic.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class 
+    public class
         ProviderController : ControllerBase
     {
         private IProviderModel model;
         private ILinksService linksService;
+
         public ProviderController(ILinksService linksService, IProviderModel model)
         {
             this.linksService = linksService;
@@ -27,7 +28,8 @@ namespace BusinessLogic.Controllers
 
         [Authorize(Roles = "administrator")]
         [HttpGet(Name = "GetProvidersRoute")]
-        public async Task<ActionResult<Page<ProviderList>>> GetProvidersAsync([FromQuery] bool? approved, [FromQuery] string name, [FromQuery] int page)
+        public async Task<ActionResult<Page<ProviderList>>> GetProvidersAsync([FromQuery] bool? approved,
+            [FromQuery] string name, [FromQuery] int page)
         {
             var list = new Page<ProviderList>();
 
@@ -52,7 +54,7 @@ namespace BusinessLogic.Controllers
                     }
                     else
                     {
-                        list = await model.GetAllProvidersByNameAsync(name,page);
+                        list = await model.GetAllProvidersByNameAsync(name, page);
                     }
                 }
 
@@ -61,11 +63,12 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
         }
 
-        
+
         [Authorize(Roles = "administrator, provider")]
         [HttpGet("{id:int}", Name = "GetProviderByIdRoute")]
         public async Task<ActionResult<User>> GetProviderById([FromRoute] int id)
@@ -78,12 +81,13 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
         }
 
         [Authorize(Roles = "provider, administrator")]
-        [HttpPatch("{id:int}",Name = "EditProviderRoute")]
+        [HttpPatch("{id:int}", Name = "EditProviderRoute")]
         public async Task<ActionResult<Provider>> EditProvider([FromBody] Provider provider)
         {
             try
@@ -94,6 +98,7 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
         }
@@ -106,14 +111,14 @@ namespace BusinessLogic.Controllers
             {
                 var user = await model.CreateProviderAsync(provider);
                 return Ok(user);
-
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
         }
-        
+
         [Authorize(Roles = "administrator")]
         [HttpDelete("{id:int}", Name = "DeleteProviderRoute")]
         public async Task<ActionResult> DeleteProviderAsync([FromRoute] int id)
@@ -128,7 +133,7 @@ namespace BusinessLogic.Controllers
                 return StatusCode(403);
             }
         }
-        
+
         private async Task AddLink(Provider provider)
         {
             try
@@ -149,6 +154,7 @@ namespace BusinessLogic.Controllers
                 {
                     await linksService.AddLinksAsync(provider);
                 }
+
                 await linksService.AddLinksAsync(list);
             }
             catch (Exception e)

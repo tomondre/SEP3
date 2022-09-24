@@ -44,13 +44,15 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
         }
 
         [HttpGet("/Categories/{id:int}/Experiences", Name = "GetExperienceByCategoryRoute")]
         [Authorize(Roles = "administrator, provider, customer")]
-        public async Task<ActionResult<Page<ExperienceList>>> GetExperiencesByCategoryAsync([FromRoute] int id, [FromQuery] int page)
+        public async Task<ActionResult<Page<ExperienceList>>> GetExperiencesByCategoryAsync([FromRoute] int id,
+            [FromQuery] int page)
         {
             try
             {
@@ -60,6 +62,7 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
         }
@@ -76,6 +79,7 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
         }
@@ -109,6 +113,7 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
         }
@@ -125,6 +130,7 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
         }
@@ -140,6 +146,7 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
         }
@@ -172,7 +179,7 @@ namespace BusinessLogic.Controllers
                 Console.WriteLine(e);
             }
         }
-        
+
         [HttpPatch]
         [Authorize(Roles = "provider")]
         [Route("{id:int}")]

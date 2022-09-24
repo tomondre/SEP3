@@ -25,7 +25,7 @@ namespace BusinessLogic.Controllers
             this.linksService = linksService;
             this.model = model;
         }
-        
+
         [AllowAnonymous]
         [HttpPost(Name = "CreateCustomerRoute")]
         public async Task<ActionResult<User>> CreateCustomer([FromBody] Customer customer)
@@ -37,13 +37,17 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
+
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
         }
 
         [Authorize(Roles = "administrator")]
         [HttpGet(Name = "GetAllCustomersRoute")]
-        public async Task<ActionResult<Page<CustomerList>>> GetAllCustomersAsync([FromQuery(Name = "name")] string name, [FromQuery(Name = "page")] int pageNumber)
+        public async Task<ActionResult<Page<CustomerList>>> GetAllCustomersAsync([FromQuery(Name = "name")] string name,
+            [FromQuery(Name = "page")] int pageNumber)
         {
             try
             {
@@ -62,9 +66,11 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
+
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
-            
         }
 
         [Authorize(Roles = "administrator")]
@@ -74,7 +80,7 @@ namespace BusinessLogic.Controllers
             await model.DeleteCustomerAsync(id);
             return Ok();
         }
-        
+
         [Authorize(Roles = "customer")]
         [HttpGet("{id:int}", Name = "GetCustomerByIdRoute")]
         public async Task<ActionResult<User>> GetCustomerById([FromRoute] int id)
@@ -87,13 +93,13 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
-      
         }
-        
+
         [Authorize(Roles = "customer")]
-        [HttpPatch("{id:int}",Name = "EditCustomerRoute")]
+        [HttpPatch("{id:int}", Name = "EditCustomerRoute")]
         public async Task<ActionResult<Customer>> EditCustomer([FromBody] Customer customer)
         {
             try
@@ -104,9 +110,9 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
-           
         }
 
         private async Task AddLink(Customer customer)
@@ -125,7 +131,7 @@ namespace BusinessLogic.Controllers
         {
             try
             {
-                foreach (var c  in list.Customers)
+                foreach (var c in list.Customers)
                 {
                     await linksService.AddLinksAsync(c);
                 }

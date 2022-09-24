@@ -23,7 +23,7 @@ namespace BusinessLogic.Controllers
             this.linksService = linksService;
             model = orderModel;
         }
-        
+
         [Authorize(Roles = "customer")]
         [HttpPost(Name = "CreateOrderRoute")]
         public async Task<ActionResult<Order>> CreateOrderAsync([FromBody] Order order)
@@ -36,14 +36,15 @@ namespace BusinessLogic.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.Write(e.Message);
                 return StatusCode(403, e.Message);
             }
         }
 
         [Authorize(Roles = "administrator, customer")]
         [HttpGet("/customers/{customerId:int}/orders", Name = "AllCustomerOrdersRoute")]
-        public async Task<ActionResult<Page<OrderList>>> GetAllCustomerOrdersAsync([FromRoute] int customerId, [FromQuery] int page)
+        public async Task<ActionResult<Page<OrderList>>> GetAllCustomerOrdersAsync([FromRoute] int customerId,
+            [FromQuery] int page)
         {
             try
             {
@@ -57,7 +58,7 @@ namespace BusinessLogic.Controllers
                 return StatusCode(403);
             }
         }
-        
+
         [Authorize(Roles = "administrator, customer")]
         [HttpGet("{id:int}", Name = "GetOrderByIdRoute")]
         public async Task<ActionResult<Order>> GetOrderByIdAsync([FromRoute] int id)
@@ -74,10 +75,11 @@ namespace BusinessLogic.Controllers
                 return StatusCode(403);
             }
         }
-        
+
         [Authorize(Roles = "provider")]
         [HttpGet("/providers/{providerId:int}/vouchers", Name = "getProvidersVouchersAsyncRoute")]
-        public async Task<ActionResult<ProvidersVoucherList>> GetProvidersVouchersAsync([FromRoute] int providerId, [FromQuery] int page)
+        public async Task<ActionResult<ProvidersVoucherList>> GetProvidersVouchersAsync([FromRoute] int providerId,
+            [FromQuery] int page)
         {
             try
             {
@@ -87,10 +89,9 @@ namespace BusinessLogic.Controllers
             catch (Exception e)
             {
                 return StatusCode(403);
-                
             }
         }
-        
+
         private async Task AddLink(Order order)
         {
             try
